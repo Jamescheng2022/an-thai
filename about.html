@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An-Thai Engineering - About Us</title>
+    <style>
+        :root {
+            --primary: #2D5BFF;
+            --secondary: #6366F1;
+            --success: #22C55E;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --text-dark: #1E293B;
+            --text-gray: #64748B;
+            --bg-light: #F8FAFC;
+            --border-light: #E2E8F0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Source Han Sans SC', sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            min-height: 100vh;
+            background-image: url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(248, 250, 252, 0.85);
+            z-index: -1;
+        }
+        
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-light);
+            background-color: rgba(255, 255, 255, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            font-size: 20px;
+            color: var(--primary);
+        }
+        
+        .logo-img {
+            width: 32px;
+            height: 32px;
+            margin-right: 8px;
+            background-color: var(--primary);
+            border-radius: 6px;
+        }
+        
+        .nav-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        
+        .lang-select {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-light);
+            background-color: white;
+            font-size: 14px;
+        }
+        
+        .login-btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--primary);
+            background-color: white;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        
+        .login-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px;
+            padding-bottom: 100px; /* Make room for bottom nav */
+        }
+        
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89f12e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.15;
+            z-index: -1;
+            border-radius: 50%;
+        }
+        
+        .page-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+        
+        .page-subtitle {
+            font-size: 18px;
+            color: var(--text-gray);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* About Content */
+        .about-section {
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--primary);
+            position: relative;
+            padding-left: 16px;
+        }
+        
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background-color: var(--primary);
+            border-radius: 4px;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .about-text {
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+        
+        .about-text p {
+            margin-bottom: 16px;
+        }
+        
+        .about-image {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .team-member {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .member-image {
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .team-member:hover .member-image img {
+            transform: scale(1.05);
+        }
+        
+        .member-info {
+            padding: 20px;
+        }
+        
+        .member-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-dark);
+        }
+        
+        .member-role {
+            font-size: 14px;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+        
+        .member-bio {
+            font-size: 14px;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+        
+        /* Engineering Decorative Elements */
+        .top-nav::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            display: block; /* Always display (not just on mobile) */
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-top: 1px solid var(--border-light);
+            padding: 10px;
+            z-index: 90;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .bottom-nav-menu {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-gray);
+            font-size: 12px;
+            padding: 5px;
+            transition: color 0.2s;
+        }
+        
+        .bottom-nav-item:hover {
+            color: var(--primary);
+        }
+        
+        .bottom-nav-item.active {
+            color: var(--primary);
+        }
+        
+        .bottom-nav-icon {
+            margin-bottom: 4px;
+            font-size: 20px;
+        }
+        
+        /* Top Navigation Menu for Desktop */
+        .top-nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .top-nav-item {
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .top-nav-item:hover {
+            background-color: var(--bg-light);
+            color: var(--primary);
+        }
+        
+        .top-nav-item.active {
+            background-color: rgba(45, 91, 255, 0.1);
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 992px) {
+            .top-nav {
+                padding: 12px 16px;
+            }
+            
+            .top-nav-menu {
+                display: none; /* Hide top nav menu on mobile */
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                background: none;
+                border: none;
+                font-size: 24px;
+                color: var(--primary);
+                cursor: pointer;
+            }
+            
+            .main-content {
+                padding: 20px 16px;
+                padding-bottom: 100px;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .about-image {
+                order: -1; /* Image first on mobile */
+            }
+            
+            .page-title {
+                font-size: 28px;
+            }
+            
+            .page-subtitle {
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 20px;
+            }
+            
+            .bottom-nav-item {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <div class="logo">
+            <div class="logo-img"></div>
+            <span>An-Thai Engineering</span>
+        </div>
+        
+        <!-- Desktop Navigation Menu -->
+        <div class="top-nav-menu">
+            <a href="index.html" class="top-nav-item">Home</a>
+            <a href="about.html" class="top-nav-item active">About Us</a>
+            <a href="services.html" class="top-nav-item">Engineering Services</a>
+            <a href="portfolio.html" class="top-nav-item">Project Portfolio</a>
+            <a href="contact.html" class="top-nav-item">Contact Us</a>
+        </div>
+        
+        <div class="nav-actions">
+            <select class="lang-select">
+                <option value="en">English</option>
+                <option value="zh">中文</option>
+                <option value="th">ไทย</option>
+            </select>
+            <button class="login-btn">Login / Register</button>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">About An-Thai Engineering</h1>
+            <p class="page-subtitle">We are a leading engineering firm dedicated to delivering high-quality solutions with integrity and innovation across Thailand and Southeast Asia.</p>
+        </div>
+        
+        <div class="about-section">
+            <h2 class="section-title">Our Story</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Founded in 2005, An-Thai Engineering has grown from a small consultancy into one of Thailand's most respected engineering firms. Our journey began with a simple mission: to provide engineering services that combine technical excellence with ethical practice.</p>
+                    <p>Over the years, we have completed hundreds of successful projects across Thailand and neighboring countries, building a reputation for reliability, innovation, and safety. Our team has expanded to include specialists in structural engineering, geotechnical analysis, construction management, and environmental compliance.</p>
+                    <p>Today, we continue to push the boundaries of what's possible in engineering, embracing new technologies and sustainable practices while maintaining our commitment to quality and integrity in everything we do.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="An-Thai Engineering office">
+                </div>
+            </div>
+        </div>
+        
+        <div class="about-section">
+            <h2 class="section-title">Our Values</h2>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Engineering team working together">
+                </div>
+                <div class="about-text">
+                    <p><strong>Integrity:</strong> We believe in honesty, transparency, and ethical practice in all our dealings. Our clients trust us because we deliver on our promises.</p>
+                    <p><strong>Excellence:</strong> We strive for technical perfection in every project, constantly updating our knowledge and skills to deliver the best solutions.</p>
+                    <p><strong>Innovation:</strong> We embrace new technologies and methodologies, finding creative solutions to complex engineering challenges.</p>
+                    <p><strong>Safety:</strong> The safety of our designs, construction sites, and end-users is paramount in everything we do.</p>
+                    <p><strong>Sustainability:</strong> We design with the future in mind, minimizing environmental impact and creating structures that stand the test of time.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="about-section">
+            <h2 class="section-title">Our Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Team member">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Somchai Ratchanon</h3>
+                        <div class="member-role">Founder & CEO</div>
+                        <p class="member-bio">With over 25 years of experience in civil engineering, Somchai leads our company with vision and expertise.</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Team member">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Priya Sharma</h3>
+                        <div class="member-role">Chief Structural Engineer</div>
+                        <p class="member-bio">Priya specializes in designing resilient structures for challenging environments across Southeast Asia.</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Team member">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Napaporn Wattana</h3>
+                        <div class="member-role">Geotechnical Lead</div>
+                        <p class="member-bio">Napaporn's groundbreaking work in soil mechanics has established new standards for foundation design.</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-image">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Team member">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Li Wei Chen</h3>
+                        <div class="member-role">Project Director</div>
+                        <p class="member-bio">Wei Chen excels at coordinating complex international projects with multiple stakeholders.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="bottom-nav-menu">
+            <a href="index.html" class="bottom-nav-item">
+                <div class="bottom-nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                </div>
+                <span>Home</span>
+            </a>
+            <a href="about.html" class="bottom-nav-item active">
+                <div class="bottom-nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                </div>
+                <span>About</span>
+            </a>
+            <a href="services.html" class="bottom-nav-item">
+                <div class="bottom-nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                </div>
+                <span>Services</span>
+            </a>
+            <a href="portfolio.html" class="bottom-nav-item">
+                <div class="bottom-nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                </div>
+                <span>Projects</span>
+            </a>
+            <a href="contact.html" class="bottom-nav-item">
+                <div class="bottom-nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                </div>
+                <span>Contact</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 

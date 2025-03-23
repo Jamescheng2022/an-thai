@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An-Thai Engineering - Project Portfolio</title>
+    <style>
+        :root {
+            --primary: #2D5BFF;
+            --secondary: #6366F1;
+            --success: #22C55E;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --text-dark: #1E293B;
+            --text-gray: #64748B;
+            --bg-light: #F8FAFC;
+            --border-light: #E2E8F0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Source Han Sans SC', sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            min-height: 100vh;
+            background-image: url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(248, 250, 252, 0.85);
+            z-index: -1;
+        }
+        
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-light);
+            background-color: rgba(255, 255, 255, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            font-size: 20px;
+            color: var(--primary);
+        }
+        
+        .logo-img {
+            width: 32px;
+            height: 32px;
+            margin-right: 8px;
+            background-color: var(--primary);
+            border-radius: 6px;
+        }
+        
+        .nav-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        
+        .lang-select {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-light);
+            background-color: white;
+            font-size: 14px;
+        }
+        
+        .login-btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--primary);
+            background-color: white;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        
+        .login-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px;
+            padding-bottom: 100px; /* Make room for bottom nav */
+        }
+        
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89f12e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.15;
+            z-index: -1;
+            border-radius: 50%;
+        }
+        
+        .page-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+        
+        .page-subtitle {
+            font-size: 18px;
+            color: var(--text-gray);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .project-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-image {
+            height: 220px;
+            overflow: hidden;
+        }
+        
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .project-card:hover .project-image img {
+            transform: scale(1.05);
+        }
+        
+        .project-content {
+            padding: 25px;
+        }
+        
+        .project-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+        
+        .project-category {
+            display: inline-block;
+            padding: 4px 10px;
+            background-color: rgba(45, 91, 255, 0.1);
+            color: var(--primary);
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .project-description {
+            color: var(--text-gray);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        
+        .project-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-light);
+            padding-top: 15px;
+        }
+        
+        .project-location {
+            display: flex;
+            align-items: center;
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+        
+        .project-location svg {
+            margin-right: 6px;
+        }
+        
+        .view-project {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: rgba(45, 91, 255, 0.1);
+            color: var(--primary);
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 14px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .view-project:hover {
+            background-color: rgba(45, 91, 255, 0.2);
+        }
+        
+        /* Engineering Decorative Elements */
+        .top-nav::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            display: block; /* Always display (not just on mobile) */
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-top: 1px solid var(--border-light);
+            padding: 10px;
+            z-index: 90;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .bottom-nav-menu {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-gray);
+            font-size: 12px;
+            padding: 5px;
+            transition: color 0.2s;
+        }
+        
+        .bottom-nav-item:hover {
+            color: var(--primary);
+        }
+        
+        .bottom-nav-item.active {
+            color: var(--primary);
+        }
+        
+        .bottom-nav-icon {
+            margin-bottom: 4px;
+            font-size: 20px;
+        }
+        
+        /* Top Navigation Menu for Desktop */
+        .top-nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .top-nav-item {
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .top-nav-item:hover {
+            background-color: var(--bg-light);
+            color: var(--primary);
+        }
+        
+        .top-nav-item.active {
+            background-color: rgba(45, 91, 255, 0.1);
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 992px) {
+            .top-nav {
+                padding: 12px 16px;
+            }
+            
+            .top-nav-menu {
+                display: none; /* Hide top nav menu on mobile */
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                background: none;
+                border: none;
+                font-size: 24px;
+                color: var(--primary);
+                cursor: pointer;
+            }
+            
+            .main-content {
+                padding: 20px 16px;
+                padding-bottom: 100px;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-title {
+                font-size: 28px;
+            }
+            
+            .page-subtitle {
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .project-title {
+                font-size: 20px;
+            }
+            
+            .bottom-nav-item {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <div class="logo">
+            <div class="logo-img"></div>
+            <span>An-Thai Engineering</span>
+        </div>
+        
+        <!-- Desktop Navigation Menu -->
+        <div class="top-nav-menu">
+            <a href="index.html" class="top-nav-item">Home</a>
+            <a href="about.html" class="top-nav-item">About Us</a>
+            <a href="services.html" class="top-nav-item">Engineering Services</a>
+            <a href="portfolio.html" class="top-nav-item active">Project Portfolio</a>
+            <a href="contact.html" class="top-nav-item">Contact Us</a>
+        </div>
+        
+        <div class="nav-actions">
+            <select class="lang-select">
+                <option value="en">English</option>
+                <option value="zh">中文</option>
+                <option value="th">ไทย</option>
+            </select>
+            <button class="login-btn">Login / Register</button>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Our Project Portfolio</h1>
+            <p class="page-subtitle">Explore our successful engineering projects across Thailand and Southeast Asia, showcasing our expertise and commitment to excellence.</p>
+        </div>
+        
+        <div class="portfolio-grid">
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1590092794015-bce5431c83f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Bangkok Commercial Tower">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Bangkok Commercial Tower</h3>
+                    <span class="project-category">Structural Engineering</span>
+                    <p class="project-description">A 45-story commercial tower with specialized seismic and wind resistance design in the heart of Bangkok's business district.</p>
+                    <div class="project-details">
+                        <div class="project-location">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            Bangkok, Thailand
+                        </div>
+                        <a href="#" class="view-project">View Project</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1520333789090-1afc82db536a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Phuket Resort Foundation">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Phuket Resort Foundation</h3>
+                    <span class="project-category">Geotechnical Engineering</span>
+                    <p class="project-description">Specialized foundation design for a luxury resort built on challenging coastal terrain with comprehensive soil stabilization.</p>
+                    <div class="project-details">
+                        <div class="project-location">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            Phuket, Thailand
+                        </div>
+                        <a href="#" class="view-project">View Project</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1540649743473-da3dab7697d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Chiang Mai Highway">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Chiang Mai Highway Extension</h3>
+                    <span class="project-category">Infrastructure Engineering</span>
+                    <p class="project-description">A 32-kilometer highway extension project featuring bridges, tunnels, and innovative drainage solutions in mountainous terrain.</p>
+                    <div class="project-details">
+                        <div class="project-location">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            Chiang Mai, Thailand
+                        </div>
+                        <a href="#" class="view-project">View Project</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1621905252472-943afaa20e20?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Ho Chi Minh City Residential Complex">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Ho Chi Minh City Residential Complex</h3>
+                    <span class="project-category">Construction Management</span>
+                    <p class="project-description">End-to-end management of a sustainable 500-unit residential development with integrated commercial spaces and green initiatives.</p>
+                    <div class="project-details">
+                        <div class="project-location">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            Ho Chi Minh City, Vietnam
+                        </div>
+                        <a href="#" class="view-project">View Project</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1554469384-e58fac937bb3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Krabi Wastewater Treatment">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Krabi Wastewater Treatment Facility</h3>
+                    <span class="project-category">Environmental Engineering</span>
+                    <p class="project-description">State-of-the-art wastewater treatment facility designed to protect coastal ecosystems while serving a growing tourist destination.</p>
+                    <div class="project-details">
+                        <div class="project-location">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            Krabi, Thailand
+                        </div>
+                        <a href="#" class="view-project">View Project</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1586435239615-53e34a276130?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Ayutthaya Heritage Restoration">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Ayutthaya Heritage Restoration</h3>
+                    <span class="project-category">Structural Restoration</span>
+                    <p class="project-description">Specialized restoration and reinforcement of historic structures using modern engineering techniques while preserving cultural integrity.</p>
+                    <div class="project-details">
+                        <div class="project-location">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            Ayutthaya, Thailand
+                        </div>
+                        <a href="#" class="view-project">View Project</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="bottom-nav-menu">
+            <a href="index.html" class="bottom-nav-item">
+                <div class="bottom-nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                </div>
+                <span>Home</span>
+            </a>
+            <a href="about.html" class="bottom-nav-item">
+                <div class="bottom-nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                </div>
+                <span>About</span>
+            </a>
+            <a href="services.html" class="bottom-nav-item">
+                <div class="bottom-nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                </div>
+                <span>Services</span>
+            </a>
+            <a href="portfolio.html" class="bottom-nav-item active">
+                <div class="bottom-nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                </div>
+                <span>Projects</span>
+            </a>
+            <a href="contact.html" class="bottom-nav-item">
+                <div class="bottom-nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                </div>
+                <span>Contact</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html> 

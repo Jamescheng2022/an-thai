@@ -14,4 +14,5 @@ fs.rmSync(output, {recursive: true, force: true});
 fs.mkdirSync(output, {recursive: true});
 for (const file of files) fs.copyFileSync(path.join(root, file), path.join(output, file));
 fs.cpSync(path.join(root, 'assets'), path.join(output, 'assets'), {recursive: true});
+require('node:child_process').execFileSync('python3', [path.join(root, 'scripts/localize.py')], {stdio:'inherit'});
 console.log('Static website packaged in dist: 7 HTML pages, sitemap, robots and assets.');

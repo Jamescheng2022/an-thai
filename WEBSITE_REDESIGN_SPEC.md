@@ -17,7 +17,7 @@ Testing and inspection should be the primary trust-building business. Equipment 
 
 ## Visual source
 
-The approved AN-THAI brochure is the primary visual source for the redesigned public site. Real brochure-derived AN-THAI field-testing, laboratory and office photography is used across Home, Testing & Inspection, Equipment, Capabilities and About. Main site visuals should not depend on generic stock photography.
+The approved AN-THAI brochure is the primary visual source for the redesigned public site. Owner-provided brochure-derived field-testing, laboratory and office imagery is used across Home, Testing & Inspection, Equipment, Capabilities and About. Main site visuals should not depend on generic stock photography.
 
 ## Problems in the current site
 
@@ -35,15 +35,17 @@ Primary navigation:
 1. Home
 2. Testing & Inspection
 3. Equipment
-4. Projects & Capabilities
-5. About AN-THAI
+4. Capabilities
+5. About
 6. Contact
 
 ## Homepage structure
 
 ### Hero
 
-Headline: **TEST IN THAILAND. EQUIP WITH CONFIDENCE.**
+Headline: **FROM GROUND TO STRUCTURE**
+
+Both business lines and both quotation routes remain visible in the hero. Brand logic: **We test in the field, therefore we understand the equipment.**
 
 Supporting position: AN-THAI combines Thailand-based field testing with professional testing-equipment supply, connecting instrumentation, field methods, engineering evaluation and reporting.
 
@@ -105,7 +107,7 @@ Do not use invented client names, project names, quantities or performance claim
 
 - white + engineering blue palette
 - strong diagonal / industrial geometry
-- real AN-THAI brochure and project/testing photography
+- owner-provided AN-THAI brochure imagery with accurate provenance labels
 - technical diagrams and process logic where useful
 - clean industrial typography
 - restrained motion
@@ -117,7 +119,7 @@ Avoid generic SaaS cards, AI-chat styling, fake dashboards and stock-photo depen
 
 Keep the site lightweight and maintainable with semantic HTML, shared CSS, small vanilla JS, accessible navigation/CTAs, SEO metadata, sitemap/robots, and factual structured data.
 
-The brochure-derived photography is packaged as a compact internal WebP sprite assembled from repository-hosted text chunks at runtime because the current GitHub connector cannot directly write binary image files. The browser receives the images from the same repository/site rather than an external stock-photo host.
+Brochure imagery is stored as native WebP files, with compact and larger variants selected through `srcset` and `sizes`. Images load without JavaScript. Source hashes, illustrations and provenance limits are recorded in `ASSET_MANIFEST.json` and `HANDOFF_AUDIT.md`. The brochure emblem is reused without drawing a replacement logo.
 
 ## Acceptance criteria
 

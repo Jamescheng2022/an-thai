@@ -1,0 +1,247 @@
+{
+  "source_zip": "anthai-website-handoff.zip",
+  "zip_sha256": "d03e715e1cdaa7973205b028a3d4f75bd21379c46b5a188b047db857314bf07e",
+  "assets": [
+    {
+      "path": "assets/images/hero-field.webp",
+      "zip_source": "anthai_site_build/assets/images/hero-field.webp",
+      "sha256": "4206eadd52c7eebddf34496849349b8c1f962c7ca74f37a32b3ed5469f1ad91c",
+      "bytes": 83676,
+      "dimensions": [
+        900,
+        687
+      ],
+      "description": "Pile-testing scenes from the AN-THAI engineering brochure",
+      "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
+      "kind": "brochure photographic/composite imagery"
+    },
+    {
+      "path": "assets/images/hero-field-small.webp",
+      "zip_source": "anthai_commit_images/hero-field.webp",
+      "sha256": "ae296b86e7870363953c0e82abb6d16757f5d593753f0730b74e218047193888",
+      "bytes": 43426,
+      "dimensions": [
+        720,
+        550
+      ],
+      "description": "Pile-testing scenes from the AN-THAI engineering brochure",
+      "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
+      "kind": "brochure photographic/composite imagery"
+    },
+    {
+      "path": "assets/images/static-load.webp",
+      "zip_source": "anthai_site_build/assets/images/static-load.webp",
+      "sha256": "f3dfb22a812d17f6a99b75a9b27371cc8e95af0fe452448d4f4eb341b2437978",
+      "bytes": 53280,
+      "dimensions": [
+        900,
+        389
+      ],
+      "description": "Static pile load-test setup shown in the AN-THAI brochure",
+      "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
+      "kind": "brochure photographic/composite imagery"
+    },
+    {
+      "path": "assets/images/static-load-small.webp",
+      "zip_source": "anthai_commit_images/static-load.webp",
+      "sha256": "84505bd7e7db943c9befa193c1c00ea86ff1eacbf30c0931d1b64b78b5e1bb81",
+      "bytes": 16522,
+      "dimensions": [
+        520,
+        225
+      ],
+      "description": "Static pile load-test setup shown in the AN-THAI brochure",
+      "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
+      "kind": "brochure photographic/composite imagery"
+    },
+    {
+      "path": "assets/images/high-strain.webp",
+      "zip_source": "anthai_site_build/assets/images/high-strain.webp",
+      "sha256": "e686783d6b166f17f4ebc68f40f64f0dd4a7ea4e7df721eb7f3371f5e9e441fa",
+      "bytes": 54958,
+      "dimensions": [
+        900,
+        480
+      ],
+      "description": "High-strain dynamic pile-testing scenes from the AN-THAI brochure",
+      "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
+      "kind": "brochure photographic/composite imagery"
+    },
+    {
+      "path": "assets/images/high-strain-small.webp",
+      "zip_source": "anthai_commit_images/high-strain.webp",
+      "sha256": "85f2daa4479b8f9b020f6bda703da1ddd2f8dab909f28c571d11c9abf08e9053",
+      "bytes": 18428,
+      "dimensions": [
+        520,
+        277
+      ],
+      "description": "High-strain dynamic pile-testing scenes from the AN-THAI brochure",
+      "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
+      "kind": "brochure photographic/composite imagery"
+    },
+    {
+      "path": "assets/images/low-strain.webp",
+      "zip_source": "anthai_site_build/assets/images/low-strain.webp",
+      "sha256": "188929568b6179c80b99f5d318ea0a37f1da355020b661091ba4952e408fb7e6",
+      "bytes": 77444,
+      "dimensions": [
+        900,
+        538
+      ],
+      "description": "Low-strain pile testing and measurement illustration from the AN-THAI brochure",
+      "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
+      "kind": "brochure photographic/composite imagery"
+    },
+    {
+      "path": "assets/images/low-strain-small.webp",
+      "zip_source": "anthai_commit_images/low-strain.webp",
+      "sha256": "a44e4b19a3cc61df276f5f824dd6b7469ff14a984a0db1e08e58b4ce8d19b3e3",
+      "bytes": 23634,
+      "dimensions": [
+        520,
+        311
+      ],
+      "description": "Low-strain pile testing and measurement illustration from the AN-THAI brochure",
+      "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
+      "kind": "brochure photographic/composite imagery"
+    },
+    {
+      "path": "assets/images/csl.webp",
+      "zip_source": "anthai_site_build/assets/images/csl.webp",
+      "sha256": "7d3205c0d81a794c38e03f1fb9d9a115151e5de75e1aabfdca49deca7d9133a0",
+      "bytes": 66506,
+      "dimensions": [
+        540,
+        795
+      ],
+      "description": "Crosshole sonic logging illustration showing access tubes, probes and signal paths",
+      "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
+      "kind": "technical illustration"
+    },
+    {
+      "path": "assets/images/csl-small.webp",
+      "zip_source": "anthai_commit_images/csl.webp",
+      "sha256": "fd5731a745f2651d914920a23c8a06fc1d6d757222d9327bb823aac3b6fc1e1d",
+      "bytes": 16720,
+      "dimensions": [
+        285,
+        420
+      ],
+      "description": "Crosshole sonic logging illustration showing access tubes, probes and signal paths",
+      "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
+      "kind": "technical illustration"
+    },
+    {
+      "path": "assets/images/plate-load.webp",
+      "zip_source": "anthai_site_build/assets/images/plate-load.webp",
+      "sha256": "9c93a62dd8a1c388a01533cef5293c2e2cb82e9fb3cf540d4a5f08acf76d513b",
+      "bytes": 73924,
+      "dimensions": [
+        900,
+        522
+      ],
+      "description": "Plate load-test arrangements shown in the AN-THAI brochure",
+      "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
+      "kind": "brochure photographic/composite imagery"
+    },
+    {
+      "path": "assets/images/plate-load-small.webp",
+      "zip_source": "anthai_commit_images/plate-load.webp",
+      "sha256": "80aa0a4bc18777ad7d0e346685c97b9733472223d6c5660debd7d88fc3afeac4",
+      "bytes": 22524,
+      "dimensions": [
+        520,
+        301
+      ],
+      "description": "Plate load-test arrangements shown in the AN-THAI brochure",
+      "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
+      "kind": "brochure photographic/composite imagery"
+    },
+    {
+      "path": "assets/images/lab-equipment.webp",
+      "zip_source": "anthai_site_build/assets/images/lab-equipment.webp",
+      "sha256": "3209ec07178df5e50fe29cc141d53301171174f1c8e07564dd3a3fb14e4941a4",
+      "bytes": 56346,
+      "dimensions": [
+        900,
+        513
+      ],
+      "description": "Laboratory instruments illustrated in the AN-THAI partner laboratory brochure section",
+      "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
+      "kind": "brochure photographic/composite imagery"
+    },
+    {
+      "path": "assets/images/lab-equipment-small.webp",
+      "zip_source": "anthai_commit_images/lab-equipment.webp",
+      "sha256": "57793604b787ebc42c3fe49fbc8276545f64dc5445f3b089e7700d8610a3aa0b",
+      "bytes": 19566,
+      "dimensions": [
+        520,
+        297
+      ],
+      "description": "Laboratory instruments illustrated in the AN-THAI partner laboratory brochure section",
+      "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
+      "kind": "brochure photographic/composite imagery"
+    },
+    {
+      "path": "assets/images/office.webp",
+      "zip_source": "anthai_site_build/assets/images/office.webp",
+      "sha256": "84538b23ec47da1895cdc0f04c3cf892cb716bed64998d47f31e638632ba59a3",
+      "bytes": 23434,
+      "dimensions": [
+        567,
+        565
+      ],
+      "description": "AN-THAI office image from the company brochure",
+      "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
+      "kind": "brochure photographic/composite imagery"
+    },
+    {
+      "path": "assets/images/office-small.webp",
+      "zip_source": "anthai_commit_images/office.webp",
+      "sha256": "7761e2088f4569e729f65546f2683e5106a3d78256bdf80c319adc2edea65593",
+      "bytes": 11430,
+      "dimensions": [
+        421,
+        420
+      ],
+      "description": "AN-THAI office image from the company brochure",
+      "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
+      "kind": "brochure photographic/composite imagery"
+    },
+    {
+      "path": "assets/images/capabilities.webp",
+      "zip_source": "anthai_site_build/assets/images/capabilities.webp",
+      "sha256": "5ac6e105366dba5e356618f0095b2226f49c9ebd8f082679f0e6b35a97d97c87",
+      "bytes": 101350,
+      "dimensions": [
+        810,
+        840
+      ],
+      "description": "Illustration of investigation and testing methods from ground to structure",
+      "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
+      "kind": "technical illustration"
+    },
+    {
+      "path": "assets/images/capabilities-small.webp",
+      "zip_source": "anthai_commit_images/capabilities.webp",
+      "sha256": "2b1a7558300189355d46ac68bb80d05ba9e6993beadb5ea92f2a0ee0f6e317ae",
+      "bytes": 23740,
+      "dimensions": [
+        405,
+        420
+      ],
+      "description": "Illustration of investigation and testing methods from ground to structure",
+      "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
+      "kind": "technical illustration"
+    },
+    {
+      "path": "assets/images/brand-header.webp",
+      "zip_source": "anthai_site_build/assets/images/brand-header.webp",
+      "sha256": "e1b456f51e4646f88204013dcf1cc0c5dc84e2edc86fa1b6109c4d6582bb3bcc",
+      "bytes": 29136,
+      "kind": "brochure brand image; emblem displayed using CSS crop"
+    }
+  ]
+}

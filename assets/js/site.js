@@ -1,49 +1,47 @@
-const photoStyles = document.createElement('style');
-photoStyles.textContent = `
-.real-photo{background-color:#d8e8f4;background-image:var(--brochure-sprite,linear-gradient(135deg,#dcecf7,#8cb8d6));background-size:300% 300%;background-repeat:no-repeat;background-origin:border-box}
-.photo-static{background-position:0% 0%}.photo-high{background-position:50% 0%}.photo-low{background-position:100% 0%}.photo-csl{background-position:0% 50%}.photo-plate{background-position:50% 50%}.photo-lab{background-position:100% 50%}.photo-office{background-position:0% 100%}.photo-capabilities{background-position:50% 100%}.photo-hero{background-position:100% 100%}
-.visual-fill{width:100%;height:100%;min-height:100%}.visual-panel,.page-visual,.equipment-visual,.bridge-visual{width:100%;border-radius:18px;box-shadow:var(--shadow)}.visual-panel{min-height:430px}.page-visual{min-height:360px}.service-photo{width:100%;height:190px}.equipment-visual{min-height:480px}.bridge-visual{height:100%;min-height:390px;border-radius:0;box-shadow:none}.brochure-ready .real-photo{transition:filter .2s ease}
-@media(max-width:980px){.equipment-visual{min-height:340px}}
-`;
-document.head.appendChild(photoStyles);
-
+// Native images load independently of this small interaction layer.
 const menuBtn = document.querySelector('.menu-btn');
 const navLinks = document.querySelector('.nav-links');
-if(menuBtn && navLinks){
-  menuBtn.addEventListener('click',()=>navLinks.classList.toggle('open'));
+document.documentElement.classList.add('js');
+function setMenu(open) {
+  navLinks?.classList.toggle('open', open);
+  menuBtn?.setAttribute('aria-expanded', String(open));
+  menuBtn?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  if (open) navLinks?.querySelector('a')?.focus();
 }
-document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>navLinks?.classList.remove('open')));
+menuBtn?.addEventListener('click', () => setMenu(menuBtn.getAttribute('aria-expanded') !== 'true'));
+navLinks?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false)));
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && menuBtn?.getAttribute('aria-expanded') === 'true') {
+    setMenu(false);
+    menuBtn.focus();
+  }
+});
+document.addEventListener('click', event => {
+  if (!event.target.closest('.site-header')) setMenu(false);
+});
+window.matchMedia('(min-width: 1121px)').addEventListener('change', () => setMenu(false));
 
 const quoteForm = document.querySelector('[data-quote-form]');
-if(quoteForm){
-  quoteForm.addEventListener('submit',(e)=>{
-    e.preventDefault();
+if (quoteForm) {
+  const params = new URLSearchParams(window.location.search);
+  const types = {testing: 'Testing service', equipment: 'Testing equipment'};
+  if (Object.hasOwn(types, params.get('type'))) quoteForm.elements.requestType.value = types[params.get('type')];
+  const categories = {
+    pile: 'Pile Integrity Testing Instruments', dynamic: 'High-Strain / Dynamic Pile Testing Systems',
+    ultrasonic: 'CSL / Ultrasonic Testing Systems', static: 'Static Load Test Instrumentation',
+    field: 'Geotechnical & Field Testing Equipment', lab: 'Material / Laboratory Testing Equipment',
+    measurement: 'Load Cells / Sensors / DAQ', support: 'Setup / Training / Technical Support'
+  };
+  const category = Object.hasOwn(categories, params.get('category')) ? categories[params.get('category')] : null;
+  if (params.get('type') === 'equipment' && category) quoteForm.elements.message.value = `Equipment category: ${category}\n\nRequirements: `;
+  quoteForm.addEventListener('submit', event => {
+    event.preventDefault();
     const data = new FormData(quoteForm);
     const type = data.get('requestType') || 'Engineering enquiry';
-    const name = data.get('name') || '';
-    const company = data.get('company') || '';
-    const email = data.get('email') || '';
-    const phone = data.get('phone') || '';
-    const message = data.get('message') || '';
-    const subject = encodeURIComponent(`AN-THAI enquiry: ${type}`);
-    const body = encodeURIComponent(`Name: ${name}\nCompany: ${company}\nEmail: ${email}\nPhone: ${phone}\nRequest: ${type}\n\n${message}`);
-    window.location.href = `mailto:chengjian1021@163.com?subject=${subject}&body=${body}`;
+    const body = `Name: ${data.get('name') || ''}\nCompany: ${data.get('company') || ''}\nEmail: ${data.get('email') || ''}\nPhone: ${data.get('phone') || ''}\nRequest: ${type}\n\n${data.get('message') || ''}`;
+    const mailto = `mailto:chengjian1021@163.com?subject=${encodeURIComponent(`AN-THAI enquiry: ${type}`)}&body=${encodeURIComponent(body)}`;
+    document.getElementById('enquiry-note').textContent = 'Your enquiry is prepared. Send it from your email app. If no app opens, email chengjian1021@163.com directly. Nothing has been sent by this website.';
+    window.location.href = mailto;
   });
+  quoteForm.querySelector('button[type="submit"]').disabled = false;
 }
-
-// Assemble the approved AN-THAI brochure photography from repository-hosted text chunks.
-async function loadBrochureSprite(){
-  const parts = ['part-01.b64','part-02.b64','part-03.b64','part-04.b64','part-05a1.b64','part-05a2.b64','part-05b.b64','part-06a.b64','part-06b.b64','part-07.b64','part-08.b64'].map(name=>`assets/images/brochure-sprite/${name}`);
-  try{
-    const chunks = await Promise.all(parts.map(async path=>{
-      const response = await fetch(path,{cache:'force-cache'});
-      if(!response.ok) throw new Error(`Unable to load ${path}`);
-      return (await response.text()).trim();
-    }));
-    document.documentElement.style.setProperty('--brochure-sprite',`url("data:image/webp;base64,${chunks.join('')}")`);
-    document.documentElement.classList.add('brochure-ready');
-  }catch(error){
-    console.warn('AN-THAI brochure imagery could not be loaded; using visual fallback.',error);
-  }
-}
-loadBrochureSprite();

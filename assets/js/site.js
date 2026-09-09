@@ -21,6 +21,22 @@ document.addEventListener('click', event => {
 });
 window.matchMedia('(min-width: 1121px)').addEventListener('change', () => setMenu(false));
 
+// Keep motion small and useful: reveal content as it enters the reading area.
+const revealItems = document.querySelectorAll ? document.querySelectorAll('.reveal') : [];
+if ('IntersectionObserver' in window && revealItems.length) {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold: .12});
+  revealItems.forEach(item => observer.observe(item));
+} else {
+  revealItems.forEach(item => item.classList.add('is-visible'));
+}
+
 const quoteForm = document.querySelector('[data-quote-form]');
 if (quoteForm) {
   const params = new URLSearchParams(window.location.search);

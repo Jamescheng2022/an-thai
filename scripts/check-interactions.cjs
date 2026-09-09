@@ -22,7 +22,7 @@ assert.match(s.elements.message.value,/Load Cells \/ Sensors \/ DAQ/);
 assert.equal(s.submit.disabled,false);
 s.formHandlers.submit({preventDefault(){}});
 const u=new URL(s.location.href);
-assert.equal(u.protocol,'mailto:');assert.equal(u.pathname,'chengjian1021@163.com');
+assert.equal(u.protocol,'mailto:');assert.equal(u.pathname,'info@an-thai.com');
 assert.equal(u.searchParams.get('subject'),'AN-THAI enquiry: Testing equipment');
 assert.match(u.searchParams.get('body'),/Name: QA & 中文/);assert.match(u.searchParams.get('body'),/Company: Test \+ Co/);
 assert.match(s.note.textContent,/Nothing has been sent/);

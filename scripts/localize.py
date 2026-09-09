@@ -4,6 +4,7 @@ from html import escape
 from pathlib import Path
 import json
 import re
+import os
 
 ROOT = Path(__file__).resolve().parent.parent
 PAGES = ['index', 'services', 'equipment', 'portfolio', 'about', 'contact', '404']
@@ -72,11 +73,11 @@ class Localizer(HTMLParser):
             value = attrs[key]
             if value.startswith('assets/'):
                 attrs[key] = value.replace('assets/', '/assets/')
-            elif key == 'href' and re.match(r'^(index|services|equipment|portfolio|about|contact|404)\.html', value):
-                attrs[key] = '/' + ('' if self.lang == 'en' else self.lang + '/') + value
+            elif key == 'href' and re.match(r'^/?(index|services|equipment|portfolio|about|contact|404)\.html', value):
+                attrs[key] = '/' + ('' if self.lang == 'en' else self.lang + '/') + value.lstrip('/')
         self.out.append('<' + tag + ''.join(' ' + k + ('' if v is None else '="' + escape(v, quote=True) + '"') for k,v in attrs.items()) + '>')
         if tag == 'div' and attrs.get('class') == 'nav-actions':
-            links = ''.join('<a data-language="'+l+'" lang="'+({'zh':'zh-CN'}.get(l,l))+'" hreflang="'+({'zh':'zh-CN'}.get(l,l))+'" href="'+url(l,self.page)+'"'+(' aria-current="true"' if l==self.lang else '')+'>'+label+'</a>' for l,label in [('en','EN'),('zh','中文'),('th','ไทย')])
+            links = ''.join('<a data-language="'+l+'" lang="'+({'zh':'zh-CN'}.get(l,l))+'" hreflang="'+({'zh':'zh-CN'}.get(l,l))+'" href="'+url(l,self.page).replace('https://an-thai.com','')+'"'+(' aria-current="true"' if l==self.lang else '')+'>'+label+'</a>' for l,label in [('en','EN'),('zh','中文'),('th','ไทย')])
             self.out.append('<nav class="language-switch" aria-label="'+LABELS[self.lang][0]+'">'+links+'</nav>')
     def handle_startendtag(self, tag, attrs): self.handle_starttag(tag,attrs)
     def handle_endtag(self, tag):
@@ -123,6 +124,13 @@ def generate():
             sitemap.append('</url>')
     sitemap.append('</urlset>')
     (ROOT/'dist/sitemap.xml').write_text('\n'.join(sitemap))
+    # Responsive browser QA harness: exists only on preview deployments.
+    if os.environ.get('VERCEL_ENV') == 'preview':
+        qa=ROOT/'dist/_qa';qa.mkdir(exist_ok=True)
+        for page in PAGES:
+            frames=''.join('<h2>'+lang+' / '+str(width)+'</h2><iframe title="'+lang+'-'+str(width)+'" width="'+str(width)+'" height="900" src="'+url(lang,page).replace('https://an-thai.com','')+'"></iframe>' for lang in ['en','zh','th'] for width in [390,820,1363])
+            nav=' '.join('<a href="'+p+'.html">'+p+'</a>' for p in PAGES)
+            (qa/(page+'.html')).write_text('<!doctype html><html lang="en"><head><meta name="robots" content="noindex,nofollow"><title>Responsive QA</title></head><body>'+nav+frames+'</body></html>')
     print(json.dumps({'pages':len(results),'coverage':results},ensure_ascii=False))
 
 if __name__ == '__main__': generate()

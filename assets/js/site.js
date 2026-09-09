@@ -40,7 +40,7 @@ if (quoteForm) {
     const type = data.get('requestType') || 'Engineering enquiry';
     const body = `Name: ${data.get('name') || ''}\nCompany: ${data.get('company') || ''}\nEmail: ${data.get('email') || ''}\nPhone: ${data.get('phone') || ''}\nRequest: ${type}\n\n${data.get('message') || ''}`;
     const mailto = `mailto:info@an-thai.com?subject=${encodeURIComponent(`AN-THAI enquiry: ${type}`)}&body=${encodeURIComponent(body)}`;
-    document.getElementById('enquiry-note').textContent = 'Your enquiry is prepared. Send it from your email app. If no app opens, email info@an-thai.com directly. Nothing has been sent by this website.';
+    document.getElementById('enquiry-note').textContent = 'Your enquiry is prepared. Send it from your email app. If no app opens, email info@an-thai.com or anthaicheng@gmail.com directly. Nothing has been sent by this website.';
     window.location.href = mailto;
   });
   quoteForm.querySelector('button[type="submit"]').disabled = false;

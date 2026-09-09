@@ -1,713 +1,200 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>An-Thai Engineering - Services</title>
-    <style>
-        :root {
-            --primary: #2D5BFF;
-            --secondary: #6366F1;
-            --success: #22C55E;
-            --warning: #F59E0B;
-            --danger: #EF4444;
-            --text-dark: #1E293B;
-            --text-gray: #64748B;
-            --bg-light: #F8FAFC;
-            --border-light: #E2E8F0;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', 'Source Han Sans SC', sans-serif;
-        }
-        
-        body {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            min-height: 100vh;
-            background-image: url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(248, 250, 252, 0.85);
-            z-index: -1;
-        }
-        
-        /* Top Navigation */
-        .top-nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 24px;
-            border-bottom: 1px solid var(--border-light);
-            background-color: rgba(255, 255, 255, 0.95);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            font-weight: bold;
-            font-size: 20px;
-            color: var(--primary);
-        }
-        
-        .logo-img {
-            width: 32px;
-            height: 32px;
-            margin-right: 8px;
-            background-color: var(--primary);
-            border-radius: 6px;
-        }
-        
-        .nav-actions {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-        }
-        
-        .lang-select {
-            padding: 8px 12px;
-            border-radius: 6px;
-            border: 1px solid var(--border-light);
-            background-color: white;
-            font-size: 14px;
-        }
-        
-        .login-btn {
-            padding: 8px 16px;
-            border-radius: 6px;
-            border: 1px solid var(--primary);
-            background-color: white;
-            color: var(--primary);
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 14px;
-        }
-        
-        .login-btn:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 24px;
-            padding-bottom: 100px; /* Make room for bottom nav */
-        }
-        
-        /* Page Header */
-        .page-header {
-            text-align: center;
-            margin-bottom: 40px;
-            position: relative;
-        }
-        
-        .page-header::before {
-            content: '';
-            position: absolute;
-            top: -50px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 300px;
-            height: 300px;
-            background-image: url('https://images.unsplash.com/photo-1581094794329-c8112a89f12e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0.15;
-            z-index: -1;
-            border-radius: 50%;
-        }
-        
-        .page-title {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--text-dark);
-        }
-        
-        .page-subtitle {
-            font-size: 18px;
-            color: var(--text-gray);
-            max-width: 700px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-        
-        /* Services Content */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-        
-        .service-card {
-            background-color: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .service-image {
-            height: 200px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .service-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-        
-        .service-card:hover .service-image img {
-            transform: scale(1.05);
-        }
-        
-        .service-content {
-            padding: 25px;
-        }
-        
-        .service-icon {
-            position: absolute;
-            top: 180px;
-            right: 25px;
-            width: 60px;
-            height: 60px;
-            background-color: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            box-shadow: 0 5px 15px rgba(45, 91, 255, 0.3);
-        }
-        
-        .service-title {
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--text-dark);
-        }
-        
-        .service-description {
-            color: var(--text-gray);
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
-        
-        .service-features {
-            list-style: none;
-            margin-bottom: 20px;
-        }
-        
-        .service-features li {
-            position: relative;
-            padding-left: 25px;
-            margin-bottom: 8px;
-            color: var(--text-dark);
-        }
-        
-        .service-features li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 16px;
-            height: 16px;
-            background-color: rgba(45, 91, 255, 0.1);
-            border-radius: 50%;
-        }
-        
-        .service-features li::after {
-            content: '';
-            position: absolute;
-            left: 5px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 6px;
-            height: 6px;
-            background-color: var(--primary);
-            border-radius: 50%;
-        }
-        
-        .learn-more {
-            display: inline-block;
-            padding: 8px 20px;
-            background-color: rgba(45, 91, 255, 0.1);
-            color: var(--primary);
-            border-radius: 6px;
-            font-weight: 500;
-            font-size: 14px;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-        
-        .learn-more:hover {
-            background-color: rgba(45, 91, 255, 0.2);
-        }
-        
-        /* Process Section */
-        .process-section {
-            margin-bottom: 60px;
-        }
-        
-        .section-title {
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 40px;
-            color: var(--primary);
-            position: relative;
-            padding-left: 16px;
-            text-align: center;
-        }
-        
-        .section-title::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            bottom: -10px;
-            transform: translateX(-50%);
-            height: 3px;
-            width: 60px;
-            background-color: var(--primary);
-            border-radius: 3px;
-        }
-        
-        .process-steps {
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        
-        .process-steps::before {
-            content: '';
-            position: absolute;
-            top: 40px;
-            left: 60px;
-            right: 60px;
-            height: 3px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            z-index: 1;
-        }
-        
-        .process-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-            width: 120px;
-        }
-        
-        .step-number {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background-color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 24px;
-            color: var(--primary);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 15px;
-            border: 3px solid var(--primary);
-        }
-        
-        .step-title {
-            font-weight: 600;
-            font-size: 16px;
-            color: var(--text-dark);
-            text-align: center;
-            margin-bottom: 8px;
-        }
-        
-        .step-description {
-            font-size: 14px;
-            color: var(--text-gray);
-            text-align: center;
-            line-height: 1.5;
-        }
-        
-        /* Engineering Decorative Elements */
-        .top-nav::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-        }
-        
-        /* Bottom Navigation */
-        .bottom-nav {
-            display: block; /* Always display (not just on mobile) */
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: rgba(255, 255, 255, 0.95);
-            border-top: 1px solid var(--border-light);
-            padding: 10px;
-            z-index: 90;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-        }
-        
-        .bottom-nav-menu {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .bottom-nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            color: var(--text-gray);
-            font-size: 12px;
-            padding: 5px;
-            transition: color 0.2s;
-        }
-        
-        .bottom-nav-item:hover {
-            color: var(--primary);
-        }
-        
-        .bottom-nav-item.active {
-            color: var(--primary);
-        }
-        
-        .bottom-nav-icon {
-            margin-bottom: 4px;
-            font-size: 20px;
-        }
-        
-        /* Top Navigation Menu for Desktop */
-        .top-nav-menu {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .top-nav-item {
-            padding: 8px 12px;
-            border-radius: 6px;
-            text-decoration: none;
-            color: var(--text-dark);
-            font-size: 14px;
-            transition: all 0.2s;
-        }
-        
-        .top-nav-item:hover {
-            background-color: var(--bg-light);
-            color: var(--primary);
-        }
-        
-        .top-nav-item.active {
-            background-color: rgba(45, 91, 255, 0.1);
-            color: var(--primary);
-            font-weight: 500;
-        }
-        
-        /* Mobile Responsiveness */
-        @media (max-width: 992px) {
-            .top-nav {
-                padding: 12px 16px;
-            }
-            
-            .top-nav-menu {
-                display: none; /* Hide top nav menu on mobile */
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-                background: none;
-                border: none;
-                font-size: 24px;
-                color: var(--primary);
-                cursor: pointer;
-            }
-            
-            .main-content {
-                padding: 20px 16px;
-                padding-bottom: 100px;
-            }
-            
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .process-steps {
-                flex-direction: column;
-                align-items: center;
-                gap: 40px;
-            }
-            
-            .process-steps::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                left: 50%;
-                width: 3px;
-                height: auto;
-                transform: translateX(-50%);
-                background: linear-gradient(to bottom, var(--primary), var(--secondary));
-            }
-            
-            .page-title {
-                font-size: 28px;
-            }
-            
-            .page-subtitle {
-                font-size: 16px;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .section-title {
-                font-size: 20px;
-            }
-            
-            .service-card {
-                max-width: 100%;
-            }
-            
-            .bottom-nav-item {
-                font-size: 10px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="assets/css/site.css">
+<meta name="theme-color" content="#074f91">
+<title>Testing &amp; Inspection Thailand | AN-THAI Engineering</title>
+<meta name="description" content="Pile testing, geotechnical investigation, plate load testing, material testing and structural inspection in Thailand.">
+<link rel="canonical" href="https://an-thai.com/services.html">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://an-thai.com/#organization", "name": "AN-THAI Engineering Company Limited", "url": "https://an-thai.com/", "telephone": "+66 90 292 1749", "email": "chengjian1021@163.com"}, {"@type": "ProfessionalService", "@id": "https://an-thai.com/#office", "name": "AN-THAI Engineering Company Limited", "url": "https://an-thai.com/", "parentOrganization": {"@id": "https://an-thai.com/#organization"}, "telephone": "+66 90 292 1749", "email": "chengjian1021@163.com", "areaServed": {"@type": "Country", "name": "Thailand"}, "address": {"@type": "PostalAddress", "streetAddress": "1339 Arwan Building, Pracharat 1 Rd, Wongsawang, Bangsue District", "addressLocality": "Bangkok", "postalCode": "10800", "addressCountry": "TH"}}, {"@type": "Service", "@id": "https://an-thai.com/services.html#service-1", "name": "Static Load Test", "provider": {"@id": "https://an-thai.com/#organization"}, "areaServed": {"@type": "Country", "name": "Thailand"}, "url": "https://an-thai.com/services.html"}, {"@type": "Service", "@id": "https://an-thai.com/services.html#service-2", "name": "High-Strain Dynamic Pile Test", "provider": {"@id": "https://an-thai.com/#organization"}, "areaServed": {"@type": "Country", "name": "Thailand"}, "url": "https://an-thai.com/services.html"}, {"@type": "Service", "@id": "https://an-thai.com/services.html#service-3", "name": "Low-Strain Integrity Test", "provider": {"@id": "https://an-thai.com/#organization"}, "areaServed": {"@type": "Country", "name": "Thailand"}, "url": "https://an-thai.com/services.html"}, {"@type": "Service", "@id": "https://an-thai.com/services.html#service-4", "name": "Crosshole Sonic Logging (CSL)", "provider": {"@id": "https://an-thai.com/#organization"}, "areaServed": {"@type": "Country", "name": "Thailand"}, "url": "https://an-thai.com/services.html"}, {"@type": "Service", "@id": "https://an-thai.com/services.html#service-5", "name": "Plate Load Test", "provider": {"@id": "https://an-thai.com/#organization"}, "areaServed": {"@type": "Country", "name": "Thailand"}, "url": "https://an-thai.com/services.html"}, {"@type": "Service", "@id": "https://an-thai.com/services.html#service-6", "name": "Geotechnical Investigation", "provider": {"@id": "https://an-thai.com/#organization"}, "areaServed": {"@type": "Country", "name": "Thailand"}, "url": "https://an-thai.com/services.html"}, {"@type": "Service", "@id": "https://an-thai.com/services.html#service-7", "name": "Material Testing", "provider": {"@id": "https://an-thai.com/#organization"}, "areaServed": {"@type": "Country", "name": "Thailand"}, "url": "https://an-thai.com/services.html"}, {"@type": "Service", "@id": "https://an-thai.com/services.html#service-8", "name": "Structural Inspection / Specialized Testing", "provider": {"@id": "https://an-thai.com/#organization"}, "areaServed": {"@type": "Country", "name": "Thailand"}, "url": "https://an-thai.com/services.html"}]}</script><meta property="og:title" content="Testing &amp; Inspection Thailand | AN-THAI Engineering">
+<meta property="og:description" content="Pile testing, geotechnical investigation, plate load testing, material testing and structural inspection in Thailand.">
+<meta property="og:url" content="https://an-thai.com/services.html">
+<meta property="og:type" content="website">
+
+
 </head>
 <body>
-    <!-- Top Navigation -->
-    <div class="top-nav">
-        <div class="logo">
-            <div class="logo-img"></div>
-            <span>An-Thai Engineering</span>
-        </div>
-        
-        <!-- Desktop Navigation Menu -->
-        <div class="top-nav-menu">
-            <a href="index.html" class="top-nav-item">Home</a>
-            <a href="about.html" class="top-nav-item">About Us</a>
-            <a href="services.html" class="top-nav-item active">Engineering Services</a>
-            <a href="portfolio.html" class="top-nav-item">Project Portfolio</a>
-            <a href="contact.html" class="top-nav-item">Contact Us</a>
-        </div>
-        
-        <div class="nav-actions">
-            <select class="lang-select">
-                <option value="en">English</option>
-                <option value="zh">中文</option>
-                <option value="th">ไทย</option>
-            </select>
-            <button class="login-btn">Login / Register</button>
-        </div>
-    </div>
-    
-    <!-- Main Content -->
-    <div class="main-content">
-        <div class="page-header">
-            <h1 class="page-title">Our Engineering Services</h1>
-            <p class="page-subtitle">Comprehensive engineering solutions tailored to your needs with precision, safety, and quality as our top priorities.</p>
-        </div>
-        
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="service-image">
-                    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Structural Engineering">
-                </div>
-                <div class="service-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                </div>
-                <div class="service-content">
-                    <h3 class="service-title">Structural Engineering</h3>
-                    <p class="service-description">Expert structural design and analysis for buildings, bridges, and infrastructure projects of all sizes.</p>
-                    <ul class="service-features">
-                        <li>Structural design and analysis</li>
-                        <li>Seismic and wind engineering</li>
-                        <li>Building code compliance</li>
-                        <li>Structural retrofitting and rehabilitation</li>
-                    </ul>
-                    <a href="#" class="learn-more">Learn More</a>
-                </div>
-            </div>
-            
-            <div class="service-card">
-                <div class="service-image">
-                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Geotechnical Engineering">
-                </div>
-                <div class="service-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16.2A8 8 0 0 1 4 16.2M4 7.8A8 8 0 0 1 20 7.8"></path><circle cx="12" cy="12" r="4"></circle></svg>
-                </div>
-                <div class="service-content">
-                    <h3 class="service-title">Geotechnical Engineering</h3>
-                    <p class="service-description">Comprehensive soil and foundation analysis to ensure your structures have a solid foundation.</p>
-                    <ul class="service-features">
-                        <li>Soil investigation and testing</li>
-                        <li>Foundation design and analysis</li>
-                        <li>Slope stability assessment</li>
-                        <li>Earthwork recommendations</li>
-                    </ul>
-                    <a href="#" class="learn-more">Learn More</a>
-                </div>
-            </div>
-            
-            <div class="service-card">
-                <div class="service-image">
-                    <img src="https://images.unsplash.com/photo-1517420704952-d9f39e95b43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Construction Management">
-                </div>
-                <div class="service-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                </div>
-                <div class="service-content">
-                    <h3 class="service-title">Construction Management</h3>
-                    <p class="service-description">End-to-end project management ensuring your construction stays on schedule and within budget.</p>
-                    <ul class="service-features">
-                        <li>Project planning and scheduling</li>
-                        <li>Construction oversight and inspection</li>
-                        <li>Budget management and cost control</li>
-                        <li>Quality assurance and safety compliance</li>
-                    </ul>
-                    <a href="#" class="learn-more">Learn More</a>
-                </div>
-            </div>
-            
-            <div class="service-card">
-                <div class="service-image">
-                    <img src="https://images.unsplash.com/photo-1530819568329-97653eafbbfa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Environmental Engineering">
-                </div>
-                <div class="service-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
-                </div>
-                <div class="service-content">
-                    <h3 class="service-title">Environmental Engineering</h3>
-                    <p class="service-description">Sustainable solutions that minimize environmental impact while maximizing project efficiency.</p>
-                    <ul class="service-features">
-                        <li>Environmental impact assessments</li>
-                        <li>Sustainable design consultation</li>
-                        <li>Waste management planning</li>
-                        <li>Regulatory compliance assistance</li>
-                    </ul>
-                    <a href="#" class="learn-more">Learn More</a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="process-section">
-            <h2 class="section-title">Our Engineering Process</h2>
-            <div class="process-steps">
-                <div class="process-step">
-                    <div class="step-number">1</div>
-                    <div class="step-title">Consultation</div>
-                    <div class="step-description">We listen to your needs and define project objectives</div>
-                </div>
-                
-                <div class="process-step">
-                    <div class="step-number">2</div>
-                    <div class="step-title">Analysis</div>
-                    <div class="step-description">Thorough evaluation of site conditions and requirements</div>
-                </div>
-                
-                <div class="process-step">
-                    <div class="step-number">3</div>
-                    <div class="step-title">Design</div>
-                    <div class="step-description">Creating detailed engineering solutions</div>
-                </div>
-                
-                <div class="process-step">
-                    <div class="step-number">4</div>
-                    <div class="step-title">Implementation</div>
-                    <div class="step-description">Executing the plans with precision and care</div>
-                </div>
-                
-                <div class="process-step">
-                    <div class="step-number">5</div>
-                    <div class="step-title">Quality Assurance</div>
-                    <div class="step-description">Rigorous testing and verification</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Bottom Navigation -->
-    <div class="bottom-nav">
-        <div class="bottom-nav-menu">
-            <a href="index.html" class="bottom-nav-item">
-                <div class="bottom-nav-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                </div>
-                <span>Home</span>
-            </a>
-            <a href="about.html" class="bottom-nav-item">
-                <div class="bottom-nav-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
-                </div>
-                <span>About</span>
-            </a>
-            <a href="services.html" class="bottom-nav-item active">
-                <div class="bottom-nav-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                </div>
-                <span>Services</span>
-            </a>
-            <a href="portfolio.html" class="bottom-nav-item">
-                <div class="bottom-nav-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                </div>
-                <span>Projects</span>
-            </a>
-            <a href="contact.html" class="bottom-nav-item">
-                <div class="bottom-nav-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                </div>
-                <span>Contact</span>
-            </a>
-        </div>
-    </div>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="site-header"><div class="container nav">
+<a class="brand" href="index.html" aria-label="AN-THAI Engineering home"><span class="brand-lockup"><span class="brand-mark"><img src="assets/images/brand-header.webp" width="615" height="290" alt="AN-THAI company emblem"></span><span class="brand-name">AN-THAI ENGINEERING<span>COMPANY LIMITED</span></span></span></a>
+<nav class="nav-links" aria-label="Primary navigation" id="primary-nav"><a href="index.html" class="">Home</a><a href="services.html" class="active" aria-current="page">Testing &amp; Inspection</a><a href="equipment.html" class="">Equipment</a><a href="portfolio.html" class="">Capabilities</a><a href="about.html" class="">About</a><a href="contact.html" class="">Contact</a>
+</nav>
+<div class="nav-actions">
+<a class="nav-quote btn primary" href="contact.html">Request Quote</a><button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav" type="button">☰</button>
+</div>
+</div>
+</header>
+<main id="main-content">
+<section class="page-hero"><div class="container page-title-row">
+<div>
+<div class="eyebrow">Testing &amp; Inspection · 工程检测与检验</div>
+<h1 style="margin-top:15px">FIELD DATA.<br>ENGINEERING JUDGEMENT.</h1>
+<p class="lead">AN-THAI provides practical testing and inspection support in Thailand from geotechnical investigation and pile testing through material and structural verification.</p>
+<div class="hero-actions">
+<a class="btn primary" href="contact.html?type=testing">Request Testing Quote</a><a class="btn secondary" href="equipment.html">Need Equipment Instead?</a>
+</div>
+</div>
+<img src="assets/images/hero-field.webp" alt="Pile-testing scenes from the AN-THAI engineering brochure" width="900" height="687" loading="eager" decoding="async" class="brochure-image page-visual" srcset="assets/images/hero-field-small.webp 720w, assets/images/hero-field.webp 900w" sizes="(max-width: 640px) calc(100vw - 28px), (max-width: 980px) 80vw, 50vw">
+</div>
+</section>
+
+<section class="section" id="pile-testing"><div class="container">
+<div class="section-head">
+<div>
+<div class="eyebrow">Pile Testing</div>
+<h2 style="margin-top:12px">Foundation performance &amp; integrity</h2>
+</div>
+<p>Testing methods are selected according to pile type, project objectives, loading requirements and available access.</p>
+</div>
+<div class="detail-grid">
+<div class="detail-card" id="static-load">
+<h3>Static Load Test · 静载试验</h3>
+<ul>
+<li>Reaction system setup and staged loading</li>
+<li>Settlement measurement and load–settlement curve</li>
+<li>Compression, uplift or lateral arrangements according to project requirements</li>
+<li>Engineering interpretation and test report</li>
+</ul>
+</div>
+<div class="detail-card" id="high-strain">
+<h3>High-Strain Dynamic Pile Test · 高应变动力试验</h3>
+<ul>
+<li>Impact loading at pile head</li>
+<li>Force and velocity measurement</li>
+<li>Wave-equation based analysis</li>
+<li>Capacity and integrity assessment</li>
+</ul>
+</div>
+<div class="detail-card" id="low-strain">
+<h3>Low-Strain Integrity Test · 低应变完整性检测</h3>
+<ul>
+<li>Pile-head preparation and light hammer impact</li>
+<li>Accelerometer signal collection</li>
+<li>Reflected-wave interpretation</li>
+<li>Rapid integrity screening and anomaly indication</li>
+</ul>
+</div>
+<div class="detail-card" id="csl">
+<h3>Crosshole Sonic Logging (CSL) · 声波透射法</h3>
+<ul>
+<li>For cast-in-place bored piles with pre-installed access tubes</li>
+<li>Transmitter and receiver probes in water-filled tubes</li>
+<li>Travel-time and signal-strength profiles</li>
+<li>Anomaly zone identification and integrity interpretation</li>
+</ul>
+</div>
+</div>
+<p class="scope-note">Test method, reaction capacity, access, specialist resources and reporting responsibilities are confirmed for each project before mobilisation.</p>
+</div>
+</section>
+
+<section class="section soft" id="geotechnical"><div class="container">
+<div class="section-head">
+<div>
+<div class="eyebrow">Geotechnical &amp; Field Testing</div>
+<h2 style="margin-top:12px">Understand the ground before the structure depends on it</h2>
+</div>
+<p>Field and laboratory resources can be coordinated according to project scope and test requirements.</p>
+</div>
+<div class="page-title-row">
+<img src="assets/images/plate-load.webp" alt="Plate load-test arrangements shown in the AN-THAI brochure" width="900" height="522" loading="eager" decoding="async" class="brochure-image page-visual" srcset="assets/images/plate-load-small.webp 520w, assets/images/plate-load.webp 900w" sizes="(max-width: 640px) calc(100vw - 28px), (max-width: 980px) 80vw, 50vw"><div>
+<h3 id="plate-load" style="font-size:1.8rem">Plate Load Test · 平板载荷试验</h3>
+<p class="lead" style="margin-top:14px">Evaluate subgrade or ground bearing behavior and deformation under applied load, supporting foundation design and construction control.</p>
+<div class="scope-list">
+<div class="scope-step">
+<b>1</b><div>
+<strong>Set up</strong><span>Reaction system, loading plate and instrumentation.</span>
+</div>
+</div>
+<div class="scope-step">
+<b>2</b><div>
+<strong>Load</strong><span>Apply load in controlled stages.</span>
+</div>
+</div>
+<div class="scope-step">
+<b>3</b><div>
+<strong>Measure</strong><span>Record settlement at each load stage.</span>
+</div>
+</div>
+<div class="scope-step">
+<b>4</b><div>
+<strong>Evaluate</strong><span>Interpret ground response and prepare report.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<article class="detail-card investigation" id="investigation">
+<h3>Geotechnical Investigation · 岩土勘察</h3>
+<p>Site investigation, borehole and sampling coordination, field measurements and laboratory testing to support assessment of soil and rock conditions. The investigation programme, responsible specialists and report scope are agreed for each project.</p>
+<a class="text-link" href="contact.html?type=testing">Discuss an investigation →</a>
+</article>
+</div>
+</section>
+
+<section class="section" id="materials"><div class="container equipment-layout">
+<div>
+<div class="eyebrow">Material &amp; Structural Testing</div>
+<h2 style="margin-top:12px">Partner laboratory network for broader test scope</h2>
+<p class="lead" style="margin-top:16px">AN-THAI coordinates with local laboratories and engineering specialists selected for the project scope for soil, concrete, steel, material and structural testing requirements.</p>
+<div class="equip-grid">
+<div class="equip-card">
+<h3>Soil Testing</h3>
+<p>Classification, compaction/CBR, permeability/consolidation and shear-strength testing.</p>
+</div>
+<div class="equip-card">
+<h3>Concrete &amp; Materials</h3>
+<p>Concrete strength and construction-material testing support.</p>
+</div>
+<div class="equip-card">
+<h3>Structural / Specialized</h3>
+<p>Component testing, NDT and specialized tests according to project needs.</p>
+</div>
+<div class="equip-card">
+<h3>Technical Coordination</h3>
+<p>Method planning, review, result discussion and bilingual project coordination.</p>
+</div>
+</div>
+</div>
+<div class="equipment-photo">
+<figure class="brochure-figure"><img src="assets/images/lab-equipment.webp" alt="Laboratory instruments illustrated in the AN-THAI partner laboratory brochure section" width="900" height="513" loading="lazy" decoding="async" class="brochure-image equipment-visual" srcset="assets/images/lab-equipment-small.webp 520w, assets/images/lab-equipment.webp 900w" sizes="(max-width: 640px) calc(100vw - 28px), (max-width: 980px) 80vw, 50vw"><figcaption>Partner laboratory imagery · AN-THAI brochure</figcaption></figure></div>
+</div>
+</section>
+
+<section class="cta-band"><div class="container cta-inner">
+<div>
+<h2>Send us the test requirement.</h2>
+<p>Include pile type, design/load target, number of test points, project location and schedule where available.</p>
+</div>
+<div class="cta-actions"><a class="btn secondary" href="contact.html?type=testing">Request Quote</a></div>
+</div>
+</section>
+</main>
+<footer class="site-footer"><div class="container">
+<div class="footer-grid">
+<div class="footer-brand">
+<span class="brand-lockup"><span class="brand-mark"><img src="assets/images/brand-header.webp" width="615" height="290" alt="AN-THAI company emblem"></span><span class="brand-name">AN-THAI ENGINEERING<span>COMPANY LIMITED</span></span></span>
+<p>Thailand-based engineering testing, inspection and testing-equipment support — from ground to structure.</p>
+</div>
+<div class="footer-col">
+<h4>Testing</h4>
+<a href="services.html#pile-testing">Pile Testing</a><a href="services.html#geotechnical">Geotechnical</a><a href="services.html#materials">Material &amp; Structural</a>
+</div>
+<div class="footer-col">
+<h4>Equipment</h4>
+<a href="equipment.html#pile">Pile Testing</a><a href="equipment.html#field">Field &amp; Geotechnical</a><a href="equipment.html#lab">Laboratory</a>
+</div>
+<div class="footer-col">
+<h4>Contact</h4>
+<a href="tel:+66902921749">+66 90 292 1749</a><a href="mailto:chengjian1021@163.com">chengjian1021@163.com</a><a href="contact.html">Bang Sue, Bangkok, Thailand</a>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 AN-THAI Engineering Company Limited.</span><span>From Ground to Structure — We Deliver Engineering Integrity.</span>
+</div>
+</div>
+</footer><script src="assets/js/site.js" defer></script>
 </body>
-</html> 
+</html>

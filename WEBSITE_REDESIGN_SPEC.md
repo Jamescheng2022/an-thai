@@ -15,14 +15,18 @@ Core positioning:
 
 Testing and inspection should be the primary trust-building business. Equipment supply should be presented as a complementary capability, not as a separate unrelated shop.
 
+## Visual source
+
+The approved AN-THAI brochure is the primary visual source for the redesigned public site. Real brochure-derived AN-THAI field-testing, laboratory and office photography is used across Home, Testing & Inspection, Equipment, Capabilities and About. Main site visuals should not depend on generic stock photography.
+
 ## Problems in the current site
 
-- The homepage is designed as an “An-Thai Engineering AI” chat interface rather than a corporate engineering website.
-- Current service content is generic and does not match the actual testing business.
-- The About page contains legacy/demo claims such as “Founded in 2005” and “hundreds of successful projects”; these must be removed unless verified.
-- The portfolio contains demo/stock project names and must not be presented as AN-THAI experience.
-- The contact page contains placeholder contact details.
-- Login/Register and AI-chat UI should be removed from the public corporate site unless there is a real backend and business reason for them.
+- The homepage was designed as an “An-Thai Engineering AI” chat interface rather than a corporate engineering website.
+- Current service content was generic and did not match the actual testing business.
+- The About page contained legacy/demo claims such as “Founded in 2005” and “hundreds of successful projects”; these must not be restored unless verified.
+- The portfolio contained demo/stock project names and must not be presented as AN-THAI experience.
+- The contact page contained placeholder contact details.
+- Login/Register and AI-chat UI should remain removed from the public corporate site unless there is a real backend and business reason for them.
 
 ## Information architecture
 
@@ -34,31 +38,21 @@ Primary navigation:
 4. Projects & Capabilities
 5. About AN-THAI
 6. Contact
-7. Language: EN / TH / 中文
 
 ## Homepage structure
 
-### 1. Hero
+### Hero
 
-Headline:
+Headline: **TEST IN THAILAND. EQUIP WITH CONFIDENCE.**
 
-**FROM GROUND TO STRUCTURE**
-
-Subheadline:
-
-**Engineering Testing, Inspection & Test Equipment Support in Thailand**
-
-Supporting copy:
-
-Thailand-based engineering delivery combining local professional resources, field testing capability, partner laboratories and bilingual technical coordination.
+Supporting position: AN-THAI combines Thailand-based field testing with professional testing-equipment supply, connecting instrumentation, field methods, engineering evaluation and reporting.
 
 Primary CTA: **Request a Testing Quote**
 Secondary CTA: **View Testing Equipment**
 
-### 2. Two core business lines
+### Two core business lines
 
 #### Testing & Inspection
-
 - Static Load Test
 - High-Strain Dynamic Pile Test
 - Low-Strain Integrity Test
@@ -69,7 +63,6 @@ Secondary CTA: **View Testing Equipment**
 - Structural Inspection / Specialized Testing
 
 #### Equipment & Instruments
-
 - Pile testing instruments and systems
 - Geotechnical and field-testing instruments
 - Load cells, sensors and data acquisition
@@ -79,134 +72,52 @@ Secondary CTA: **View Testing Equipment**
 
 Do not claim exclusive distribution, manufacturing ownership or specific brand authorization unless documented.
 
-### 3. Core service logic
+## Core service logic
 
 Use the brochure logic:
 
 **Investigate → Test → Evaluate → Report**
 
-This should visually connect soil investigation, pile testing, field testing, material testing and structural inspection.
+This visually connects soil investigation, pile testing, field testing, material testing and structural inspection.
 
-### 4. Why AN-THAI
+## Why AN-THAI
 
 - Thailand-based delivery
 - Local engineering knowledge and professional resources
 - Foundation-to-structure testing scope
 - Partner laboratory network
-- English / Chinese / Thai coordination
+- English / Chinese / Thai coordination where available
 - Equipment knowledge connected to real field-testing practice
 
-### 5. Equipment section
+## Equipment section
 
 Equipment should not look like a consumer e-commerce store. Use a professional B2B catalog and quotation workflow.
 
-Each equipment category/card should have:
+Each equipment category should explain application, measurement purpose, typical users, available support, and verified models only where supported. The main CTA is **Request Equipment Quote**.
 
-- application
-- key measurement purpose
-- typical users
-- available support
-- product/model list only where verified
-- **Request Equipment Quote** CTA
+## Experience / applications
 
-### 6. Experience / applications
-
-Use only verified project photos, real testing photos and truthful application categories. Good categories from the brochure include:
-
-- Industrial plants
-- Logistics facilities
-- Factory developments
-- Data centers and commercial projects
-- Foundation testing projects
-- Geotechnical support
-- Material and structural testing support
+Use only verified project photos, real testing photos and truthful application categories such as industrial plants, logistics facilities, factory developments, data centers and commercial projects, foundation testing, geotechnical support, and material/structural testing support.
 
 Do not use invented client names, project names, quantities or performance claims.
 
-### 7. Contact
-
-Use the current marketing contact information supplied in the approved brochure. If the registered-office address and operating/contact office differ, label them separately rather than mixing them.
-
-## Dedicated Testing pages
-
-Create search-oriented service pages for:
-
-- `/static-load-test.html`
-- `/high-strain-pile-test.html`
-- `/low-strain-integrity-test.html`
-- `/csl-test.html`
-- `/plate-load-test.html`
-- `/geotechnical-investigation.html`
-- `/material-structural-testing.html`
-
-Each page should include purpose, method, workflow, outputs, suitable applications, standards only where verified, project-enquiry CTA and FAQ.
-
-## Equipment page
-
-Create `/equipment.html` with category sections rather than unverified product listings.
-
-Suggested categories:
-
-1. Pile Integrity Testing
-2. High-Strain / Dynamic Pile Testing
-3. CSL / Ultrasonic Pile Testing
-4. Static Load Test Instrumentation
-5. Geotechnical & Field Testing
-6. Material & Laboratory Testing
-7. Sensors, DAQ & Accessories
-8. Calibration / Setup / Training Support
-
-## SEO / GEO targets
-
-Primary English intent clusters:
-
-- pile testing Thailand
-- static load test Thailand
-- pile integrity test Thailand
-- low strain pile test Thailand
-- high strain dynamic pile test Thailand
-- PDA pile test Thailand
-- CSL test Thailand
-- crosshole sonic logging Thailand
-- plate load test Thailand
-- geotechnical investigation Thailand
-- material testing Thailand
-- structural inspection Thailand
-- pile testing equipment Thailand
-- civil engineering testing equipment Thailand
-
-Build factual, method-specific content rather than keyword stuffing.
-
 ## Visual direction
 
-Use the brochure as the design source:
-
 - white + engineering blue palette
-- strong diagonal geometry
-- real AN-THAI project/testing photography
-- technical diagrams and process icons
+- strong diagonal / industrial geometry
+- real AN-THAI brochure and project/testing photography
+- technical diagrams and process logic where useful
 - clean industrial typography
 - restrained motion
 - mobile-first responsive layout
 
-Avoid generic SaaS cards, AI-chat styling, fake dashboards and excessive gradients.
+Avoid generic SaaS cards, AI-chat styling, fake dashboards and stock-photo dependence.
 
 ## Technical direction
 
-Keep the site lightweight and maintainable. The current repository is a static HTML site, so do not introduce a heavy framework unless there is a concrete need.
+Keep the site lightweight and maintainable with semantic HTML, shared CSS, small vanilla JS, accessible navigation/CTAs, SEO metadata, sitemap/robots, and factual structured data.
 
-Preferred structure:
-
-- semantic HTML
-- shared CSS in `/assets/css/site.css`
-- small vanilla JS in `/assets/js/site.js`
-- local optimized images in `/assets/images/`
-- responsive images (`webp`/`avif` where practical)
-- accessible navigation and CTAs
-- Open Graph metadata
-- Organization / LocalBusiness / Service structured data where factual
-- sitemap.xml and robots.txt
-- canonical URLs
+The brochure-derived photography is packaged as a compact internal WebP sprite assembled from repository-hosted text chunks at runtime because the current GitHub connector cannot directly write binary image files. The browser receives the images from the same repository/site rather than an external stock-photo host.
 
 ## Acceptance criteria
 
@@ -214,7 +125,9 @@ Preferred structure:
 - Testing and inspection is clearly visible above the fold.
 - Equipment sales is visible from the homepage and main navigation.
 - Testing and equipment feel like one engineering brand.
+- Approved AN-THAI brochure photography appears throughout the core pages.
+- Core visual areas do not rely on Unsplash or other stock-photo hosts.
 - Mobile layout works without desktop-only controls.
-- All public contact details are verified against approved company material.
+- All public contact details are based on approved company material.
 - All service claims are traceable to AN-THAI capability or documented partner capability.
 - No production deployment or `main` merge until reviewed.

@@ -354,3 +354,24 @@ This page is not here. || 此页面不存在。 || ไม่พบหน้า�
 Find testing services, equipment or contact our team from the links below. || 请通过以下链接查找检测服务、设备，或联系我们。 || ใช้ลิงก์ด้านล่างเพื่อดูบริการทดสอบ เครื่องมือ หรือติดต่อทีมงาน
 Return Home || 返回首页 || กลับหน้าแรก
 Testing Equipment || 检测设备 || เครื่องมือทดสอบ
+Pile Test Selection || 桩基检测选择 || การเลือกวิธีทดสอบเสาเข็ม
+Which pile test answers which question? || 哪种桩基检测回答哪类工程问题？ || การทดสอบเสาเข็มแต่ละวิธีตอบคำถามทางวิศวกรรมอะไร
+Start with the engineering decision, then confirm the project specification, pile type, site condition and acceptance criteria before fixing the test method. || 先明确工程决策问题，再根据项目规范、桩型、现场条件和验收标准确定检测方法。 || เริ่มจากคำถามทางวิศวกรรมที่ต้องตัดสินใจ แล้วจึงยืนยันข้อกำหนดโครงการ ประเภทเสาเข็ม สภาพหน้างาน และเกณฑ์การยอมรับก่อนกำหนดวิธีทดสอบ
+Use it to screen pile integrity quickly. || 用于快速筛查桩身完整性。 || ใช้สำหรับคัดกรองความสมบูรณ์ของเสาเข็มอย่างรวดเร็ว
+Useful for identifying reflected-wave anomalies that may indicate changes in pile continuity. || 可用于识别反射波异常，这些异常可能提示桩身连续性发生变化。 || ใช้ระบุความผิดปกติของคลื่นสะท้อนที่อาจบ่งชี้การเปลี่ยนแปลงของความต่อเนื่องในเสาเข็ม
+Requires a prepared, accessible pile head and a suitable impact/sensor location. || 需要桩头可接近并完成适当处理，同时具备合适的敲击和传感器安装位置。 || ต้องมีหัวเสาเข็มที่เตรียมและเข้าถึงได้ พร้อมตำแหน่งที่เหมาะสมสำหรับการกระแทกและติดตั้งเซนเซอร์
+It does not by itself establish geotechnical bearing capacity. || 该方法本身不能单独确定岩土承载力。 || วิธีนี้เพียงอย่างเดียวไม่สามารถยืนยันกำลังรับน้ำหนักทางธรณีเทคนิคได้
+Typical output: recorded signal, interpretation and agreed reporting notes. || 典型成果包括采集信号、解释结果及约定的报告说明。 || ผลลัพธ์ทั่วไปประกอบด้วยสัญญาณที่บันทึก การแปลผล และรายละเอียดรายงานตามที่ตกลง
+High-Strain Dynamic Test · 高应变动力试验 || 高应变动力试验 || การทดสอบเสาเข็มแบบพลศาสตร์แรงกระแทกสูง
+Use it when the project needs dynamic response and capacity-related evidence. || 当项目需要动力响应及承载力相关证据时采用。 || ใช้เมื่อโครงการต้องการข้อมูลการตอบสนองแบบพลศาสตร์และหลักฐานที่เกี่ยวข้องกับกำลังรับน้ำหนัก
+Measures force and velocity during impact and supports wave-equation based interpretation. || 测量冲击过程中的力和速度，并用于基于波动方程的分析解释。 || วัดแรงและความเร็วระหว่างการกระแทก และรองรับการแปลผลโดยอาศัยสมการคลื่น
+Requires an impact arrangement, accessible pile head and project-specific test setup. || 需要合适的冲击装置、可接近的桩头以及符合项目要求的试验布置。 || ต้องมีระบบกระแทก หัวเสาเข็มที่เข้าถึงได้ และการจัดเตรียมการทดสอบเฉพาะโครงการ
+Results depend on test conditions and the agreed interpretation method. || 结果取决于试验条件和约定的分析解释方法。 || ผลลัพธ์ขึ้นอยู่กับสภาวะการทดสอบและวิธีการแปลผลที่ตกลงกัน
+Typical output: field records, analysis results and engineering interpretation. || 典型成果包括现场记录、分析结果和工程解释。 || ผลลัพธ์ทั่วไปประกอบด้วยบันทึกภาคสนาม ผลการวิเคราะห์ และการแปลผลทางวิศวกรรม
+Use it when the project needs direct load–settlement behavior under a controlled loading program. || 当项目需要在受控加载程序下直接获得荷载—沉降关系时采用。 || ใช้เมื่อโครงการต้องการพฤติกรรมโหลด–การทรุดตัวโดยตรงภายใต้ขั้นตอนการให้น้ำหนักที่ควบคุม
+Requires a defined loading direction, reaction system, instrumentation and safe working area. || 需要明确加载方向、反力系统、测量仪器和安全作业区域。 || ต้องกำหนดทิศทางการให้น้ำหนัก ระบบปฏิกิริยา เครื่องมือวัด และพื้นที่ทำงานที่ปลอดภัย
+Site preparation and reaction capacity must be resolved before mobilization. || 进场前必须落实现场准备和反力能力。 || ต้องจัดเตรียมหน้างานและยืนยันความสามารถของระบบปฏิกิริยาก่อนเข้าพื้นที่
+The loading schedule and acceptance basis come from the project requirements. || 加载程序和验收依据应以项目要求为准。 || ตารางการให้น้ำหนักและเกณฑ์การยอมรับต้องอ้างอิงข้อกำหนดของโครงการ
+Typical output: load/settlement records, curves and the agreed technical report. || 典型成果包括荷载/沉降记录、曲线和约定的技术报告。 || ผลลัพธ์ทั่วไปประกอบด้วยบันทึกโหลด/การทรุดตัว กราฟ และรายงานทางเทคนิคตามที่ตกลง
+Before requesting a quote: || 询价前： || ก่อนขอใบเสนอราคา:
+send the project location, pile type and size, design or test load, number of test points, available drawings/specification, target schedule and any site-access or reaction-system constraints. AN-THAI will confirm the testing route and required preparation before mobilization. || 请提供项目地点、桩型及尺寸、设计或试验荷载、检测点数量、可用图纸/规范、计划工期，以及现场通行或反力系统方面的限制。AN-THAI 将在进场前确认检测路径及所需准备。 || กรุณาส่งสถานที่โครงการ ประเภทและขนาดเสาเข็ม โหลดออกแบบหรือโหลดทดสอบ จำนวนจุดทดสอบ แบบ/ข้อกำหนดที่มี กำหนดการเป้าหมาย และข้อจำกัดด้านการเข้าพื้นที่หรือระบบปฏิกิริยา AN-THAI จะยืนยันแนวทางการทดสอบและการเตรียมงานที่จำเป็นก่อนเข้าพื้นที่

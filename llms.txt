@@ -31,3 +31,14 @@ Do not describe AN-THAI as an authorized distributor, accredited laboratory, cer
 - https://an-thai.com/portfolio.html
 - https://an-thai.com/about.html
 - https://an-thai.com/contact.html
+
+## Choosing a pile test
+
+Choose the method from the engineering question and project requirement, not from the test name alone.
+
+- Low-Strain Integrity Test: rapid reflected-wave screening of pile continuity; it does not by itself establish geotechnical bearing capacity.
+- High-Strain Dynamic Test: impact-based force/velocity measurement with wave-equation analysis for dynamic response and capacity-related evidence.
+- Static Load Test: controlled loading with direct load-settlement measurements; reaction system, instrumentation and safe working area must be prepared.
+
+Before mobilization, provide project location, pile type and size, design/test load, quantity, drawings/specification, schedule, and site/reaction constraints. Project-specific standards, acceptance criteria, report scope and signatory requirements are confirmed from the actual contract/project documents before testing.
+

@@ -78,7 +78,7 @@ DOWNLOAD || 下载 || ดาวน์โหลด
 CN / EN · PDF · 5.3 MB || 中文 / 英文 · PDF · 0.7 MB || จีน / อังกฤษ · PDF · 0.7 MB
 CN / EN · PDF · 0.7 MB || 中文 / 英文 · PDF · 0.7 MB || จีน / อังกฤษ · PDF · 0.7 MB
 05 / START A CONVERSATION || 05 / 联系洽谈 || 05 / เริ่มพูดคุยกับเรา
-Tell us what you need || 告诉我们您的 || แจ้งความต้องการ
+Tell us what you need || 告诉我们您的项目需求 || แจ้งความต้องการของคุณ
 Describe your requirements || 请告诉我们您的需求 || แจ้งความต้องการของคุณ
 to test. || 检测需求。 || ทดสอบของคุณ
 Send the project location, method, quantity or measurement requirement. We will begin with the technical route. || 请提供项目地点、检测方法、数量或测量要求，我们将据此讨论技术方案。 || ส่งสถานที่โครงการ วิธีทดสอบ จำนวน หรือข้อกำหนดการวัด เพื่อเริ่มพิจารณาแนวทางทางเทคนิค
@@ -412,3 +412,28 @@ Prepare Enquiry || 准备咨询邮件 || เตรียมคำสอบถา
 Describe the project or requirement || 说明项目或需求 || อธิบายโครงการหรือความต้องการ
 Project location and stage; drawings/specification; required output; key technical parameters or equipment application; interfaces, delivery location and target schedule. || 项目地点与阶段；图纸/规范；所需成果；关键技术参数或设备用途；接口条件、交货地点和目标工期。 || สถานที่และระยะโครงการ; แบบ/ข้อกำหนด; ผลงานที่ต้องการ; พารามิเตอร์สำคัญหรือการใช้งานอุปกรณ์; อินเทอร์เฟซ สถานที่ส่งมอบ และกำหนดการเป้าหมาย
 Prepare your enquiry, then send it from your email app. This website does not transmit the form or create a customer record. You can also email info@an-thai.com or anthaicheng@gmail.com directly, or call us. || 填写需求后，请在邮件应用中发送。本网站不会提交表单，也不会创建客户记录。也可直接发送至 info@an-thai.com、anthaicheng@gmail.com，或致电联系。 || กรอกคำสอบถามแล้วส่งจากแอปอีเมลของคุณ เว็บไซต์นี้ไม่ส่งแบบฟอร์มหรือสร้างข้อมูลลูกค้า คุณสามารถส่งอีเมลตรงถึง info@an-thai.com หรือ anthaicheng@gmail.com หรือโทรหาเราได้
+AN-THAI Engineering | Engineering Services & Technical Cooperation Thailand || 安泰工程｜泰国工程服务与技术合作 || AN-THAI Engineering | บริการวิศวกรรมและความร่วมมือทางเทคนิคในประเทศไทย
+AN-THAI Engineering supports engineering services, testing instruments and selected steel, space-structure and powder-equipment cooperation in Thailand. || 安泰在泰国提供工程服务、检测仪器支持，并协调部分钢结构、空间结构及粉体设备合作。 || AN-THAI สนับสนุนบริการวิศวกรรม เครื่องมือทดสอบ และประสานความร่วมมือบางโครงการด้านโครงสร้างเหล็ก โครงสร้างช่วงกว้าง และเครื่องจักรกระบวนการผงในประเทศไทย
+Explore AN-THAI business routes || 了解安泰业务入口 || ดูช่องทางธุรกิจของ AN-THAI
+01 / BUSINESS ROUTES || 01 / 业务入口 || 01 / ช่องทางธุรกิจ
+Four routes. || 四类业务， || 4 ช่องทาง
+One engineering contact. || 一个工程联系入口。 || หนึ่งช่องทางติดต่อด้านวิศวกรรม
+Start from the project need. Before quotation or commitment, AN-THAI confirms its own scope and any partner or manufacturer responsibility. || 从项目需求出发。报价或作出承诺前，AN-THAI 会确认自身范围以及合作方或制造商的责任边界。 || เริ่มจากความต้องการของโครงการ ก่อนเสนอราคาหรือให้คำมั่น AN-THAI จะยืนยันขอบเขตของตนเอง รวมถึงความรับผิดชอบของพันธมิตรหรือผู้ผลิตที่เกี่ยวข้อง
+Testing, geotech & || 检测、岩土与 || งานทดสอบ ปฐพี และ
+design coordination || 设计协调 || การประสานงานด้านแบบ
+Measurement equipment || 测量设备 || เครื่องมือวัด
+& technical support || 与技术支持 || และการสนับสนุนทางเทคนิค
+Project cooperation || 项目合作 || ความร่วมมือโครงการ
+Steel / space-structure || 钢结构／空间结构 || โครงสร้างเหล็ก / โครงสร้างช่วงกว้าง
+Equipment cooperation || 设备合作 || ความร่วมมือด้านอุปกรณ์
+CNBM powder-equipment || CNBM 粉体设备 || เครื่องจักรกระบวนการผง CNBM
+to build, test or source. || 工程、检测或设备采购。 || ด้านงานวิศวกรรม การทดสอบ หรือการจัดหา
+Send the project location, business route, drawings/specification or equipment requirement. We will begin by confirming the technical scope and who is responsible for what. || 请提供项目地点、业务类型、图纸/规范或设备需求。我们会先确认技术范围以及各方责任。 || กรุณาส่งสถานที่โครงการ ประเภทธุรกิจ แบบ/ข้อกำหนด หรือความต้องการด้านอุปกรณ์ เราจะเริ่มจากการยืนยันขอบเขตทางเทคนิคและความรับผิดชอบของแต่ละฝ่าย
+AN-THAI is a Thailand-based engineering company providing testing, technical coordination, testing-instrument support and selected project cooperation. || AN-THAI 是一家立足泰国的工程公司，提供检测、技术协调、检测仪器支持及经确认的项目合作。 || AN-THAI เป็นบริษัทวิศวกรรมในประเทศไทย ให้บริการงานทดสอบ การประสานงานทางเทคนิค การสนับสนุนเครื่องมือทดสอบ และความร่วมมือโครงการที่ได้รับการยืนยัน
+AN-THAI Engineering Company Limited is a Thailand-based engineering company providing testing and inspection, design and technical coordination, testing-instrument support and selected project cooperation with qualified partners. || AN-THAI Engineering Company Limited 是一家立足泰国的工程公司，提供检测与检验、设计与技术协调、检测仪器支持，并与合适的专业合作伙伴开展经确认的项目合作。 || AN-THAI Engineering Company Limited เป็นบริษัทวิศวกรรมในประเทศไทย ให้บริการทดสอบและตรวจสอบ การประสานงานด้านแบบและเทคนิค การสนับสนุนเครื่องมือทดสอบ และความร่วมมือโครงการที่ได้รับการยืนยันกับพันธมิตรที่เหมาะสม
+Engineering services and selected cooperation routes. One technical core. || 工程服务与部分合作路径，共享一个技术核心。 || บริการวิศวกรรมและช่องทางความร่วมมือบางประเภท บนพื้นฐานทางเทคนิคเดียวกัน
+Our testing work gives us direct understanding of field conditions, measurement methods and engineering outputs. That practical base supports testing-instrument selection and selected steel, space-structure and powder-equipment cooperation, with responsibilities confirmed for each project. || 我们的检测工作使我们直接理解现场条件、测量方法与工程成果。这一实践基础也支持检测仪器选型，以及部分钢结构、空间结构和粉体设备项目合作；各方责任按具体项目确认。 || ประสบการณ์งานทดสอบทำให้เราเข้าใจสภาพหน้างาน วิธีการวัด และผลลัพธ์ทางวิศวกรรมโดยตรง พื้นฐานดังกล่าวยังสนับสนุนการเลือกเครื่องมือทดสอบ และความร่วมมือบางโครงการด้านโครงสร้างเหล็ก โครงสร้างช่วงกว้าง และเครื่องจักรกระบวนการผง โดยยืนยันความรับผิดชอบเป็นรายโครงการ
+cooperation || 合作 || ความร่วมมือ
+Thailand-based engineering services, testing-instrument support and selected technical cooperation. || 立足泰国的工程服务、检测仪器支持及部分技术合作。 || บริการวิศวกรรมในประเทศไทย การสนับสนุนเครื่องมือทดสอบ และความร่วมมือทางเทคนิคบางประเภท
+AN-THAI is a Thailand-based engineering company providing testing, design conversion and Thai submission coordination, testing-instrument support and selected project cooperation. || AN-THAI 是一家立足泰国的工程公司，提供检测、设计转化与泰国报建协调、检测仪器支持及部分项目合作。 || AN-THAI เป็นบริษัทวิศวกรรมในประเทศไทย ให้บริการงานทดสอบ การปรับแบบและประสานงานยื่นขออนุญาตตามข้อกำหนดไทย การสนับสนุนเครื่องมือทดสอบ และความร่วมมือในบางโครงการ
+AN-THAI Engineering Company Limited is a Thailand-based engineering company providing testing and inspection, design conversion and Thai submission coordination, testing-instrument support and selected project cooperation with suitable partners. Licensed design/sign-off and authority submission are confirmed against the agreed project scope. || AN-THAI Engineering Company Limited 是一家立足泰国的工程公司，提供检测与检验、设计转化与泰国报建协调、检测仪器支持，并与合适的专业合作伙伴开展部分项目合作。涉及持证设计、签章或主管部门报审的工作，将按双方确认的项目范围另行核实。 || AN-THAI Engineering Company Limited เป็นบริษัทวิศวกรรมในประเทศไทย ให้บริการทดสอบและตรวจสอบ การปรับแบบและประสานงานยื่นขออนุญาตตามข้อกำหนดไทย การสนับสนุนเครื่องมือทดสอบ และความร่วมมือในบางโครงการกับพันธมิตรที่เหมาะสม งานที่ต้องใช้วิศวกรผู้มีใบอนุญาตลงนามหรือยื่นต่อหน่วยงานรัฐ จะยืนยันตามขอบเขตโครงการที่ตกลงกัน

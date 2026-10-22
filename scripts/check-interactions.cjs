@@ -25,7 +25,7 @@ const u=new URL(s.location.href);
 assert.equal(u.protocol,'mailto:');assert.equal(u.pathname,'info@an-thai.com');
 assert.equal(u.searchParams.get('subject'),'AN-THAI enquiry: Testing instruments');
 assert.match(u.searchParams.get('body'),/Name: QA & 中文/);assert.match(u.searchParams.get('body'),/Company: Test \+ Co/);
-assert.match(s.note.textContent,/Nothing has been sent/);
+assert.match(s.note.textContent,/does not transmit the form or create a customer record/);
 s.buttonHandlers.click();assert.equal(s.attrs['aria-expanded'],'true');assert.equal(s.states.open,true);assert.equal(s.states.linkFocused,true);
 s.handlers.keydown({key:'Escape'});assert.equal(s.attrs['aria-expanded'],'false');assert.equal(s.states.focused,true);
 s.buttonHandlers.click();s.linkHandlers.click();assert.equal(s.states.open,false);

@@ -375,3 +375,40 @@ The loading schedule and acceptance basis come from the project requirements. ||
 Typical output: load/settlement records, curves and the agreed technical report. || 典型成果包括荷载/沉降记录、曲线和约定的技术报告。 || ผลลัพธ์ทั่วไปประกอบด้วยบันทึกโหลด/การทรุดตัว กราฟ และรายงานทางเทคนิคตามที่ตกลง
 Before requesting a quote: || 询价前： || ก่อนขอใบเสนอราคา:
 send the project location, pile type and size, design or test load, number of test points, available drawings/specification, target schedule and any site-access or reaction-system constraints. AN-THAI will confirm the testing route and required preparation before mobilization. || 请提供项目地点、桩型及尺寸、设计或试验荷载、检测点数量、可用图纸/规范、计划工期，以及现场通行或反力系统方面的限制。AN-THAI 将在进场前确认检测路径及所需准备。 || กรุณาส่งสถานที่โครงการ ประเภทและขนาดเสาเข็ม โหลดออกแบบหรือโหลดทดสอบ จำนวนจุดทดสอบ แบบ/ข้อกำหนดที่มี กำหนดการเป้าหมาย และข้อจำกัดด้านการเข้าพื้นที่หรือระบบปฏิกิริยา AN-THAI จะยืนยันแนวทางการทดสอบและการเตรียมงานที่จำเป็นก่อนเข้าพื้นที่
+Contact AN-THAI Engineering | Engineering Enquiries Thailand || 联系安泰工程｜泰国工程业务咨询 || ติดต่อ AN-THAI Engineering | สอบถามงานวิศวกรรมในประเทศไทย
+Contact AN-THAI Engineering for engineering services, steel and space-structure cooperation, powder-equipment cooperation and testing instruments in Thailand. || 联系安泰工程，咨询泰国工程服务、钢结构与空间结构合作、粉体设备合作及工程检测仪器。 || ติดต่อ AN-THAI Engineering เพื่อสอบถามบริการวิศวกรรม ความร่วมมืองานโครงสร้างเหล็กและโครงสร้างช่วงกว้าง เครื่องจักรกระบวนการผง และเครื่องมือทดสอบทางวิศวกรรมในประเทศไทย
+Contact · Engineering Enquiries || 联系 · 工程业务咨询 || ติดต่อ · สอบถามงานวิศวกรรม
+START WITH THE RIGHT BRIEF || 先把需求说清楚 || เริ่มจากข้อมูลโครงการที่ชัดเจน
+Choose the closest route below. The website helps prepare an email; scope, partner responsibility, licences, schedule and commercial terms are confirmed project by project. || 请先选择最接近的业务类型。网站只帮助生成邮件；具体范围、合作方责任、资质要求、工期和商务条件均按项目确认。 || เลือกประเภทงานที่ใกล้เคียงที่สุดด้านล่าง เว็บไซต์ช่วยเตรียมอีเมลเท่านั้น ส่วนขอบเขตงาน ความรับผิดชอบของพันธมิตร ใบอนุญาต กำหนดการ และเงื่อนไขทางการค้าจะยืนยันเป็นรายโครงการ
+Choose an enquiry route || 选择咨询类型 || เลือกประเภทคำสอบถาม
+Prepare an email || 生成咨询邮件 || เตรียมอีเมล
+Four business routes || 四类业务入口 || 4 ประเภทงาน
+Choose the enquiry route || 选择合适的业务入口 || เลือกช่องทางสอบถามที่เหมาะสม
+Start with the business line, then provide the minimum technical brief. AN-THAI will confirm its own scope and any partner scope before work, quotation or commitment. || 先选业务线，再提供最基本的技术资料。开始工作、报价或作出承诺前，AN-THAI 会明确自身范围及合作方范围。 || เริ่มจากประเภทงานแล้วส่งข้อมูลทางเทคนิคขั้นต่ำ ก่อนเริ่มงาน เสนอราคา หรือให้คำมั่น AN-THAI จะยืนยันขอบเขตของตนเองและขอบเขตของพันธมิตรที่เกี่ยวข้อง
+Field testing reference image from the AN-THAI company brochure || AN-THAI 公司资料中的现场检测参考图片 || ภาพอ้างอิงงานทดสอบภาคสนามจากเอกสารบริษัท AN-THAI
+Field-testing reference image from the AN-THAI company brochure. Project or customer attribution is not stated here. || 现场检测参考图片来自 AN-THAI 公司资料；本页不声明其具体项目或客户归属。 || ภาพอ้างอิงงานทดสอบภาคสนามมาจากเอกสารบริษัท AN-THAI โดยหน้านี้ไม่ได้ระบุว่าเป็นโครงการหรือลูกค้ารายใด
+Testing equipment reference image from the AN-THAI company brochure || AN-THAI 公司资料中的检测设备参考图片 || ภาพอ้างอิงเครื่องมือทดสอบจากเอกสารบริษัท AN-THAI
+Testing-equipment reference image from the AN-THAI company brochure. Manufacturer or ownership is not implied by this page. || 检测设备参考图片来自 AN-THAI 公司资料；本页不据此暗示制造商身份或设备所有权。 || ภาพอ้างอิงเครื่องมือทดสอบมาจากเอกสารบริษัท AN-THAI โดยหน้านี้ไม่ได้สื่อว่า AN-THAI เป็นผู้ผลิตหรือเป็นเจ้าของอุปกรณ์ดังกล่าว
+Engineering services || 工程服务 || บริการวิศวกรรม
+Pile testing, geotechnical investigation, design conversion and Thai submission coordination. || 桩基检测、岩土勘察、设计转化及泰国报建协调。 || งานทดสอบเสาเข็ม สำรวจปฐพี การปรับแบบ และประสานงานยื่นขออนุญาตตามข้อกำหนดไทย
+Send first || 建议先提供 || ข้อมูลที่ควรส่งก่อน
+Project location and stage, drawings/specification, pile or ground information, required output and target dates. || 项目地点和阶段、图纸/规范、桩基或地质资料、所需成果及目标时间。 || สถานที่และระยะของโครงการ แบบ/ข้อกำหนด ข้อมูลเสาเข็มหรือสภาพดิน ผลงานที่ต้องการ และกำหนดเวลาเป้าหมาย
+Any licensed design/sign-off or authority submission is confirmed against the agreed project scope. || 涉及持证设计、签章或主管部门报审的工作，将按双方确认的项目范围另行核实。 || งานที่ต้องใช้วิศวกรผู้มีใบอนุญาตลงนามหรือยื่นต่อหน่วยงานรัฐ จะยืนยันตามขอบเขตโครงการที่ตกลงกัน
+Prepare this enquiry → || 生成此类咨询 → || เตรียมคำสอบถามประเภทนี้ →
+Steel / space-structure cooperation || 钢结构／空间结构合作 || ความร่วมมืองานโครงสร้างเหล็ก / โครงสร้างช่วงกว้าง
+Special steel, long-span and space-structure opportunities where cross-border supply and engineering coordination may be relevant. || 面向特种钢结构、大跨度及空间结构项目，协调可能适用的跨境供应与工程合作。 || สำหรับโอกาสด้านโครงสร้างเหล็กพิเศษ โครงสร้างช่วงกว้าง และโครงสร้างสามมิติที่อาจเหมาะกับการจัดหาข้ามประเทศและการประสานงานวิศวกรรม
+Drawings or span/grid, design basis, material/finish, quantity, delivery or erection boundary and schedule. || 图纸或跨度/网格、设计依据、材料及表面处理、数量、供货/安装边界和工期。 || แบบหรือช่วงพาด/กริด เกณฑ์ออกแบบ วัสดุและผิวสำเร็จ ปริมาณ ขอบเขตการส่งมอบหรือติดตั้ง และกำหนดการ
+Fabrication, design responsibility, certification and installation are confirmed with the selected partner. || 加工制造、设计责任、认证及安装范围以最终选定合作方的确认内容为准。 || ขอบเขตการผลิต ความรับผิดชอบด้านการออกแบบ การรับรอง และการติดตั้ง จะยืนยันกับพันธมิตรที่ได้รับเลือก
+CNBM powder-equipment cooperation || CNBM 粉体设备合作 || ความร่วมมือด้านเครื่องจักรกระบวนการผง CNBM
+Powder-process and grinding-related equipment cooperation based on the project duty. || 根据项目工况开展粉体工艺及粉磨相关设备合作。 || ความร่วมมือด้านเครื่องจักรกระบวนการผงและงานบดตามหน้าที่การใช้งานของโครงการ
+Material, feed/product size, target capacity, process flow, utilities, layout limits, destination and schedule. || 物料、进料/成品粒度、目标产能、工艺流程、公用工程、布置限制、目的地和工期。 || ชนิดวัสดุ ขนาดป้อน/ผลิตภัณฑ์ กำลังการผลิตเป้าหมาย กระบวนการ สาธารณูปโภค ข้อจำกัดด้านผัง ปลายทาง และกำหนดการ
+Manufacturer selection, guarantees and the final technical offer remain subject to manufacturer confirmation. || 制造商选择、性能保证及最终技术方案均以制造商确认文件为准。 || การเลือกผู้ผลิต การรับประกันสมรรถนะ และข้อเสนอทางเทคนิคฉบับสุดท้าย ต้องอ้างอิงการยืนยันจากผู้ผลิต
+Testing instruments || 工程检测仪器 || เครื่องมือทดสอบทางวิศวกรรม
+Pile, geotechnical, structural/material and measurement instruments for engineering teams. || 面向工程团队的桩基、岩土、结构/材料及测量类检测仪器。 || เครื่องมือทดสอบเสาเข็ม ปฐพี โครงสร้าง/วัสดุ และเครื่องมือวัดสำหรับทีมวิศวกรรม
+Test method or standard, application, range/accuracy, sensor or DAQ interfaces, site environment, support needs and delivery location. || 试验方法或标准、应用场景、量程/精度、传感器或 DAQ 接口、现场环境、技术支持需求和交货地点。 || วิธีหรือมาตรฐานการทดสอบ การใช้งาน ช่วงวัด/ความแม่นยำ อินเทอร์เฟซเซนเซอร์หรือ DAQ สภาพหน้างาน ความต้องการสนับสนุน และสถานที่ส่งมอบ
+Equipment compatibility and the supply/support boundary are confirmed before offer. || 设备兼容性及供货/技术支持边界将在报价前确认。 || ความเข้ากันได้ของอุปกรณ์และขอบเขตการจัดหา/สนับสนุนจะยืนยันก่อนเสนอราคา
+Thailand-based engineering coordination, testing services and equipment-related support. Each enquiry is scoped before any commitment. || 在泰国提供工程协调、检测服务及设备相关支持；每项咨询均在承诺前明确工作范围。 || ให้บริการประสานงานวิศวกรรม งานทดสอบ และการสนับสนุนด้านอุปกรณ์ในประเทศไทย โดยจะยืนยันขอบเขตของแต่ละคำสอบถามก่อนให้คำมั่นใด ๆ
+Prepare Enquiry || 准备咨询邮件 || เตรียมคำสอบถาม
+Describe the project or requirement || 说明项目或需求 || อธิบายโครงการหรือความต้องการ
+Project location and stage; drawings/specification; required output; key technical parameters or equipment application; interfaces, delivery location and target schedule. || 项目地点与阶段；图纸/规范；所需成果；关键技术参数或设备用途；接口条件、交货地点和目标工期。 || สถานที่และระยะโครงการ; แบบ/ข้อกำหนด; ผลงานที่ต้องการ; พารามิเตอร์สำคัญหรือการใช้งานอุปกรณ์; อินเทอร์เฟซ สถานที่ส่งมอบ และกำหนดการเป้าหมาย
+Prepare your enquiry, then send it from your email app. This website does not transmit the form or create a customer record. You can also email info@an-thai.com or anthaicheng@gmail.com directly, or call us. || 填写需求后，请在邮件应用中发送。本网站不会提交表单，也不会创建客户记录。也可直接发送至 info@an-thai.com、anthaicheng@gmail.com，或致电联系。 || กรอกคำสอบถามแล้วส่งจากแอปอีเมลของคุณ เว็บไซต์นี้ไม่ส่งแบบฟอร์มหรือสร้างข้อมูลลูกค้า คุณสามารถส่งอีเมลตรงถึง info@an-thai.com หรือ anthaicheng@gmail.com หรือโทรหาเราได้

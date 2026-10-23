@@ -1,0 +1,14 @@
+{
+  "slug": "sample-template",
+  "title": "SAMPLE DRAFT — article template demonstration",
+  "description": "Unpublished sample for checking the Insights article template. This is not engineering advice or a published article.",
+  "author": "AN-THAI Engineering",
+  "date": "2026-10-23",
+  "image": "assets/images/hero-field.webp",
+  "image_alt": "Pile-testing scenes from the AN-THAI engineering brochure",
+  "image_caption": "Pile-testing operations and measurement setups shown in the AN-THAI brochure.",
+  "image_width": 900,
+  "image_height": 687,
+  "sections": [{"heading": "Sample section", "paragraphs": ["SAMPLE ONLY. Replace this draft with reviewed editorial text before publication."]}],
+  "faq": [{"question": "Is this a published article?", "answer": "No. This sample is excluded from the public build and sitemap."}]
+}

@@ -35,16 +35,22 @@ Before publication, verify the six pages at 320/390/768/1440 px, menu keyboard b
 
 ## Insights publishing
 
-The Insights section publishes daily engineering articles. Each article requires exactly **one JSON source file** and **one local lead image**.
+The Insights section publishes daily engineering articles. Each article requires exactly **one JSON source file**, **one local lead image**, and **in-body illustrative figures** meeting the Visual Contract.
 
-The Insights index has English, Thai and Chinese chrome. Article text is published in English; no translated article URLs or hreflang claims are generated until translations exist.
+The Insights index has English, Thai and Chinese chrome with localized card action buttons. Article text is published in English; no translated article URLs or hreflang claims are generated until translations exist.
 
 ### How to add an article
 
-1. **Add the lead image:**
-   - Save your image under `assets/images/insights/<slug>.webp` (or reuse an approved file in `assets/images/`).
+1. **Add editorial and inline images:**
+   - Save your lead and section images under `assets/images/insights/` (or reuse an approved file in `assets/images/`).
    - Use WebP format, compressed for web performance.
    - Note the exact pixel width and height (e.g., 900x600).
+   - Comply with the **Visual Contract** (`docs/editorial/ANTHAI_INSIGHTS_STANDARD.md`):
+     - Every article requires **one editorial cover** PLUS useful inline body figures.
+     - Up to 600 English words: at least **2** distinct inline body visuals.
+     - 601–1,200 English words: at least **3** distinct inline body visuals.
+     - Above 1,200 English words: at least **4** distinct inline body visuals.
+     - Cover image cannot be repeated in the body; duplicate figures are rejected.
 
 2. **Create the article JSON file:**
    - Copy `drafts/insights/sample-template.json` to `content/insights/<slug>.json`.
@@ -70,6 +76,33 @@ The Insights index has English, Thai and Chinese chrome. Article text is publish
          "paragraphs": [
            "First paragraph of technical editorial text.",
            "Second paragraph explaining the methodology and local standards."
+         ],
+         "figures": [
+           {
+             "image": "assets/images/static-load.webp",
+             "image_alt": "Static pile load test reaction frame with hydraulic jack and dial gauges",
+             "caption": "Static load test setup with Kentledge reaction frame and displacement instrumentation.",
+             "declaration": "Source: AN-THAI brochure field testing documentation",
+             "width": 900,
+             "height": 389
+           }
+         ]
+       },
+       {
+         "heading": "Low-Strain Integrity Verification",
+         "paragraphs": [
+           "Low-strain sonic echo integrity testing records reflected wave velocity along the pile shaft.",
+           "Signal response variations assist in identifying potential cross-section necking, voids or major integrity discontinuities."
+         ],
+         "figures": [
+           {
+             "image": "assets/images/low-strain.webp",
+             "image_alt": "Low-strain pile integrity testing waveform analysis illustration",
+             "caption": "Low-strain integrity testing principle: sonic echo velocity response and impedance profiling.",
+             "declaration": "Source: AN-THAI brochure technical illustration",
+             "width": 900,
+             "height": 538
+           }
          ]
        }
      ],
@@ -86,6 +119,7 @@ The Insights index has English, Thai and Chinese chrome. Article text is publish
    - `image`: Must start with `assets/` and exist on disk.
    - `image_caption`: Optional string for the `<figcaption>`; if omitted, `image_alt` is used.
    - `sections`: Must contain at least one section with a non-empty heading and paragraphs.
+   - `figures`: Array of inline body figures per section. Each figure requires `image` (existing local asset), `image_alt`, `caption`, `declaration` (provenance, copyright, or AI disclosure), `width`, and `height`.
    - `faq`: Optional array of `{ "question", "answer" }` pairs. Generates both visible FAQ accordions and `FAQPage` schema JSON-LD. Use `[]` if none.
    - All editorial text is escaped safely; HTML and Markdown syntax are not interpreted.
 

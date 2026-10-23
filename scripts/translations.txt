@@ -445,3 +445,4 @@ Engineering testing, inspection and equipment insights. || 工程检测、检验
 Articles will appear here once published. || 文章发布后将显示在此处。 || บทความจะปรากฏที่นี่เมื่อเผยแพร่แล้ว
 Discuss your project || 讨论您的项目 || พูดคุยเกี่ยวกับโครงการของคุณ
 Contact AN-THAI || 联系 AN-THAI || ติดต่อ AN-THAI
+Read article || 阅读文章 || อ่านบทความ

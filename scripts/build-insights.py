@@ -10,6 +10,27 @@ ROOT = Path(__file__).resolve().parent.parent
 BASE = 'https://an-thai.com/'
 e = escape
 
+CTA_LABELS = {
+    'en': 'Read article',
+    'zh': '阅读文章',
+    'th': 'อ่านบทความ'
+}
+
+def count_words(a):
+    text_chunks = [a['title'], a['description']]
+    for s in a.get('sections', []):
+        text_chunks.append(s.get('heading', ''))
+        text_chunks.extend(s.get('paragraphs', []))
+        figures = s.get('figures', [])
+        if 'figure' in s and isinstance(s['figure'], dict):
+            figures = [s['figure']] + list(figures)
+        for fig in figures:
+            text_chunks.extend([fig.get('caption', ''), fig.get('declaration', '')])
+    for faq in a.get('faq', []):
+        text_chunks.extend([faq.get('question', ''), faq.get('answer', '')])
+    full_text = ' '.join(str(chunk) for chunk in text_chunks)
+    return len(re.findall(r"\b[A-Za-z0-9'-]+\b", full_text))
+
 def load_articles(directory):
     articles = []
     for source in sorted(directory.glob('*.json')):
@@ -20,16 +41,43 @@ def load_articles(directory):
             assert isinstance(a[key], str) and a[key].strip(), (source, key)
         assert len(a['description']) <= 160, (source, 'description exceeds 160 characters')
         date.fromisoformat(a['date'])
-        image = Path(a['image'])
-        assert not image.is_absolute() and '..' not in image.parts and image.parts[0] == 'assets', source
-        assert (ROOT/image).is_file(), (source, 'missing image')
+        cover_image = Path(a['image'])
+        assert not cover_image.is_absolute() and '..' not in cover_image.parts and cover_image.parts[0] == 'assets', source
+        assert (ROOT/cover_image).is_file(), (source, 'missing cover image')
         assert all(type(a[k]) is int and a[k] > 0 for k in ['image_width', 'image_height']), source
         assert a['sections'] and all(s['heading'] and s['paragraphs'] for s in a['sections']), source
+
+        # Validate inline body visuals per visual contract
+        body_figures = []
+        body_image_paths = []
+        for s in a['sections']:
+            figs = s.get('figures', [])
+            if 'figure' in s and isinstance(s['figure'], dict):
+                figs = [s['figure']] + list(figs)
+            for fig in figs:
+                assert isinstance(fig, dict), (source, 'invalid figure format')
+                for fkey in ['image', 'image_alt', 'caption', 'declaration']:
+                    assert isinstance(fig.get(fkey), str) and fig[fkey].strip(), (source, fkey)
+                fig_image = Path(fig['image'])
+                assert not fig_image.is_absolute() and '..' not in fig_image.parts and fig_image.parts[0] == 'assets', source
+                assert (ROOT/fig_image).is_file(), (source, f'missing body figure image: {fig["image"]}')
+                assert fig['image'] != a['image'], (source, 'body figure repeats cover image')
+                assert all(type(fig.get(k)) is int and fig[k] > 0 for k in ['width', 'height']), (source, 'figure dimensions')
+                body_figures.append(fig)
+                body_image_paths.append(fig['image'])
+
+        assert len(body_image_paths) == len(set(body_image_paths)), (source, 'duplicate body figure images')
+        word_count = count_words(a)
+        min_figures = 2 if word_count <= 600 else 3 if word_count <= 1200 else 4
+        assert len(body_figures) >= min_figures, (
+            source,
+            f'Visual contract failed: word count {word_count} requires >= {min_figures} distinct body visuals, got {len(body_figures)}'
+        )
+
         articles.append(a)
     return sorted(articles, key=lambda a: (a['date'], a['slug']), reverse=True)
 
 def render(a, articles, shell):
-    e = escape
     url = BASE+'insights/'+a['slug']+'.html'
     image = BASE+a['image']
     graph = [
@@ -45,7 +93,27 @@ def render(a, articles, shell):
     if faq:
         graph.append({'@type':'FAQPage', 'mainEntity':[{'@type':'Question', 'name':f['question'],
             'acceptedAnswer':{'@type':'Answer', 'text':f['answer']}} for f in faq]})
-    sections = ''.join('<section><h2>'+e(s['heading'])+'</h2>'+''.join('<p>'+e(p)+'</p>' for p in s['paragraphs'])+'</section>' for s in a['sections'])
+
+    def render_section(s):
+        h = '<h2>' + e(s['heading']) + '</h2>'
+        p = ''.join('<p>' + e(para) + '</p>' for para in s['paragraphs'])
+        figs = s.get('figures', [])
+        if 'figure' in s and isinstance(s['figure'], dict):
+            figs = [s['figure']] + list(figs)
+        figures_html = ''
+        for fig in figs:
+            figures_html += (
+                '<figure class="insight-body-figure">'
+                f'<img src="/{e(fig["image"])}" alt="{e(fig["image_alt"])}" width="{fig["width"]}" height="{fig["height"]}" loading="lazy" decoding="async">'
+                '<figcaption>'
+                f'<span class="figure-caption">{e(fig["caption"])}</span>'
+                f'<span class="figure-declaration">{e(fig["declaration"])}</span>'
+                '</figcaption>'
+                '</figure>'
+            )
+        return f'<section class="insight-section">{h}{p}{figures_html}</section>'
+
+    sections = ''.join(render_section(s) for s in a['sections'])
     faqs = '<section class="insight-faq"><h2>Frequently asked questions</h2><div class="faq-list">'+''.join('<details open><summary>'+e(f['question'])+'</summary><p>'+e(f['answer'])+'</p></details>' for f in faq)+'</div></section>' if faq else ''
     related = [x for x in articles if x['slug'] != a['slug']][:3]
     related_html = ''.join('<li><a href="/insights/'+x['slug']+'.html"><span>'+e(x['title'])+'</span><span class="arrow" aria-hidden="true">→</span></a></li>' for x in related)
@@ -84,6 +152,27 @@ def render(a, articles, shell):
     head += '<script type="application/ld+json">'+json.dumps({'@context':'https://schema.org','@graph':graph}, ensure_ascii=False).replace('<','\\u003c')+'</script>'
     return shell.replace('</head>', head+'</head>')
 
+def build_cards(articles, lang='en'):
+    cta = CTA_LABELS.get(lang, 'Read article')
+    return ''.join(
+        '<article class="insight-card">'
+        f'<a class="insight-card__media" href="/insights/{a["slug"]}.html" tabindex="-1" aria-hidden="true">'
+        f'<img src="/{e(a["image"])}" alt="{e(a["image_alt"])}" width="{a["image_width"]}" height="{a["image_height"]}" loading="lazy" decoding="async">'
+        '</a>'
+        '<div class="insight-card__body">'
+        '<div class="insight-card__meta">'
+        f'<time datetime="{a["date"]}">{a["date"]}</time>'
+        '<span class="insight-card__sep" aria-hidden="true">·</span>'
+        f'<span class="insight-card__author">{e(a["author"])}</span>'
+        '</div>'
+        f'<h2 class="insight-card__title"><a href="/insights/{a["slug"]}.html">{e(a["title"])}</a></h2>'
+        f'<p class="insight-card__desc">{e(a["description"])}</p>'
+        f'<a class="insight-card__cta" href="/insights/{a["slug"]}.html">{cta} <span aria-hidden="true">→</span></a>'
+        '</div>'
+        '</article>'
+        for a in articles
+    )
+
 def generate():
     dist = ROOT/'dist'
     articles = load_articles(ROOT/'content/insights')
@@ -92,40 +181,21 @@ def generate():
     shell = (dist/'insights.html').read_text(encoding='utf-8')
     sitemap = (dist/'sitemap.xml').read_text(encoding='utf-8')
     llms = (dist/'llms.txt').read_text(encoding='utf-8')+'\n## Insights\n\n- '+BASE+'insights.html\n'
-    cards = ''.join(
-        '<article class="insight-card">'
-        '<a class="insight-card__media" href="/insights/'+a['slug']+'.html" tabindex="-1" aria-hidden="true">'
-        '<img src="/'+e(a['image'])+'" alt="'+e(a['image_alt'])+'" width="'+str(a['image_width'])+'" height="'+str(a['image_height'])+'" loading="lazy" decoding="async">'
-        '</a>'
-        '<div class="insight-card__body">'
-        '<div class="insight-card__meta">'
-        '<time datetime="'+a['date']+'">'+a['date']+'</time>'
-        '<span class="insight-card__sep" aria-hidden="true">·</span>'
-        '<span class="insight-card__author">'+e(a['author'])+'</span>'
-        '</div>'
-        '<h2 class="insight-card__title"><a href="/insights/'+a['slug']+'.html">'+e(a['title'])+'</a></h2>'
-        '<p class="insight-card__desc">'+e(a['description'])+'</p>'
-        '<a class="insight-card__cta" href="/insights/'+a['slug']+'.html">Read article <span aria-hidden="true">→</span></a>'
-        '</div>'
-        '</article>'
-        for a in articles
-    )
     for a in articles:
         (target/(a['slug']+'.html')).write_text(render(a, articles, shell), encoding='utf-8')
         url = BASE+'insights/'+a['slug']+'.html'
         sitemap = sitemap.replace('</urlset>', '<url><loc>'+url+'</loc><lastmod>'+a['date']+'</lastmod></url>\n</urlset>')
         llms += '- ['+a['title']+']('+url+')\n'
-    if cards:
-        cards_block = '<div class="insights-grid">' + cards + '</div>'
-        for page in [dist/'insights.html', dist/'th/insights.html', dist/'zh/insights.html']:
+    if articles:
+        for page, lang in [(dist/'insights.html', 'en'), (dist/'th/insights.html', 'th'), (dist/'zh/insights.html', 'zh')]:
             html = page.read_text(encoding='utf-8')
-            # Article titles stay English; only the index chrome is translated.
+            cards_block = '<div class="insights-grid">' + build_cards(articles, lang=lang) + '</div>'
             page.write_text(re.sub(r'<!-- insights:start -->.*?<!-- insights:end -->', lambda _: cards_block, html, flags=re.S), encoding='utf-8')
     (dist/'sitemap.xml').write_text(sitemap, encoding='utf-8')
     (dist/'llms.txt').write_text(llms, encoding='utf-8')
     locs = {x.text for x in ET.fromstring(sitemap).iter() if x.tag.endswith('}loc')}
     for a in articles: assert BASE+'insights/'+a['slug']+'.html' in locs
     assert not (dist/'drafts').exists(), 'Drafts must never be packaged'
-    print(f'PASS: {len(articles)} published articles: image, description and sitemap checks; drafts excluded')
+    print(f'PASS: {len(articles)} published articles: image, visual contract, description and sitemap checks; drafts excluded')
 
 if __name__ == '__main__': generate()

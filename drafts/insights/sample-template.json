@@ -9,6 +9,46 @@
   "image_caption": "Pile-testing operations and measurement setups shown in the AN-THAI brochure.",
   "image_width": 900,
   "image_height": 687,
-  "sections": [{"heading": "Sample section", "paragraphs": ["SAMPLE ONLY. Replace this draft with reviewed editorial text before publication."]}],
-  "faq": [{"question": "Is this a published article?", "answer": "No. This sample is excluded from the public build and sitemap."}]
+  "sections": [
+    {
+      "heading": "Static Load Testing Principle",
+      "paragraphs": [
+        "SAMPLE ONLY. Replace this draft with reviewed editorial text before publication.",
+        "Static pile load testing applies controlled test loads to measure pile head settlement under verified reaction systems."
+      ],
+      "figures": [
+        {
+          "image": "assets/images/static-load.webp",
+          "image_alt": "Static pile load test reaction frame with hydraulic jack and dial gauges",
+          "caption": "Static load test setup with Kentledge reaction frame and displacement instrumentation.",
+          "declaration": "Source: AN-THAI brochure field testing documentation",
+          "width": 900,
+          "height": 389
+        }
+      ]
+    },
+    {
+      "heading": "Low-Strain Integrity Verification",
+      "paragraphs": [
+        "Low-strain sonic echo integrity testing records reflected wave velocity along the pile shaft.",
+        "Signal response variations assist in identifying potential cross-section necking, voids or major integrity discontinuities."
+      ],
+      "figures": [
+        {
+          "image": "assets/images/low-strain.webp",
+          "image_alt": "Low-strain pile integrity testing waveform analysis illustration",
+          "caption": "Low-strain integrity testing principle: sonic echo velocity response and impedance profiling.",
+          "declaration": "Source: AN-THAI brochure technical illustration",
+          "width": 900,
+          "height": 538
+        }
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "question": "Is this a published article?",
+      "answer": "No. This sample is excluded from the public build and sitemap."
+    }
+  ]
 }

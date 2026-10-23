@@ -27,8 +27,10 @@ function rateLimited(req, now) {
 function allowedOrigin(origin) {
   try {
     const url = new URL(origin);
-    return ['http:', 'https:'].includes(url.protocol) && url.origin === origin && !url.port &&
-      (url.hostname === 'an-thai.com' || url.hostname === 'www.an-thai.com' || url.hostname.endsWith('.vercel.app'));
+    if (!['http:', 'https:'].includes(url.protocol) || url.origin !== origin) return false;
+    const exact = ['https://an-thai.com', 'https://www.an-thai.com', 'https://an-thai.vercel.app',
+      ...(process.env.ENQUIRY_ALLOWED_ORIGINS || '').split(',').map(value => value.trim()).filter(Boolean)];
+    return exact.includes(origin) || /^https:\/\/an-thai-[a-z0-9-]+-jamescheng2022s-projects\.vercel\.app$/.test(origin);
   } catch { return false; }
 }
 
@@ -75,9 +77,9 @@ module.exports = async function enquiry(req, res) {
       data[key] = value.trim();
     }
     if (data.website) return res.status(200).json({ok: true});
-    const age = Date.now() - body.renderedAt;
-    if (!Number.isSafeInteger(body.renderedAt) || age < 3000 || age > DAY) {
-      return res.status(200).json({ok: true});
+    // Client-measured monotonic duration avoids comparing client and server clocks.
+    if (!Number.isFinite(body.elapsedMs) || body.elapsedMs < 2500) {
+      return res.status(400).json({ok: false, retry: true});
     }
     if (!data.name || !data.message || !EMAIL.test(data.email) || !UUID.test(data.enquiryId)) throw new Error('Invalid field');
   } catch {

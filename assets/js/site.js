@@ -42,13 +42,15 @@ if (quoteForm) {
   const lang = document.documentElement.lang || 'en';
   const copy = lang.startsWith('zh') ? {
     category:'设备类别', requirements:'需求', enquiry:'安泰询价', labels:['姓名','公司','邮箱','联系方式','需求类型'],
-    status:'询盘内容已准备好，请在邮件应用中发送。如未打开邮件应用，请直接联系 info@an-thai.com 或 anthaicheng@gmail.com。本网站不会提交表单，也不会创建客户记录。',
+    success:'您的询盘已提交，我们会尽快回复。', pending:'正在提交询盘…',
+    status:'无法确认在线提交。请在邮件应用中发送；如未打开，请直接发送至 info@an-thai.com 或 anthaicheng@gmail.com。',
     categories:['桩身完整性检测仪器','高应变／动力桩基检测系统','声波透射／超声检测系统','静载试验测量仪器','岩土与现场检测设备','材料／实验室检测设备','荷载传感器／传感器／数据采集系统','安装／培训／技术支持']
   } : lang === 'th' ? {
     category:'หมวดหมู่เครื่องมือ', requirements:'ข้อกำหนด', enquiry:'สอบถาม AN-THAI', labels:['ชื่อ','บริษัท','อีเมล','ช่องทางติดต่อ','ประเภทคำสอบถาม'],
-    status:'เตรียมคำสอบถามแล้ว โปรดส่งจากแอปอีเมล หากแอปไม่เปิด ให้ติดต่อ info@an-thai.com หรือ anthaicheng@gmail.com โดยตรง เว็บไซต์นี้ไม่ส่งแบบฟอร์มหรือสร้างข้อมูลลูกค้า',
+    success:'ส่งคำสอบถามแล้ว เราจะติดต่อกลับโดยเร็ว', pending:'กำลังส่งคำสอบถาม…',
+    status:'ไม่สามารถยืนยันการส่งออนไลน์ได้ โปรดส่งจากแอปอีเมล หากแอปไม่เปิด ให้ส่งตรงถึง info@an-thai.com หรือ anthaicheng@gmail.com',
     categories:['เครื่องมือทดสอบความสมบูรณ์ของเสาเข็ม','ระบบทดสอบเสาเข็มแบบพลศาสตร์ความเครียดสูง','ระบบทดสอบคลื่นเสียงผ่านท่อ / อัลตราโซนิก','เครื่องมือวัดสำหรับการทดสอบรับน้ำหนักแบบสถิต','เครื่องมือทดสอบปฐพีและภาคสนาม','เครื่องมือทดสอบวัสดุ / ห้องปฏิบัติการ','โหลดเซลล์ / เซนเซอร์ / ระบบเก็บข้อมูล','การติดตั้ง / ฝึกอบรม / สนับสนุนทางเทคนิค']
-  } : {category:'Equipment category',requirements:'Requirements',enquiry:'AN-THAI enquiry',labels:['Name','Company','Email','Phone','Request'],status:'Your enquiry is prepared. Send it from your email app. If no app opens, email info@an-thai.com or anthaicheng@gmail.com directly. This website does not transmit the form or create a customer record.'};
+  } : {category:'Equipment category',requirements:'Requirements',enquiry:'AN-THAI enquiry',labels:['Name','Company','Email','Phone','Request'],success:'Your enquiry has been submitted. We will be in touch soon.',pending:'Submitting your enquiry…',status:'Online submission could not be confirmed. Please send from your email app. If no app opens, email info@an-thai.com or anthaicheng@gmail.com directly.'};
   const params = new URLSearchParams(window.location.search);
   if (!lang.startsWith('en')) quoteForm.querySelectorAll('input,textarea,select').forEach(field => {
     field.addEventListener('input', () => field.setCustomValidity(''));
@@ -69,16 +71,41 @@ if (quoteForm) {
   const categoryIndex = Object.keys(categories).indexOf(params.get('category'));
   const category = categoryIndex >= 0 ? (copy.categories?.[categoryIndex] || categories[params.get('category')]) : null;
   if (['equipment','instruments'].includes(params.get('type')) && category) quoteForm.elements.message.value = `${copy.category}: ${category}\n\n${copy.requirements}: `;
-  quoteForm.addEventListener('submit', event => {
+  const submit = quoteForm.querySelector('button[type="submit"]');
+  quoteForm.addEventListener('submit', async event => {
     event.preventDefault();
+    if (submit.disabled) return;
+    submit.disabled = true;
     const data = new FormData(quoteForm);
     const type = quoteForm.elements.requestType.selectedOptions?.[0]?.textContent || data.get('requestType') || copy.enquiry;
     const body = ['name','company','email','phone'].map((key,i)=>`${copy.labels[i]}: ${data.get(key)||''}`).join('\n') + `\n${copy.labels[4]}: ${type}\n\n${data.get('message')||''}`;
     const mailto = `mailto:info@an-thai.com?subject=${encodeURIComponent(`${copy.enquiry}: ${type}`)}&body=${encodeURIComponent(body)}`;
-    document.getElementById('enquiry-note').textContent = copy.status;
-    window.location.href = mailto;
+    const note = document.getElementById('enquiry-note');
+    note.textContent = copy.pending;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12000);
+    try {
+      const payload = {};
+      for (const field of ['name','company','email','phone','requestType','message','website']) payload[field] = data.get(field) || '';
+      payload.category = category || '';
+      payload.page = window.location.pathname;
+      payload.lang = lang;
+      const response = await fetch('/api/enquiry', {
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload), signal: controller.signal
+      });
+      if (!response.ok || (await response.json()).ok !== true) throw new Error('Submission unavailable');
+      note.textContent = copy.success;
+      quoteForm.reset();
+    } catch {
+      note.textContent = copy.status;
+      window.location.href = mailto;
+    } finally {
+      clearTimeout(timeout);
+      submit.disabled = false;
+    }
   });
-  quoteForm.querySelector('button[type="submit"]').disabled = false;
+  submit.disabled = false;
 }
 
 // Preserve enquiry context when changing language on the same page.

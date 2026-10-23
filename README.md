@@ -20,7 +20,21 @@ node scripts/check-interactions.cjs
 
 `index.html`, `services.html`, `equipment.html`, `portfolio.html`, `about.html` and `contact.html` are the six public routes. `portfolio.html` intentionally presents capabilities and application sectors, not named client projects. `404.html` is the error document; the eventual hosting provider must serve it with HTTP 404 for unknown paths, including nested paths. Its root-relative links support that use.
 
-The enquiry helper prepares a `mailto:` message; the visitor sends it from their own email app. It has no submission backend and does not claim delivery. Direct phone/email routes remain available. The submit button stays disabled until JavaScript installs its handler, preventing accidental GET submission of form values when scripts are unavailable.
+The enquiry form POSTs JSON to `/api/enquiry`, which sends a plain-text email through Resend. Success means Resend accepted the email, not confirmed inbox delivery. On failure, the form preserves its values and opens the existing `mailto:` draft for the visitor to send. Direct phone/email routes remain available. The submit button stays disabled until JavaScript installs its handler, preventing accidental GET submission of form values when scripts are unavailable.
+
+## Enquiry backend
+
+Set these server-side environment variables in Vercel for each intended deployment environment:
+
+- `RESEND_API_KEY`: a Resend API key with permission to send email. Never expose it in client assets or commit it.
+- `ENQUIRY_FROM_EMAIL`: a sender address on an already verified Resend domain, for example `AN-THAI <info@an-thai.com>` if that domain is verified.
+- `ENQUIRY_TO_EMAIL`: comma-separated business recipients. Intended value: `info@an-thai.com,anthaicheng@gmail.com`.
+
+All three variables are required; absent configuration returns HTTP 503 with the mailto fallback. The customer email is `reply_to`. No customer database is created; contact details and message content are passed to Resend and the configured business inboxes. The handler never logs message bodies or provider errors. It accepts JSON POST only, requires name/email/message, caps every accepted field and rejects bodies of 20 KiB or more. The hidden `website` field is a honeypot; filled submissions are acknowledged without sending.
+
+The existing `framework: null` and `outputDirectory: "dist"` remain valid: Vercel discovers supported files in the root `api/` separately from static build output. Do not copy server code into `dist`. References: [Node functions](https://vercel.com/docs/functions/runtimes/node-js), [outputDirectory](https://vercel.com/docs/project-configuration/vercel-json#outputdirectory), [Resend send-email API](https://resend.com/docs/api-reference/emails/send-email).
+
+Run `node scripts/test-enquiry.cjs` and `node scripts/check-interactions.cjs` for offline tests (mocked fetch only), then `node scripts/build-static.cjs` to generate the English, Chinese and Thai pages. A static-only local server cannot execute `/api/enquiry` and will exercise the email-app fallback. Real Vercel routing and inbox delivery still need an owner-authorized runtime acceptance after configuration; no real email is sent by these tests. A network timeout can be ambiguous: the fallback says submission could not be confirmed, and manually sending may produce a duplicate. The honeypot is basic spam filtering, not a rate limiter.
 
 ## Content and images
 

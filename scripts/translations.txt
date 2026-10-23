@@ -340,9 +340,10 @@ Testing service / 工程检测 || 工程检测服务 || บริการทด
 Testing equipment / 检测设备 || 检测设备 || เครื่องมือทดสอบ
 Geotechnical / material / structural support || 岩土／材料／结构支持 || สนับสนุนงานปฐพี / วัสดุ / โครงสร้าง
 General engineering enquiry || 一般工程咨询 || สอบถามงานวิศวกรรมทั่วไป
-Project / equipment requirement || 项目／设备要求 || ข้อกำหนดโครงการ / เครื่องมือ
+Project / equipment requirement * || 项目／设备要求 * || ข้อกำหนดโครงการ / เครื่องมือ *
 Project location, pile type, design/load target, number of tests, schedule — or equipment application, measurement range and required delivery location. || 项目地点、桩型、设计或目标荷载、检测数量及工期；或设备应用、测量范围与交货地点。 || สถานที่โครงการ ประเภทเสาเข็ม น้ำหนักออกแบบหรือเป้าหมาย จำนวนทดสอบ กำหนดการ หรือการใช้งานเครื่องมือ ช่วงวัด และสถานที่ส่งมอบ
-Prepare Email Enquiry → || 生成询价邮件 → || เตรียมอีเมลสอบถาม →
+Send Enquiry → || 提交询盘 → || ส่งคำสอบถาม →
+Website || 网站 || เว็บไซต์
 Prepare your enquiry, then send it from your email app. You can also email info@an-thai.com or anthaicheng@gmail.com directly, or call us. || 填写需求后，请在邮件应用中发送。也可直接发邮件至 info@an-thai.com、anthaicheng@gmail.com，或致电咨询。 || กรอกคำสอบถามแล้วส่งจากแอปอีเมลของคุณ หรือส่งตรงถึง info@an-thai.com หรือ anthaicheng@gmail.com หรือโทรหาเรา
 Please email || 请发送邮件至 || โปรดส่งอีเมลถึง
 or || 或 || หรือ
@@ -411,7 +412,7 @@ Thailand-based engineering coordination, testing services and equipment-related 
 Prepare Enquiry || 准备咨询邮件 || เตรียมคำสอบถาม
 Describe the project or requirement || 说明项目或需求 || อธิบายโครงการหรือความต้องการ
 Project location and stage; drawings/specification; required output; key technical parameters or equipment application; interfaces, delivery location and target schedule. || 项目地点与阶段；图纸/规范；所需成果；关键技术参数或设备用途；接口条件、交货地点和目标工期。 || สถานที่และระยะโครงการ; แบบ/ข้อกำหนด; ผลงานที่ต้องการ; พารามิเตอร์สำคัญหรือการใช้งานอุปกรณ์; อินเทอร์เฟซ สถานที่ส่งมอบ และกำหนดการเป้าหมาย
-Prepare your enquiry, then send it from your email app. This website does not transmit the form or create a customer record. You can also email info@an-thai.com or anthaicheng@gmail.com directly, or call us. || 填写需求后，请在邮件应用中发送。本网站不会提交表单，也不会创建客户记录。也可直接发送至 info@an-thai.com、anthaicheng@gmail.com，或致电联系。 || กรอกคำสอบถามแล้วส่งจากแอปอีเมลของคุณ เว็บไซต์นี้ไม่ส่งแบบฟอร์มหรือสร้างข้อมูลลูกค้า คุณสามารถส่งอีเมลตรงถึง info@an-thai.com หรือ anthaicheng@gmail.com หรือโทรหาเราได้
+Submit your enquiry to AN-THAI by email through Resend. If online submission is unavailable, please send from your email app. You can also email info@an-thai.com or anthaicheng@gmail.com directly, or call us. || 提交后，您的询盘将通过 Resend 以邮件发送给安泰。如无法在线提交，请在邮件应用中发送。也可直接发送至 info@an-thai.com、anthaicheng@gmail.com，或致电联系。 || ส่งคำสอบถามถึง AN-THAI ทางอีเมลผ่าน Resend หากส่งออนไลน์ไม่ได้ โปรดส่งจากแอปอีเมลของคุณ หรือส่งตรงถึง info@an-thai.com หรือ anthaicheng@gmail.com หรือโทรหาเรา
 AN-THAI Engineering | Engineering Services & Technical Cooperation Thailand || 安泰工程｜泰国工程服务与技术合作 || AN-THAI Engineering | บริการวิศวกรรมและความร่วมมือทางเทคนิคในประเทศไทย
 AN-THAI Engineering supports engineering services, testing instruments and selected steel, space-structure and powder-equipment cooperation in Thailand. || 安泰在泰国提供工程服务、检测仪器支持，并协调部分钢结构、空间结构及粉体设备合作。 || AN-THAI สนับสนุนบริการวิศวกรรม เครื่องมือทดสอบ และประสานความร่วมมือบางโครงการด้านโครงสร้างเหล็ก โครงสร้างช่วงกว้าง และเครื่องจักรกระบวนการผงในประเทศไทย
 Explore AN-THAI business routes || 了解安泰业务入口 || ดูช่องทางธุรกิจของ AN-THAI

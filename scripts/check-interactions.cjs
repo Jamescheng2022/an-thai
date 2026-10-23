@@ -119,7 +119,7 @@ for (const lang of ['en','zh-CN','th']) {
   assert.equal(s.states.reset,undefined);
   assert.equal(s.elements.message.value,'Keep my details');
   assert.equal(s.submit.disabled,false);
-  assert.match(s.note.textContent,lang==='en'?/Please check your details and submit again/:lang==='zh-CN'?/请检查您的信息并再次提交/:/โปรดตรวจสอบข้อมูลและส่งอีกครั้ง/);
+  assert.match(s.note.textContent,lang==='en'?/Please wait a moment and submit again/:lang==='zh-CN'?/请稍等片刻后再次提交/:/โปรดรอสักครู่แล้วส่งอีกครั้ง/);
   const tooFastId=JSON.parse(s.states.request.options.body).enquiryId;
   s.states.elapsed=3000;
   s.states.mode='success';

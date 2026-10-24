@@ -16,4 +16,5 @@ for (const file of files) fs.copyFileSync(path.join(root, file), path.join(outpu
 fs.cpSync(path.join(root, 'assets'), path.join(output, 'assets'), {recursive: true});
 require('node:child_process').execFileSync('python3', [path.join(root, 'scripts/localize.py')], {stdio:'inherit', env: {...process.env, PYTHONUTF8: '1'}});
 require('node:child_process').execFileSync('python3', [path.join(root, 'scripts/build-insights.py')], {stdio:'inherit', env: {...process.env, PYTHONUTF8: '1'}});
+require('./inject-analytics.cjs')(output);
 console.log('Static website packaged in dist, including Insights.');

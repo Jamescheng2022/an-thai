@@ -8,7 +8,7 @@ import os
 
 ROOT = Path(__file__).resolve().parent.parent
 PAGES = ['index', 'services', 'equipment', 'portfolio', 'about', 'contact', '404']
-ROWS = [line.split(' || ') for line in (ROOT / 'scripts/translations.txt').read_text().splitlines() if line.strip()]
+ROWS = [line.split(' || ') for line in (ROOT / 'scripts/translations.txt').read_text(encoding='utf-8').splitlines() if line.strip()]
 assert all(len(row) == 3 and all(row) for row in ROWS), 'Malformed translation row'
 assert len({r[0] for r in ROWS}) == len(ROWS), 'Duplicate translation key'
 MAP = {r[0]: r[1:] for r in ROWS}
@@ -111,9 +111,9 @@ def generate():
         target = ROOT/'dist'/('' if lang=='en' else lang)
         target.mkdir(parents=True, exist_ok=True)
         for page in PAGES:
-            p=Localizer(lang,page);p.feed((ROOT/(page+'.html')).read_text())
+            p=Localizer(lang,page);p.feed((ROOT/(page+'.html')).read_text(encoding='utf-8'))
             if p.missing: raise RuntimeError(f'{lang}/{page}: missing translations: '+json.dumps(sorted(p.missing),ensure_ascii=False))
-            (target/(page+'.html')).write_text(''.join(p.out))
+            (target/(page+'.html')).write_text(''.join(p.out), encoding='utf-8')
             results.append({'language':lang,'page':page,'translated_items':p.count,'missing':0})
     sitemap=['<?xml version="1.0" encoding="UTF-8"?>','<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">']
     for lang in ['en','zh','th']:
@@ -123,14 +123,14 @@ def generate():
                 sitemap.append('<xhtml:link rel="alternate" hreflang="'+({'zh':'zh-CN'}.get(alt,alt))+'" href="'+url(alt,page)+'"/>')
             sitemap.append('</url>')
     sitemap.append('</urlset>')
-    (ROOT/'dist/sitemap.xml').write_text('\n'.join(sitemap))
+    (ROOT/'dist/sitemap.xml').write_text('\n'.join(sitemap), encoding='utf-8')
     # Responsive browser QA harness: exists only on preview deployments.
     if os.environ.get('VERCEL_ENV') == 'preview':
         qa=ROOT/'dist/_qa';qa.mkdir(exist_ok=True)
         for page in PAGES:
             frames=''.join('<h2>'+lang+' / '+str(width)+'</h2><iframe title="'+lang+'-'+str(width)+'" width="'+str(width)+'" height="900" src="'+url(lang,page).replace('https://an-thai.com','')+'"></iframe>' for lang in ['en','zh','th'] for width in [390,820,1363])
             nav=' '.join('<a href="'+p+'.html">'+p+'</a>' for p in PAGES)
-            (qa/(page+'.html')).write_text('<!doctype html><html lang="en"><head><meta name="robots" content="noindex,nofollow"><title>Responsive QA</title></head><body>'+nav+frames+'</body></html>')
+            (qa/(page+'.html')).write_text('<!doctype html><html lang="en"><head><meta name="robots" content="noindex,nofollow"><title>Responsive QA</title></head><body>'+nav+frames+'</body></html>', encoding='utf-8')
     print(json.dumps({'pages':len(results),'coverage':results},ensure_ascii=False))
 
 if __name__ == '__main__': generate()

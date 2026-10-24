@@ -70,10 +70,11 @@
 <div class="eyebrow">Prepare Enquiry</div>
 <h2 class="form-title">Describe the project or requirement</h2>
 <form data-quote-form aria-describedby="enquiry-note"><div class="form-grid">
-<div class="field"><label for="enquiry-name">Name *</label><input name="name" required id="enquiry-name" autocomplete="name"></div>
-<div class="field"><label for="enquiry-company">Company</label><input name="company" id="enquiry-company" autocomplete="organization"></div>
-<div class="field"><label for="enquiry-email">Email *</label><input name="email" type="email" required id="enquiry-email" autocomplete="email"></div>
-<div class="field"><label for="enquiry-phone">Phone / WeChat / LINE</label><input name="phone" id="enquiry-phone" autocomplete="tel"></div>
+<label for="enquiry-website" hidden>Website</label><input type="text" name="website" id="enquiry-website" maxlength="200" hidden tabindex="-1" autocomplete="off" aria-hidden="true">
+<div class="field"><label for="enquiry-name">Name *</label><input name="name" required maxlength="200" id="enquiry-name" autocomplete="name"></div>
+<div class="field"><label for="enquiry-company">Company</label><input name="company" maxlength="300" id="enquiry-company" autocomplete="organization"></div>
+<div class="field"><label for="enquiry-email">Email *</label><input name="email" type="email" required maxlength="254" id="enquiry-email" autocomplete="email"></div>
+<div class="field"><label for="enquiry-phone">Phone / WeChat / LINE</label><input name="phone" maxlength="100" id="enquiry-phone" autocomplete="tel"></div>
 <div class="field full"><label for="enquiry-requestType">Request type *</label><select name="requestType" required id="enquiry-requestType">
 <option value="Engineering services">Engineering services</option>
 <option value="Steel / space-structure cooperation">Steel / space-structure cooperation</option>
@@ -81,8 +82,8 @@
 <option value="Testing instruments">Testing instruments</option>
 <option value="General engineering enquiry">General engineering enquiry</option>
 </select></div>
-<div class="field full"><label for="enquiry-message">Project / equipment requirement</label><textarea name="message" placeholder="Project location and stage; drawings/specification; required output; key technical parameters or equipment application; interfaces, delivery location and target schedule." id="enquiry-message"></textarea></div>
-<div class="field full"><button class="btn primary" type="submit" disabled>Prepare Email Enquiry →</button><div class="form-note" id="enquiry-note" role="status">Prepare your enquiry, then send it from your email app. This website does not transmit the form or create a customer record. You can also email info@an-thai.com or anthaicheng@gmail.com directly, or call us.</div></div>
+<div class="field full"><label for="enquiry-message">Project / equipment requirement *</label><textarea name="message" required maxlength="10000" placeholder="Project location and stage; drawings/specification; required output; key technical parameters or equipment application; interfaces, delivery location and target schedule." id="enquiry-message"></textarea></div>
+<div class="field full"><button class="btn primary" type="submit" disabled>Send Enquiry →</button><div class="form-note" id="enquiry-note" role="status">Submit your enquiry to AN-THAI by email through Resend. If online submission is unavailable, please send from your email app. You can also email info@an-thai.com or anthaicheng@gmail.com directly, or call us.</div></div>
 </div></form>
 <noscript><p>Please email <a href="mailto:info@an-thai.com">info@an-thai.com</a> or <a href="mailto:anthaicheng@gmail.com">anthaicheng@gmail.com</a>, or call <a href="tel:+66902921749">+66 90 292 1749</a> with your requirements.</p></noscript>
 </div>

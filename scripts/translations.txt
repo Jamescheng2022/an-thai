@@ -437,3 +437,12 @@ cooperation || 合作 || ความร่วมมือ
 Thailand-based engineering services, testing-instrument support and selected technical cooperation. || 立足泰国的工程服务、检测仪器支持及部分技术合作。 || บริการวิศวกรรมในประเทศไทย การสนับสนุนเครื่องมือทดสอบ และความร่วมมือทางเทคนิคบางประเภท
 AN-THAI is a Thailand-based engineering company providing testing, design conversion and Thai submission coordination, testing-instrument support and selected project cooperation. || AN-THAI 是一家立足泰国的工程公司，提供检测、设计转化与泰国报建协调、检测仪器支持及部分项目合作。 || AN-THAI เป็นบริษัทวิศวกรรมในประเทศไทย ให้บริการงานทดสอบ การปรับแบบและประสานงานยื่นขออนุญาตตามข้อกำหนดไทย การสนับสนุนเครื่องมือทดสอบ และความร่วมมือในบางโครงการ
 AN-THAI Engineering Company Limited is a Thailand-based engineering company providing testing and inspection, design conversion and Thai submission coordination, testing-instrument support and selected project cooperation with suitable partners. Licensed design/sign-off and authority submission are confirmed against the agreed project scope. || AN-THAI Engineering Company Limited 是一家立足泰国的工程公司，提供检测与检验、设计转化与泰国报建协调、检测仪器支持，并与合适的专业合作伙伴开展部分项目合作。涉及持证设计、签章或主管部门报审的工作，将按双方确认的项目范围另行核实。 || AN-THAI Engineering Company Limited เป็นบริษัทวิศวกรรมในประเทศไทย ให้บริการทดสอบและตรวจสอบ การปรับแบบและประสานงานยื่นขออนุญาตตามข้อกำหนดไทย การสนับสนุนเครื่องมือทดสอบ และความร่วมมือในบางโครงการกับพันธมิตรที่เหมาะสม งานที่ต้องใช้วิศวกรผู้มีใบอนุญาตลงนามหรือยื่นต่อหน่วยงานรัฐ จะยืนยันตามขอบเขตโครงการที่ตกลงกัน
+
+Insights || 资讯 || ข้อมูลเชิงลึก
+Insights | AN-THAI Engineering || 资讯 | AN-THAI Engineering || ข้อมูลเชิงลึก | AN-THAI Engineering
+Engineering insights from AN-THAI. Explore testing, inspection and testing-equipment articles as they are published. || 来自 AN-THAI 的工程资讯，持续发布检测、检验与检测设备相关文章。 || ข้อมูลเชิงลึกด้านวิศวกรรมจาก AN-THAI อ่านบทความเกี่ยวกับงานทดสอบ ตรวจสอบ และเครื่องมือทดสอบที่เผยแพร่อย่างต่อเนื่อง
+Engineering testing, inspection and equipment insights. || 工程检测、检验与检测设备资讯。 || ข้อมูลเชิงลึกด้านการทดสอบ ตรวจสอบ และเครื่องมือทางวิศวกรรม
+Articles will appear here once published. || 文章发布后将显示在此处。 || บทความจะปรากฏที่นี่เมื่อเผยแพร่แล้ว
+Discuss your project || 讨论您的项目 || พูดคุยเกี่ยวกับโครงการของคุณ
+Contact AN-THAI || 联系 AN-THAI || ติดต่อ AN-THAI
+Read article || 阅读文章 || อ่านบทความ

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="1200" height="680" role="img"><rect width="1200" height="680" fill="#f4f8fa"/><rect x="0" y="0" width="1200" height="680" rx="0" fill="#0e2943" stroke="none" stroke-width="1"/>
+<defs><linearGradient id="c" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#187c91"/><stop offset="100%" stop-color="#0e2943"/></linearGradient></defs>
+<rect x="36" y="45" width="1128" height="590" rx="28" fill="url(#c)" stroke="#3b8095" stroke-width="2"/>
+<rect x="64" y="76" width="398" height="45" rx="20" fill="#ddf1f1" stroke="none" stroke-width="1"/><text x="89" y="107" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="700" fill="#143a54" >ENGINEERING  /  FIELD EVIDENCE</text>
+<text x="66" y="214" font-family="Arial,Helvetica,sans-serif" font-size="55" font-weight="750" fill="#ffffff" >PILE INTEGRITY</text>
+<text x="66" y="279" font-family="Arial,Helvetica,sans-serif" font-size="55" font-weight="750" fill="#ffffff" >REPORT REVIEW</text>
+<text x="66" y="347" font-family="Arial,Helvetica,sans-serif" font-size="34" font-weight="500" fill="#d6eef1" >Seven questions before</text>
+<text x="66" y="391" font-family="Arial,Helvetica,sans-serif" font-size="34" font-weight="500" fill="#d6eef1" >accepting a conclusion</text>
+<rect x="64" y="453" width="440" height="2" rx="0" fill="#80bfc9" stroke="none" stroke-width="1"/>
+<text x="66" y="509" font-family="Arial,Helvetica,sans-serif" font-size="20" font-weight="700" fill="#c9e0e7" >AN-THAI  /  ENGINEERING INSIGHTS</text>
+<text x="66" y="554" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="400" fill="#a1c4ce" >Conceptual illustration — not project data</text>
+<rect x="624" y="100" width="476" height="448" rx="27" fill="#f9fbfb" stroke="none" stroke-width="1"/>
+<rect x="661" y="139" width="195" height="52" rx="14" fill="#dcedf0" stroke="none" stroke-width="1"/><text x="683" y="172" font-family="Arial,Helvetica,sans-serif" font-size="19" font-weight="700" fill="#184460" >PILE RECORD</text>
+<rect x="679" y="227" width="385" height="96" rx="14" fill="#e9f2f4" stroke="none" stroke-width="1"/>
+<text x="701" y="261" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="650" fill="#173a55" >Raw signal evidence</text>
+<path d="M704 300 L742 300 L764 281 L785 313 L811 287 L841 299 L880 299 L901 265 L922 321 L950 289 L989 299 L1038 299" fill="none" stroke="#197d93" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="680" y="351" width="384" height="156" rx="14" fill="#e9f2f4" stroke="none" stroke-width="1"/>
+<text x="701" y="383" font-family="Arial,Helvetica,sans-serif" font-size="19" font-weight="700" fill="#173a55" >ENGINEERING REVIEW</text>
+<text x="707" y="426" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="600" fill="#1b5974" >Identity  ·  Context</text>
+<text x="707" y="460" font-family="Arial,Helvetica,sans-serif" font-size="21" font-weight="600" fill="#1b5974" >Limitations  ·  Next step</text>
+<text x="645" y="603" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="600" fill="#bfdee3" >NO MEASURED TRACE OR REAL JOBSITE DEPICTED</text>
+</svg>

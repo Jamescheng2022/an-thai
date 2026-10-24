@@ -7,7 +7,7 @@ import json, re, sys, xml.etree.ElementTree as ET
 ROOT=Path(__file__).resolve().parents[1]
 class Document(HTMLParser):
  def __init__(self,path):
-  super().__init__(convert_charrefs=True);self.tags=[];self.scripts=[];self.in_json=False;self.buffer='';self.feed(path.read_text())
+  super().__init__(convert_charrefs=True);self.tags=[];self.scripts=[];self.in_json=False;self.buffer='';self.feed(path.read_text(encoding='utf-8'))
  def handle_starttag(self,tag,attrs):
   attrs=dict(attrs);self.tags.append((tag,attrs))
   if tag=='script' and attrs.get('type')=='application/ld+json':self.in_json=True;self.buffer=''
@@ -46,16 +46,16 @@ for name,d in pages.items():
    check((ROOT/path).is_file(),f'{name}: missing {path}');refs.add(path)
    if u.fragment and path in pages:check(u.fragment in ids[path],f'{name}: broken #{u.fragment} in {path}')
 for name in pages:
- s=(ROOT/name).read_text()
+ s=(ROOT/name).read_text(encoding='utf-8')
  check(not re.search(r'Founded in 2005|Login|Register|Unsplash|AI Chat|placeholder@|example\.com',s,re.I),f'{name}: forbidden legacy content')
-manifest=json.loads((ROOT/'ASSET_MANIFEST.json').read_text())
+manifest=json.loads((ROOT/'ASSET_MANIFEST.json').read_text(encoding='utf-8'))
 import hashlib
 for a in manifest['assets']:
  p=ROOT/a['path'];check(p.is_file() and hashlib.sha256(p.read_bytes()).hexdigest()==a['sha256'],f'asset hash {a["path"]}')
 locs=[x.text for x in ET.parse(ROOT/'sitemap.xml').iter() if x.tag.endswith('}loc')]
 check(set(locs)=={'https://an-thai.com/'+('' if p=='index.html' else p) for p in pages if p!='404.html'},'sitemap routes')
-check('Sitemap: https://an-thai.com/sitemap.xml' in (ROOT/'robots.txt').read_text(),'robots sitemap')
+check('Sitemap: https://an-thai.com/sitemap.xml' in (ROOT/'robots.txt').read_text(encoding='utf-8'),'robots sitemap')
 check(not list((ROOT/'assets').rglob('*.b64')),'legacy image chunks')
-check('loadBrochureSprite' not in (ROOT/'assets/js/site.js').read_text(),'legacy sprite JS')
+check('loadBrochureSprite' not in (ROOT/'assets/js/site.js').read_text(encoding='utf-8'),'legacy sprite JS')
 result={'status':'PASS' if not errors else 'FAIL','pages':len(pages),'referenced_local_files':len(refs),'image_files':len(manifest['assets']),'image_bytes_total':sum(a['bytes'] for a in manifest['assets']),'errors':errors,'limitations':['Static validation does not certify browser layout, mobile devices, hosting status codes or legal/business credentials.']}
 print(json.dumps(result,indent=2));sys.exit(bool(errors))

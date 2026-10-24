@@ -18,17 +18,18 @@ class Doc(HTMLParser):
     def handle_data(self,d):
         if self.script:self.schemas.append(json.loads(d))
         else:self.text.append(d)
-docs={p.relative_to(root).as_posix():Doc(p.read_text()) for p in root.rglob('*.html')}
-assert len(docs)==21, len(docs)
+docs={p.relative_to(root).as_posix():Doc(p.read_text(encoding='utf-8')) for p in root.rglob('*.html')}
+assert len(docs)==24 + len(list((root/'insights').glob('*.html'))), len(docs)
 links=0
 for name,d in docs.items():
     language='zh-CN' if name.startswith('zh/') else 'th' if name.startswith('th/') else 'en'
     assert ('html',{'lang':language}) in d.tags, name
     alternatives=[a for t,a in d.tags if t=='link' and a.get('rel')=='alternate']
-    assert {a['hreflang'] for a in alternatives}=={'en','zh-CN','th','x-default'},name
+    article=name.startswith('insights/')
+    assert {a['hreflang'] for a in alternatives}==(set() if article else {'en','zh-CN','th','x-default'}),name
     assert len([a for t,a in d.tags if t=='link' and a.get('rel')=='canonical'])==1,name
     assert len([a for t,a in d.tags if t=='h1'])==1,name
-    assert len([a for t,a in d.tags if t=='a' and 'data-language' in a])==3,name
+    assert len([a for t,a in d.tags if t=='a' and 'data-language' in a])==(0 if article else 3),name
     for t,a in d.tags:
         if t=='img':assert a.get('alt','').strip(),name
         for key in ['href','src']:
@@ -42,6 +43,6 @@ for name,d in docs.items():
             assert (root/target).exists(),(name,a[key],target)
             if u.fragment and target in docs:assert unquote(u.fragment) in docs[target].ids,(name,a[key])
             links+=1
-    if language in ['en','th']:assert not re.search('[\u3400-\u9fff]', ''.join(d.text).replace('中文','')),name
+    if language in ['en','th'] and not name.endswith('insights.html'):assert not re.search('[\u3400-\u9fff]', ''.join(d.text).replace('中文','')),name
     print('PASS',name,language,'navigation, alternate languages, links, images, metadata, JSON-LD')
 print('PASS:',len(docs),'pages;',links,'local links and assets checked')

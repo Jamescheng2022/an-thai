@@ -1,0 +1,134 @@
+{
+  "slug": "pile-integrity-test-report-review-checklist",
+  "title": "When a Pile Integrity Report Says “Pass” but the Waveform Looks Odd: Seven Questions",
+  "description": "Seven practical questions to assess a low-strain pile integrity report, trace source records, and choose an evidence-led next step.",
+  "author": "AN-THAI Engineering",
+  "date": "2026-10-24",
+  "image": "assets/images/insights/pit-report-review-cover.svg",
+  "image_alt": "Conceptual graphic with an illustrative signal line, pile record, and engineering evidence review cards; not an actual test trace",
+  "image_caption": "Original conceptual editorial illustration. Not a real AN-THAI project, actual test record or acceptance signal.",
+  "image_width": 1200,
+  "image_height": 680,
+  "sections": [
+    {
+      "heading": "Why a “Pass” label is not the whole answer",
+      "paragraphs": [
+        "A low-strain impact test can help screen a pile for possible integrity-related changes, but interpretation depends on pile material, geometry, accessibility, site conditions and signal quality. A report that simply says “Pass” or “No significant anomaly detected” may leave an owner’s engineer unsure what evidence supports the judgment. Equally, an unfamiliar waveform is not proof of a defect.",
+        "The useful question is whether the data, site context and interpretation can be traced to the particular pile tested. The steps below help organize a technical review; they are not a universal acceptance checklist or a substitute for the project engineer’s assessment."
+      ],
+      "figures": [
+        {
+          "image": "assets/images/insights/pit-report-review-scope.svg",
+          "image_alt": "Two-column diagram contrasting low-strain integrity screening insights with properties it does not directly establish",
+          "caption": "Low-strain response can contribute to an integrity review but does not directly establish bearing capacity or load–settlement behaviour.",
+          "declaration": "Original programmatic SVG, illustrative only; based on the public ASTM D5882-16 significance and use text.",
+          "width": 720,
+          "height": 930
+        }
+      ]
+    },
+    {
+      "heading": "1. Is this the right engineering question?",
+      "paragraphs": [
+        "Low-strain impact methods examine wave response for possible integrity-related anomalies. They do not directly determine geotechnical bearing capacity. If the decision concerns allowable load or load–settlement behaviour, the project engineer must identify an appropriate different test or analysis. A positive integrity-screening conclusion is not a load-test certificate."
+      ]
+    },
+    {
+      "heading": "2. Can the signal be matched to the correct pile?",
+      "paragraphs": [
+        "Check the pile ID, location, type, geometry, construction record and test date. Match the schedule, as-built drawings, field log, image or file name and summary table. When identifiers disagree, reconcile the records before drawing conclusions. This is a data-control issue even if the visible waveform looks familiar."
+      ]
+    },
+    {
+      "heading": "3. Does the report describe how data were acquired?",
+      "paragraphs": [
+        "Look for the pile-head access and preparation, impact and sensor locations, instrumentation, and any relevant site constraints or instrument checks. Poor coupling or unsuitable impact conditions can affect the record. Meaningful deviations from the agreed test procedure belong in the technical record, not behind a one-word result."
+      ],
+      "figures": [
+        {
+          "image": "assets/images/insights/pit-report-review-traceability.svg",
+          "image_alt": "Five linked stages from pile identification through field records and acquisition to original signal files and signed report",
+          "caption": "A defensible handover links each acquisition record and interpretation to the same identified pile.",
+          "declaration": "Original programmatic SVG traceability diagram; not a diagram of any client's records.",
+          "width": 720,
+          "height": 1010
+        }
+      ]
+    },
+    {
+      "heading": "4. Are the original signal records reviewable?",
+      "paragraphs": [
+        "Ask for the evidence and explanation required by the agreed scope. Where access rights allow, obtain representative raw traces with readable axes, clear pile references and an account of repeatability or rejected measurements where relevant. A single clean screenshot may conceal acquisition issues; a single awkward trace may justify another look rather than an immediate failure verdict.",
+        "Ask which assumptions were used when interpreting reflection features, including wave-speed estimates and whether a pile-toe reflection could reasonably be identified. Some pile and soil combinations do not produce an unambiguous end reflection."
+      ]
+    },
+    {
+      "heading": "5. Were geometry, installation history and ground conditions considered?",
+      "paragraphs": [
+        "Changes in pile cross-section, material, surrounding ground or installation method can complicate a response. Review the relevant drawings, concreting or driving records, ground profile and comparable nearby pile evidence, if available. The interpretation should connect the signal to these conditions, not treat a waveform as a stand-alone photograph of a pile."
+      ],
+      "figures": [
+        {
+          "image": "assets/images/insights/pit-report-review-triage.svg",
+          "image_alt": "Four-stage decision flow for an unusual trace: acquisition quality, pile context, explanations, and documented conclusion",
+          "caption": "Start with acquisition quality and context; the responsible engineer determines whether a repeat or complementary investigation is justified.",
+          "declaration": "Original programmatic non-scale workflow; no invented signal thresholds or defect classification.",
+          "width": 720,
+          "height": 1020
+        }
+      ]
+    },
+    {
+      "heading": "6. Does the conclusion separate evidence from uncertainty?",
+      "paragraphs": [
+        "Look for a clear distinction between signal quality, observed features, possible explanations and the responsible engineer’s judgment. “Inconclusive,” “possible anomaly” and “confirmed defect” are not interchangeable. An ambiguous result can call for better acquisition, document reconciliation or a suitable complementary investigation; there is no one follow-up method for every foundation."
+      ]
+    },
+    {
+      "heading": "7. What method and acceptance basis govern the decision?",
+      "paragraphs": [
+        "The report should identify the responsible testing organization and reviewer, the contractually adopted method and edition where specified, and project-specific decision or escalation criteria. ASTM D5882-16 was withdrawn in 2025 with no replacement listed on its official product page; it must not be presented as a currently active standard. Do not substitute a generic web checklist for the project specification.",
+        "If the report includes a statement of conformity, ask which rule was used to reach it and which relevant uncertainty or limitation was considered. ILAC G8:09/2019 provides general guidance on decision rules in laboratory reporting; it is not a universal pile acceptance criterion and does not establish anyone’s accreditation."
+      ],
+      "figures": [
+        {
+          "image": "assets/images/insights/pit-report-review-handover.svg",
+          "image_alt": "Six-part document pack: pile identifiers, design records, construction history, ground information, raw traces, and acceptance basis",
+          "caption": "A useful technical enquiry starts with a coherent evidence pack, not an unsupported request to change “Pass” to “Fail.”",
+          "declaration": "Original programmatic document checklist; project-specific requirements may differ.",
+          "width": 720,
+          "height": 1080
+        }
+      ]
+    },
+    {
+      "heading": "A practical handover request",
+      "paragraphs": [
+        "Send the pile schedule and drawing references, accurate pile ID, relevant construction and ground records, the original test report, and the trace or statement in question. Access to raw instrument exports may require agreement with the testing team. Request written reconciliation of the evidence, assumptions and proposed next step rather than asking for a label change without explanation.",
+        "For an engineering-services discussion in Thailand, choose the Engineering services route at an-thai.com/contact.html?type=engineering#enquiry-form and include the project stage, location, test scope and available records. AN-THAI will confirm its own scope and any specialist responsibility before commitment. This page offers general information, not a diagnosis of an individual pile."
+      ]
+    },
+    {
+      "heading": "Source and applicability notes",
+      "paragraphs": [
+        "ASTM International, D5882-16 public scope and significance page (official status: withdrawn 2025, no replacement): https://store.astm.org/d5882-16.html",
+        "ILAC, G8:09/2019 Guidelines on Decision Rules and Statements of Conformity (general laboratory guidance, not pile acceptance): https://ilac.org/publications-and-resources/ilac-guidance-series/",
+        "Check the actual project contract, specifications, any applicable Thai requirements, professional responsibilities and edition before deciding which acceptance documents govern a particular site."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "question": "Does an acceptable low-strain integrity report prove pile bearing capacity?",
+      "answer": "No. It does not directly determine geotechnical bearing capacity; the project engineer must select an appropriate capacity assessment when that is the actual question."
+    },
+    {
+      "question": "Should one unusual reflection automatically mean a pile has failed?",
+      "answer": "No. First check trace quality, repeatability, identification and site context; the responsible engineer determines any follow-up."
+    },
+    {
+      "question": "Can any reviewer demand raw instrument files?",
+      "answer": "File disclosure depends on the contract, testing scope and agreed review rights. Request the evidence needed to understand the decision and clarify access with the test provider."
+    }
+  ]
+}

@@ -45,21 +45,59 @@ with tempfile.TemporaryDirectory(prefix='.insights-check-', dir=root) as tempora
         except AssertionError: pass
         else: raise AssertionError('Accepted invalid '+field)
 
-    # Visual contract: body figure repeating cover image
-    invalid_repeat_cover = copy.deepcopy(sample)
-    invalid_repeat_cover['sections'][0]['figures'][0]['image'] = sample['image']
-    source.write_text(json.dumps(invalid_repeat_cover), encoding='utf-8')
-    try: module.load_articles(content)
-    except AssertionError: pass
-    else: raise AssertionError('Accepted body figure repeating cover image')
+    # Image path normalization unit checks across all alias styles
+    expected_norm = 'assets/images/static-load.webp'
+    for alias in [
+        'assets/images/static-load.webp',
+        '/assets/images/static-load.webp',
+        './assets/images/static-load.webp',
+        'assets/images/../images/static-load.webp',
+        'assets/./images/static-load.webp',
+        'assets%2Fimages%2Fstatic-load.webp',
+        'assets/images/static%2Dload.webp',
+        'ASSETS/IMAGES/STATIC-LOAD.WEBP',
+        '/ASSETS/images/../images/STATIC-LOAD.webp',
+        './assets%2Fimages/STATIC-LOAD.WEBP',
+        'assets///images//static-load.webp',
+    ]:
+        assert module.normalize_image_path(alias) == expected_norm, f'Normalization failed for {alias}'
 
-    # Visual contract: duplicate body figures
-    invalid_duplicate_fig = copy.deepcopy(sample)
-    invalid_duplicate_fig['sections'][1]['figures'][0]['image'] = invalid_duplicate_fig['sections'][0]['figures'][0]['image']
-    source.write_text(json.dumps(invalid_duplicate_fig), encoding='utf-8')
-    try: module.load_articles(content)
-    except AssertionError: pass
-    else: raise AssertionError('Accepted duplicate body figures')
+    # Visual contract: body figure repeating cover image (direct and via aliases)
+    for cover_alias in [
+        sample['image'],
+        '/' + sample['image'],
+        './' + sample['image'],
+        sample['image'].upper(),
+        'assets/images/../images/' + Path(sample['image']).name,
+        sample['image'].replace('/', '%2F'),
+    ]:
+        invalid_repeat_cover = copy.deepcopy(sample)
+        invalid_repeat_cover['sections'][0]['figures'][0]['image'] = cover_alias
+        source.write_text(json.dumps(invalid_repeat_cover), encoding='utf-8')
+        try: module.load_articles(content)
+        except AssertionError as err:
+            assert 'body figure repeats cover image' in str(err), f'Unexpected error: {err}'
+        else: raise AssertionError(f'Accepted body figure repeating cover via alias: {cover_alias}')
+
+    # Visual contract: duplicate body figures (direct and via aliases)
+    base_fig = sample['sections'][0]['figures'][0]['image']
+    for fig_alias in [
+        base_fig,
+        '/' + base_fig,
+        './' + base_fig,
+        'assets/images/../images/' + Path(base_fig).name,
+        base_fig.upper(),
+        base_fig.replace('/', '%2F'),
+        './' + base_fig.upper(),
+        '/' + base_fig.replace('/', '%2F'),
+    ]:
+        invalid_duplicate_fig = copy.deepcopy(sample)
+        invalid_duplicate_fig['sections'][1]['figures'][0]['image'] = fig_alias
+        source.write_text(json.dumps(invalid_duplicate_fig), encoding='utf-8')
+        try: module.load_articles(content)
+        except AssertionError as err:
+            assert 'duplicate body figure images' in str(err) or 'body figure repeats cover image' in str(err), f'Unexpected error: {err}'
+        else: raise AssertionError(f'Accepted duplicate body figure via alias: {fig_alias}')
 
     # Visual contract: missing body figure image
     invalid_missing_fig = copy.deepcopy(sample)

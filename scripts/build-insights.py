@@ -2,7 +2,9 @@
 from pathlib import Path
 from html import escape
 from datetime import date
+from urllib.parse import unquote
 import json
+import posixpath
 import re
 import xml.etree.ElementTree as ET
 
@@ -15,6 +17,17 @@ CTA_LABELS = {
     'zh': '阅读文章',
     'th': 'อ่านบทความ'
 }
+
+def normalize_image_path(raw_path):
+    if not isinstance(raw_path, str):
+        return ''
+    s = unquote(raw_path.strip())
+    s = s.replace('\\', '/')
+    s = posixpath.normpath(s)
+    s = s.lstrip('/')
+    while s.startswith('./'):
+        s = s[2:].lstrip('/')
+    return s.lower()
 
 def count_words(a):
     text_chunks = [a['title'], a['description']]
@@ -41,15 +54,17 @@ def load_articles(directory):
             assert isinstance(a[key], str) and a[key].strip(), (source, key)
         assert len(a['description']) <= 160, (source, 'description exceeds 160 characters')
         date.fromisoformat(a['date'])
-        cover_image = Path(a['image'])
-        assert not cover_image.is_absolute() and '..' not in cover_image.parts and cover_image.parts[0] == 'assets', source
-        assert (ROOT/cover_image).is_file(), (source, 'missing cover image')
+        assert isinstance(a.get('image'), str) and a['image'].strip(), (source, 'image')
+        canonical_cover = normalize_image_path(a['image'])
+        assert canonical_cover.startswith('assets/') and '..' not in Path(canonical_cover).parts, (source, 'invalid cover image')
+        assert (ROOT/canonical_cover).is_file(), (source, 'missing cover image')
+        a['image'] = canonical_cover
         assert all(type(a[k]) is int and a[k] > 0 for k in ['image_width', 'image_height']), source
         assert a['sections'] and all(s['heading'] and s['paragraphs'] for s in a['sections']), source
 
         # Validate inline body visuals per visual contract
         body_figures = []
-        body_image_paths = []
+        body_image_canonicals = []
         for s in a['sections']:
             figs = s.get('figures', [])
             if 'figure' in s and isinstance(s['figure'], dict):
@@ -58,15 +73,16 @@ def load_articles(directory):
                 assert isinstance(fig, dict), (source, 'invalid figure format')
                 for fkey in ['image', 'image_alt', 'caption', 'declaration']:
                     assert isinstance(fig.get(fkey), str) and fig[fkey].strip(), (source, fkey)
-                fig_image = Path(fig['image'])
-                assert not fig_image.is_absolute() and '..' not in fig_image.parts and fig_image.parts[0] == 'assets', source
-                assert (ROOT/fig_image).is_file(), (source, f'missing body figure image: {fig["image"]}')
-                assert fig['image'] != a['image'], (source, 'body figure repeats cover image')
+                canonical_fig = normalize_image_path(fig['image'])
+                assert canonical_fig.startswith('assets/') and '..' not in Path(canonical_fig).parts, (source, f'invalid figure image: {fig["image"]}')
+                assert (ROOT/canonical_fig).is_file(), (source, f'missing body figure image: {fig["image"]}')
+                assert canonical_fig != canonical_cover, (source, 'body figure repeats cover image')
                 assert all(type(fig.get(k)) is int and fig[k] > 0 for k in ['width', 'height']), (source, 'figure dimensions')
+                fig['image'] = canonical_fig
                 body_figures.append(fig)
-                body_image_paths.append(fig['image'])
+                body_image_canonicals.append(canonical_fig)
 
-        assert len(body_image_paths) == len(set(body_image_paths)), (source, 'duplicate body figure images')
+        assert len(body_image_canonicals) == len(set(body_image_canonicals)), (source, 'duplicate body figure images')
         word_count = count_words(a)
         min_figures = 2 if word_count <= 600 else 3 if word_count <= 1200 else 4
         assert len(body_figures) >= min_figures, (

@@ -18,7 +18,9 @@ class Doc(HTMLParser):
     def handle_data(self,d):
         if self.script:self.schemas.append(json.loads(d))
         else:self.text.append(d)
-docs={p.relative_to(root).as_posix():Doc(p.read_text(encoding='utf-8')) for p in root.rglob('*.html')}
+for preview in (root/'_qa').glob('*.html'):
+    assert 'noindex,nofollow' in preview.read_text(encoding='utf-8'), preview
+docs={p.relative_to(root).as_posix():Doc(p.read_text(encoding='utf-8')) for p in root.rglob('*.html') if '_qa' not in p.relative_to(root).parts}
 assert len(docs)==24 + len(list((root/'insights').glob('*.html'))), len(docs)
 links=0
 for name,d in docs.items():

@@ -37,8 +37,8 @@ with tempfile.TemporaryDirectory(prefix='.insights-check-', dir=root) as tempora
     assert 'อ่านบทความ' in (fixture/'dist/th/insights.html').read_text(encoding='utf-8')
     assert '阅读文章' in (fixture/'dist/zh/insights.html').read_text(encoding='utf-8')
 
-    # Existing unpublished PIT draft: validate real mobile assets, HTTPS sources and business CTA.
-    pit_path = root/'drafts/insights/pile-integrity-test-report-review-checklist.json'
+    # Published PIT article: validate real mobile assets, HTTPS sources and business CTA.
+    pit_path = root/'content/insights/pile-integrity-test-report-review-checklist.json'
     pit = json.loads(pit_path.read_text(encoding='utf-8'))
     pit_source = content/(pit['slug']+'.json')
     pit_source.write_text(json.dumps(pit), encoding='utf-8')
@@ -62,7 +62,7 @@ with tempfile.TemporaryDirectory(prefix='.insights-check-', dir=root) as tempora
     try: module.load_articles(content)
     except AssertionError: pass
     else: raise AssertionError('Accepted missing mobile image')
-    pit_source.unlink()
+    pit_source.write_text(json.dumps(pit), encoding='utf-8')
 
     # Basic invalid field tests
     for field, value in [('description', 'x'*161), ('image', 'assets/missing.webp')]:

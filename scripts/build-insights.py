@@ -2,7 +2,7 @@
 from pathlib import Path
 from html import escape
 from datetime import date
-from urllib.parse import unquote
+from urllib.parse import unquote, urlsplit
 import json
 import posixpath
 import re
@@ -18,6 +18,19 @@ CTA_LABELS = {
     'th': 'อ่านบทความ'
 }
 
+CTA_ROUTES = {'engineering', 'steel', 'powder', 'instruments'}
+
+def valid_https_reference(raw):
+    if not isinstance(raw, str) or not raw.startswith('https://'):
+        return False
+    if any(c.isspace() or ord(c) < 32 or ord(c) == 127 for c in raw):
+        return False
+    try:
+        part = urlsplit(raw)
+        return part.scheme == 'https' and bool(part.hostname) and not part.username and not part.password
+    except ValueError:
+        return False
+
 def normalize_image_path(raw_path):
     if not isinstance(raw_path, str):
         return ''
@@ -28,6 +41,33 @@ def normalize_image_path(raw_path):
     while s.startswith('./'):
         s = s[2:].lstrip('/')
     return s.lower()
+
+def parse_svg_dimensions(svg_path):
+    try:
+        tree = ET.parse(svg_path)
+        root = tree.getroot()
+        if not root.tag.endswith('svg'):
+            return None
+        w_attr = root.attrib.get('width')
+        h_attr = root.attrib.get('height')
+        if w_attr and h_attr:
+            w_str = w_attr.strip()
+            h_str = h_attr.strip()
+            if w_str.lower().endswith('px'):
+                w_str = w_str[:-2].strip()
+            if h_str.lower().endswith('px'):
+                h_str = h_str[:-2].strip()
+            if not w_str.endswith('%') and not h_str.endswith('%'):
+                return int(float(w_str)), int(float(h_str))
+        viewbox = root.attrib.get('viewBox')
+        if viewbox:
+            parts = [float(val) for val in viewbox.replace(',', ' ').split()]
+            if len(parts) == 4:
+                return int(parts[2]), int(parts[3])
+    except (ET.ParseError, ValueError):
+        return None
+    return None
+
 
 def count_words(a):
     text_chunks = [a['title'], a['description']]
@@ -60,6 +100,8 @@ def load_articles(directory):
         assert (ROOT/canonical_cover).is_file(), (source, 'missing cover image')
         a['image'] = canonical_cover
         assert all(type(a[k]) is int and a[k] > 0 for k in ['image_width', 'image_height']), source
+        if canonical_cover.endswith('.svg'):
+            assert parse_svg_dimensions(ROOT/canonical_cover) == (a['image_width'], a['image_height']), (source, 'cover SVG dimensions mismatch')
         assert a['sections'] and all(s['heading'] and s['paragraphs'] for s in a['sections']), source
 
         # Validate inline body visuals per visual contract
@@ -78,11 +120,36 @@ def load_articles(directory):
                 assert (ROOT/canonical_fig).is_file(), (source, f'missing body figure image: {fig["image"]}')
                 assert canonical_fig != canonical_cover, (source, 'body figure repeats cover image')
                 assert all(type(fig.get(k)) is int and fig[k] > 0 for k in ['width', 'height']), (source, 'figure dimensions')
+                if canonical_fig.endswith('.svg'):
+                    assert parse_svg_dimensions(ROOT/canonical_fig) == (fig['width'], fig['height']), (source, 'figure SVG dimensions mismatch')
                 fig['image'] = canonical_fig
+                if any(key in fig for key in ('mobile_image', 'mobile_width', 'mobile_height')):
+                    assert all(key in fig for key in ('mobile_image', 'mobile_width', 'mobile_height')), (source, 'incomplete mobile figure fields')
+                    canonical_mobile = normalize_image_path(fig['mobile_image'])
+                    assert canonical_mobile.startswith('assets/') and '..' not in Path(canonical_mobile).parts, (source, 'invalid mobile image path')
+                    assert (ROOT/canonical_mobile).is_file(), (source, 'missing mobile image')
+                    assert canonical_mobile not in (canonical_fig, canonical_cover), (source, 'mobile image repeats desktop or cover')
+                    assert all(type(fig[key]) is int and fig[key] > 0 for key in ('mobile_width', 'mobile_height')), (source, 'mobile figure dimensions')
+                    if canonical_mobile.endswith('.svg'):
+                        assert parse_svg_dimensions(ROOT/canonical_mobile) == (fig['mobile_width'], fig['mobile_height']), (source, 'mobile SVG dimensions mismatch')
+                    fig['mobile_image'] = canonical_mobile
+                    body_image_canonicals.append(canonical_mobile)
                 body_figures.append(fig)
                 body_image_canonicals.append(canonical_fig)
 
         assert len(body_image_canonicals) == len(set(body_image_canonicals)), (source, 'duplicate body figure images')
+        for s in a['sections']:
+            if 'links' in s:
+                assert isinstance(s['links'], list), (source, 'invalid source link list')
+                for link in s['links']:
+                    assert isinstance(link, dict), (source, 'invalid source link')
+                    assert isinstance(link.get('label'), str) and link['label'].strip(), (source, 'missing source label')
+                    assert valid_https_reference(link.get('url')), (source, 'invalid source URL')
+        if 'cta_route' in a:
+            assert a['cta_route'] in CTA_ROUTES, (source, 'unknown CTA route')
+        for field in ('cta_label', 'cta_note'):
+            if field in a:
+                assert isinstance(a[field], str) and a[field].strip(), (source, field)
         word_count = count_words(a)
         min_figures = 2 if word_count <= 600 else 3 if word_count <= 1200 else 4
         assert len(body_figures) >= min_figures, (
@@ -118,16 +185,29 @@ def render(a, articles, shell):
             figs = [s['figure']] + list(figs)
         figures_html = ''
         for fig in figs:
+            img = (
+                f'<img src="/{e(fig["image"], quote=True)}" alt="{e(fig["image_alt"], quote=True)}" width="{fig["width"]}" height="{fig["height"]}" loading="lazy" decoding="async">'
+            )
+            if fig.get('mobile_image'):
+                img = (
+                    '<picture>'
+                    f'<source media="(max-width: 600px)" srcset="/{e(fig["mobile_image"], quote=True)}" width="{fig["mobile_width"]}" height="{fig["mobile_height"]}">'
+                    + img + '</picture>'
+                )
             figures_html += (
-                '<figure class="insight-body-figure">'
-                f'<img src="/{e(fig["image"])}" alt="{e(fig["image_alt"])}" width="{fig["width"]}" height="{fig["height"]}" loading="lazy" decoding="async">'
-                '<figcaption>'
+                '<figure class="insight-body-figure">' + img
+                + '<figcaption>'
                 f'<span class="figure-caption">{e(fig["caption"])}</span>'
                 f'<span class="figure-declaration">{e(fig["declaration"])}</span>'
-                '</figcaption>'
-                '</figure>'
+                '</figcaption></figure>'
             )
-        return f'<section class="insight-section">{h}{p}{figures_html}</section>'
+        links_html = ''
+        if s.get('links'):
+            links_html = '<ul class="insight-source-links">' + ''.join(
+                f'<li><a href="{e(link["url"], quote=True)}" rel="noopener noreferrer">{e(link["label"])}</a></li>'
+                for link in s['links']
+            ) + '</ul>'
+        return f'<section class="insight-section">{h}{p}{figures_html}{links_html}</section>'
 
     sections = ''.join(render_section(s) for s in a['sections'])
     faqs = '<section class="insight-faq"><h2>Frequently asked questions</h2><div class="faq-list">'+''.join('<details open><summary>'+e(f['question'])+'</summary><p>'+e(f['answer'])+'</p></details>' for f in faq)+'</div></section>' if faq else ''
@@ -135,7 +215,12 @@ def render(a, articles, shell):
     related_html = ''.join('<li><a href="/insights/'+x['slug']+'.html"><span>'+e(x['title'])+'</span><span class="arrow" aria-hidden="true">→</span></a></li>' for x in related)
     related_html = '<ul class="insight-related-list">'+related_html+'</ul>' if related else '<p><a class="arrow-link" href="/insights.html">Browse all Insights <span>→</span></a></p>'
     caption = e(a.get('image_caption') or a['image_alt'])
+    route = a.get('cta_route')
+    cta_href = '/contact.html?type=' + route + '#enquiry-form' if route in CTA_ROUTES else '/contact.html'
+    cta_label = a.get('cta_label') or 'Contact AN-THAI'
+    cta_note = a.get('cta_note') or 'Connect with AN-THAI to discuss the relevant project scope and requirements.'
     values = {'title':e(a['title']), 'author':e(a['author']), 'date':e(a['date']),
+        'cta_href':e(cta_href, quote=True), 'cta_label':e(cta_label), 'cta_note':e(cta_note),
         'image':e('/'+a['image']), 'image_alt':e(a['image_alt']), 'image_caption':caption,
         'width':str(a['image_width']), 'height':str(a['image_height']),
         'sections':sections, 'faq':faqs, 'related':related_html}

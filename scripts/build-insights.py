@@ -158,7 +158,7 @@ def render(a, articles, shell):
             if fig.get('mobile_image'):
                 img = (
                     '<picture>'
-                    f'<source media="(max-width: 600px)" srcset="/{e(fig["mobile_image"], quote=True)}">'
+                    f'<source media="(max-width: 600px)" srcset="/{e(fig["mobile_image"], quote=True)}" width="{fig["mobile_width"]}" height="{fig["mobile_height"]}">'
                     + img + '</picture>'
                 )
             figures_html += (

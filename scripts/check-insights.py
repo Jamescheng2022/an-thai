@@ -56,12 +56,38 @@ with tempfile.TemporaryDirectory(prefix='.insights-check-', dir=root) as tempora
         try: module.load_articles(content)
         except AssertionError: pass
         else: raise AssertionError('Accepted unsafe source URL ' + invalid_url)
+    assert '<source media="(max-width: 600px)" srcset="/assets/images/insights/pit-report-review-scope-mobile.svg" width="400" height="596">' in pit_html
+    for s in pit['sections']:
+        for fig in s.get('figures', []):
+            if fig.get('mobile_image'):
+                expected_source = (
+                    f'<source media="(max-width: 600px)" srcset="/{fig["mobile_image"]}" '
+                    f'width="{fig["mobile_width"]}" height="{fig["mobile_height"]}">'
+                )
+                assert expected_source in pit_html, f'Missing expected source element for {fig["mobile_image"]}'
     bad_mobile = copy.deepcopy(pit)
     bad_mobile['sections'][0]['figures'][0]['mobile_image'] = 'assets/images/insights/not-found.svg'
     pit_source.write_text(json.dumps(bad_mobile), encoding='utf-8')
     try: module.load_articles(content)
     except AssertionError: pass
     else: raise AssertionError('Accepted missing mobile image')
+    for bad_dim in [0, -1, '400', 400.5, None]:
+        bad_dim_fig = copy.deepcopy(pit)
+        fig = bad_dim_fig['sections'][0]['figures'][0]
+        if bad_dim is None:
+            del fig['mobile_width']
+        else:
+            fig['mobile_width'] = bad_dim
+        pit_source.write_text(json.dumps(bad_dim_fig), encoding='utf-8')
+        try: module.load_articles(content)
+        except AssertionError: pass
+        else: raise AssertionError(f'Accepted invalid mobile_width: {bad_dim}')
+    bad_no_height = copy.deepcopy(pit)
+    del bad_no_height['sections'][0]['figures'][0]['mobile_height']
+    pit_source.write_text(json.dumps(bad_no_height), encoding='utf-8')
+    try: module.load_articles(content)
+    except AssertionError: pass
+    else: raise AssertionError('Accepted missing mobile_height')
     pit_source.write_text(json.dumps(pit), encoding='utf-8')
 
     # Basic invalid field tests

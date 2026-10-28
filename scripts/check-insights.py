@@ -37,6 +37,33 @@ with tempfile.TemporaryDirectory(prefix='.insights-check-', dir=root) as tempora
     assert 'อ่านบทความ' in (fixture/'dist/th/insights.html').read_text(encoding='utf-8')
     assert '阅读文章' in (fixture/'dist/zh/insights.html').read_text(encoding='utf-8')
 
+    # Existing unpublished PIT draft: validate real mobile assets, HTTPS sources and business CTA.
+    pit_path = root/'drafts/insights/pile-integrity-test-report-review-checklist.json'
+    pit = json.loads(pit_path.read_text(encoding='utf-8'))
+    pit_source = content/(pit['slug']+'.json')
+    pit_source.write_text(json.dumps(pit), encoding='utf-8')
+    accepted = {article['slug']: article for article in module.load_articles(content)}
+    pit_html = module.render(accepted[pit['slug']], list(accepted.values()),
+                             (fixture/'dist/insights.html').read_text(encoding='utf-8'))
+    assert '<picture>' in pit_html and 'pit-report-review-scope-mobile.svg' in pit_html
+    assert 'https://store.astm.org/d5882-16.html' in pit_html
+    assert 'href="/contact.html?type=engineering#enquiry-form"' in pit_html
+    assert 'Discuss a pile-test report review' in pit_html
+    for invalid_url in ['http://example.com/standard', 'javascript:alert(1)', 'https://example.com/has space']:
+        bad = copy.deepcopy(pit)
+        bad['sections'][-1]['links'][0]['url'] = invalid_url
+        pit_source.write_text(json.dumps(bad), encoding='utf-8')
+        try: module.load_articles(content)
+        except AssertionError: pass
+        else: raise AssertionError('Accepted unsafe source URL ' + invalid_url)
+    bad_mobile = copy.deepcopy(pit)
+    bad_mobile['sections'][0]['figures'][0]['mobile_image'] = 'assets/images/insights/not-found.svg'
+    pit_source.write_text(json.dumps(bad_mobile), encoding='utf-8')
+    try: module.load_articles(content)
+    except AssertionError: pass
+    else: raise AssertionError('Accepted missing mobile image')
+    pit_source.unlink()
+
     # Basic invalid field tests
     for field, value in [('description', 'x'*161), ('image', 'assets/missing.webp')]:
         invalid = dict(sample, **{field:value})

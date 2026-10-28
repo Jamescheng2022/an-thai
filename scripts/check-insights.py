@@ -82,12 +82,39 @@ with tempfile.TemporaryDirectory(prefix='.insights-check-', dir=root) as tempora
         try: module.load_articles(content)
         except AssertionError: pass
         else: raise AssertionError(f'Accepted invalid mobile_width: {bad_dim}')
-    bad_no_height = copy.deepcopy(pit)
-    del bad_no_height['sections'][0]['figures'][0]['mobile_height']
-    pit_source.write_text(json.dumps(bad_no_height), encoding='utf-8')
+    for bad_dim in [0, -1, '400', 400.5, None]:
+        bad_dim_fig = copy.deepcopy(pit)
+        fig = bad_dim_fig['sections'][0]['figures'][0]
+        if bad_dim is None:
+            del fig['mobile_height']
+        else:
+            fig['mobile_height'] = bad_dim
+        pit_source.write_text(json.dumps(bad_dim_fig), encoding='utf-8')
+        try: module.load_articles(content)
+        except AssertionError: pass
+        else: raise AssertionError(f'Accepted invalid mobile_height: {bad_dim}')
+
+    # SVG intrinsic dimension validation tests
+    bad_cover_svg_dim = copy.deepcopy(pit)
+    bad_cover_svg_dim['image_width'] = 1201
+    pit_source.write_text(json.dumps(bad_cover_svg_dim), encoding='utf-8')
     try: module.load_articles(content)
     except AssertionError: pass
-    else: raise AssertionError('Accepted missing mobile_height')
+    else: raise AssertionError('Accepted mismatched cover SVG dimensions')
+
+    bad_fig_svg_dim = copy.deepcopy(pit)
+    bad_fig_svg_dim['sections'][0]['figures'][0]['width'] = 721
+    pit_source.write_text(json.dumps(bad_fig_svg_dim), encoding='utf-8')
+    try: module.load_articles(content)
+    except AssertionError: pass
+    else: raise AssertionError('Accepted mismatched body figure SVG dimensions')
+
+    bad_mobile_svg_dim = copy.deepcopy(pit)
+    bad_mobile_svg_dim['sections'][0]['figures'][0]['mobile_height'] = 597
+    pit_source.write_text(json.dumps(bad_mobile_svg_dim), encoding='utf-8')
+    try: module.load_articles(content)
+    except AssertionError: pass
+    else: raise AssertionError('Accepted mismatched mobile SVG dimensions')
     pit_source.write_text(json.dumps(pit), encoding='utf-8')
 
     # Basic invalid field tests

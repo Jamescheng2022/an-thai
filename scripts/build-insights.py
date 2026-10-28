@@ -42,6 +42,33 @@ def normalize_image_path(raw_path):
         s = s[2:].lstrip('/')
     return s.lower()
 
+def parse_svg_dimensions(svg_path):
+    try:
+        tree = ET.parse(svg_path)
+        root = tree.getroot()
+        if not root.tag.endswith('svg'):
+            return None
+        w_attr = root.attrib.get('width')
+        h_attr = root.attrib.get('height')
+        if w_attr and h_attr:
+            w_str = w_attr.strip()
+            h_str = h_attr.strip()
+            if w_str.lower().endswith('px'):
+                w_str = w_str[:-2].strip()
+            if h_str.lower().endswith('px'):
+                h_str = h_str[:-2].strip()
+            if not w_str.endswith('%') and not h_str.endswith('%'):
+                return int(float(w_str)), int(float(h_str))
+        viewbox = root.attrib.get('viewBox')
+        if viewbox:
+            parts = [float(val) for val in viewbox.replace(',', ' ').split()]
+            if len(parts) == 4:
+                return int(parts[2]), int(parts[3])
+    except (ET.ParseError, ValueError):
+        return None
+    return None
+
+
 def count_words(a):
     text_chunks = [a['title'], a['description']]
     for s in a.get('sections', []):
@@ -73,6 +100,8 @@ def load_articles(directory):
         assert (ROOT/canonical_cover).is_file(), (source, 'missing cover image')
         a['image'] = canonical_cover
         assert all(type(a[k]) is int and a[k] > 0 for k in ['image_width', 'image_height']), source
+        if canonical_cover.endswith('.svg'):
+            assert parse_svg_dimensions(ROOT/canonical_cover) == (a['image_width'], a['image_height']), (source, 'cover SVG dimensions mismatch')
         assert a['sections'] and all(s['heading'] and s['paragraphs'] for s in a['sections']), source
 
         # Validate inline body visuals per visual contract
@@ -91,6 +120,8 @@ def load_articles(directory):
                 assert (ROOT/canonical_fig).is_file(), (source, f'missing body figure image: {fig["image"]}')
                 assert canonical_fig != canonical_cover, (source, 'body figure repeats cover image')
                 assert all(type(fig.get(k)) is int and fig[k] > 0 for k in ['width', 'height']), (source, 'figure dimensions')
+                if canonical_fig.endswith('.svg'):
+                    assert parse_svg_dimensions(ROOT/canonical_fig) == (fig['width'], fig['height']), (source, 'figure SVG dimensions mismatch')
                 fig['image'] = canonical_fig
                 if any(key in fig for key in ('mobile_image', 'mobile_width', 'mobile_height')):
                     assert all(key in fig for key in ('mobile_image', 'mobile_width', 'mobile_height')), (source, 'incomplete mobile figure fields')
@@ -99,6 +130,8 @@ def load_articles(directory):
                     assert (ROOT/canonical_mobile).is_file(), (source, 'missing mobile image')
                     assert canonical_mobile not in (canonical_fig, canonical_cover), (source, 'mobile image repeats desktop or cover')
                     assert all(type(fig[key]) is int and fig[key] > 0 for key in ('mobile_width', 'mobile_height')), (source, 'mobile figure dimensions')
+                    if canonical_mobile.endswith('.svg'):
+                        assert parse_svg_dimensions(ROOT/canonical_mobile) == (fig['mobile_width'], fig['mobile_height']), (source, 'mobile SVG dimensions mismatch')
                     fig['mobile_image'] = canonical_mobile
                     body_image_canonicals.append(canonical_mobile)
                 body_figures.append(fig)

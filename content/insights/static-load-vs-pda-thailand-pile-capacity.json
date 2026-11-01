@@ -4,11 +4,11 @@
   "description": "How Thai engineers can combine static pile load tests, PDA/CAPWAP and auditable field records to make better pile acceptance decisions.",
   "author": "AN-THAI Engineering",
   "date": "2026-11-01",
-  "image": "assets/images/insights/static-load-vs-pda-thailand-pile-capacity-cover.svg",
-  "image_alt": "Editorial illustration contrasting a static pile load reaction setup with a dynamic PDA impact and sensor system, without actual project readings",
-  "image_caption": "Two different routes to pile capacity evidence. Concept illustration—not an AN-THAI project photo or a test design.",
-  "image_width": 1440,
-  "image_height": 760,
+  "image": "assets/images/insights/static-load-vs-pda-thailand-pile-capacity-static-field-photo.webp",
+  "image_alt": "Actual field photograph of a steel reaction frame and supports during a static pile load test, sourced from AN-THAI's existing engineering brochure",
+  "image_caption": "Field photograph from the AN-THAI engineering brochure, cropped to focus on static pile load test reaction steelwork. The image illustrates equipment and site conditions; it does not certify a particular test or identify the executing contractor.",
+  "image_width": 575,
+  "image_height": 350,
   "cta_route": "engineering",
   "cta_label": "Discuss a project-specific pile testing plan",
   "cta_note": "Share your pile schedule, design loads, available boreholes, project specification and intended test objective. AN-THAI can discuss an appropriate scoped proposal; the designated engineer must approve the final method and acceptance criteria.",
@@ -20,6 +20,14 @@
         "Static axial load testing (SLT) and high-strain dynamic testing using a Pile Driving Analyzer (PDA) both have legitimate roles. The practical choice is not to dismiss either method. It is to establish the required evidence first, then match the test plan to the pile type, ground conditions, construction method and consequences of a wrong decision."
       ],
       "figures": [
+        {
+          "image": "assets/images/insights/static-load-vs-pda-thailand-pile-capacity-pda-field-photo.webp",
+          "image_alt": "Real field photograph showing a large suspended drop hammer above a pile head at a pile testing site",
+          "caption": "Actual high-strain testing equipment photograph excerpted from AN-THAI's company brochure. Shown for equipment context, not as a verified project test record.",
+          "declaration": "Photograph: crop from AN-THAI brochure (assets/images/hero-field.webp). Site/operator/project attribution not independently verified.",
+          "width": 258,
+          "height": 576
+        },
         {
           "image": "assets/images/insights/static-load-vs-pda-thailand-pile-capacity-two-measurements.svg",
           "image_alt": "Side-by-side comparison: static testing measures applied load and settlement over time, while PDA records impact force and velocity for interpreted pile resistance",
@@ -140,6 +148,14 @@
         "The practical rule is simple: bag weights help document the reaction inventory, whereas the calibrated jack/load cell and approved load schedule establish the force on the pile. A qualified engineer must separately review the steelwork, bearing/support conditions, lifting and exclusion zones. The test report must preserve the full time–load–settlement history and any stop or unload events."
       ],
       "figures": [
+        {
+          "image": "assets/images/insights/static-load-vs-pda-thailand-pile-capacity-china-large-bags-field-photo.webp",
+          "image_alt": "Original 2023 China construction site photograph showing large netted earth bags arranged above heavy steel beams as kentledge reaction mass for a static pile load test",
+          "caption": "China field reference (2023): large netted soil bags placed on a steel reaction platform. Cropped from a photograph supplied with the engineering exchange deck; this is not an AN-THAI Thailand project photo or proof of the applied pile load.",
+          "declaration": "User-supplied 2023 China field reference. Cropped to omit identifiable third-party company and phone details; image reuse requires owner authorization.",
+          "width": 920,
+          "height": 690
+        },
         {
           "image": "assets/images/insights/static-load-vs-pda-thailand-pile-capacity-kentledge.svg",
           "image_alt": "Conceptual diagram of a large netted-earth-bag kentledge platform over a static pile test highlighting mass records, reaction load path, calibrated jack and independent reference beam",

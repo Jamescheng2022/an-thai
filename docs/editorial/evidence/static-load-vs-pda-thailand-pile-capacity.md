@@ -33,3 +33,14 @@
 - Re-run `node scripts/build-static.cjs`, `python scripts/check-insights.py` after moving to publishable content. Review images visually in mobile viewport, links and public sitemap. Drafts are currently intentionally excluded from production build.
 
 **No automatic merge, production deploy or true-public URL is claimed by this source upload.**
+
+
+## 2026-11-01 photo-first editorial correction (response to live mobile visual critique)
+
+The previous edition displayed only generated SVG diagrams and no field photographs. This revision **uses authentic photographic bytes**, retaining SVG as explanatory support instead of hero imagery. These are all three materially distinct scenes, not crops of one repeated subject:
+
+1. **Page hero — static load field photo**: `assets/images/insights/static-load-vs-pda-thailand-pile-capacity-static-field-photo.webp`, 575×350 WebP. Cropped from existing AnThai website company brochure asset `assets/images/static-load.webp` (photographic area, no promotional text overlay). It shows a steel reaction arrangement, but we **do not claim this image documents an AN-THAI-operated test or a particular capacity**. Original website source is already part of the company's published brochure set.
+2. **PDA section — real drop-hammer field photo**: `assets/images/insights/static-load-vs-pda-thailand-pile-capacity-pda-field-photo.webp`, 258×576 WebP, cropped from existing AnThai website brochure photograph `assets/images/hero-field.webp`. This is equipment context; project and operator attribution are not independently validated. Real photo, not AI synthetic image or an SVG.
+3. **Kentledge section — actual large netted earth bags**: `assets/images/insights/static-load-vs-pda-thailand-pile-capacity-china-large-bags-field-photo.webp`, 920×690 WebP, cropped from the user's 2026-10-31 corrected 15-slide pile-testing engineer exchange deck (2023 China archive photo). Crop omits sign/telephone-bearing part of the third-party steel beam. It is explicitly labelled **China field reference supplied for technical exchange**, not a Thai or AN-THAI site and not engineering proof that bag mass equals applied load. Copyright/permission is governed by the owner's provided photo material; do not infer the third-party firm's ownership or endorsements.
+
+The page still keeps its six different technical SVG body illustrations (measurement principle, Thai research panels, PDA quality chain, kentledge load-path schematic, risk-based decision flow and documentation pack) and three independent mobile SVG derivatives. The original SVG cover remains in the repository as an unused historical asset; do not count it as the published hero. Each photo includes a distinct descriptive alt, caption, declaration/attribution and intrinsic dimensions. **QA/acceptance is scoped to this exact new image and source change; no changes to the technical conclusions, standards citations, email flow or global website redesign.**

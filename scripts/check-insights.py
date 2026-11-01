@@ -173,6 +173,10 @@ with tempfile.TemporaryDirectory(prefix='.insights-check-', dir=root) as tempora
     ]:
         invalid_duplicate_fig = copy.deepcopy(sample)
         invalid_duplicate_fig['sections'][1]['figures'][0]['image'] = fig_alias
+        # Keep image metadata valid so this negative case specifically tests
+        # duplicate detection rather than failing earlier on raster dimensions.
+        invalid_duplicate_fig['sections'][1]['figures'][0]['width'] = sample['sections'][0]['figures'][0]['width']
+        invalid_duplicate_fig['sections'][1]['figures'][0]['height'] = sample['sections'][0]['figures'][0]['height']
         source.write_text(json.dumps(invalid_duplicate_fig), encoding='utf-8')
         try: module.load_articles(content)
         except AssertionError as err:

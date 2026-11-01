@@ -4,11 +4,11 @@
   "description": "Seven practical questions to assess a low-strain pile integrity report, trace source records, and choose an evidence-led next step.",
   "author": "AN-THAI Engineering",
   "date": "2026-10-28",
-  "image": "assets/images/insights/pit-report-review-cover.svg",
-  "image_alt": "Conceptual graphic with an illustrative signal line, pile record, and engineering evidence review cards; not an actual test trace",
-  "image_caption": "Original conceptual editorial illustration. Not a real AN-THAI project, actual test record or acceptance signal.",
-  "image_width": 1200,
-  "image_height": 680,
+  "image": "assets/images/insights/pit-field-photo-diptych.webp",
+  "image_alt": "Field-photo montage from AN-THAI brochure showing low-strain pile testing at the pile head and field checking activities",
+  "image_caption": "Two authentic field-photo crops from AN-THAI's existing brochure. These show low-strain testing context; site, operator and individual result are not independently verified.",
+  "image_width": 1400,
+  "image_height": 700,
   "sections": [
     {
       "heading": "Why a “Pass” label is not the whole answer",
@@ -40,6 +40,16 @@
       "heading": "2. Can the signal be matched to the correct pile?",
       "paragraphs": [
         "Check the pile ID, location, type, geometry, construction record and test date. Match the schedule, as-built drawings, field log, image or file name and summary table. When identifiers disagree, reconcile the records before drawing conclusions. This is a data-control issue even if the visible waveform looks familiar."
+      ],
+      "figures": [
+        {
+          "image": "assets/images/insights/pit-field-team.webp",
+          "image_alt": "Brochure photograph showing workers documenting testing activity beside a concrete pile",
+          "caption": "Field preparation and pile identification must be tied to the same test record.",
+          "declaration": "Cropped from AN-THAI's previously published low-strain brochure composite; location and project attribution not independently verified.",
+          "width": 480,
+          "height": 290
+        }
       ]
     },
     {
@@ -49,15 +59,12 @@
       ],
       "figures": [
         {
-          "image": "assets/images/insights/pit-report-review-traceability.svg",
-          "image_alt": "Five linked stages from pile identification through field records and acquisition to original signal files and signed report",
-          "caption": "A defensible handover links each acquisition record and interpretation to the same identified pile.",
-          "declaration": "Original programmatic SVG traceability diagram; not a diagram of any client's records.",
-          "width": 720,
-          "height": 1010,
-          "mobile_image": "assets/images/insights/pit-report-review-traceability-mobile.svg",
-          "mobile_width": 400,
-          "mobile_height": 723
+          "image": "assets/images/insights/pit-field-sensor.webp",
+          "image_alt": "Close-up photograph of a sensor and cabling at a pile head",
+          "caption": "A real low-strain test begins with physical sensor contact and suitable acquisition conditions.",
+          "declaration": "Brochure photograph, illustrative only; not the test trace for the pile discussed.",
+          "width": 413,
+          "height": 500
         }
       ]
     },
@@ -72,19 +79,6 @@
       "heading": "5. Were geometry, installation history and ground conditions considered?",
       "paragraphs": [
         "Changes in pile cross-section, material, surrounding ground or installation method can complicate a response. Review the relevant drawings, concreting or driving records, ground profile and comparable nearby pile evidence, if available. The interpretation should connect the signal to these conditions, not treat a waveform as a stand-alone photograph of a pile."
-      ],
-      "figures": [
-        {
-          "image": "assets/images/insights/pit-report-review-triage.svg",
-          "image_alt": "Four-stage decision flow for an unusual trace: acquisition quality, pile context, explanations, and documented conclusion",
-          "caption": "Start with acquisition quality and context; the responsible engineer determines whether a repeat or complementary investigation is justified.",
-          "declaration": "Original programmatic non-scale workflow; no invented signal thresholds or defect classification.",
-          "width": 720,
-          "height": 1020,
-          "mobile_image": "assets/images/insights/pit-report-review-triage-mobile.svg",
-          "mobile_width": 400,
-          "mobile_height": 647
-        }
       ]
     },
     {
@@ -98,19 +92,6 @@
       "paragraphs": [
         "The report should identify the responsible testing organization and reviewer, the contractually adopted method and edition where specified, and project-specific decision or escalation criteria. ASTM D5882-16 was withdrawn in 2025 with no replacement listed on its official product page; it must not be presented as a currently active standard. Do not substitute a generic web checklist for the project specification.",
         "If the report includes a statement of conformity, ask which rule was used to reach it and which relevant uncertainty or limitation was considered. ILAC G8:09/2019 provides general guidance on decision rules in laboratory reporting; it is not a universal pile acceptance criterion and does not establish anyone’s accreditation."
-      ],
-      "figures": [
-        {
-          "image": "assets/images/insights/pit-report-review-handover.svg",
-          "image_alt": "Six-part document pack: pile identifiers, design records, construction history, ground information, raw traces, and acceptance basis",
-          "caption": "A useful technical enquiry starts with a coherent evidence pack, not an unsupported request to change “Pass” to “Fail.”",
-          "declaration": "Original programmatic document checklist; project-specific requirements may differ.",
-          "width": 720,
-          "height": 1080,
-          "mobile_image": "assets/images/insights/pit-report-review-handover-mobile.svg",
-          "mobile_width": 400,
-          "mobile_height": 849
-        }
       ]
     },
     {

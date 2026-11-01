@@ -35,7 +35,14 @@ module.exports = function injectAnalytics(output, env = process.env) {
     function render(){
       box.replaceChildren();
       if(choice===null){var p=document.createElement('p');p.textContent='Allow Google Analytics cookies to help us understand visits? Optional analytics stays off until you allow it. You can change this choice at any time.';box.appendChild(p);var link=document.createElement('a');link.href='https://policies.google.com/privacy';link.textContent='Google privacy policy';link.style.cssText='display:block;margin-bottom:12px';box.appendChild(link);button('Allow analytics','granted');button('Reject analytics','denied');}
-      else button(choice==='granted'?'Analytics: on — turn off':'Analytics: off — allow',choice==='granted'?'denied':'granted');
+      else {
+        // Persist the preference control in the document footer instead of
+        // covering the article with an always-fixed consent panel.
+        box.style.cssText='position:static;display:block;max-width:none;padding:8px 18px;margin:0;text-align:right;background:#f5f7f6;color:#50656c;border:0;box-shadow:none';
+        button(choice==='granted'?'Analytics: on — turn off':'Analytics: off — allow',choice==='granted'?'denied':'granted');
+        var preferenceButton=box.lastElementChild;
+        preferenceButton.style.cssText='margin:0;padding:5px 10px;background:white;color:#50656c;border:1px solid #d1dad8;border-radius:20px;font-size:12px;line-height:1.4;cursor:pointer';
+      }
     }
     window.addEventListener('storage',function(e){if(e.key===key)location.reload();});
     render();document.body.appendChild(box);if(choice==='granted')load();

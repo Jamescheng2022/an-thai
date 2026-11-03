@@ -42,13 +42,13 @@ if (quoteForm) {
   const lang = document.documentElement.lang || 'en';
   const copy = lang.startsWith('zh') ? {
     category:'设备类别', requirements:'需求', enquiry:'安泰询价', labels:['姓名','公司','邮箱','联系方式','需求类型'],
-    status:'询盘内容已准备好，请在邮件应用中发送。如未打开邮件应用，请直接联系 info@an-thai.com 或 anthaicheng@gmail.com。本网站不会提交表单，也不会创建客户记录。',
+    status:'询盘内容已准备好，请在邮件应用中发送。如未打开邮件应用，请联系 anthaicheng@gmail.com 或通过 LINE ID: rachada2018 联系。本网站不会提交表单，也不会创建客户记录。',
     categories:['桩身完整性检测仪器','高应变／动力桩基检测系统','声波透射／超声检测系统','静载试验测量仪器','岩土与现场检测设备','材料／实验室检测设备','荷载传感器／传感器／数据采集系统','安装／培训／技术支持']
   } : lang === 'th' ? {
     category:'หมวดหมู่เครื่องมือ', requirements:'ข้อกำหนด', enquiry:'สอบถาม AN-THAI', labels:['ชื่อ','บริษัท','อีเมล','ช่องทางติดต่อ','ประเภทคำสอบถาม'],
-    status:'เตรียมคำสอบถามแล้ว โปรดส่งจากแอปอีเมล หากแอปไม่เปิด ให้ติดต่อ info@an-thai.com หรือ anthaicheng@gmail.com โดยตรง เว็บไซต์นี้ไม่ส่งแบบฟอร์มหรือสร้างข้อมูลลูกค้า',
+    status:'เตรียมคำสอบถามแล้ว โปรดส่งจากแอปอีเมล หากแอปไม่เปิด ให้ติดต่อ anthaicheng@gmail.com หรือ LINE ID: rachada2018 เว็บไซต์นี้ไม่ส่งแบบฟอร์มหรือสร้างข้อมูลลูกค้า',
     categories:['เครื่องมือทดสอบความสมบูรณ์ของเสาเข็ม','ระบบทดสอบเสาเข็มแบบพลศาสตร์ความเครียดสูง','ระบบทดสอบคลื่นเสียงผ่านท่อ / อัลตราโซนิก','เครื่องมือวัดสำหรับการทดสอบรับน้ำหนักแบบสถิต','เครื่องมือทดสอบปฐพีและภาคสนาม','เครื่องมือทดสอบวัสดุ / ห้องปฏิบัติการ','โหลดเซลล์ / เซนเซอร์ / ระบบเก็บข้อมูล','การติดตั้ง / ฝึกอบรม / สนับสนุนทางเทคนิค']
-  } : {category:'Equipment category',requirements:'Requirements',enquiry:'AN-THAI enquiry',labels:['Name','Company','Email','Phone','Request'],status:'Your enquiry is prepared. Send it from your email app. If no app opens, email info@an-thai.com or anthaicheng@gmail.com directly. This website does not transmit the form or create a customer record.'};
+  } : {category:'Equipment category',requirements:'Requirements',enquiry:'AN-THAI enquiry',labels:['Name','Company','Email','Phone','Request'],status:'Your enquiry is prepared. Send it from your email app. If no app opens, email anthaicheng@gmail.com or add LINE ID: rachada2018. This website does not transmit the form or create a customer record.'};
   const params = new URLSearchParams(window.location.search);
   if (!lang.startsWith('en')) quoteForm.querySelectorAll('input,textarea,select').forEach(field => {
     field.addEventListener('input', () => field.setCustomValidity(''));
@@ -74,7 +74,7 @@ if (quoteForm) {
     const data = new FormData(quoteForm);
     const type = quoteForm.elements.requestType.selectedOptions?.[0]?.textContent || data.get('requestType') || copy.enquiry;
     const body = ['name','company','email','phone'].map((key,i)=>`${copy.labels[i]}: ${data.get(key)||''}`).join('\n') + `\n${copy.labels[4]}: ${type}\n\n${data.get('message')||''}`;
-    const mailto = `mailto:info@an-thai.com?subject=${encodeURIComponent(`${copy.enquiry}: ${type}`)}&body=${encodeURIComponent(body)}`;
+    const mailto = `mailto:anthaicheng@gmail.com?subject=${encodeURIComponent(`${copy.enquiry}: ${type}`)}&body=${encodeURIComponent(body)}`;
     document.getElementById('enquiry-note').textContent = copy.status;
     window.location.href = mailto;
   });

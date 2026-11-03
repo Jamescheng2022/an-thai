@@ -446,3 +446,14 @@ Articles will appear here once published. || 文章发布后将显示在此处�
 Discuss your project || 讨论您的项目 || พูดคุยเกี่ยวกับโครงการของคุณ
 Contact AN-THAI || 联系 AN-THAI || ติดต่อ AN-THAI
 Read article || 阅读文章 || อ่านบทความ
+Company Profile TH / EN || 公司简介 泰英版 || แนะนำบริษัท ภาษาไทย/อังกฤษ
+Thai / English company profile PDF || 泰英双语公司介绍 PDF || เอกสารแนะนำบริษัท ภาษาไทย/อังกฤษ (PDF)
+Original Chinese / English PDF || 原有中英版 PDF || ไฟล์ PDF ฉบับภาษาจีน/อังกฤษเดิม
+LINE ID: rachada2018 || LINE ID：rachada2018 || LINE ID: rachada2018
+Email AN-THAI || 邮件联系安泰 || ติดต่อ AN-THAI ทางอีเมล
+Contact AN-THAI on LINE || 通过 LINE 联系 AN-THAI || ติดต่อ AN-THAI ทาง LINE
+Primary email || 主要邮箱 || อีเมลหลัก
+LINE for engineering enquiries || 工程询价 LINE 联系方式 || LINE สำหรับสอบถามงานวิศวกรรม
+If the LINE link does not open, search the ID in the LINE app. || 若无法打开 LINE 链接，请在 LINE 应用内搜索该 ID。 || หากเปิดลิงก์ LINE ไม่ได้ ให้ค้นหา LINE ID ในแอป
+Domain email || 域名邮箱 || อีเมลโดเมน
+Prepare your enquiry, then send it from your email app. This website does not transmit the form or create a customer record. You can also email anthaicheng@gmail.com directly, use LINE ID: rachada2018, or call us. || 填写需求后，请在邮件应用中发送。本站不会自动提交表单或创建客户记录。也可直接发邮件到 anthaicheng@gmail.com、通过 LINE ID：rachada2018 或电话联系。 || กรอกคำสอบถามแล้วส่งผ่านแอปอีเมล เว็บไซต์นี้ไม่ส่งแบบฟอร์มหรือสร้างข้อมูลลูกค้าโดยอัตโนมัติ ติดต่อโดยตรงได้ทาง anthaicheng@gmail.com, LINE ID: rachada2018 หรือโทรศัพท์

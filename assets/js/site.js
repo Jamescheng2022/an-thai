@@ -46,7 +46,7 @@ if (quoteForm) {
     uncertain:'无法确认是否送达，您的询盘可能已经收到。如在 1 个工作日内未收到回复，请通过邮件发送。',
     limited:'请求过多，请直接发送邮件联系我们。', emailLink:'通过邮件发送',
     retry:'请稍等片刻后再次提交。',
-    status:'无法确认在线提交。请在邮件应用中发送；如未打开，请直接发送至 info@an-thai.com 或 anthaicheng@gmail.com。',
+    status:'无法确认在线提交。请在邮件应用中发送；如未打开，请直接发送至 anthaicheng@gmail.com 或 LINE ID: rachada2018。',
     categories:['桩身完整性检测仪器','高应变／动力桩基检测系统','声波透射／超声检测系统','静载试验测量仪器','岩土与现场检测设备','材料／实验室检测设备','荷载传感器／传感器／数据采集系统','安装／培训／技术支持']
   } : lang === 'th' ? {
     category:'หมวดหมู่เครื่องมือ', requirements:'ข้อกำหนด', enquiry:'สอบถาม AN-THAI', labels:['ชื่อ','บริษัท','อีเมล','ช่องทางติดต่อ','ประเภทคำสอบถาม'],
@@ -54,9 +54,9 @@ if (quoteForm) {
     uncertain:'เราไม่สามารถยืนยันการส่งได้ คำสอบถามของคุณอาจได้รับแล้ว หากไม่ได้รับการติดต่อกลับภายใน 1 วันทำการ โปรดส่งทางอีเมล',
     limited:'ส่งคำขอมากเกินไป โปรดติดต่อเราทางอีเมลโดยตรง', emailLink:'ส่งทางอีเมล',
     retry:'โปรดรอสักครู่แล้วส่งอีกครั้ง',
-    status:'ไม่สามารถยืนยันการส่งออนไลน์ได้ โปรดส่งจากแอปอีเมล หากแอปไม่เปิด ให้ส่งตรงถึง info@an-thai.com หรือ anthaicheng@gmail.com',
+    status:'ไม่สามารถยืนยันการส่งออนไลน์ได้ โปรดส่งจากแอปอีเมล หากแอปไม่เปิด ให้ส่งตรงถึง anthaicheng@gmail.com หรือ LINE ID: rachada2018',
     categories:['เครื่องมือทดสอบความสมบูรณ์ของเสาเข็ม','ระบบทดสอบเสาเข็มแบบพลศาสตร์ความเครียดสูง','ระบบทดสอบคลื่นเสียงผ่านท่อ / อัลตราโซนิก','เครื่องมือวัดสำหรับการทดสอบรับน้ำหนักแบบสถิต','เครื่องมือทดสอบปฐพีและภาคสนาม','เครื่องมือทดสอบวัสดุ / ห้องปฏิบัติการ','โหลดเซลล์ / เซนเซอร์ / ระบบเก็บข้อมูล','การติดตั้ง / ฝึกอบรม / สนับสนุนทางเทคนิค']
-  } : {category:'Equipment category',requirements:'Requirements',enquiry:'AN-THAI enquiry',labels:['Name','Company','Email','Phone','Request'],success:'Your enquiry has been submitted. We will be in touch soon.',pending:'Submitting your enquiry…',status:'Online submission could not be confirmed. Please send from your email app. If no app opens, email info@an-thai.com or anthaicheng@gmail.com directly.'};
+  } : {category:'Equipment category',requirements:'Requirements',enquiry:'AN-THAI enquiry',labels:['Name','Company','Email','Phone','Request'],success:'Your enquiry has been submitted. We will be in touch soon.',pending:'Submitting your enquiry…',status:'Online submission could not be confirmed. Please send from your email app. If no app opens, email anthaicheng@gmail.com or LINE ID: rachada2018 directly.'};
   const params = new URLSearchParams(window.location.search);
   if (lang.startsWith('en')) Object.assign(copy, {
     uncertain:'We could not confirm delivery. Your enquiry may already have been received. If you don\'t hear from us within 1 business day, send it by email.',
@@ -103,7 +103,7 @@ if (quoteForm) {
     const data = new FormData(quoteForm);
     const type = quoteForm.elements.requestType.selectedOptions?.[0]?.textContent || data.get('requestType') || copy.enquiry;
     const body = ['name','company','email','phone'].map((key,i)=>`${copy.labels[i]}: ${data.get(key)||''}`).join('\n') + `\n${copy.labels[4]}: ${type}\n\n${data.get('message')||''}`;
-    const mailto = `mailto:info@an-thai.com?subject=${encodeURIComponent(`${copy.enquiry}: ${type}`)}&body=${encodeURIComponent(body)}`;
+    const mailto = `mailto:anthaicheng@gmail.com?subject=${encodeURIComponent(`${copy.enquiry}: ${type}`)}&body=${encodeURIComponent(body)}`;
     const note = document.getElementById('enquiry-note');
     function offerEmail(message, open = false) {
       note.textContent = message;

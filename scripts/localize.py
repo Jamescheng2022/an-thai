@@ -7,7 +7,7 @@ import re
 import os
 
 ROOT = Path(__file__).resolve().parent.parent
-PAGES = ['index', 'services', 'equipment', 'portfolio', 'about', 'contact', '404']
+PAGES = ['index', 'services', 'equipment', 'portfolio', 'about', 'contact', 'insights', '404']
 ROWS = [line.split(' || ') for line in (ROOT / 'scripts/translations.txt').read_text(encoding='utf-8').splitlines() if line.strip()]
 assert all(len(row) == 3 and all(row) for row in ROWS), 'Malformed translation row'
 assert len({r[0] for r in ROWS}) == len(ROWS), 'Duplicate translation key'
@@ -73,7 +73,7 @@ class Localizer(HTMLParser):
             value = attrs[key]
             if value.startswith('assets/'):
                 attrs[key] = value.replace('assets/', '/assets/')
-            elif key == 'href' and re.match(r'^/?(index|services|equipment|portfolio|about|contact|404)\.html', value):
+            elif key == 'href' and re.match(r'^/?(index|services|equipment|portfolio|about|contact|insights|404)\.html', value):
                 attrs[key] = '/' + ('' if self.lang == 'en' else self.lang + '/') + value.lstrip('/')
         self.out.append('<' + tag + ''.join(' ' + k + ('' if v is None else '="' + escape(v, quote=True) + '"') for k,v in attrs.items()) + '>')
         if tag == 'div' and attrs.get('class') == 'nav-actions':

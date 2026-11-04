@@ -43,7 +43,7 @@ assert.match(s.elements.message.value,/Load Cells \/ Sensors \/ DAQ/);
 assert.equal(s.submit.disabled,false);
 await s.formHandlers.submit({preventDefault(){}});
 const u=new URL(s.location.href);
-assert.equal(u.protocol,'mailto:');assert.equal(u.pathname,'info@an-thai.com');
+assert.equal(u.protocol,'mailto:');assert.equal(u.pathname,'anthaicheng@gmail.com');
 assert.equal(u.searchParams.get('subject'),'AN-THAI enquiry: Testing instruments');
 assert.match(u.searchParams.get('body'),/Name: QA & 中文/);assert.match(u.searchParams.get('body'),/Company: Test \+ Co/);
 assert.match(s.note.textContent,/Please send from your email app/);

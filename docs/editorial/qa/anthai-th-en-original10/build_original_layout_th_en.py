@@ -1,17 +1,45 @@
-import fitz, json, sys, os, io, html
+"""Rebuild the original-layout QA draft; never edits website brochure links.
+
+python3 build_original_layout_th_en.py --output-dir /path/to/review
+Requires PyMuPDF, Pillow and numpy. Optional --font selects a local Thai font;
+otherwise reuse the embedded font in the existing review PDF, temporarily only.
+"""
+import argparse, fitz, json, io, html, tempfile
 import numpy as np
-from PIL import Image,ImageDraw,ImageFont
+from PIL import Image, ImageDraw
 from pathlib import Path
-ROOT=Path(r'D:\AgentWorkspaces\anthai-th-en-original-overlay-20261103')
-sys.path.insert(0,str(ROOT/'_deps'))
-import cv2
-SOURCE=Path(r'D:\AgentWorkspaces\anthai-th-en-line-qa-20261103\assets\downloads\an-thai-engineering-brochure-cn-en.pdf')
-specs=json.loads((ROOT/'thai_regions.json').read_text(encoding='utf-8'))
-specs.update(json.loads((ROOT/'thai_more.json').read_text(encoding='utf-8')))
-base=fitz.open(SOURCE)
-doc=fitz.open()
-archive=fitz.Archive(r'C:\Windows\Fonts')
-css='@font-face{font-family:ThaiUI;src:url(LEELAWDB.TTF)} div{font-family:ThaiUI;line-height:1.07;margin:0;padding:0;font-weight:700}'
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--output-dir', type=Path, required=True)
+parser.add_argument('--font', type=Path)
+args = parser.parse_args()
+HERE = Path(__file__).resolve().parent
+REPO = HERE.parents[3]
+ROOT = args.output_dir.resolve()
+ROOT.mkdir(parents=True, exist_ok=True)
+SOURCE = REPO/'assets/downloads/an-thai-engineering-brochure-cn-en.pdf'
+specs = {}
+for filename in ('thai_regions_01-03.json', 'thai_regions_04-10.json'):
+    part = json.loads((HERE/filename).read_text(encoding='utf-8'))
+    if specs.keys() & part.keys():
+        raise ValueError('Overlapping page definitions')
+    specs.update(part)
+if set(specs) != {str(i) for i in range(1, 11)}:
+    raise ValueError('All original ten pages must be defined')
+base = fitz.open(SOURCE)
+assert len(base) == 10
+font_dir = tempfile.TemporaryDirectory(prefix='anthai-thai-font-')
+if args.font:
+    font_bytes = args.font.read_bytes()
+else:
+    with fitz.open(REPO/'assets/downloads/an-thai-engineering-brochure-th-en-original10-REVIEW.pdf') as review:
+        font_xref = review[0].get_fonts(full=True)[0][0]
+        font_bytes = review.extract_font(font_xref)[3]
+font_path = Path(font_dir.name)/'thai.ttf'
+font_path.write_bytes(font_bytes)
+archive = fitz.Archive(font_dir.name)
+css = '@font-face{font-family:ThaiUI;src:url(thai.ttf)} div{font-family:ThaiUI;line-height:1.07;margin:0;padding:0;font-weight:700}'
+doc = fitz.open()
 info=[]
 for i,op in enumerate(base):
  pgnum=i+1
@@ -84,6 +112,19 @@ for i,op in enumerate(base):
   p.insert_link({'kind':fitz.LINK_URI,'from':fitz.Rect(274/565*p.rect.width,616/800*p.rect.height,394/565*p.rect.width,646/800*p.rect.height),'uri':'mailto:anthaicheng@gmail.com'})
   p.insert_link({'kind':fitz.LINK_URI,'from':fitz.Rect(274/565*p.rect.width,646/800*p.rect.height,435/565*p.rect.width,676/800*p.rect.height),'uri':'https://line.me/ti/p/~rachada2018'})
  p.get_pixmap(matrix=fitz.Matrix(565/p.rect.width,800/p.rect.height),alpha=False).save(ROOT/f'final_preview_{pgnum:02d}.png')
-print('BUILT',len(doc),'REGIONS',len(info),'OUTPUT_BYTES_SO_FAR',sum(x['scale']<.7 for x in info),'LOW_SCALE')
+print('BUILT',len(doc),'REGIONS',len(info),'LOW_SCALE_REGIONS',sum(x['scale']<.7 for x in info))
 (ROOT/'region_review.json').write_text(json.dumps(info,ensure_ascii=False,indent=2),encoding='utf-8')
 doc.save(ROOT/'AN-THAI_Brochure_TH-EN_Original_10pages_QA.pdf',garbage=4,deflate=True)
+
+assert len(doc) == len(base) == 10
+# A fit is not a legibility approval. Flag tiny live text for visual review.
+small = []
+for i, page in enumerate(doc):
+    for block in page.get_text('dict')['blocks']:
+        for line in block.get('lines', []):
+            for span in line['spans']:
+                if span['text'].strip() and span['size'] < 5.5:
+                    small.append({'page': i+1, 'size': round(span['size'], 2), 'text': span['text']})
+(ROOT/'legibility_review.json').write_text(json.dumps({'status': 'REQUIRES_VISUAL_AND_THAI_REVIEW', 'small_text_spans': small}, ensure_ascii=False, indent=2), encoding='utf-8')
+font_dir.cleanup()
+print('QA ONLY: small text spans', len(small), '; not approved for publication')

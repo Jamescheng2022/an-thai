@@ -6,7 +6,7 @@ Owner instruction: keep the original 10-page Chinese/English brochure's photo se
 - Original official source: `assets/downloads/an-thai-engineering-brochure-cn-en.pdf` on main, **unchanged**.
 - Review derivative (TEN pages, same A4 page geometry): `assets/downloads/an-thai-engineering-brochure-th-en-original10-REVIEW.pdf`, approximately 4.1 MB.
 - Side-by-side visual comparison: `docs/editorial/qa/anthai-th-en-original10/compare_original_vs_thai.jpg`.
-- Two region/translation JSON files (180 manually placed Thai text regions) and the Python/Fitz reconstruction script under this folder. Do not commit/share fonts; the script references a local installed Windows Thai font at run time.
+- Two region/translation JSON files (180 manually placed Thai text regions) and the Python/Fitz reconstruction script under this folder. Do not commit/share fonts. The script now reuses the font already embedded in the existing review PDF in a temporary directory, or accepts an explicit local --font path. No Windows paths are required.
 
 ## Honest quality status / no automatic publish
 - This is a **QA DRAFT**, not signed off for Thai language or exact visual perfection.
@@ -18,3 +18,15 @@ Owner instruction: keep the original 10-page Chinese/English brochure's photo se
 
 ## Editorial requirement
 Finish native Thai terminology and visual QA across **all 10 source pages**; correct any remaining Chinese/English overlap and tiny illegible captions in the **same original-layout lane**, not a redesigned brochure. After final authorization only, promote the reviewed PDF to the user-visible Thai/English brochure link, keeping the original CN/EN PDF available.
+
+## Cloud rebuild and legibility check (2026-11-04)
+
+Run from any directory:
+
+```sh
+python3 docs/editorial/qa/anthai-th-en-original10/build_original_layout_th_en.py --output-dir /tmp/anthai-brochure-review
+```
+
+Requires PyMuPDF, Pillow and numpy; unused OpenCV dependency removed. Source/region files resolve relative to this repository. The command creates an isolated QA PDF and page previews, not a new production brochure or website link. It checks all ten page definitions and reports region fits separately from small live text.
+
+Cloud rebuild: 10 pages, 180 text regions, zero regions below 0.7 fit scale, **56 extracted text spans below 5.5pt**. Combining marks can be separate spans, so 56 is not a count of independent captions. This identifies a legibility risk, not Thai proofreading approval. The existing 10-page layout and English background remain unchanged. Do not publish until every small caption and remaining Chinese diagram label has been visually checked and Thai language acceptance is complete.

@@ -4,11 +4,11 @@
   "description": "Seven practical questions to assess a low-strain pile integrity report, trace source records, and choose an evidence-led next step.",
   "author": "AN-THAI Engineering",
   "date": "2026-10-28",
-  "image": "assets/images/insights/pit-field-photo-diptych.webp",
-  "image_alt": "Field-photo montage from AN-THAI brochure showing low-strain pile testing at the pile head and field checking activities",
-  "image_caption": "Two authentic field-photo crops from AN-THAI's existing brochure. These show low-strain testing context; site, operator and individual result are not independently verified.",
-  "image_width": 1400,
-  "image_height": 700,
+  "image": "assets/images/insights/pit-team-cover.webp",
+  "image_alt": "Brochure photographs of field personnel documenting pile-testing activity",
+  "image_caption": "Company-supplied brochure photographs of field documentation and testing activity. Project and operator attribution are not independently verified; this is not a test record. Source photo resolution: 480 × 290 pixels.",
+  "image_width": 1000,
+  "image_height": 604,
   "sections": [
     {
       "heading": "Why a “Pass” label is not the whole answer",
@@ -26,7 +26,10 @@
           "height": 930,
           "mobile_image": "assets/images/insights/pit-report-review-scope-mobile.svg",
           "mobile_width": 400,
-          "mobile_height": 596
+          "mobile_height": 596,
+          "source_visual_ids": [
+            "pit-method-scope"
+          ]
         }
       ]
     },
@@ -43,12 +46,18 @@
       ],
       "figures": [
         {
-          "image": "assets/images/insights/pit-field-team.webp",
-          "image_alt": "Brochure photograph showing workers documenting testing activity beside a concrete pile",
-          "caption": "Field preparation and pile identification must be tied to the same test record.",
-          "declaration": "Cropped from AN-THAI's previously published low-strain brochure composite; location and project attribution not independently verified.",
-          "width": 480,
-          "height": 290
+          "image": "assets/images/insights/pit-report-review-traceability.svg",
+          "image_alt": "Traceability checklist connecting pile identification, field records and the reviewed report",
+          "caption": "Match the pile identifier across the field log, original signal record and report before reviewing the conclusion.",
+          "declaration": "Original editorial checklist diagram; illustrative only, not a project record.",
+          "width": 720,
+          "height": 1010,
+          "mobile_image": "assets/images/insights/pit-report-review-traceability-mobile.svg",
+          "mobile_width": 400,
+          "mobile_height": 723,
+          "source_visual_ids": [
+            "pit-traceability-checklist"
+          ]
         }
       ]
     },
@@ -64,7 +73,10 @@
           "caption": "A real low-strain test begins with physical sensor contact and suitable acquisition conditions.",
           "declaration": "Brochure photograph, illustrative only; not the test trace for the pile discussed.",
           "width": 413,
-          "height": 500
+          "height": 500,
+          "source_visual_ids": [
+            "brochure-pit-sensor"
+          ]
         }
       ]
     },
@@ -134,5 +146,9 @@
   ],
   "cta_route": "engineering",
   "cta_label": "Discuss a pile-test report review",
-  "cta_note": "Please provide pile identifiers, drawings, the report, relevant field records and the question requiring engineering review. Scope and responsibilities are subject to project confirmation."
+  "cta_note": "Please provide pile identifiers, drawings, the report, relevant field records and the question requiring engineering review. Scope and responsibilities are subject to project confirmation.",
+  "source_visual_ids": [
+    "brochure-pit-field-documentation",
+    "brochure-pit-field-team"
+  ]
 }

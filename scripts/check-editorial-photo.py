@@ -16,6 +16,17 @@ for source in ARTICLES:
     if not article.get("image_caption","").strip() or not article.get("image_alt","").strip():
         ERRORS.append(f"{slug}: cover needs meaningful alt text and provenance caption")
     all_figs = [f for s in article.get("sections",[]) for f in s.get("figures",[])]
+    # IDs describe the original photographic subjects, including each panel
+    # in a composite. A new crop/filename must retain its original subject ID.
+    seen = set()
+    for label, visual in [('cover', article)] + [('body', f) for f in all_figs]:
+        ids = visual.get('source_visual_ids')
+        if not isinstance(ids, list) or not ids or any(not isinstance(v, str) or not v.strip() for v in ids):
+            ERRORS.append(f"{slug}: {label} needs nonempty source_visual_ids")
+            continue
+        if len(ids) != len(set(ids)) or seen.intersection(ids):
+            ERRORS.append(f"{slug}: repeated source visual in cover/body: {ids}")
+        seen.update(ids)
     photos = [f for f in all_figs if f.get("image","").endswith((".webp",".png",".jpg",".jpeg"))]
     charts = [f for f in all_figs if f.get("image","").endswith(".svg")]
     if not photos:

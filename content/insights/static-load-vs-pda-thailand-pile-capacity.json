@@ -4,11 +4,11 @@
   "description": "How Thai engineers can combine static pile load tests, PDA/CAPWAP and auditable field records to make better pile acceptance decisions.",
   "author": "AN-THAI Engineering",
   "date": "2026-11-01",
-  "image": "assets/images/insights/static-pda-photo-diptych.webp",
-  "image_alt": "Two actual brochure photographs illustrating static load reaction steelwork and impact equipment used in high-strain testing",
-  "image_caption": "Real field-photo comparison cropped from the existing AN-THAI engineering brochure. Illustration of equipment only; the separate site and operator identities have not been independently verified.",
-  "image_width": 1400,
-  "image_height": 700,
+  "image": "assets/images/insights/static-field-cover.webp",
+  "image_alt": "Brochure field photograph showing a static pile-load test reaction structure",
+  "image_caption": "Static-load test context from the company-supplied brochure. Project attribution and applied test load are not independently verified. Source photo resolution: 575 × 350 pixels.",
+  "image_width": 1000,
+  "image_height": 609,
   "cta_route": "engineering",
   "cta_label": "Discuss a project-specific pile testing plan",
   "cta_note": "Share your pile schedule, design loads, available boreholes, project specification and intended test objective. AN-THAI can discuss an appropriate scoped proposal; the designated engineer must approve the final method and acceptance criteria.",
@@ -26,7 +26,12 @@
           "caption": "High-strain impact-test equipment illustrated using AN-THAI's previously published field-photo brochure.",
           "declaration": "Company-brochure image; site and operator attribution unverified; not a verified test record.",
           "width": 900,
-          "height": 480
+          "height": 480,
+          "source_visual_ids": [
+            "brochure-pda-hammer",
+            "brochure-pda-rig-middle",
+            "brochure-pda-rig-right"
+          ]
         },
         {
           "image": "assets/images/insights/static-load-vs-pda-thailand-pile-capacity-two-measurements.svg",
@@ -34,7 +39,10 @@
           "caption": "SLT produces a measured load–movement–time record; PDA derives resistance from wave measurements and analysis. Neither number stands alone.",
           "declaration": "Original AN-THAI editorial vector illustration (2026); schematic, not to scale and not a project test record.",
           "width": 1200,
-          "height": 720
+          "height": 720,
+          "source_visual_ids": [
+            "static-load-vs-pda-thailand-pile-capacity-two-measurements"
+          ]
         }
       ]
     },
@@ -85,7 +93,10 @@
           "height": 700,
           "mobile_image": "assets/images/insights/static-load-vs-pda-thailand-pile-capacity-thai-evidence-mobile.svg",
           "mobile_width": 720,
-          "mobile_height": 980
+          "mobile_height": 980,
+          "source_visual_ids": [
+            "static-load-vs-pda-thailand-pile-capacity-thai-evidence"
+          ]
         }
       ],
       "links": [
@@ -141,7 +152,10 @@
           "caption": "China field reference (2023): large netted soil bags placed on a steel reaction platform. Cropped from a photograph supplied with the engineering exchange deck; this is not an AN-THAI Thailand project photo or proof of the applied pile load.",
           "declaration": "User-supplied 2023 China field reference. Cropped to omit identifiable third-party company and phone details; image reuse requires owner authorization.",
           "width": 920,
-          "height": 690
+          "height": 690,
+          "source_visual_ids": [
+            "static-load-vs-pda-thailand-pile-capacity-china-large-bags-field-photo"
+          ]
         }
       ],
       "links": [
@@ -190,5 +204,8 @@
       "question": "Who should approve the Method Statement and final pile-test report?",
       "answer": "The responsible project parties and appropriately qualified licensed Thai engineering professionals, as required by the adopted contract, applicable law and scope of practice. The approved responsibilities should be documented before testing."
     }
+  ],
+  "source_visual_ids": [
+    "brochure-static-reaction-frame"
   ]
 }

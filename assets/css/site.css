@@ -947,7 +947,28 @@ html[lang="th"]{font-family:Tahoma,"Leelawadee UI",sans-serif}html[lang="th"] h1
 
 }
 
-
+/* Direct, owner-supplied business contact channels (2026-11-03). */
+.direct-actions,.insight-direct-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:18px}
+.direct-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;border:1px solid #c5d3d6;border-radius:6px;background:#fff;color:#143b49;font-size:.94rem;line-height:1.35;text-decoration:none;font-weight:750;overflow-wrap:anywhere}
+.direct-link:hover,.direct-link:focus-visible{outline:2px solid #1d8191;outline-offset:2px}
+.direct-link--line{background:#e7f7ed;border-color:#64bd87;color:#125b35}
+.direct-link--email{background:#eef5f9;border-color:#c4dbe6;color:#143b49}
+.direct-actions--dark .direct-link,.insight-direct-actions .direct-link{color:#f5fffd;border-color:#57958f;background:rgba(8,67,69,.58)}
+.direct-actions--dark .direct-link--line,.insight-direct-actions .direct-link--line{background:#187347;border-color:#2d995c;color:#fff}
+.contact-direct-actions{margin-top:18px}
+.contact-panel .line-help{font-size:.82rem;line-height:1.55;color:#5c7479;margin-top:5px}
+.contact-row--alternate{opacity:.78}
+.profile-th-link{display:flex;gap:15px;flex-wrap:wrap;margin-top:12px;align-items:center}
+.profile-th-link a{display:inline-block;font-size:.92rem;font-weight:750;text-decoration:underline;text-underline-offset:3px;color:#087788;overflow-wrap:anywhere}
+.profile-th-link .profile-old-link{font-size:.81rem;color:#52666e}
+.insight-direct-actions{margin-top:-10px}
+.insight-direct-actions .direct-link{border-radius:4px}
+@media(max-width:640px){
+ .direct-actions,.insight-direct-actions{gap:8px}
+ .direct-link{flex:1 1 156px;text-align:center;padding:10px 11px;font-size:.84rem;min-width:0}
+ .profile-th-link{flex-direction:column;align-items:flex-start}
+ .contact-direct-actions{margin-top:12px}
+}
 
 
 

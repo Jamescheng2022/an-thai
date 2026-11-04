@@ -437,3 +437,24 @@ cooperation || 合作 || ความร่วมมือ
 Thailand-based engineering services, testing-instrument support and selected technical cooperation. || 立足泰国的工程服务、检测仪器支持及部分技术合作。 || บริการวิศวกรรมในประเทศไทย การสนับสนุนเครื่องมือทดสอบ และความร่วมมือทางเทคนิคบางประเภท
 AN-THAI is a Thailand-based engineering company providing testing, design conversion and Thai submission coordination, testing-instrument support and selected project cooperation. || AN-THAI 是一家立足泰国的工程公司，提供检测、设计转化与泰国报建协调、检测仪器支持及部分项目合作。 || AN-THAI เป็นบริษัทวิศวกรรมในประเทศไทย ให้บริการงานทดสอบ การปรับแบบและประสานงานยื่นขออนุญาตตามข้อกำหนดไทย การสนับสนุนเครื่องมือทดสอบ และความร่วมมือในบางโครงการ
 AN-THAI Engineering Company Limited is a Thailand-based engineering company providing testing and inspection, design conversion and Thai submission coordination, testing-instrument support and selected project cooperation with suitable partners. Licensed design/sign-off and authority submission are confirmed against the agreed project scope. || AN-THAI Engineering Company Limited 是一家立足泰国的工程公司，提供检测与检验、设计转化与泰国报建协调、检测仪器支持，并与合适的专业合作伙伴开展部分项目合作。涉及持证设计、签章或主管部门报审的工作，将按双方确认的项目范围另行核实。 || AN-THAI Engineering Company Limited เป็นบริษัทวิศวกรรมในประเทศไทย ให้บริการทดสอบและตรวจสอบ การปรับแบบและประสานงานยื่นขออนุญาตตามข้อกำหนดไทย การสนับสนุนเครื่องมือทดสอบ และความร่วมมือในบางโครงการกับพันธมิตรที่เหมาะสม งานที่ต้องใช้วิศวกรผู้มีใบอนุญาตลงนามหรือยื่นต่อหน่วยงานรัฐ จะยืนยันตามขอบเขตโครงการที่ตกลงกัน
+
+Insights || 资讯 || ข้อมูลเชิงลึก
+Insights | AN-THAI Engineering || 资讯 | AN-THAI Engineering || ข้อมูลเชิงลึก | AN-THAI Engineering
+Engineering insights from AN-THAI. Explore testing, inspection and testing-equipment articles as they are published. || 来自 AN-THAI 的工程资讯，持续发布检测、检验与检测设备相关文章。 || ข้อมูลเชิงลึกด้านวิศวกรรมจาก AN-THAI อ่านบทความเกี่ยวกับงานทดสอบ ตรวจสอบ และเครื่องมือทดสอบที่เผยแพร่อย่างต่อเนื่อง
+Engineering testing, inspection and equipment insights. || 工程检测、检验与检测设备资讯。 || ข้อมูลเชิงลึกด้านการทดสอบ ตรวจสอบ และเครื่องมือทางวิศวกรรม
+Articles will appear here once published. || 文章发布后将显示在此处。 || บทความจะปรากฏที่นี่เมื่อเผยแพร่แล้ว
+Discuss your project || 讨论您的项目 || พูดคุยเกี่ยวกับโครงการของคุณ
+Contact AN-THAI || 联系 AN-THAI || ติดต่อ AN-THAI
+Read article || 阅读文章 || อ่านบทความ
+Company Profile TH / EN || 公司简介 泰英版 || แนะนำบริษัท ภาษาไทย/อังกฤษ
+Thai / English company profile PDF || 泰英双语公司介绍 PDF || เอกสารแนะนำบริษัท ภาษาไทย/อังกฤษ (PDF)
+Original Chinese / English PDF || 原有中英版 PDF || ไฟล์ PDF ฉบับภาษาจีน/อังกฤษเดิม
+LINE ID: rachada2018 || LINE ID：rachada2018 || LINE ID: rachada2018
+Email AN-THAI || 邮件联系安泰 || ติดต่อ AN-THAI ทางอีเมล
+Contact AN-THAI on LINE || 通过 LINE 联系 AN-THAI || ติดต่อ AN-THAI ทาง LINE
+Primary email || 主要邮箱 || อีเมลหลัก
+LINE for engineering enquiries || 工程询价 LINE 联系方式 || LINE สำหรับสอบถามงานวิศวกรรม
+If the LINE link does not open, search the ID in the LINE app. || 若无法打开 LINE 链接，请在 LINE 应用内搜索该 ID。 || หากเปิดลิงก์ LINE ไม่ได้ ให้ค้นหา LINE ID ในแอป
+Domain email || 域名邮箱 || อีเมลโดเมน
+Prepare your enquiry, then send it from your email app. This website does not transmit the form or create a customer record. You can also email anthaicheng@gmail.com directly, use LINE ID: rachada2018, or call us. || 填写需求后，请在邮件应用中发送。本站不会自动提交表单或创建客户记录。也可直接发邮件到 anthaicheng@gmail.com、通过 LINE ID：rachada2018 或电话联系。 || กรอกคำสอบถามแล้วส่งผ่านแอปอีเมล เว็บไซต์นี้ไม่ส่งแบบฟอร์มหรือสร้างข้อมูลลูกค้าโดยอัตโนมัติ ติดต่อโดยตรงได้ทาง anthaicheng@gmail.com, LINE ID: rachada2018 หรือโทรศัพท์
+, add LINE ID: rachada2018, or call || ，也可以添加 LINE ID：rachada2018，或拨打 || หรือเพิ่ม LINE ID: rachada2018 หรือโทร

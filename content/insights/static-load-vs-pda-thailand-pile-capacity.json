@@ -1,0 +1,238 @@
+{
+  "slug": "static-load-vs-pda-thailand-pile-capacity",
+  "title": "Static Load Test vs PDA in Thailand: Building Trustworthy Pile Capacity Evidence",
+  "description": "How Thai engineers can combine static pile load tests, PDA/CAPWAP and auditable field records to make better pile acceptance decisions.",
+  "author": "AN-THAI Engineering",
+  "date": "2026-11-01",
+  "image": "assets/images/insights/static-load-vs-pda-thailand-pile-capacity-static-field-photo.webp",
+  "image_alt": "Actual field photograph of a steel reaction frame and supports during a static pile load test, sourced from AN-THAI's existing engineering brochure",
+  "image_caption": "Field photograph from the AN-THAI engineering brochure, cropped to focus on static pile load test reaction steelwork. The image illustrates equipment and site conditions; it does not certify a particular test or identify the executing contractor.",
+  "image_width": 575,
+  "image_height": 350,
+  "cta_route": "engineering",
+  "cta_label": "Discuss a project-specific pile testing plan",
+  "cta_note": "Share your pile schedule, design loads, available boreholes, project specification and intended test objective. AN-THAI can discuss an appropriate scoped proposal; the designated engineer must approve the final method and acceptance criteria.",
+  "sections": [
+    {
+      "heading": "The real question is not which machine gives the bigger number",
+      "paragraphs": [
+        "A pile test report is only useful when an owner, designer or supervising engineer can explain what was actually measured, what was inferred and why the result is adequate for the project. That distinction becomes important when a high-strain dynamic test reports an apparently satisfactory capacity, yet the owner has never seen a measured load–settlement response at the relevant site.",
+        "Static axial load testing (SLT) and high-strain dynamic testing using a Pile Driving Analyzer (PDA) both have legitimate roles. The practical choice is not to dismiss either method. It is to establish the required evidence first, then match the test plan to the pile type, ground conditions, construction method and consequences of a wrong decision."
+      ],
+      "figures": [
+        {
+          "image": "assets/images/insights/static-load-vs-pda-thailand-pile-capacity-pda-field-photo.webp",
+          "image_alt": "Real field photograph showing a large suspended drop hammer above a pile head at a pile testing site",
+          "caption": "Actual high-strain testing equipment photograph excerpted from AN-THAI's company brochure. Shown for equipment context, not as a verified project test record.",
+          "declaration": "Photograph: crop from AN-THAI brochure (assets/images/hero-field.webp). Site/operator/project attribution not independently verified.",
+          "width": 258,
+          "height": 576
+        },
+        {
+          "image": "assets/images/insights/static-load-vs-pda-thailand-pile-capacity-two-measurements.svg",
+          "image_alt": "Side-by-side comparison: static testing measures applied load and settlement over time, while PDA records impact force and velocity for interpreted pile resistance",
+          "caption": "SLT produces a measured load–movement–time record; PDA derives resistance from wave measurements and analysis. Neither number stands alone.",
+          "declaration": "Original AN-THAI editorial vector illustration (2026); schematic, not to scale and not a project test record.",
+          "width": 1200,
+          "height": 720
+        }
+      ]
+    },
+    {
+      "heading": "What the Thai pile-work standard actually specifies",
+      "paragraphs": [
+        "Thailand's Department of Public Works and Town and Country Planning (DPT) pile-work standard มยผ. 1106-64, Section 6, points to มยผ. 1251 for static axial load testing and มยผ. 1252 for dynamic axial load testing. Its Section 6.3 states that, where drawings or project-specific specifications do not set out the load-testing method, the static method under Section 6.1 is to be used. The same section separately references integrity testing under มยผ. 1551. These are different technical questions.",
+        "This is an important reference for a discussion with a Thai designer, but not a blanket claim that every private project in Thailand is legally required to perform SLT. The governing contract, adopted codes, drawings, permit conditions and the engineer's approved testing programme still need to be checked. Do not replace the designer's decision with a sales assertion."
+      ],
+      "links": [
+        {
+          "label": "Thai DPT 1106-64 official government-hosted standard — Section 6",
+          "url": "https://www.audit.go.th/sites/default/files/files/purchase/%E0%B8%A1%E0%B8%B2%E0%B8%95%E0%B8%A3%E0%B8%90%E0%B8%B2%E0%B8%99%E0%B8%81%E0%B8%B3%E0%B8%AB%E0%B8%99%E0%B8%94%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B8%A5%E0%B8%B1%E0%B8%81%E0%B8%A9%E0%B8%93%E0%B8%B0%E0%B9%80%E0%B8%89%E0%B8%9E%E0%B8%B2%E0%B8%B0%E0%B8%82%E0%B8%AD%E0%B8%87%E0%B8%A7%E0%B8%B1%E0%B8%AA%E0%B8%94%E0%B8%B8%E0%B9%83%E0%B8%8A%E0%B9%89%E0%B9%83%E0%B8%99%E0%B9%82%E0%B8%84%E0%B8%A3%E0%B8%87%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87%E0%B8%AD%E0%B8%B2%E0%B8%84%E0%B8%B2%E0%B8%A3_1.pdf"
+        }
+      ]
+    },
+    {
+      "heading": "China's standards provide a useful comparison, not Thai acceptance rules",
+      "paragraphs": [
+        "China makes an explicit distinction between establishing design parameters and selecting construction acceptance tests. GB 55003-2021, Section 5.2.5, calls for the characteristic ultimate axial pile resistance to be established through a static pile load test, using a slow maintained-load procedure for compression. That reflects a design-evidence principle in the Chinese system; it is not a law governing a Thai project.",
+        "China's JGJ 106-2014 also separates higher-risk acceptance situations from other cases. Its Section 3.3.4 identifies circumstances calling for static compression tests, including high design grades, new pile methods, complex ground or construction anomalies. For those specified cases it sets a conditional minimum of 1% of the pile count and normally at least three test piles, or at least two where the total pile count is below fifty. Other technically eligible piles may use high-strain dynamic testing under Section 3.3.5, and Section 3.3.6 treats local comparative evidence as a condition for supplementary high-strain use in the higher-risk cases.",
+        "These Chinese sampling figures belong to that code and its specified scenarios. Copying '1% SLT' or '5% PDA' into a Thai Method Statement without reviewing the actual Thai contract, ground conditions and design intent would be as unsound as selecting tests solely by price."
+      ],
+      "links": [
+        {
+          "label": "China GB 55003-2021 §5.2.5: pile design and static capacity testing",
+          "url": "https://gf.cabr-fire.com/m/article-39188.htm"
+        },
+        {
+          "label": "China JGJ 106-2014 §§3.3.4–3.3.6: testing method and numbers",
+          "url": "https://gf.cabr-fire.com/m/article-15286.htm"
+        }
+      ]
+    },
+    {
+      "heading": "Thai data show why site-specific correlation matters",
+      "paragraphs": [
+        "A 1996 Chulalongkorn University thesis examined dynamic and static test evidence from driven piles in Bangkok and Rayong. For the study's CAPWAP-derived capacity (Y) compared with a static-test capacity interpreted by the Mazurkiewicz method (X), the Bangkok regression was Y = 0.963X with R² = 0.85. Rayong produced Y = 1.172X with R² = 0.68. The thesis itself notes limited data and discusses variation with pile and soil conditions.",
+        "Those coefficients are not the typical error of an individual pile, nor do they authorize transferring a Bangkok calibration to Rayong. They do show why a project engineer should ask which soil profile, pile geometry, construction method and test timing support the proposed correlation."
+      ],
+      "figures": [
+        {
+          "image": "assets/images/insights/static-load-vs-pda-thailand-pile-capacity-thai-evidence.svg",
+          "image_alt": "Two study-level comparison panels displaying Bangkok regression Y equals 0.963 X with R squared 0.85 and Rayong regression Y equals 1.172 X with R squared 0.68",
+          "caption": "1996 Chulalongkorn research: site-specific correlations, not individual pile error rates.",
+          "declaration": "Original AN-THAI editorial vector illustration (2026); schematic, not to scale and not a project test record.",
+          "width": 1200,
+          "height": 700,
+          "mobile_image": "assets/images/insights/static-load-vs-pda-thailand-pile-capacity-thai-evidence-mobile.svg",
+          "mobile_width": 720,
+          "mobile_height": 980
+        }
+      ],
+      "links": [
+        {
+          "label": "Chulalongkorn University (1996): Evaluation of dynamic pile load tests in Bangkok and Rayong",
+          "url": "https://digital.car.chula.ac.th/chulaetd/27258/"
+        }
+      ]
+    },
+    {
+      "heading": "Chinese studies underline uncertainty without discrediting PDA",
+      "paragraphs": [
+        "A 2016 Chinese study by Li Sa and colleagues analysed 92 paired results for steel pipe piles and precast concrete piles. The authors reported useful correlation while modelling a broad approximately ±50% study-level fluctuation interval for the dynamic/static ratio. This interval must not be described as 'PDA has a 50% error' for every pile or for Thailand as a whole.",
+        "A separate 2022 study of PHC pipe piles in Foshan reported relative differences of 7.1%–25.2% for the piles examined. Its authors identified the pile–soil model, mobilization of soil resistance and signal-matching choices as relevant factors. The range is a finding for that study, not an acceptable discrepancy threshold or a national accuracy rating.",
+        "Together with the Thai thesis, the appropriate conclusion is measured rather than dramatic: correlations can be useful, but the engineering confidence attached to one reported capacity depends on the input evidence and interpretation quality."
+      ],
+      "links": [
+        {
+          "label": "Li et al. (2016), 92 paired piles: probabilistic reliability of high-strain testing",
+          "url": "https://dxkjxb.cqu.edu.cn/EN/Y2016/V12/I5/1423"
+        },
+        {
+          "label": "Liu et al. (2022): dynamic/static comparison of PHC piles in Foshan",
+          "url": "https://www.aeeisp.com/slyjzgcxb/article/id/d626d7ce-557c-43a7-96ab-98231a992cb4?viewType=citedby-info"
+        }
+      ]
+    },
+    {
+      "heading": "A valid PDA result needs more than a convincing final plot",
+      "paragraphs": [
+        "High-strain testing measures force and velocity responses generated by an impact. Capacity evaluation depends on whether the impact sufficiently mobilizes resistance, on sensor attachment and signal quality, and on the interpretation method. CAPWAP-type wave-equation matching uses assumptions and adjustable model parameters; more than one interpretation may fit aspects of an observed response. Adjustment is not, by itself, evidence of misconduct, but undocumented changes are not a satisfactory acceptance record.",
+        "A defensible submission should retain the raw force and velocity traces for the selected impacts, time and pile identification, sensor and calibration information, the hammer or drop-weight configuration, the estimated stresses, the modelling inputs and revisions, the final matched signals and the engineer's interpretation. For driven piles, initial driving and later restrike can differ materially because soil resistance can change with time. A comparison to an SLT on a genuinely representative pile can help constrain the interpretation.",
+        "ASTM D4945-26 describes high-strain testing as a measurement of pile response from which static resistance is derived indirectly; the standard alone is not evidence that any particular site report is valid. The engineer must judge whether the event mobilized enough load and movement for the intended conclusion."
+      ],
+      "figures": [
+        {
+          "image": "assets/images/insights/static-load-vs-pda-thailand-pile-capacity-pda-quality.svg",
+          "image_alt": "Five-stage PDA quality control chain from sensor mounting to impact mobilization, preserved raw traces, model interpretation and independent review",
+          "caption": "The acceptance chain must preserve measurements and assumptions, not just a final capacity value.",
+          "declaration": "Original AN-THAI editorial vector illustration (2026); schematic, not to scale and not a project test record.",
+          "width": 1200,
+          "height": 720,
+          "mobile_image": "assets/images/insights/static-load-vs-pda-thailand-pile-capacity-pda-quality-mobile.svg",
+          "mobile_width": 720,
+          "mobile_height": 1000
+        }
+      ],
+      "links": [
+        {
+          "label": "ASTM D4945-26: High-Strain Dynamic Testing of Deep Foundations",
+          "url": "https://store.astm.org/d4945-26.html"
+        }
+      ]
+    },
+    {
+      "heading": "A static load test can fail the evidence test, too",
+      "paragraphs": [
+        "SLT directly records applied loading and resulting displacement over time, making it particularly valuable when the question concerns a specified proof load or the pile's load–movement behaviour. Yet 'direct' does not mean error-free. An unsafe or insufficiently rigid reaction arrangement, unstable kentledge, uncalibrated instrumentation, an influenced reference datum or incomplete hold-time records can undermine the result.",
+        "Consider large bagged-earth kentledge as a practical example. The China field reference photographs discussed in our October 2026 engineering exchange show large netted earth bags on a steel platform; associated archival weighing slips show individual recorded masses of approximately 5.48–6.61 tonnes. These records concern that reference archive, not a measured or certified Thai test setup. They do not prove the total reaction system, applied test load, stability or independent settlement datum.",
+        "The practical rule is simple: bag weights help document the reaction inventory, whereas the calibrated jack/load cell and approved load schedule establish the force on the pile. A qualified engineer must separately review the steelwork, bearing/support conditions, lifting and exclusion zones. The test report must preserve the full time–load–settlement history and any stop or unload events."
+      ],
+      "figures": [
+        {
+          "image": "assets/images/insights/static-load-vs-pda-thailand-pile-capacity-china-large-bags-field-photo.webp",
+          "image_alt": "Original 2023 China construction site photograph showing large netted earth bags arranged above heavy steel beams as kentledge reaction mass for a static pile load test",
+          "caption": "China field reference (2023): large netted soil bags placed on a steel reaction platform. Cropped from a photograph supplied with the engineering exchange deck; this is not an AN-THAI Thailand project photo or proof of the applied pile load.",
+          "declaration": "User-supplied 2023 China field reference. Cropped to omit identifiable third-party company and phone details; image reuse requires owner authorization.",
+          "width": 920,
+          "height": 690
+        },
+        {
+          "image": "assets/images/insights/static-load-vs-pda-thailand-pile-capacity-kentledge.svg",
+          "image_alt": "Conceptual diagram of a large netted-earth-bag kentledge platform over a static pile test highlighting mass records, reaction load path, calibrated jack and independent reference beam",
+          "caption": "Large netted earth bags are a possible reaction mass—not a substitute for a verified reaction design or calibrated applied-load record.",
+          "declaration": "Original AN-THAI editorial vector illustration (2026); schematic, not to scale and not a project test record.",
+          "width": 1200,
+          "height": 800
+        }
+      ],
+      "links": [
+        {
+          "label": "ASTM D1143/D1143M-20: static axial compressive testing",
+          "url": "https://store.astm.org/d1143_d1143m-20.html"
+        }
+      ]
+    },
+    {
+      "heading": "A risk-matched acceptance programme is stronger than a one-method rule",
+      "paragraphs": [
+        "For high-consequence foundations, unusual pile types, new installation methods or poorly established site correlations, the design engineer can consider representative static load testing to anchor the acceptance decision. PDA may then provide wider coverage, installation monitoring, stress information or supplementary capacity evidence where its technical limitations are understood. Other methods, including appropriately validated rapid-load tests, may be considered when the project has a sound basis for them.",
+        "This is a proposed engineering framework, not a fixed legal sampling percentage. The number and location of tests, proof loads, acceptance definitions, correlation requirements and handling of disagreeing results must come from the applicable specifications and the responsible designer. A static proof test that never approaches a failure condition should not automatically be reported as having directly measured the ultimate capacity."
+      ],
+      "figures": [
+        {
+          "image": "assets/images/insights/static-load-vs-pda-thailand-pile-capacity-decision-path.svg",
+          "image_alt": "Decision flow for a risk-matched pile testing program from project specification and pile risk through representative static baseline, justified PDA use and engineering acceptance",
+          "caption": "A designer-led sequence: establish the required evidence, approve the method, record the testing, then accept or investigate.",
+          "declaration": "Original AN-THAI editorial vector illustration (2026); schematic, not to scale and not a project test record.",
+          "width": 1200,
+          "height": 740,
+          "mobile_image": "assets/images/insights/static-load-vs-pda-thailand-pile-capacity-decision-path-mobile.svg",
+          "mobile_width": 720,
+          "mobile_height": 1070
+        }
+      ],
+      "links": [
+        {
+          "label": "ISSMGE 2026 Thai comparison of rapid, dynamic and static pile tests",
+          "url": "https://www.issmge.org/publications/publication/comparisons-of-rapid-load-test-dynamic-load-test-and-static-load-test-on-piles-in-a-clayey-ground-in-thailand"
+        }
+      ]
+    },
+    {
+      "heading": "Before testing, approve the Method Statement and the evidence to be retained",
+      "paragraphs": [
+        "A practical Method Statement should identify each pile, its geometry and construction history, the design load and test purpose; the applicable testing standard and loading or impact procedure; the reaction-system design and safety provisions for SLT or the instrument/impact arrangement for PDA; calibration and reference measurements; hold times or signal-selection logic; the proposed analysis and acceptance criteria; and the conditions under which testing must pause or be repeated.",
+        "The contractor, testing organization, supervising consultant and engineer should have clearly documented roles. The required Thai professional credentials and authority to review or sign depend on the work and contract. A signature should represent genuine review within the signatory's licensed scope, not a purchased stamp. Project witnessing, original data retention and a traceable record of subcontracting or specialist interpretation make the resulting report more useful for the owner.",
+        "To request a scoped technical discussion, send the pile layout and schedule, pile type/size/length, load requirements, geotechnical logs, recent installation records, the project specification, proposed test locations, site access and the decision that the result is meant to support. If these basics are unavailable, the first deliverable may be a gap list rather than a credible acceptance promise."
+      ],
+      "figures": [
+        {
+          "image": "assets/images/insights/static-load-vs-pda-thailand-pile-capacity-evidence-pack.svg",
+          "image_alt": "Five components of an auditable pile test report: approved method, calibrated instrumentation, raw records, interpretation trail and engineer approval",
+          "caption": "An auditable evidence pack ties methods, observations and sign-off to the same identified test piles.",
+          "declaration": "Original AN-THAI editorial vector illustration (2026); schematic, not to scale and not a project test record.",
+          "width": 1200,
+          "height": 660
+        }
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "question": "Can PDA replace every static load test in Thailand?",
+      "answer": "No universal substitution rule can be inferred. Check the adopted DPT standard, project documents, pile and soil conditions, required evidence and the designated engineer's acceptance decision."
+    },
+    {
+      "question": "Do the Bangkok and Rayong R² values mean PDA is accurate to 85% or 68%?",
+      "answer": "No. R² summarizes the fit of regression data in the cited thesis; it is not a percent accuracy for any individual tested pile."
+    },
+    {
+      "question": "Are five-tonne earth bags sufficient proof of a static load test?",
+      "answer": "No. Recorded bag mass does not establish applied pile load, platform stability or settlement measurement quality. The approved reaction system and calibrated force/movement records remain essential."
+    },
+    {
+      "question": "Who should approve the Method Statement and final pile-test report?",
+      "answer": "The responsible project parties and appropriately qualified licensed Thai engineering professionals, as required by the adopted contract, applicable law and scope of practice. The approved responsibilities should be documented before testing."
+    }
+  ]
+}

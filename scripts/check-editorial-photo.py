@@ -15,7 +15,11 @@ for source in ARTICLES:
         ERRORS.append(f"{slug}: lead image must be at least 1000px wide")
     if not article.get("image_caption","").strip() or not article.get("image_alt","").strip():
         ERRORS.append(f"{slug}: cover needs meaningful alt text and provenance caption")
-    all_figs = [f for s in article.get("sections",[]) for f in s.get("figures",[])]
+    all_figs = []
+    for s in article.get("sections",[]):
+        all_figs.extend(s.get("figures",[]))
+        if isinstance(s.get("figure"), dict):
+            all_figs.append(s["figure"])
     # IDs describe the original photographic subjects, including each panel
     # in a composite. A new crop/filename must retain its original subject ID.
     seen = set()

@@ -35,4 +35,8 @@ with tempfile.TemporaryDirectory() as tmp:
     invalid_id = copy.deepcopy(sample)
     invalid_id['source_visual_ids'] = ['']
     check(invalid_id, False)
-print('PASS: distinct subjects accepted; montage crop, repeated body, missing and blank source IDs rejected')
+    singular_figure_repeat = copy.deepcopy(sample)
+    singular_figure_repeat['sections'][2]['figure'] = copy.deepcopy(singular_figure_repeat['sections'][2]['figures'][0])
+    singular_figure_repeat['sections'][2]['figure']['source_visual_ids'] = sample['source_visual_ids'][:1]
+    check(singular_figure_repeat, False)
+print('PASS: distinct subjects accepted; montage crop, repeated body (plural and singular figure), missing and blank source IDs rejected')

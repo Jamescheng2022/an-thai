@@ -1,3 +1,14 @@
+## 2026-11-07 owner-authorized revision and release
+
+Owner follow-up: “修改后上线” (correct and publish). The prior HOLD applies to the historical REVIEW PDF, not the corrected edition described below.
+
+- Corrected ten-page edition: `assets/downloads/an-thai-engineering-brochure-th-en.pdf`.
+- Revision source, original-vs-corrected contact sheet and validation: [revision-20261107](revision-20261107/RELEASE.md).
+- Original CN/EN PDF is unchanged and remains available. The rejected six-page design is not linked.
+- Publication is owner-authorized editorial release, not native-Thai engineering language certification. No verified LINE Official Account claim is made.
+
+---
+
 # AN-THAI Original-layout Thai/English brochure — visual QA draft
 
 Owner instruction: keep the original 10-page Chinese/English brochure's photo sequence and blue-white image composition. Do **not** replace it with the rejected six-page newly designed PDF.

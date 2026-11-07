@@ -43,7 +43,10 @@
           "height": 990,
           "source_visual_ids": [
             "pit-pretest-owner-documents-diagram"
-          ]
+          ],
+          "mobile_image": "assets/images/insights/pit-pretest-handover-five-files-mobile.svg",
+          "mobile_width": 480,
+          "mobile_height": 1120
         }
       ],
       "links": [
@@ -69,7 +72,10 @@
           "height": 980,
           "source_visual_ids": [
             "pit-pretest-owner-head-readiness-diagram"
-          ]
+          ],
+          "mobile_image": "assets/images/insights/pit-pretest-pile-head-readiness-mobile.svg",
+          "mobile_width": 480,
+          "mobile_height": 1030
         }
       ],
       "links": [
@@ -108,7 +114,10 @@
           "height": 1030,
           "source_visual_ids": [
             "pit-pretest-owner-roles-diagram"
-          ]
+          ],
+          "mobile_image": "assets/images/insights/pit-pretest-roles-handoff-mobile.svg",
+          "mobile_width": 480,
+          "mobile_height": 1170
         }
       ],
       "links": [

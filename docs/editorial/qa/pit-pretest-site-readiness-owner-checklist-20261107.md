@@ -19,7 +19,7 @@ No numerical pile capacity, soil strength, test interval, ASTM clause, local per
 
 ## Image manifest / provenance
 
-All four SVG assets are newly authored original deterministic vector graphics within this deliverable, not external copies, licensed third-party photographs, client documents, actual AN-THAI projects, or AI-generated photographic scenes. Original code is the SVG source bytes. Cover and all three body images depict **different concepts** (editorial readiness cover, documents, site head readiness, roles). The explanatory illustrations are unscaled and non-engineering; no numerical measurements. Color contrast and aspect ratios were chosen for narrow-screen reading; **real 320/390/820/1363 browser screenshot acceptance still required**.
+All seven SVG assets (one cover, three desktop inline visuals and three mobile variants) are newly authored original deterministic vector graphics within this deliverable, not external copies, licensed third-party photographs, client documents, actual AN-THAI projects, or AI-generated photographic scenes. Original code is the SVG source bytes. Cover and all three body images depict **different concepts** (editorial readiness cover, documents, site head readiness, roles). The explanatory illustrations are unscaled and non-engineering; no numerical measurements. Color contrast and aspect ratios were chosen for narrow-screen reading; **real 320/390/820/1363 browser screenshot acceptance still required**.
 
 | Usage | Asset | Intrinsic px | Content | Rights |
 | --- | --- | --- | --- | --- |
@@ -28,7 +28,7 @@ All four SVG assets are newly authored original deterministic vector graphics wi
 | inline 2 | `assets/images/insights/pit-pretest-pile-head-readiness.svg` | 720×980 | Conceptual diagram showing clear access, suitable pile head, and engineer-selected measuring positions | AN-THAI original editorial SVG; generated in-house |
 | inline 3 | `assets/images/insights/pit-pretest-roles-handoff.svg` | 720×1030 | Pre-test responsibility handoff for owner, contractor, testing crew, and design engineer | AN-THAI original editorial SVG; generated in-house |
 
-All inline images contain `image_alt`, `caption`, `declaration`, dimensions and unique `source_visual_ids` in the JSON. SVGs have intrinsic width/height, viewBox, title and aria-label. They are part of the JSON section render sequence; not merely additional unattached assets. No mobile variant is needed at draft stage for portrait inline graphics, but actual mobile readability remains **unverified** pending browser acceptance.
+All inline images contain `image_alt`, `caption`, `declaration`, dimensions, `mobile_image`/`mobile_width`/`mobile_height` and unique `source_visual_ids` in the JSON. SVGs have intrinsic width/height, viewBox, title and aria-label. They are part of the JSON section render sequence; not merely additional unattached assets. Three dedicated portrait **480px-width mobile SVG variants** have been added to the article figures with explicit mobile paths/dimensions. Labels were shortened and font sizes increased for small screens. Actual mobile readability is still **unverified** until 320/390/820/1363 browser screenshots are independently inspected.
 
 ## Acceptance gates
 
@@ -36,3 +36,8 @@ All inline images contain `image_alt`, `caption`, `declaration`, dimensions and 
 - Verify all five JSON/article images relative paths and source declarations against actual GitHub blobs; run existing `build-insights.py`, `check-insights.py`, `check-editorial-photo.py`, locale/static checks, independent facts/editorial and Code review at exact SHA.
 - Do **not** move this file into `content/insights/` until existing Claude Lead and independent reviewer approve; then original authorized publisher handles merge/deploy and public readback including images/CTA/mobile and indexing.
 - No email, contact-form submission, DNS/secret changes or production merge authorized.
+
+### Mobile asset manifest (same information as desktop, **not** extra independent body figures)
+- `assets/images/insights/pit-pretest-handover-five-files-mobile.svg`, 480×1120px; original AN-THAI editorial SVG, source/permission same as corresponding figure 1; not a site photograph or actual measurement.
+- `assets/images/insights/pit-pretest-pile-head-readiness-mobile.svg`, 480×1030px; original AN-THAI editorial SVG, source/permission same as corresponding figure 2; not a site photograph or actual measurement.
+- `assets/images/insights/pit-pretest-roles-handoff-mobile.svg`, 480×1170px; original AN-THAI editorial SVG, source/permission same as corresponding figure 3; not a site photograph or actual measurement.

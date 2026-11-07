@@ -1,0 +1,11 @@
+# 2026-11-07 standards-edition reference check — static load versus PDA article
+
+Scope: existing PR #20, source `content/insights/static-load-vs-pda-thailand-pile-capacity.json`; article title and substantive technical text are unchanged. Date checked: 2026-11-07 (Asia/Bangkok). The change updates **one bibliographic/source-link label and URL only**, not a contractual test specification or a claim of Thai legal adoption.
+
+- ASTM International official catalog: `https://store.astm.org/d1143_d1143m-26.html` explicitly lists **ASTM D1143/D1143M-26** as *Active*, last updated 2026-05-19; standard title: “Standard Test Methods for Deep Foundation Elements Under Static Axial Compressive Load”. Earlier link `https://store.astm.org/d1143_d1143m-20.html` identifies the 2020 edition and is not the current catalog edition as of the check date.
+- ASTM International official catalog: `https://store.astm.org/d4945-26.html` lists **ASTM D4945-26** as *Active*, last updated 2026-05-19. The article already cites D4945-26, so there was no change there.
+- ASTM International official catalog: `https://store.astm.org/d5882-16.html` lists **D5882-16 withdrawn in 2025, no replacement**. The separate PIT report article already makes that distinction; it is not an active method certification.
+
+Important scope boundary: a newly published ASTM edition does not automatically supersede an older edition **explicitly incorporated by a project contract, design specification, Thai authority or accredited procedure**. The project engineer must confirm the controlling edition and test plan. This editorial reference update does not claim full licensed-standard clause review, comparative redline examination, Thai code equivalence or authorization to use new clauses. It does not alter engineering outcomes or acceptance criteria.
+
+Original source assets/photos and article figures are untouched. Re-run the existing branch's build/localization/visual checks as appropriate. Because this JSON edit changes the exact PR head, previous Codex and Claude MERGE-READY reviews for `7c1e8a5442` must not be treated as final-commit approval; an independent check of the new head and original Lead sign-off are again required. No production publication authorization is implied.

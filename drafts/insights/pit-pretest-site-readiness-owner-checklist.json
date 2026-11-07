@@ -4,11 +4,11 @@
   "description": "A practical pre-test PIT checklist for Thai project owners: pile records, access, engineering scope and data handover before mobilization.",
   "author": "AN-THAI Engineering",
   "date": "2026-11-07",
-  "image": "assets/images/insights/pit-pretest-owner-cover.svg",
-  "image_alt": "Illustrated editorial guide cover with document checklist and conceptual field-test symbol",
-  "image_caption": "Conceptual editorial cover: the article describes pre-test planning, not a documented project.",
-  "image_width": 1100,
-  "image_height": 700,
+  "image": "assets/images/insights/pit-team-cover.webp",
+  "image_alt": "Genuine company-brochure field photographs of personnel documenting or preparing a pile test, provenance unverified for exact site and date",
+  "image_caption": "Existing AN-THAI brochure field images (low-resolution source, illustrative only). This photograph does not document a new or specific Thai client or the test discussed.",
+  "image_width": 1000,
+  "image_height": 604,
   "sections": [
     {
       "heading": "Why an apparently simple PIT booking can go wrong",
@@ -64,18 +64,15 @@
       ],
       "figures": [
         {
-          "image": "assets/images/insights/pit-pretest-pile-head-readiness.svg",
-          "image_alt": "Conceptual diagram showing clear access, suitable pile head, and engineer-selected measuring positions",
-          "caption": "Site-readiness concepts only; no dimensions, test settings or safety plan are prescribed.",
-          "declaration": "Original AN-THAI editorial SVG (2026-11-07); concept/checklist only, not a real site photograph, engineering drawing or test record.",
-          "width": 720,
-          "height": 980,
+          "image": "assets/images/insights/pit-field-sensor.webp",
+          "image_alt": "Existing brochure photograph showing low-strain test sensor and cable on a prepared concrete pile head",
+          "caption": "An existing field reference shows a sensor in contact with an exposed pile head. The location, date and test result are not independently verified.",
+          "declaration": "Company-supplied AN-THAI brochure photograph; illustrative reference only, not a new Thai project record, certified report or site-readiness instruction. Photo source is limited resolution.",
+          "width": 413,
+          "height": 500,
           "source_visual_ids": [
-            "pit-pretest-owner-head-readiness-diagram"
-          ],
-          "mobile_image": "assets/images/insights/pit-pretest-pile-head-readiness-mobile.svg",
-          "mobile_width": 480,
-          "mobile_height": 1030
+            "brochure-pit-sensor"
+          ]
         }
       ],
       "links": [
@@ -151,5 +148,9 @@
   ],
   "cta_route": "engineering",
   "cta_label": "Discuss a PIT site-readiness enquiry",
-  "cta_note": "Send your pile register, marked plan, as-built details, installation notes, available ground information and test objective; our team can clarify a suitable engineering-services enquiry scope."
+  "cta_note": "Send your pile register, marked plan, as-built details, installation notes, available ground information and test objective; our team can clarify a suitable engineering-services enquiry scope.",
+  "source_visual_ids": [
+    "brochure-pit-field-documentation",
+    "brochure-pit-field-team"
+  ]
 }

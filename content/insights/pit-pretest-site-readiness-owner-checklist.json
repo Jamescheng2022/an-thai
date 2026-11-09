@@ -1,0 +1,156 @@
+{
+  "slug": "pit-pretest-site-readiness-owner-checklist",
+  "title": "Before Booking a Pile Integrity Test in Thailand: The Owner's Site-Readiness Pack",
+  "description": "A practical pre-test PIT checklist for Thai project owners: pile records, access, engineering scope and data handover before mobilization.",
+  "author": "AN-THAI Engineering",
+  "date": "2026-11-09",
+  "image": "assets/images/insights/pit-team-cover.webp",
+  "image_alt": "Genuine company-brochure field photographs of personnel documenting or preparing a pile test, provenance unverified for exact site and date",
+  "image_caption": "Existing AN-THAI brochure field images (low-resolution source, illustrative only). This photograph does not document a new or specific Thai client or the test discussed.",
+  "image_width": 1000,
+  "image_height": 604,
+  "sections": [
+    {
+      "heading": "Why an apparently simple PIT booking can go wrong",
+      "paragraphs": [
+        "A project manager may ask for a pile integrity test as soon as the concrete is in place. But the useful question is not simply whether someone can bring a hammer and sensor to site. It is whether the selected piles, installation records, access conditions and intended engineering decision have been agreed before the crew arrives.",
+        "Low-strain pile integrity testing (PIT) records the response to a light impact and may help investigate continuity or significant changes along suitable deep foundations. It is not a bearing-capacity test. This guide is for owners, main contractors and site QA teams organizing concrete-pile integrity testing; it is not a universal procedure for steel sections, very short piles, heavily capped piles or every foundation geometry."
+      ],
+      "links": [
+        {
+          "label": "Pile Dynamics: PIT method and equipment scope",
+          "url": "https://www.pile.com/products/pit/"
+        },
+        {
+          "label": "ASTM D5882-16 official status (withdrawn 2025; no replacement listed)",
+          "url": "https://store.astm.org/d5882-16.html"
+        }
+      ]
+    },
+    {
+      "heading": "Build a usable pile list, not merely a total quantity",
+      "paragraphs": [
+        "Send a marked plan and a pile register with stable pile IDs, locations, pile type, nominal section, design or constructed length if known, installation date, and the reason for each selected test. Provide the latest drawings as well as any changes between design and construction. A request for '200 piles' without a traceable register invites testing the wrong element or producing results that cannot be linked confidently to the permanent works.",
+        "Installation history matters. Share relevant driving or concreting records, interruptions, suspected obstructions, unexpected spoil or volume changes, repairs and previous tests. Add the borehole or ground-investigation information available for the test area. The equipment maker specifically recommends considering installation records and soil profiles when interpreting PIT reflections. A missing record should be labeled missing rather than reconstructed from memory."
+      ],
+      "figures": [
+        {
+          "image": "assets/images/insights/pit-pretest-handover-five-files.svg",
+          "image_alt": "Five-part previsit document checklist for pile testing",
+          "caption": "Five items that make the testing request actionable; exact project records may differ.",
+          "declaration": "Original AN-THAI editorial SVG (2026-11-07); concept/checklist only, not a real site photograph, engineering drawing or test record.",
+          "width": 720,
+          "height": 990,
+          "source_visual_ids": [
+            "pit-pretest-owner-documents-diagram"
+          ],
+          "mobile_image": "assets/images/insights/pit-pretest-handover-five-files-mobile.svg",
+          "mobile_width": 480,
+          "mobile_height": 1120
+        }
+      ],
+      "links": [
+        {
+          "label": "Pile Dynamics: why PIT results need pile logs and soil profiles",
+          "url": "https://www.pile.com/resources/faqs/faq-can-results-pit-tests-confirmed-comparing-piling-records/"
+        }
+      ]
+    },
+    {
+      "heading": "Prepare the actual pile head and a safe work window",
+      "paragraphs": [
+        "Confirm which pile heads are exposed and accessible, whether site housekeeping allows an inspection, and who will escort the testing team. For ordinary top-impact PIT, there must be a suitable concrete surface for the impact and motion-sensing device. The testing engineer should decide the impact arrangement and whether special access, preparation or an alternative method is necessary. Do not instruct the contractor to cut, notch or alter a structural element from a generic web diagram.",
+        "Coordinate concrete maturity or curing restrictions with the project specification and engineer; do not assume every installation can be tested the next morning. Arrange safe access, sufficient working room, a reliable identification mark and a practical sequence that avoids clashing with ongoing pile breaking, excavation, concreting or lifting. Work-at-height, lifting and temporary works questions remain the contractor's and competent professionals' responsibilities."
+      ],
+      "figures": [
+        {
+          "image": "assets/images/insights/pit-field-sensor.webp",
+          "image_alt": "Existing brochure photograph showing low-strain test sensor and cable on a prepared concrete pile head",
+          "caption": "An existing field reference shows a sensor in contact with an exposed pile head. The location, date and test result are not independently verified.",
+          "declaration": "Company-supplied AN-THAI brochure photograph; illustrative reference only, not a new Thai project record, certified report or site-readiness instruction. Photo source is limited resolution.",
+          "width": 413,
+          "height": 500,
+          "source_visual_ids": [
+            "brochure-pit-sensor"
+          ]
+        }
+      ],
+      "links": [
+        {
+          "label": "Pile Dynamics: access limitations when testing foundations in existing structures",
+          "url": "https://www.pile.com/resources/faqs/faq-can-pile-integrity-tester-used-evaluate-length-defects-piles-supporting-existing-structures/"
+        }
+      ]
+    },
+    {
+      "heading": "Set the evidence question before discussing a pass or fail",
+      "paragraphs": [
+        "Ask the designated design or geotechnical engineer what the PIT data are intended to establish and what will happen if a trace is unclear. Distinguish a routine integrity screening exercise from an investigation of a known construction anomaly. Specify who will assess the records, which additional records they may consult, and when a follow-up investigation or an alternative method could be warranted.",
+        "The historic ASTM D5882-16 method was withdrawn in 2025 and ASTM currently lists no replacement. If project documents still reference that edition, the engineer and authority or employer must confirm the controlling contractual and approval basis; do not advertise a withdrawn document as a currently active standard. Manufacturer descriptions support understanding of the instrument, not automatic acceptance criteria for a Thai project. A clean-looking trace is not itself a design sign-off."
+      ],
+      "links": [
+        {
+          "label": "ASTM catalog: D5882-16 withdrawal and applicability notes",
+          "url": "https://store.astm.org/d5882-16.html"
+        }
+      ]
+    },
+    {
+      "heading": "Agree a four-party handover and an exception path",
+      "paragraphs": [
+        "Before mobilization, let the owner or QA representative define the decision sought; let the contractor confirm access and the matching as-built records; let the testing specialist confirm the feasible acquisition arrangement; and let the responsible engineer identify the review and escalation path. The parties' contractual duties may differ, but these four questions still need an answer.",
+        "Specify how test IDs will be cross-checked against the site register, who will attend to resolve doubtful labels, how data and photographs may be shared, and what happens if a pile head cannot be tested safely. For unusual reflections, request the raw signal, notes on the testing conditions and comparison with neighbouring piles before making an irreversible remedial decision. Keep test results, observations and professional interpretations separate."
+      ],
+      "figures": [
+        {
+          "image": "assets/images/insights/pit-pretest-roles-handoff.svg",
+          "image_alt": "Pre-test responsibility handoff for owner, contractor, testing crew, and design engineer",
+          "caption": "A pre-mobilization responsibility map, not a contractual allocation of duties.",
+          "declaration": "Original AN-THAI editorial SVG (2026-11-07); concept/checklist only, not a real site photograph, engineering drawing or test record.",
+          "width": 720,
+          "height": 1030,
+          "source_visual_ids": [
+            "pit-pretest-owner-roles-diagram"
+          ],
+          "mobile_image": "assets/images/insights/pit-pretest-roles-handoff-mobile.svg",
+          "mobile_width": 480,
+          "mobile_height": 1170
+        }
+      ],
+      "links": [
+        {
+          "label": "Pile Dynamics: comparative records and cross-pile interpretation",
+          "url": "https://www.pile.com/resources/faqs/faq-can-results-pit-tests-confirmed-comparing-piling-records/"
+        }
+      ]
+    },
+    {
+      "heading": "What to include when requesting a scoped quotation",
+      "paragraphs": [
+        "A useful first enquiry contains the project location and phase, the proposed pile schedule, an annotated site plan, expected test quantity and timing window, pile type and dimensions, available installation and geotechnical records, a description of pile-head access, and the specific question the testing is expected to inform. Remove confidential customer identifiers if sharing is not authorized.",
+        "AN-THAI can review the enquiry information for a potential engineering-services scope and clarify outstanding data before proposing an approach. The final test procedure, interpretation, acceptance basis and any structural decision remain subject to the responsible qualified engineer, the contract and applicable project requirements. Nothing in this article constitutes a certification, test report, safety plan or guaranteed outcome."
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "question": "Can PIT prove that a pile can carry its design load?",
+      "answer": "No. Low-strain integrity information is not a direct axial bearing-capacity measurement. Capacity questions need an engineer-selected method and project-specific evidence."
+    },
+    {
+      "question": "What if some installation records are missing?",
+      "answer": "Submit the available pile register, drawings and ground data and list the missing records explicitly. The engineer can assess the limitations and whether additional investigation is needed."
+    },
+    {
+      "question": "Is an ASTM reference automatically mandatory in Thailand?",
+      "answer": "No. The governing edition and applicability depend on project specifications, contracts and competent authorities or engineers. D5882-16 is withdrawn; do not present it as an active standard."
+    }
+  ],
+  "cta_route": "engineering",
+  "cta_label": "Discuss a PIT site-readiness enquiry",
+  "cta_note": "Send your pile register, marked plan, as-built details, installation notes, available ground information and test objective; our team can clarify a suitable engineering-services enquiry scope.",
+  "source_visual_ids": [
+    "brochure-pit-field-documentation",
+    "brochure-pit-field-team"
+  ]
+}

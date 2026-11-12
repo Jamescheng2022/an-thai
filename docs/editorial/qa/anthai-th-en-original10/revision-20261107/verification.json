@@ -1,0 +1,25 @@
+{
+  "status": "PASS_RENDER_AND_CONTENT_REVIEW",
+  "pages": 10,
+  "text_regions": 220,
+  "overflow": 0,
+  "minimum_live_text_pt": 6.5,
+  "spans_below_5_5pt": 0,
+  "original_page_image_streams_unchanged": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "original_cn_en_sha256": "04848cb6ef00f66041cbc9780bd4652b24995a07c1296834465bddd324a27698",
+  "release_pdf_sha256": "7ea9bd9d9df9cb988c0630905d4a0542a2b07a51425439fb0d5262742350507f",
+  "release_pdf_bytes": 956405,
+  "language_certification": "Editorial machine-assisted review only; native Thai engineering certification not obtained.",
+  "line_identity": "Owner-supplied ID retained; not independently verified; no QR or Official Account claim."
+}

@@ -5,7 +5,7 @@ const root = path.resolve(__dirname, '..');
 const output = path.join(root, 'dist');
 const files = [
   'index.html', 'services.html', 'equipment.html', 'portfolio.html',
-  'about.html', 'contact.html', 'insights.html', '404.html', 'robots.txt', 'sitemap.xml', 'llms.txt'
+  'about.html', 'contact.html', 'insights.html', 'steel-procurement.html', '404.html', 'robots.txt', 'sitemap.xml', 'llms.txt'
 ];
 for (const file of files) {
   if (!fs.statSync(path.join(root, file)).isFile()) throw new Error(`Missing ${file}`);

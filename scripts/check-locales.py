@@ -48,4 +48,7 @@ for name,d in docs.items():
             links+=1
     if language in ['en','th'] and not name.endswith('insights.html'):assert not re.search('[\u3400-\u9fff]', ''.join(d.text).replace('中文','')),name
     print('PASS',name,language,'navigation, alternate languages, links, images, metadata, JSON-LD')
+if (root/'steel-procurement.html').exists():
+    sitemap_text = (root/'sitemap.xml').read_text(encoding='utf-8')
+    assert 'https://an-thai.com/steel-procurement.html' in sitemap_text, 'Missing steel-procurement in dist/sitemap.xml'
 print('PASS:',len(docs),'pages;',links,'local links and assets checked')

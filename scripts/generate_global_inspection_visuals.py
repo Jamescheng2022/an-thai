@@ -50,6 +50,35 @@ def draw_footer(draw, width, height, note="Standards: ASTM | ISO | EN Eurocode |
 def make_card(draw, box, fill="#1e293b", outline="#334155", radius=8, width=1):
     draw.rounded_rectangle(box, radius=radius, fill=fill, outline=outline, width=width)
 
+def draw_wrapped_text(draw, text, pos, max_width, font, fill, line_spacing=3):
+    words = text.split(" ")
+    lines = []
+    current_line = []
+    for word in words:
+        test_line = " ".join(current_line + [word])
+        bbox = draw.textbbox((0, 0), test_line, font=font)
+        if bbox[2] - bbox[0] <= max_width:
+            current_line.append(word)
+        else:
+            if current_line:
+                lines.append(" ".join(current_line))
+                current_line = [word]
+            else:
+                lines.append(word)
+                current_line = []
+    if current_line:
+        lines.append(" ".join(current_line))
+
+    x, y = pos
+    total_height = 0
+    for line in lines:
+        draw.text((x, y), line, font=font, fill=fill)
+        bbox = draw.textbbox((0, 0), line, font=font)
+        h = (bbox[3] - bbox[1]) + line_spacing
+        y += h
+        total_height += h
+    return total_height
+
 # ==========================================================
 # 1. Dual-Core Architecture Diagram
 # ==========================================================
@@ -221,8 +250,8 @@ def generate_pit_impedance_shadowing():
     ]
     ny = 445
     for note in notes:
-        draw.text((435, ny), note, font=get_font(10, bold=False), fill="#cbd5e1")
-        ny += 38
+        h = draw_wrapped_text(draw, note, (435, ny), 595, get_font(9.5, bold=False), "#cbd5e1", line_spacing=3)
+        ny += h + 6
 
     draw_footer(draw, W, H, "Low-Strain Wave Mechanics | ASTM D5882 / EN ISO 22477-4 Compliance Guide")
     out_path = ASSETS_DIR / "pit-impedance-shadowing-defect-masking.webp"
@@ -306,8 +335,8 @@ def generate_megaton_slt_diagram():
     ]
     ty = 480
     for l in t_lines:
-        draw.text((45, ty), l, font=get_font(10, bold=False), fill="#cbd5e1")
-        ty += 26
+        h = draw_wrapped_text(draw, l, (45, ty), 470, get_font(9.5, bold=False), "#cbd5e1", line_spacing=3)
+        ty += h + 4
 
     make_card(draw, [555, 445, 1070, 620], fill="#0f172a", outline="#059669")
     draw.text((570, 455), "MANDATORY ASTM D1143 / ISO 22477-1 FIELD CONTROLS", font=get_font(12, bold=True), fill="#34d399")
@@ -319,8 +348,8 @@ def generate_megaton_slt_diagram():
     ]
     my = 480
     for l in m_lines:
-        draw.text((570, my), l, font=get_font(10, bold=False), fill="#cbd5e1")
-        my += 26
+        h = draw_wrapped_text(draw, l, (570, my), 480, get_font(9.5, bold=False), "#cbd5e1", line_spacing=3)
+        my += h + 4
 
     draw_footer(draw, W, H, "Megaton Static Load Testing | ASTM D1143 / ISO 22477-1 QA Specifications")
     out_path = ASSETS_DIR / "megaton-slt-anchor-thermal-distortion.webp"
@@ -369,9 +398,15 @@ def generate_paut_weld_flaw_diagram():
     # Technical Specs Box Below
     make_card(draw, [45, 520, 505, 605], fill="#1e293b", outline="#475569")
     draw.text((55, 528), "ULTRASONIC ACOUSTIC PRINCIPLE (声学反射机理)", font=get_font(10, bold=True), fill="#38bdf8")
-    draw.text((55, 548), "• Sidewall LOF is planar: Max reflection occurs when beam is perpendicular to bevel angle.", font=get_font(9, bold=False), fill="#cbd5e1")
-    draw.text((55, 568), "• Root bead produces specular geometric corner trap reflection at 0.5 & 1.0 skip.", font=get_font(9, bold=False), fill="#cbd5e1")
-    draw.text((55, 588), "• Misinterpreting geometric echoes causes unnecessary gouging of sound welds.", font=get_font(9, bold=False), fill="#fca5a5")
+    p_specs = [
+        "• Sidewall LOF is planar: Max reflection occurs when beam is perpendicular to bevel angle.",
+        "• Root bead produces specular geometric corner trap reflection at 0.5 & 1.0 skip.",
+        "• Misinterpreting geometric echoes causes unnecessary gouging of sound welds."
+    ]
+    sy = 546
+    for s in p_specs:
+        h = draw_wrapped_text(draw, s, (55, sy), 440, get_font(9, bold=False), "#fca5a5" if "gouging" in s else "#cbd5e1", line_spacing=2)
+        sy += h + 3
 
     # Right: S-Scan & Discrimination Criteria
     make_card(draw, [540, 115, 1070, 620], fill="#0f172a", outline="#334155")
@@ -407,10 +442,10 @@ def generate_paut_weld_flaw_diagram():
         "3. Complementary TOFD (Diffraction): Deploy Time-of-Flight Diffraction (ISO 16828) across suspect zones. Planar flaws generate distinctive top & bottom tip-diffracted signals.",
         "4. ASNT / ISO 9712 Level III Authority: Automated threshold gating must never replace independent signal interpretation by certified Level III personnel on fatigue-critical joints."
     ]
-    py = 430
+    py = 428
     for l in p_lines:
-        draw.text((570, py), l, font=get_font(9, bold=False), fill="#cbd5e1")
-        py += 42
+        h = draw_wrapped_text(draw, l, (570, py), 470, get_font(9, bold=False), "#cbd5e1", line_spacing=3)
+        py += h + 4
 
     draw_footer(draw, W, H, "Advanced Steel NDT | AWS D1.1 / ISO 13588 & ISO 16828 Compliance")
     out_path = ASSETS_DIR / "paut-weld-flaw-vs-geometric-echo.webp"

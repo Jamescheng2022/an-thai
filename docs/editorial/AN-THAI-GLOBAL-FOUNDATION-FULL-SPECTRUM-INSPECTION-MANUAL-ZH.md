@@ -232,8 +232,8 @@ AN-THAI 遵循最高等级的国际工程法证合规标准：
 
 **AN-THAI 官方技术服务通道：**
 - **工程咨询系统入口：** [https://an-thai.com/contact.html?type=engineering#enquiry-form](https://an-thai.com/contact.html?type=engineering#enquiry-form)
-- **工程技术部专用邮箱：** `info@an-thai.com`
-- **东南亚及泰国本地 LINE 技术通道：** `@anthai`
+- **主要工程邮箱：** `anthaicheng@gmail.com` | **企业域名邮箱：** `info@an-thai.com`
+- **东南亚及泰国本地 LINE 技术通道：** [LINE ID: rachada2018](https://line.me/ti/p/~rachada2018)（工程对接专用通道；若链接无法直接唤起 App，请在 LINE 内搜索 ID：`rachada2018`）
 
 ---
 *AN-THAI Engineering Company Limited — 国际领先的深基础工程与全领域工程检测实战智库*

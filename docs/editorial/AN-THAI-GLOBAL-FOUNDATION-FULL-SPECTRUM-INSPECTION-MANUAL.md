@@ -228,8 +228,8 @@ When submitting deep foundation or engineering testing requirements to AN-THAI E
 
 **Direct AN-THAI Engineering Consultation Routes:**
 - **Online Engineering Enquiry Portal:** [https://an-thai.com/contact.html?type=engineering#enquiry-form](https://an-thai.com/contact.html?type=engineering#enquiry-form)
-- **Technical Division Direct Email:** `info@an-thai.com`
-- **Official LINE Technical Channel:** `@anthai` (Direct technical support for Southeast Asia projects)
+- **Primary Technical Email:** `anthaicheng@gmail.com` | **Domain Email:** `info@an-thai.com`
+- **Official LINE Engineering Channel:** [LINE ID: rachada2018](https://line.me/ti/p/~rachada2018) (Direct engineering enquiries for Thailand and Southeast Asia; search ID `rachada2018` in the LINE app if the direct link does not open)
 
 ---
 *AN-THAI Engineering Company Limited — Global Deep Foundations & Full-Spectrum Engineering Inspection Intelligence.*

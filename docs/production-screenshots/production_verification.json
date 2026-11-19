@@ -1,0 +1,218 @@
+{
+  "status": "PASS",
+  "errors": [],
+  "existing_pages": {
+    "https://an-thai.com/": {
+      "status": 200,
+      "h1": "FROM\nGROUND TO\nSTRUCTURE",
+      "pass": true
+    },
+    "https://an-thai.com/services.html": {
+      "status": 200,
+      "h1": "FIELD DATA.\nENGINEERING JUDGEMENT.",
+      "pass": true
+    },
+    "https://an-thai.com/equipment.html": {
+      "status": 200,
+      "h1": "EQUIPMENT FOR PEOPLE WHO ACTUALLY TEST.",
+      "pass": true
+    },
+    "https://an-thai.com/portfolio.html": {
+      "status": 200,
+      "h1": "REAL TESTING.\nREAL PROJECT CONDITIONS.",
+      "pass": true
+    },
+    "https://an-thai.com/insights.html": {
+      "status": 200,
+      "h1": "INSIGHTS",
+      "pass": true
+    },
+    "https://an-thai.com/about.html": {
+      "status": 200,
+      "h1": "THAILAND-BASED.\nENGINEERING-LED.",
+      "pass": true
+    },
+    "https://an-thai.com/contact.html": {
+      "status": 200,
+      "h1": "START WITH THE RIGHT BRIEF",
+      "pass": true
+    },
+    "https://an-thai.com/zh/index.html": {
+      "status": 200,
+      "h1": "\u4ece\n\u5730\u57fa \u5230\n\u7ed3\u6784",
+      "pass": true
+    },
+    "https://an-thai.com/th/index.html": {
+      "status": 200,
+      "h1": "\u0e08\u0e32\u0e01\n\u0e10\u0e32\u0e19\u0e23\u0e32\u0e01 \u0e2a\u0e39\u0e48\n\u0e42\u0e04\u0e23\u0e07\u0e2a\u0e23\u0e49\u0e32\u0e07",
+      "pass": true
+    }
+  },
+  "homepage_navigation": {
+    "card_href": "/steel-procurement.html",
+    "landed_url": "https://an-thai.com/steel-procurement.html",
+    "pass": true
+  },
+  "viewports": [
+    {
+      "viewport": "1440px-desktop",
+      "width": 1440,
+      "height": 900,
+      "atf_screenshot": "C:\\Users\\cheng\\.t3\\worktrees\\an-thai-enquiry-20261023\\t3-e345a117-a906df2d86525ccb\\docs\\production-screenshots\\prod-steel-1440px-atf.png",
+      "full_screenshot": "C:\\Users\\cheng\\.t3\\worktrees\\an-thai-enquiry-20261023\\t3-e345a117-a906df2d86525ccb\\docs\\production-screenshots\\prod-steel-1440px-full.png",
+      "has_overflow": false,
+      "images_count": 8,
+      "menu_ok": true
+    },
+    {
+      "viewport": "768px-tablet",
+      "width": 768,
+      "height": 1024,
+      "atf_screenshot": "C:\\Users\\cheng\\.t3\\worktrees\\an-thai-enquiry-20261023\\t3-e345a117-a906df2d86525ccb\\docs\\production-screenshots\\prod-steel-768px-atf.png",
+      "full_screenshot": "C:\\Users\\cheng\\.t3\\worktrees\\an-thai-enquiry-20261023\\t3-e345a117-a906df2d86525ccb\\docs\\production-screenshots\\prod-steel-768px-full.png",
+      "has_overflow": false,
+      "images_count": 8,
+      "menu_ok": true
+    },
+    {
+      "viewport": "390px-mobile",
+      "width": 390,
+      "height": 844,
+      "atf_screenshot": "C:\\Users\\cheng\\.t3\\worktrees\\an-thai-enquiry-20261023\\t3-e345a117-a906df2d86525ccb\\docs\\production-screenshots\\prod-steel-390px-atf.png",
+      "full_screenshot": "C:\\Users\\cheng\\.t3\\worktrees\\an-thai-enquiry-20261023\\t3-e345a117-a906df2d86525ccb\\docs\\production-screenshots\\prod-steel-390px-full.png",
+      "has_overflow": false,
+      "images_count": 5,
+      "menu_ok": true
+    },
+    {
+      "viewport": "320px-small-mobile",
+      "width": 320,
+      "height": 568,
+      "atf_screenshot": "C:\\Users\\cheng\\.t3\\worktrees\\an-thai-enquiry-20261023\\t3-e345a117-a906df2d86525ccb\\docs\\production-screenshots\\prod-steel-320px-atf.png",
+      "full_screenshot": "C:\\Users\\cheng\\.t3\\worktrees\\an-thai-enquiry-20261023\\t3-e345a117-a906df2d86525ccb\\docs\\production-screenshots\\prod-steel-320px-full.png",
+      "has_overflow": false,
+      "images_count": 5,
+      "menu_ok": true
+    }
+  ],
+  "details_verification": {
+    "count": 12,
+    "items": [
+      {
+        "index": 1,
+        "summary": "See sourcing options",
+        "init_closed": true,
+        "opened": true,
+        "has_content": true,
+        "closed": true,
+        "pass": true
+      },
+      {
+        "index": 2,
+        "summary": "See technical support",
+        "init_closed": true,
+        "opened": true,
+        "has_content": true,
+        "closed": true,
+        "pass": true
+      },
+      {
+        "index": 3,
+        "summary": "See QA & shipment scope",
+        "init_closed": true,
+        "opened": true,
+        "has_content": true,
+        "closed": true,
+        "pass": true
+      },
+      {
+        "index": 4,
+        "summary": "Scope & examples",
+        "init_closed": true,
+        "opened": true,
+        "has_content": true,
+        "closed": true,
+        "pass": true
+      },
+      {
+        "index": 5,
+        "summary": "Scope & examples",
+        "init_closed": true,
+        "opened": true,
+        "has_content": true,
+        "closed": true,
+        "pass": true
+      },
+      {
+        "index": 6,
+        "summary": "Scope & examples",
+        "init_closed": true,
+        "opened": true,
+        "has_content": true,
+        "closed": true,
+        "pass": true
+      },
+      {
+        "index": 7,
+        "summary": "Scope & examples",
+        "init_closed": true,
+        "opened": true,
+        "has_content": true,
+        "closed": true,
+        "pass": true
+      },
+      {
+        "index": 8,
+        "summary": "Scope & examples",
+        "init_closed": true,
+        "opened": true,
+        "has_content": true,
+        "closed": true,
+        "pass": true
+      },
+      {
+        "index": 9,
+        "summary": "Optional detailing support",
+        "init_closed": true,
+        "opened": true,
+        "has_content": true,
+        "closed": true,
+        "pass": true
+      },
+      {
+        "index": 10,
+        "summary": "Flexible factory options",
+        "init_closed": true,
+        "opened": true,
+        "has_content": true,
+        "closed": true,
+        "pass": true
+      },
+      {
+        "index": 11,
+        "summary": "QC coordination",
+        "init_closed": true,
+        "opened": true,
+        "has_content": true,
+        "closed": true,
+        "pass": true
+      },
+      {
+        "index": 12,
+        "summary": "FOB / CFR / CIF",
+        "init_closed": true,
+        "opened": true,
+        "has_content": true,
+        "closed": true,
+        "pass": true
+      }
+    ],
+    "all_pass": true
+  },
+  "rfq_routing": {
+    "url": "https://an-thai.com/contact.html?type=steel#enquiry-form",
+    "value": "Steel / space-structure cooperation",
+    "label": "Steel / space-structure cooperation",
+    "pass": true
+  }
+}

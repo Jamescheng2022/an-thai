@@ -63,3 +63,36 @@
 @media(max-width:760px){.steel-page .sv-container{width:calc(100% - 32px)}.steel-page .sv-hero{min-height:460px}.steel-page .sv-hero__scrim{background:linear-gradient(90deg,rgba(13,36,64,.92),rgba(13,36,64,.3))}.steel-page .sv-hero__inner{padding:76px 0}.steel-page .sv-solution-grid{grid-template-columns:1fr}.steel-page .sv-solution img{aspect-ratio:2.1/1}.steel-page .sv-process-flow{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:30px}.steel-page .sv-step:nth-child(3):after{display:none}.steel-page .sv-product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.steel-page .sv-cta__layout{grid-template-columns:1fr 32%}}
 @media(max-width:480px){.steel-page .sv-hero h1{font-size:clamp(2.35rem,11vw,3.35rem)}.steel-page .sv-hero p{font-size:1rem}.steel-page .sv-actions{gap:8px}.steel-page .sv-actions .sv-btn{padding:11px 16px;font-size:.88rem}.steel-page .sv-solution img{aspect-ratio:1.95/1}.steel-page .sv-process-flow{grid-template-columns:repeat(2,minmax(0,1fr));gap:21px 11px}.steel-page .sv-step:nth-child(2):after,.steel-page .sv-step:nth-child(4):after{display:none}.steel-page .sv-step:nth-child(3):after{display:block}.steel-page .sv-step__circle{width:70px;height:70px}.steel-page .sv-step__circle svg{width:38px;height:38px}.steel-page .sv-step:not(:last-child):after{top:20px;right:-12px;font-size:25px}.steel-page .sv-product-grid{gap:10px}.steel-page .sv-product b{font-size:.85rem}.steel-page .sv-benefit-grid{grid-template-columns:1fr}.steel-page .sv-benefit{min-height:57px}.steel-page .sv-cta__layout{display:block}.steel-page .sv-cta__copy{padding:32px 0}.steel-page .sv-cta__image{display:none}.steel-page .sv-title{font-size:1.72rem}.steel-page .sv-step b{font-size:1rem}}
 @media(prefers-reduced-motion:reduce){.steel-page .sv-btn{transition:none}}
+
+/* V2.1 — native, keyboard-accessible, client-facing disclosure panels.
+   Content is visible to crawlers and hidden visually until requested. */
+.steel-page .sv details > summary{cursor:pointer;list-style:none;-webkit-tap-highlight-color:transparent}
+.steel-page .sv details > summary::-webkit-details-marker{display:none}
+.steel-page .sv details > summary::marker{display:none}
+.steel-page .sv details > summary:focus-visible{outline:3px solid #d7641d;outline-offset:-3px}
+.steel-page .sv .sv-card-details{border-top:1px solid #dde6ec;background:#f1f5f8}
+.steel-page .sv .sv-card-details summary,
+.steel-page .sv .sv-product-details summary{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 18px;font-size:.84rem;color:#274862;font-weight:750;min-height:44px}
+.steel-page .sv .sv-card-details summary::after,
+.steel-page .sv .sv-product-details summary::after{content:"+";display:inline-grid;place-items:center;font-size:1.25rem;line-height:1;color:#b65119;font-weight:500}
+.steel-page .sv .sv-card-details[open] summary::after,
+.steel-page .sv .sv-product-details[open] summary::after{content:"−"}
+.steel-page .sv .sv-card-details[open] summary,
+.steel-page .sv .sv-product-details[open] summary{border-bottom:1px solid #dce5eb;color:#102d4d}
+.steel-page .sv .sv-detail-body{padding:13px 18px 20px;display:grid;gap:10px}
+.steel-page .sv .sv-detail-body p,
+.steel-page .sv .sv-product-details p{font-size:.89rem;line-height:1.55;color:#38546a;margin:0}
+.steel-page .sv .sv-detail-body strong{color:#173651}
+.steel-page .sv .sv-product-details{border-top:1px solid #dbe4ec}
+.steel-page .sv .sv-product-details summary{padding:11px 13px;font-size:.78rem}
+.steel-page .sv .sv-product-details p{padding:12px 13px 17px}
+.steel-page .sv .sv-benefit--expander{display:block;padding:0;min-height:0;align-self:start;overflow:hidden}
+.steel-page .sv .sv-benefit--expander summary{display:flex;align-items:center;gap:12px;min-height:67px;padding:15px 37px 15px 17px;position:relative;font-weight:750}
+.steel-page .sv .sv-benefit--expander summary::after{content:"+";position:absolute;right:13px;font-size:1.3rem;font-weight:400;color:#b65119}
+.steel-page .sv .sv-benefit--expander[open] summary::after{content:"−"}
+.steel-page .sv .sv-benefit--expander[open] summary{border-bottom:1px solid #e0e7ee}
+.steel-page .sv .sv-benefit--expander p{font-size:.83rem;color:#475e71;line-height:1.55;padding:13px 17px 17px;margin:0;font-weight:400}
+@media(max-width:480px){
+ .steel-page .sv .sv-card-details summary{min-height:46px}
+ .steel-page .sv .sv-benefit--expander summary{min-height:57px}
+}

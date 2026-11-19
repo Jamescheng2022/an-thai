@@ -1,0 +1,346 @@
+{
+  "status": "PASS",
+  "errors": [],
+  "viewports": [
+    {
+      "viewport": "1440px-desktop",
+      "width": 1440,
+      "height": 900,
+      "atf_screenshot": "C:\\Users\\cheng\\.t3\\worktrees\\an-thai-enquiry-20261023\\t3-e345a117-a906df2d86525ccb\\docs\\preview-screenshots\\steel-preview-1440px-above-the-fold.png",
+      "full_screenshot": "C:\\Users\\cheng\\.t3\\worktrees\\an-thai-enquiry-20261023\\t3-e345a117-a906df2d86525ccb\\docs\\preview-screenshots\\steel-preview-1440px-full-page.png",
+      "scroll_width": 1440,
+      "client_width": 1440,
+      "has_horizontal_overflow": false,
+      "header_cta_href": "contact.html?type=steel#enquiry-form",
+      "hero_cta_href": "contact.html?type=steel#enquiry-form",
+      "closing_cta_href": "contact.html?type=steel#enquiry-form"
+    },
+    {
+      "viewport": "768px-tablet",
+      "width": 768,
+      "height": 1024,
+      "atf_screenshot": "C:\\Users\\cheng\\.t3\\worktrees\\an-thai-enquiry-20261023\\t3-e345a117-a906df2d86525ccb\\docs\\preview-screenshots\\steel-preview-768px-above-the-fold.png",
+      "full_screenshot": "C:\\Users\\cheng\\.t3\\worktrees\\an-thai-enquiry-20261023\\t3-e345a117-a906df2d86525ccb\\docs\\preview-screenshots\\steel-preview-768px-full-page.png",
+      "scroll_width": 768,
+      "client_width": 768,
+      "has_horizontal_overflow": false,
+      "header_cta_href": "contact.html?type=steel#enquiry-form",
+      "hero_cta_href": "contact.html?type=steel#enquiry-form",
+      "closing_cta_href": "contact.html?type=steel#enquiry-form"
+    },
+    {
+      "viewport": "390px-mobile",
+      "width": 390,
+      "height": 844,
+      "atf_screenshot": "C:\\Users\\cheng\\.t3\\worktrees\\an-thai-enquiry-20261023\\t3-e345a117-a906df2d86525ccb\\docs\\preview-screenshots\\steel-preview-390px-above-the-fold.png",
+      "full_screenshot": "C:\\Users\\cheng\\.t3\\worktrees\\an-thai-enquiry-20261023\\t3-e345a117-a906df2d86525ccb\\docs\\preview-screenshots\\steel-preview-390px-full-page.png",
+      "scroll_width": 390,
+      "client_width": 390,
+      "has_horizontal_overflow": false,
+      "header_cta_href": "contact.html?type=steel#enquiry-form",
+      "hero_cta_href": "contact.html?type=steel#enquiry-form",
+      "closing_cta_href": "contact.html?type=steel#enquiry-form"
+    },
+    {
+      "viewport": "320px-small-mobile",
+      "width": 320,
+      "height": 568,
+      "atf_screenshot": "C:\\Users\\cheng\\.t3\\worktrees\\an-thai-enquiry-20261023\\t3-e345a117-a906df2d86525ccb\\docs\\preview-screenshots\\steel-preview-320px-above-the-fold.png",
+      "full_screenshot": "C:\\Users\\cheng\\.t3\\worktrees\\an-thai-enquiry-20261023\\t3-e345a117-a906df2d86525ccb\\docs\\preview-screenshots\\steel-preview-320px-full-page.png",
+      "scroll_width": 320,
+      "client_width": 320,
+      "has_horizontal_overflow": false,
+      "header_cta_href": "contact.html?type=steel#enquiry-form",
+      "hero_cta_href": "contact.html?type=steel#enquiry-form",
+      "closing_cta_href": "contact.html?type=steel#enquiry-form"
+    }
+  ],
+  "image_network_logs": [
+    {
+      "url": "http://127.0.0.1:8899/assets/images/brand-header.webp",
+      "status": 200,
+      "viewport": "1440px-desktop"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-hero.webp",
+      "status": 200,
+      "viewport": "1440px-desktop"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-cta.webp",
+      "status": 200,
+      "viewport": "1440px-desktop"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-fabrication.webp",
+      "status": 200,
+      "viewport": "1440px-desktop"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-welding.webp",
+      "status": 200,
+      "viewport": "1440px-desktop"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-truss.webp",
+      "status": 200,
+      "viewport": "1440px-desktop"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-structure.webp",
+      "status": 200,
+      "viewport": "1440px-desktop"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-warehouse.webp",
+      "status": 200,
+      "viewport": "1440px-desktop"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/brand-header.webp",
+      "status": 200,
+      "viewport": "768px-tablet"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-hero.webp",
+      "status": 200,
+      "viewport": "768px-tablet"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-cta.webp",
+      "status": 200,
+      "viewport": "768px-tablet"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-fabrication.webp",
+      "status": 200,
+      "viewport": "768px-tablet"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-structure.webp",
+      "status": 200,
+      "viewport": "768px-tablet"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-truss.webp",
+      "status": 200,
+      "viewport": "768px-tablet"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-welding.webp",
+      "status": 200,
+      "viewport": "768px-tablet"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-warehouse.webp",
+      "status": 200,
+      "viewport": "768px-tablet"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/brand-header.webp",
+      "status": 200,
+      "viewport": "390px-mobile"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-hero.webp",
+      "status": 200,
+      "viewport": "390px-mobile"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-structure.webp",
+      "status": 200,
+      "viewport": "390px-mobile"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-fabrication.webp",
+      "status": 200,
+      "viewport": "390px-mobile"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-welding.webp",
+      "status": 200,
+      "viewport": "390px-mobile"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/brand-header.webp",
+      "status": 200,
+      "viewport": "320px-small-mobile"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-hero.webp",
+      "status": 200,
+      "viewport": "320px-small-mobile"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-fabrication.webp",
+      "status": 200,
+      "viewport": "320px-small-mobile"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-structure.webp",
+      "status": 200,
+      "viewport": "320px-small-mobile"
+    },
+    {
+      "url": "http://127.0.0.1:8899/assets/images/steel/steel-welding.webp",
+      "status": 200,
+      "viewport": "320px-small-mobile"
+    }
+  ],
+  "console_logs": [],
+  "interactions": {
+    "menu_768px": {
+      "visible": true,
+      "opened_on_click": true,
+      "aria_expanded_open": true,
+      "dismissed_on_escape": true,
+      "aria_collapsed_closed": true,
+      "focus_restored_to_toggle": true,
+      "screenshot": "C:\\Users\\cheng\\.t3\\worktrees\\an-thai-enquiry-20261023\\t3-e345a117-a906df2d86525ccb\\docs\\preview-screenshots\\steel-preview-768px-menu-open.png"
+    },
+    "menu_390px": {
+      "visible": true,
+      "opened_on_click": true,
+      "aria_expanded_open": true,
+      "dismissed_on_escape": true,
+      "aria_collapsed_closed": true,
+      "focus_restored_to_toggle": true,
+      "screenshot": "C:\\Users\\cheng\\.t3\\worktrees\\an-thai-enquiry-20261023\\t3-e345a117-a906df2d86525ccb\\docs\\preview-screenshots\\steel-preview-390px-menu-open.png"
+    },
+    "menu_320px": {
+      "visible": true,
+      "opened_on_click": true,
+      "aria_expanded_open": true,
+      "dismissed_on_escape": true,
+      "aria_collapsed_closed": true,
+      "focus_restored_to_toggle": true,
+      "screenshot": "C:\\Users\\cheng\\.t3\\worktrees\\an-thai-enquiry-20261023\\t3-e345a117-a906df2d86525ccb\\docs\\preview-screenshots\\steel-preview-320px-menu-open.png"
+    },
+    "homepage_steel_card": {
+      "href": "/steel-procurement.html",
+      "navigated_url": "http://127.0.0.1:8899/steel-procurement.html",
+      "pass": true
+    }
+  },
+  "routing_verification": {
+    "url": "http://127.0.0.1:8899/contact.html?type=steel#enquiry-form",
+    "selected_value": "Steel / space-structure cooperation",
+    "selected_label": "Steel / space-structure cooperation",
+    "success": true
+  },
+  "details_verification": {
+    "expected_count": 12,
+    "actual_count": 12,
+    "expanders": [
+      {
+        "index": 1,
+        "summary": "See sourcing options",
+        "initially_closed": true,
+        "opened_on_click": true,
+        "content_verified": true,
+        "closed_on_second_click": true,
+        "pass": true
+      },
+      {
+        "index": 2,
+        "summary": "See technical support",
+        "initially_closed": true,
+        "opened_on_click": true,
+        "content_verified": true,
+        "closed_on_second_click": true,
+        "pass": true
+      },
+      {
+        "index": 3,
+        "summary": "See QA & shipment scope",
+        "initially_closed": true,
+        "opened_on_click": true,
+        "content_verified": true,
+        "closed_on_second_click": true,
+        "pass": true
+      },
+      {
+        "index": 4,
+        "summary": "Scope & examples",
+        "initially_closed": true,
+        "opened_on_click": true,
+        "content_verified": true,
+        "closed_on_second_click": true,
+        "pass": true
+      },
+      {
+        "index": 5,
+        "summary": "Scope & examples",
+        "initially_closed": true,
+        "opened_on_click": true,
+        "content_verified": true,
+        "closed_on_second_click": true,
+        "pass": true
+      },
+      {
+        "index": 6,
+        "summary": "Scope & examples",
+        "initially_closed": true,
+        "opened_on_click": true,
+        "content_verified": true,
+        "closed_on_second_click": true,
+        "pass": true
+      },
+      {
+        "index": 7,
+        "summary": "Scope & examples",
+        "initially_closed": true,
+        "opened_on_click": true,
+        "content_verified": true,
+        "closed_on_second_click": true,
+        "pass": true
+      },
+      {
+        "index": 8,
+        "summary": "Scope & examples",
+        "initially_closed": true,
+        "opened_on_click": true,
+        "content_verified": true,
+        "closed_on_second_click": true,
+        "pass": true
+      },
+      {
+        "index": 9,
+        "summary": "Optional detailing support",
+        "initially_closed": true,
+        "opened_on_click": true,
+        "content_verified": true,
+        "closed_on_second_click": true,
+        "pass": true
+      },
+      {
+        "index": 10,
+        "summary": "Flexible factory options",
+        "initially_closed": true,
+        "opened_on_click": true,
+        "content_verified": true,
+        "closed_on_second_click": true,
+        "pass": true
+      },
+      {
+        "index": 11,
+        "summary": "QC coordination",
+        "initially_closed": true,
+        "opened_on_click": true,
+        "content_verified": true,
+        "closed_on_second_click": true,
+        "pass": true
+      },
+      {
+        "index": 12,
+        "summary": "FOB / CFR / CIF",
+        "initially_closed": true,
+        "opened_on_click": true,
+        "content_verified": true,
+        "closed_on_second_click": true,
+        "pass": true
+      }
+    ],
+    "all_pass": true
+  }
+}

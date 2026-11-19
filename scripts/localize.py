@@ -122,6 +122,8 @@ def generate():
             for alt in ['en','zh','th']:
                 sitemap.append('<xhtml:link rel="alternate" hreflang="'+({'zh':'zh-CN'}.get(alt,alt))+'" href="'+url(alt,page)+'"/>')
             sitemap.append('</url>')
+    if (ROOT / 'steel-procurement.html').exists():
+        sitemap.append('<url><loc>https://an-thai.com/steel-procurement.html</loc><lastmod>2026-11-19</lastmod></url>')
     sitemap.append('</urlset>')
     (ROOT/'dist/sitemap.xml').write_text('\n'.join(sitemap), encoding='utf-8')
     # Responsive browser QA harness: exists only on preview deployments.

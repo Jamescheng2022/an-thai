@@ -1,4 +1,4 @@
-"""Verify steel-procurement.html across 1440, 768, 390, 320 px using Playwright."""
+"""Verify steel-procurement.html V2.1 across 1440, 768, 390, 320 px using Playwright."""
 import os
 import sys
 import json
@@ -16,7 +16,7 @@ VIEWPORTS = [
     {"name": "320px-small-mobile", "width": 320, "height": 568}
 ]
 
-BASE_URL = "http://localhost:8899/steel-procurement.html"
+BASE_URL = "http://127.0.0.1:8899/steel-procurement.html"
 
 results = {
     "status": "PASS",
@@ -25,7 +25,8 @@ results = {
     "image_network_logs": [],
     "console_logs": [],
     "interactions": {},
-    "routing_verification": {}
+    "routing_verification": {},
+    "details_verification": {}
 }
 
 errors = []
@@ -121,8 +122,10 @@ with sync_playwright() as p:
         
         # 5. Check RFQ button href
         cta_href = page.locator(".nav-quote").get_attribute("href")
-        hero_cta_href = page.locator(".ss-actions .ss-button--accent").get_attribute("href")
-        closing_cta_href = page.locator(".ss-cta__actions .ss-button--accent").get_attribute("href")
+        hero_btn = page.locator(".sv-actions a[href*='contact.html']")
+        hero_cta_href = hero_btn.get_attribute("href") if hero_btn.count() > 0 else None
+        closing_btn = page.locator(".sv-cta a[href*='contact.html']")
+        closing_cta_href = closing_btn.get_attribute("href") if closing_btn.count() > 0 else None
         
         expected_cta = "contact.html?type=steel#enquiry-form"
         if hero_cta_href != expected_cta:
@@ -147,10 +150,87 @@ with sync_playwright() as p:
         context.close()
         print(f"Captured {vp_name}: ATF -> {atf_filename}, Full -> {full_filename}, Overflow={has_h_overflow}")
 
-    # 6. Test RFQ Funnel Routing and Auto-Selection
+    # 6. Test all 12 Native HTML Details/Summary Expanders (on Desktop 1440px)
+    test_context = browser.new_context(viewport={"width": 1440, "height": 900})
+    test_page = test_context.new_page()
+    test_page.goto(BASE_URL, wait_until="networkidle")
+    
+    details_list = test_page.locator("details")
+    details_count = details_list.count()
+    if details_count != 12:
+        errors.append(f"Expected 12 details elements, found {details_count}")
+    
+    details_log = []
+    for i in range(details_count):
+        d = details_list.nth(i)
+        summary = d.locator("summary")
+        summary_text = summary.inner_text().strip()
+        
+        # Verify initially closed
+        initially_closed = not d.evaluate("el => el.open")
+        
+        # Click to open
+        summary.click()
+        test_page.wait_for_timeout(100)
+        opened = d.evaluate("el => el.open")
+        
+        # Verify content visible
+        body_text = d.inner_text().replace(summary_text, "").strip()
+        has_content = len(body_text) > 0
+        
+        # Click to close
+        summary.click()
+        test_page.wait_for_timeout(100)
+        closed = not d.evaluate("el => el.open")
+        
+        ok = initially_closed and opened and has_content and closed
+        if not ok:
+            errors.append(f"Details expander #{i+1} ('{summary_text[:30]}') failed toggle check")
+            
+        details_log.append({
+            "index": i + 1,
+            "summary": summary_text,
+            "initially_closed": initially_closed,
+            "opened_on_click": opened,
+            "content_verified": has_content,
+            "closed_on_second_click": closed,
+            "pass": ok
+        })
+        
+    results["details_verification"] = {
+        "expected_count": 12,
+        "actual_count": details_count,
+        "expanders": details_log,
+        "all_pass": all(x["pass"] for x in details_log) and details_count == 12
+    }
+    test_context.close()
+
+    # 7. Test Homepage Steel Route Navigation
+    home_context = browser.new_context(viewport={"width": 1440, "height": 900})
+    home_page = home_context.new_page()
+    home_page.goto("http://127.0.0.1:8899/index.html", wait_until="networkidle")
+    steel_card = home_page.locator(".business-route-card--steel")
+    steel_card_href = steel_card.get_attribute("href")
+    
+    # Click card to verify navigation
+    with home_page.expect_navigation():
+        steel_card.click()
+    navigated_url = home_page.url
+    home_card_ok = "/steel-procurement.html" in steel_card_href and "steel-procurement.html" in navigated_url
+    if not home_card_ok:
+        errors.append(f"Homepage steel card navigation failed: href={steel_card_href}, navigated={navigated_url}")
+        
+    results["interactions"]["homepage_steel_card"] = {
+        "href": steel_card_href,
+        "navigated_url": navigated_url,
+        "pass": home_card_ok
+    }
+    home_context.close()
+
+    # 8. Test RFQ Funnel Routing and Auto-Selection
     routing_context = browser.new_context(viewport={"width": 1440, "height": 900})
     routing_page = routing_context.new_page()
-    routing_page.goto("http://localhost:8899/contact.html?type=steel#enquiry-form", wait_until="networkidle")
+    routing_page.goto("http://127.0.0.1:8899/contact.html?type=steel#enquiry-form", wait_until="networkidle")
     routing_page.wait_for_selector("#enquiry-form")
     type_select = routing_page.locator("#enquiry-requestType")
     selected_val = type_select.input_value()
@@ -161,7 +241,7 @@ with sync_playwright() as p:
         errors.append(f"Enquiry routing failed: expected value containing 'Steel', got '{selected_val}' ({selected_label})")
         
     results["routing_verification"] = {
-        "url": "http://localhost:8899/contact.html?type=steel#enquiry-form",
+        "url": "http://127.0.0.1:8899/contact.html?type=steel#enquiry-form",
         "selected_value": selected_val,
         "selected_label": selected_label,
         "success": routing_ok
@@ -180,10 +260,11 @@ with open(SCREENSHOTS_DIR / "verification_results.json", "w", encoding="utf-8") 
 print("\n--- Playwright Verification Complete ---")
 print(f"Status: {results['status']}")
 print(f"Total image requests checked: {len(results['image_network_logs'])}")
+print(f"Details elements verified: {results['details_verification']['actual_count']}/12")
 print(f"Errors encountered: {len(errors)}")
 if errors:
     for err in errors:
         print(f"  - ERROR: {err}")
     sys.exit(1)
 else:
-    print("All layout, image, keyboard interaction, and enquiry routing checks passed cleanly!")
+    print("All layout, image, 12 details expanders, keyboard interaction, and enquiry routing checks passed cleanly!")

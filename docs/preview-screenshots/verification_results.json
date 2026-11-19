@@ -1,0 +1,229 @@
+{
+  "status": "PASS",
+  "viewports": [
+    {
+      "viewport": "1440px-desktop",
+      "width": 1440,
+      "height": 900,
+      "atf_screenshot": "docs\\preview-screenshots\\steel-preview-1440px-above-the-fold.png",
+      "full_screenshot": "docs\\preview-screenshots\\steel-preview-1440px-full-page.png",
+      "scroll_width": 1440,
+      "client_width": 1440,
+      "has_horizontal_overflow": false,
+      "cta_href": "contact.html?type=steel#enquiry-form"
+    },
+    {
+      "viewport": "768px-tablet",
+      "width": 768,
+      "height": 1024,
+      "atf_screenshot": "docs\\preview-screenshots\\steel-preview-768px-above-the-fold.png",
+      "full_screenshot": "docs\\preview-screenshots\\steel-preview-768px-full-page.png",
+      "scroll_width": 768,
+      "client_width": 768,
+      "has_horizontal_overflow": false,
+      "cta_href": "contact.html?type=steel#enquiry-form"
+    },
+    {
+      "viewport": "390px-mobile",
+      "width": 390,
+      "height": 844,
+      "atf_screenshot": "docs\\preview-screenshots\\steel-preview-390px-above-the-fold.png",
+      "full_screenshot": "docs\\preview-screenshots\\steel-preview-390px-full-page.png",
+      "scroll_width": 390,
+      "client_width": 390,
+      "has_horizontal_overflow": false,
+      "cta_href": "contact.html?type=steel#enquiry-form"
+    },
+    {
+      "viewport": "320px-small-mobile",
+      "width": 320,
+      "height": 568,
+      "atf_screenshot": "docs\\preview-screenshots\\steel-preview-320px-above-the-fold.png",
+      "full_screenshot": "docs\\preview-screenshots\\steel-preview-320px-full-page.png",
+      "scroll_width": 320,
+      "client_width": 320,
+      "has_horizontal_overflow": false,
+      "cta_href": "contact.html?type=steel#enquiry-form"
+    }
+  ],
+  "image_network_logs": [
+    {
+      "url": "http://localhost:8899/assets/images/brand-header.webp",
+      "status": 200,
+      "viewport": "1440px-desktop"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-hero.webp",
+      "status": 200,
+      "viewport": "1440px-desktop"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-warehouse.webp",
+      "status": 200,
+      "viewport": "1440px-desktop"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-truss.webp",
+      "status": 200,
+      "viewport": "1440px-desktop"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-welding.webp",
+      "status": 200,
+      "viewport": "1440px-desktop"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-fabrication.webp",
+      "status": 200,
+      "viewport": "1440px-desktop"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-structure.webp",
+      "status": 200,
+      "viewport": "1440px-desktop"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-cta.webp",
+      "status": 200,
+      "viewport": "1440px-desktop"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/brand-header.webp",
+      "status": 200,
+      "viewport": "768px-tablet"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-hero.webp",
+      "status": 200,
+      "viewport": "768px-tablet"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-fabrication.webp",
+      "status": 200,
+      "viewport": "768px-tablet"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-warehouse.webp",
+      "status": 200,
+      "viewport": "768px-tablet"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-truss.webp",
+      "status": 200,
+      "viewport": "768px-tablet"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-welding.webp",
+      "status": 200,
+      "viewport": "768px-tablet"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-structure.webp",
+      "status": 200,
+      "viewport": "768px-tablet"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-cta.webp",
+      "status": 200,
+      "viewport": "768px-tablet"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/brand-header.webp",
+      "status": 200,
+      "viewport": "390px-mobile"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-hero.webp",
+      "status": 200,
+      "viewport": "390px-mobile"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-warehouse.webp",
+      "status": 200,
+      "viewport": "390px-mobile"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-fabrication.webp",
+      "status": 200,
+      "viewport": "390px-mobile"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-welding.webp",
+      "status": 200,
+      "viewport": "390px-mobile"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-truss.webp",
+      "status": 200,
+      "viewport": "390px-mobile"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-structure.webp",
+      "status": 200,
+      "viewport": "390px-mobile"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-cta.webp",
+      "status": 200,
+      "viewport": "390px-mobile"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/brand-header.webp",
+      "status": 200,
+      "viewport": "320px-small-mobile"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-hero.webp",
+      "status": 200,
+      "viewport": "320px-small-mobile"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-welding.webp",
+      "status": 200,
+      "viewport": "320px-small-mobile"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-warehouse.webp",
+      "status": 200,
+      "viewport": "320px-small-mobile"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-fabrication.webp",
+      "status": 200,
+      "viewport": "320px-small-mobile"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-truss.webp",
+      "status": 200,
+      "viewport": "320px-small-mobile"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-structure.webp",
+      "status": 200,
+      "viewport": "320px-small-mobile"
+    },
+    {
+      "url": "http://localhost:8899/assets/images/steel/steel-cta.webp",
+      "status": 200,
+      "viewport": "320px-small-mobile"
+    }
+  ],
+  "console_logs": [],
+  "interactions": {
+    "menu_768px": {
+      "visible": true,
+      "opened": true,
+      "screenshot": "docs\\preview-screenshots\\steel-preview-768px-menu-open.png"
+    },
+    "menu_390px": {
+      "visible": true,
+      "opened": true,
+      "screenshot": "docs\\preview-screenshots\\steel-preview-390px-menu-open.png"
+    },
+    "menu_320px": {
+      "visible": true,
+      "opened": true,
+      "screenshot": "docs\\preview-screenshots\\steel-preview-320px-menu-open.png"
+    }
+  }
+}

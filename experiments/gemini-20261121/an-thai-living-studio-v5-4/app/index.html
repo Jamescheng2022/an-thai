@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AN-THAI · Employee Chat &amp; AI Living Website Studio (V5.4)</title>
+  <link rel="stylesheet" href="./studio.css" />
+</head>
+<body>
+  <header class="top-bar">
+    <div class="brand-row">
+      <span class="badge-at">AT</span>
+      <div>
+        <div style="font-weight:800;font-size:13px;">AN-THAI · Living Workspace (V5.4)</div>
+        <div class="mono" style="font-size:10px;color:#a1a1aa;">Employee-First Chat → Lite CRM → AI Content Studio</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+      <span class="sandbox-pill">LOCAL SANDBOX · Pending Supabase/SourceRating Backend</span>
+      <label for="roleSelect" class="sr-only">Active Role</label>
+      <select id="roleSelect" class="role-sel" aria-label="Simulate employee role">
+        <option value="contributor">Role: Contributor (Field Engineer)</option>
+        <option value="publisher">Role: Editor / Publisher (Manager)</option>
+      </select>
+    </div>
+  </header>
+
+  <nav class="nav-tabs" role="tablist" aria-label="Workspace sections">
+    <button type="button" class="nav-tab" role="tab" data-tab="chat" aria-selected="true">1. Team Chat</button>
+    <button type="button" class="nav-tab" role="tab" data-tab="crm" aria-selected="false">2. Lite CRM (<span id="crmCount">0</span>)</button>
+    <button type="button" class="nav-tab" role="tab" data-tab="studio" aria-selected="false">3. Content Studio (<span id="draftCount">0</span>)</button>
+    <button type="button" class="nav-tab" role="tab" data-tab="brief" aria-selected="false">4. Daily Brief</button>
+  </nav>
+
+  <main class="app-main">
+    <!-- TAB 1: EMPLOYEE-FIRST NATIVE CHAT -->
+    <section id="tab-chat" class="tab-view">
+      <div id="chatFeed" class="chat-feed"></div>
+    </section>
+
+    <!-- TAB 2: LITE AGENT-NATIVE CRM (6 OBJECTS) -->
+    <section id="tab-crm" class="tab-view" hidden>
+      <div class="panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px;">
+          <strong style="font-size:14px;">Lite Agent-Native CRM (6 Minimal Objects)</strong>
+          <span class="mono" style="font-size:11px;color:var(--muted);">Customer · Contact · Lead · Project · Task · Interaction</span>
+        </div>
+        <div id="crmMount"></div>
+      </div>
+    </section>
+
+    <!-- TAB 3: AI CONTENT STUDIO & ROLE-GATED REVIEW -->
+    <section id="tab-studio" class="tab-view" hidden>
+      <div id="studioFeedback" class="notice" hidden role="status" aria-live="polite"></div>
+      <div id="studioMount"></div>
+    </section>
+
+    <!-- TAB 4: DAILY AUTHORIZED MANAGEMENT BRIEF -->
+    <section id="tab-brief" class="tab-view" hidden>
+      <div class="panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <strong style="font-size:14px;">Daily Authorized Management Brief</strong>
+          <button id="refreshBriefBtn" type="button" class="btn btn-dark">Regenerate From Confirmed Data</button>
+        </div>
+        <div id="briefMount"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MOBILE-FIRST CHAT COMPOSER -->
+  <form id="chatComposer" class="composer">
+    <div class="composer-inner">
+      <div class="quick-chips">
+        <button type="button" class="chip" data-sample="今天在罗勇进行了桩基检测，这几张照片帮我整理成项目动态。客户：Rayong Industrial Park，工作内容：36根灌注桩CSL检测。">+ 示例：罗勇桩基检测动态 (含照片)</button>
+        <button type="button" class="chip" data-sample="Client: Eastern Steel Logistics, Bangkok. Need buyer-side steel procurement agency for 900t warehouse frame next month.">+ Sample: Steel Agency Lead</button>
+      </div>
+      <div class="composer-row">
+        <button id="addPhotoBtn" type="button" class="btn btn-outline" title="Attach site photos (EXIF auto-strip)">📷 Photos (<span id="photoBadge">0</span>)</button>
+        <button id="addVoiceBtn" type="button" class="btn btn-outline" title="Attach voice note">🎙 Voice</button>
+        <input id="chatInput" type="text" placeholder="发消息、照片或语音 — Agent 自动整理 CRM 候选与待审内容草稿..." />
+        <button type="submit" class="btn btn-accent">Send</button>
+      </div>
+    </div>
+  </form>
+
+  <script src="../api/studio-engine.js"></script>
+  <script src="./studio.js"></script>
+</body>
+</html>

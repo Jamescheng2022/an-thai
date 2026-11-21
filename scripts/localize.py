@@ -54,6 +54,8 @@ class Localizer(HTMLParser):
         key = value.strip()
         if not key: return value
         if self.lang == 'en':
+            if ' · ' in key and re.search('[\u3400-\u9fff]', key):
+                return key.split(' · ')[0]
             return value
         if key in MAP:
             replacement = MAP[key][0 if self.lang == 'zh' else 1]

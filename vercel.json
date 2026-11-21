@@ -3,5 +3,46 @@
   "framework": null,
   "installCommand": "",
   "buildCommand": "node scripts/build-static.cjs",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/insights.html",
+      "destination": "/insights/",
+      "permanent": true
+    },
+    {
+      "source": "/services.html",
+      "destination": "/testing.html",
+      "permanent": true
+    },
+    {
+      "source": "/equipment.html",
+      "destination": "/powder-equipment.html",
+      "permanent": true
+    },
+    {
+      "source": "/portfolio.html",
+      "destination": "/cases/",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    }
+  ]
 }

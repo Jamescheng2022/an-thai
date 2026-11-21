@@ -4,8 +4,10 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const output = path.join(root, 'dist');
 const files = [
-  'index.html', 'services.html', 'equipment.html', 'portfolio.html',
-  'about.html', 'contact.html', 'insights.html', 'steel-procurement.html', '404.html', 'robots.txt', 'sitemap.xml', 'llms.txt'
+  'index.html', 'about.html', 'contact.html', 'testing.html',
+  'steel-procurement.html', 'powder-equipment.html', 'testing-instruments.html',
+  'services.html', 'equipment.html', 'portfolio.html', 'insights.html',
+  '404.html', 'robots.txt', 'sitemap.xml', 'llms.txt'
 ];
 for (const file of files) {
   if (!fs.statSync(path.join(root, file)).isFile()) throw new Error(`Missing ${file}`);
@@ -13,10 +15,23 @@ for (const file of files) {
 fs.rmSync(output, {recursive: true, force: true});
 fs.mkdirSync(output, {recursive: true});
 for (const file of files) fs.copyFileSync(path.join(root, file), path.join(output, file));
-fs.cpSync(path.join(root, 'assets'), path.join(output, 'assets'), {recursive: true});
+
+// Copy asset directories
+if (fs.existsSync(path.join(root, 'assets'))) fs.cpSync(path.join(root, 'assets'), path.join(output, 'assets'), {recursive: true});
+if (fs.existsSync(path.join(root, 'cases'))) fs.cpSync(path.join(root, 'cases'), path.join(output, 'cases'), {recursive: true});
+if (fs.existsSync(path.join(root, 'content'))) fs.cpSync(path.join(root, 'content'), path.join(output, 'content'), {recursive: true});
+if (fs.existsSync(path.join(root, 'insights'))) fs.cpSync(path.join(root, 'insights'), path.join(output, 'insights'), {recursive: true});
+if (fs.existsSync(path.join(root, 'studio'))) fs.cpSync(path.join(root, 'studio'), path.join(output, 'studio'), {recursive: true});
+if (fs.existsSync(path.join(root, 'api'))) fs.cpSync(path.join(root, 'api'), path.join(output, 'api'), {recursive: true});
+
+// Run localizer (generates static /zh/ and /th/ pages)
 require('node:child_process').execFileSync('python3', [path.join(root, 'scripts/localize.py')], {stdio:'inherit', env: {...process.env, PYTHONUTF8: '1'}});
+
+// Run full insights compiler (compiles content/insights/*.json into full articles in dist/insights/)
 require('node:child_process').execFileSync('python3', [path.join(root, 'scripts/build-insights.py')], {stdio:'inherit', env: {...process.env, PYTHONUTF8: '1'}});
+
 require('./inject-analytics.cjs')(output);
+
 // Publish AdSense ownership verification across generated and localized pages.
 const adsenseMeta = '<meta name="google-adsense-account" content="ca-pub-4813203643604350">';
 function addAdSenseVerification(dir) {
@@ -34,4 +49,4 @@ function addAdSenseVerification(dir) {
 }
 addAdSenseVerification(output);
 fs.writeFileSync(path.join(output, 'ads.txt'), 'google.com, pub-4813203643604350, DIRECT, f08c47fec0942fa0\n');
-console.log('Static website packaged in dist, including Insights.');
+console.log('Static website packaged in dist, including V5.3 Services, Cases, Insights & Studio.');

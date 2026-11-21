@@ -1,5 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /cases/case-template.html
+Disallow: /studio/
+
 Sitemap: https://an-thai.com/sitemap.xml
 
 # AI-readable company facts: https://an-thai.com/llms.txt

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AN-THAI · Employee Workspace &amp; AI Living Website Studio (V5.4)</title>
+  <link rel="stylesheet" href="./studio.css" />
+</head>
+<body>
+  <!-- HEADER & WORKSPACE AUTH IDENTITY -->
+  <header class="studio-header">
+    <div class="studio-brand">
+      <span class="brand-badge">AT</span>
+      <div class="brand-meta">
+        <span class="brand-title">AN-THAI · LIVING WORKSPACE (V5.4)</span>
+        <span class="brand-sub">Employee-First Chat · Lite CRM · AI Content Studio</span>
+      </div>
+    </div>
+
+    <!-- CHANNELS -->
+    <div class="channel-selector" role="tablist" aria-label="Chat Channels">
+      <button type="button" class="channel-btn is-active" data-channel="#team-field-ops">#team-field-ops</button>
+      <button type="button" class="channel-btn" data-channel="#steel-procurement">#steel-procurement</button>
+      <button type="button" class="channel-btn" data-channel="#client-inquiries">#client-inquiries</button>
+      <button type="button" class="channel-btn" data-channel="@anthai-agent">@anthai-agent</button>
+    </div>
+
+    <!-- USER SESSION & ROLE TOGGLE (STAGING VERIFICATION) -->
+    <div class="user-identity-badge">
+      <span id="currentUserName">James Cheng</span>
+      <label for="roleSelect" class="sr-only">Role</label>
+      <select id="roleSelect" class="role-select" aria-label="Employee Role">
+        <option value="contributor">Contributor (Field Engineer)</option>
+        <option value="publisher">Editor / Publisher (Manager)</option>
+      </select>
+    </div>
+  </header>
+
+  <!-- NAVIGATION TABS -->
+  <nav class="studio-nav" role="tablist" aria-label="Studio Sections">
+    <button type="button" class="nav-tab-btn is-active" data-tab="chat">
+      1. Team Chat
+    </button>
+    <button type="button" class="nav-tab-btn" data-tab="crm">
+      2. Lite CRM <span id="crmCount" class="badge-count">0</span>
+    </button>
+    <button type="button" class="nav-tab-btn" data-tab="studio">
+      3. Content Studio <span id="draftCount" class="badge-count">0</span>
+    </button>
+    <button type="button" class="nav-tab-btn" data-tab="brief">
+      4. Daily Brief
+    </button>
+  </nav>
+
+  <!-- MAIN APP PANES -->
+  <main class="studio-container">
+    <!-- TAB 1: TEAM CHAT (EMPLOYEE-FIRST) -->
+    <section id="tab-chat" class="tab-pane is-active">
+      <div id="chatFeed" class="chat-container"></div>
+    </section>
+
+    <!-- TAB 2: LITE CRM (6 OBJECTS) -->
+    <section id="tab-crm" class="tab-pane">
+      <div class="studio-panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+          <div>
+            <h2 style="font-size:15px;font-weight:800;color:var(--brand-navy);">Lite Agent-Native CRM</h2>
+            <div class="mono" style="font-size:11px;color:var(--text-muted);">6 Minimal Objects: Customer · Contact · Lead · Project · Task · Interaction</div>
+          </div>
+          <span class="status-pill is-confirmed">Zero Fabrication Policy</span>
+        </div>
+        <div id="crmMount"></div>
+      </div>
+    </section>
+
+    <!-- TAB 3: CONTENT STUDIO -->
+    <section id="tab-studio" class="tab-pane">
+      <div id="studioFeedback" class="studio-feedback" hidden role="status" aria-live="polite"></div>
+      <div id="studioMount"></div>
+    </section>
+
+    <!-- TAB 4: DAILY BRIEF -->
+    <section id="tab-brief" class="tab-pane">
+      <div class="studio-panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+          <h2 style="font-size:15px;font-weight:800;color:var(--brand-navy);">Daily Authorized Management Brief</h2>
+          <button id="refreshBriefBtn" type="button" class="btn btn-primary">Regenerate from Confirmed Data</button>
+        </div>
+        <div id="briefMount"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- CHAT COMPOSER (MOBILE-FIRST) -->
+  <footer class="chat-composer-bar">
+    <div class="composer-wrapper">
+      <div class="quick-sample-chips">
+        <button type="button" class="sample-chip" data-sample="今天在罗勇进行桩基检测，工作内容：36根灌注桩CSL声测。客户：Rayong Industrial Park。附带3张现场照片。">+ Sample: Rayong CSL Testing</button>
+        <button type="button" class="sample-chip" data-sample="Client: Eastern Steel Logistics, Bangkok. Need buyer-side steel procurement agency for 900t warehouse frame next month.">+ Sample: Steel Procurement Agency Lead</button>
+        <button type="button" class="sample-chip" data-sample="客户来电咨询：春武里新厂房20吨球磨机与粉体分级设备技术协调。">+ Sample: Powder Equipment Inquiry</button>
+      </div>
+
+      <form id="chatComposer" class="composer-input-row">
+        <button id="addPhotoBtn" type="button" class="btn btn-outline" title="Attach site photos (EXIF auto-strip)">
+          📷 Photos (<span id="photoBadge">0</span>)
+        </button>
+        <button id="addVoiceBtn" type="button" class="btn btn-outline" title="Attach voice note">
+          🎙️ Voice
+        </button>
+        <input id="chatInput" type="text" class="composer-input" placeholder="Type a message, field update, or inquiry..." autocomplete="off" />
+        <button type="submit" class="btn btn-accent" style="padding:8px 16px;">Send</button>
+      </form>
+    </div>
+  </footer>
+
+  <script src="./studio-engine.js"></script>
+  <script src="./studio.js"></script>
+</body>
+</html>

@@ -279,21 +279,26 @@ def generate():
     articles = load_articles(ROOT/'content/insights')
     target = dist/'insights'
     target.mkdir(exist_ok=True)
-    shell = (dist/'insights.html').read_text(encoding='utf-8')
-    sitemap = (dist/'sitemap.xml').read_text(encoding='utf-8')
-    llms = (dist/'llms.txt').read_text(encoding='utf-8')+'\n## Insights\n\n- '+BASE+'insights.html\n'
+    root_insights = ROOT/'insights'
+    root_insights.mkdir(exist_ok=True)
+    shell = (dist/'insights.html').read_text(encoding='utf-8') if (dist/'insights.html').is_file() else (ROOT/'insights.html').read_text(encoding='utf-8')
+    sitemap = (dist/'sitemap.xml').read_text(encoding='utf-8') if (dist/'sitemap.xml').is_file() else (ROOT/'sitemap.xml').read_text(encoding='utf-8')
+    llms = ((dist/'llms.txt').read_text(encoding='utf-8') if (dist/'llms.txt').is_file() else (ROOT/'llms.txt').read_text(encoding='utf-8'))+'\n## Insights\n\n- '+BASE+'insights.html\n'
     for a in articles:
-        (target/(a['slug']+'.html')).write_text(render(a, articles, shell), encoding='utf-8')
+        rendered = render(a, articles, shell)
+        (target/(a['slug']+'.html')).write_text(rendered, encoding='utf-8')
+        (root_insights/(a['slug']+'.html')).write_text(rendered, encoding='utf-8')
         url = BASE+'insights/'+a['slug']+'.html'
         sitemap = sitemap.replace('</urlset>', '<url><loc>'+url+'</loc><lastmod>'+a['date']+'</lastmod></url>\n</urlset>')
         llms += '- ['+a['title']+']('+url+')\n'
     if articles:
         for page, lang in [(dist/'insights.html', 'en'), (dist/'th/insights.html', 'th'), (dist/'zh/insights.html', 'zh')]:
-            html = page.read_text(encoding='utf-8')
-            cards_block = '<div class="insights-grid">' + build_cards(articles, lang=lang) + '</div>'
-            page.write_text(re.sub(r'<!-- insights:start -->.*?<!-- insights:end -->', lambda _: cards_block, html, flags=re.S), encoding='utf-8')
-    (dist/'sitemap.xml').write_text(sitemap, encoding='utf-8')
-    (dist/'llms.txt').write_text(llms, encoding='utf-8')
+            if page.exists():
+                html = page.read_text(encoding='utf-8')
+                cards_block = '<div class="insights-grid">' + build_cards(articles, lang=lang) + '</div>'
+                page.write_text(re.sub(r'<!-- insights:start -->.*?<!-- insights:end -->', lambda _: cards_block, html, flags=re.S), encoding='utf-8')
+    if (dist/'sitemap.xml').is_file(): (dist/'sitemap.xml').write_text(sitemap, encoding='utf-8')
+    if (dist/'llms.txt').is_file(): (dist/'llms.txt').write_text(llms, encoding='utf-8')
     locs = {x.text for x in ET.fromstring(sitemap).iter() if x.tag.endswith('}loc')}
     for a in articles: assert BASE+'insights/'+a['slug']+'.html' in locs
     assert not (dist/'drafts').exists(), 'Drafts must never be packaged'

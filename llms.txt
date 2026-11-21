@@ -31,9 +31,12 @@ Do not describe AN-THAI as an authorized distributor, accredited laboratory, cer
 ## Primary pages
 
 - https://an-thai.com/
-- https://an-thai.com/services.html
-- https://an-thai.com/equipment.html
-- https://an-thai.com/portfolio.html
+- https://an-thai.com/testing.html
+- https://an-thai.com/steel-procurement.html
+- https://an-thai.com/powder-equipment.html
+- https://an-thai.com/testing-instruments.html
+- https://an-thai.com/cases/
+- https://an-thai.com/insights/
 - https://an-thai.com/about.html
 - https://an-thai.com/contact.html
 

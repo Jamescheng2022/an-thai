@@ -416,6 +416,26 @@
       + '?subject=' + encodeURIComponent('[AN-THAI] ' + (route || 'Technical Inquiry'))
       + '&body=' + encodeURIComponent(brief);
   }
+  function showInquiryFeedback(el, route, brief) {
+    if (!el) return;
+    openMailto(route, brief);
+    el.className = 'notice-box is-neutral';
+    var waUrl = 'https://wa.me/66902921749?text=' + encodeURIComponent(brief);
+    el.innerHTML = [
+      '<div style="font-weight:700;margin-bottom:6px;">' + t('mailtoOpenedMsg') + '</div>',
+      '<div style="font-size:12px;margin-bottom:8px;line-height:1.4;">' + t('mailtoFallbackHelp') + '</div>',
+      '<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">',
+        '<a href="' + waUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-sm" style="background:#25D366;color:#fff;padding:6px 12px;font-size:12px;display:inline-flex;align-items:center;gap:4px;border-radius:4px;text-decoration:none;font-weight:600;">📱 ' + t('sendViaWhatsApp') + '</a>',
+        '<button type="button" class="btn btn-sm btn-outline" style="padding:6px 12px;font-size:12px;border-radius:4px;" data-inquiry-copy="">📋 ' + t('copyBriefBtn') + '</button>',
+        '<a href="mailto:info@an-thai.com" class="btn btn-sm" style="padding:6px 12px;font-size:12px;border-radius:4px;text-decoration:none;">✉️ info@an-thai.com</a>',
+      '</div>'
+    ].join('');
+    el.hidden = false;
+    var cpBtn = el.querySelector('[data-inquiry-copy]');
+    if (cpBtn) {
+      cpBtn.addEventListener('click', function () { copyBrief(brief, el); });
+    }
+  }
   async function copyBrief(text, el) {
     try {
       if (navigator.clipboard && navigator.clipboard.writeText) await navigator.clipboard.writeText(text);
@@ -448,8 +468,7 @@
         if (dFeedback) { dFeedback.className = 'notice-box is-err'; dFeedback.textContent = t('validationMsg'); dFeedback.hidden = false; }
         return;
       }
-      openMailto(f.route, buildBrief(f));
-      if (dFeedback) { dFeedback.className = 'notice-box is-neutral'; dFeedback.textContent = t('mailtoOpenedMsg'); dFeedback.hidden = false; }
+      showInquiryFeedback(dFeedback, f.route, buildBrief(f));
     });
   }
   if (dCopyBtn) dCopyBtn.addEventListener('click', function () { copyBrief(buildBrief(readDrawer()), dFeedback); });
@@ -487,20 +506,20 @@
               lang: state.lang, sourceUrl: window.location.href
             })
           });
-          if (!res.ok) throw new Error('HTTP_' + res.status);
-          var payload = await res.json().catch(function () { return {}; });
-          var receiptId = payload.requestId || payload.id || ('HTTP-' + res.status);
-          window.ANTHAI_TRACK('rfq_submit_success', { route: f.route, receiptId: receiptId });
-          if (contactFeedback) { contactFeedback.className = 'notice-box is-ok'; contactFeedback.textContent = t('fServerOk') + receiptId; contactFeedback.hidden = false; }
-          contactForm.reset();
+          if (res.ok) {
+            var payload = await res.json().catch(function () { return {}; });
+            var receiptId = payload.requestId || payload.id || ('HTTP-' + res.status);
+            window.ANTHAI_TRACK('rfq_submit_success', { route: f.route, receiptId: receiptId });
+            if (contactFeedback) { contactFeedback.className = 'notice-box is-ok'; contactFeedback.textContent = t('fServerOk') + receiptId; contactFeedback.hidden = false; }
+            contactForm.reset();
+            return;
+          }
         } catch (err) {
-          if (contactFeedback) { contactFeedback.className = 'notice-box is-err'; contactFeedback.textContent = t('fServerErr') + ' (' + err.message + ')'; contactFeedback.hidden = false; }
+          // Gracefully fall through to multi-channel contact fallback
         }
-        return;
       }
       if (f.website_url) return;
-      openMailto(f.route, buildBrief(f));
-      if (contactFeedback) { contactFeedback.className = 'notice-box is-neutral'; contactFeedback.textContent = t('mailtoOpenedMsg'); contactFeedback.hidden = false; }
+      showInquiryFeedback(contactFeedback, f.route, buildBrief(f));
     });
   }
 

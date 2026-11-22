@@ -255,6 +255,8 @@ def render(a, articles, shell):
 
 def build_cards(articles, lang='en'):
     cta = CTA_LABELS.get(lang, 'Read article')
+    lang_badge = '' if lang == 'en' else ('<span class="lang-pill" style="margin-left:8px;font-size:11px;font-weight:600;background:var(--card);border:1px solid var(--border);padding:2px 6px;border-radius:4px;">' + ('EN 英文原稿' if lang == 'zh' else 'EN ต้นฉบับ') + '</span>')
+    cta_suffix = '' if lang == 'en' else (' (' + ('英文原稿' if lang == 'zh' else 'ต้นฉบับ EN') + ')')
     return ''.join(
         '<article class="insight-card">'
         f'<a class="insight-card__media" href="/insights/{a["slug"]}.html" tabindex="-1" aria-hidden="true">'
@@ -265,10 +267,11 @@ def build_cards(articles, lang='en'):
         f'<time datetime="{a["date"]}">{a["date"]}</time>'
         '<span class="insight-card__sep" aria-hidden="true">·</span>'
         f'<span class="insight-card__author">{e(a["author"])}</span>'
+        f'{lang_badge}'
         '</div>'
         f'<h2 class="insight-card__title"><a href="/insights/{a["slug"]}.html">{e(a["title"])}</a></h2>'
         f'<p class="insight-card__desc">{e(a["description"])}</p>'
-        f'<a class="insight-card__cta" href="/insights/{a["slug"]}.html">{cta} <span aria-hidden="true">→</span></a>'
+        f'<a class="insight-card__cta" href="/insights/{a["slug"]}.html">{cta}{cta_suffix} <span aria-hidden="true">→</span></a>'
         '</div>'
         '</article>'
         for a in articles
@@ -292,11 +295,15 @@ def generate():
         sitemap = sitemap.replace('</urlset>', '<url><loc>'+url+'</loc><lastmod>'+a['date']+'</lastmod></url>\n</urlset>')
         llms += '- ['+a['title']+']('+url+')\n'
     if articles:
-        for page, lang in [(dist/'insights.html', 'en'), (dist/'th/insights.html', 'th'), (dist/'zh/insights.html', 'zh')]:
+        for page, lang in [(dist/'insights.html', 'en'), (dist/'insights/index.html', 'en'), (dist/'th/insights.html', 'th'), (dist/'zh/insights.html', 'zh')]:
             if page.exists():
                 html = page.read_text(encoding='utf-8')
                 cards_block = '<div class="insights-grid">' + build_cards(articles, lang=lang) + '</div>'
                 page.write_text(re.sub(r'<!-- insights:start -->.*?<!-- insights:end -->', lambda _: cards_block, html, flags=re.S), encoding='utf-8')
+        if (ROOT/'insights/index.html').exists():
+            html = (ROOT/'insights/index.html').read_text(encoding='utf-8')
+            cards_block = '<div class="insights-grid">' + build_cards(articles, lang='en') + '</div>'
+            (ROOT/'insights/index.html').write_text(re.sub(r'<!-- insights:start -->.*?<!-- insights:end -->', lambda _: cards_block, html, flags=re.S), encoding='utf-8')
     if (dist/'sitemap.xml').is_file(): (dist/'sitemap.xml').write_text(sitemap, encoding='utf-8')
     if (dist/'llms.txt').is_file(): (dist/'llms.txt').write_text(llms, encoding='utf-8')
     locs = {x.text for x in ET.fromstring(sitemap).iter() if x.tag.endswith('}loc')}

@@ -32,7 +32,7 @@ if i18n_js_path.is_file():
         except Exception as e:
             print(f'Warning: failed to parse i18n-data.js: {e}')
 
-IDENTITY = {'AN-THAI', 'info@an-thai.com', 'anthaicheng@gmail.com', '+66 90 292 1749', '+66-90-292-1749'}
+IDENTITY = {'AT', 'AN-THAI', 'AN-THAI ENGINEERING', 'AN-THAI ENGINEERING COMPANY LIMITED', 'AN-THAI Engineering Company Limited', 'info@an-thai.com', 'anthaicheng@gmail.com', '+66 90 292 1749', '+66-90-292-1749', 'Bangkok, Thailand'}
 LABELS = {'en': ['Language', 'Close menu', 'Open menu'], 'zh': ['语言', '关闭菜单', '打开菜单'], 'th': ['ภาษา', 'ปิดเมนู', 'เปิดเมนู']}
 
 def url(lang, page):
@@ -62,8 +62,9 @@ class Localizer(HTMLParser):
             replacement = MAP[key][0 if self.lang == 'zh' else 1]
             self.count += 1
             return value.replace(key, replacement)
-        if key in IDENTITY or not re.search('[A-Za-z\u3400-\u9fff]', key):
+        if key in IDENTITY or not re.search('[A-Za-z\u3400-\u9fff]', key) or key.startswith('/') or key.startswith('http'):
             return value
+        self.missing.add(key)
         return value
 
     def handle_decl(self, decl):
@@ -119,6 +120,8 @@ class Localizer(HTMLParser):
             if ph_key in I18N.get(self.lang_upper, {}):
                 attrs_dict['placeholder'] = I18N[self.lang_upper][ph_key]
                 self.count += 1
+            elif self.lang != 'en':
+                self.missing.add(f"data-i18n-ph:{ph_key}")
 
         for key in ['alt', 'placeholder', 'aria-label']:
             if key in attrs_dict:
@@ -165,7 +168,10 @@ class Localizer(HTMLParser):
                 base_page = clean_href.split('#')[0].split('?')[0]
                 hash_part = ('#' + clean_href.split('#')[1]) if '#' in clean_href else ''
                 query_part = ('?' + clean_href.split('?')[1].split('#')[0]) if '?' in clean_href else ''
-                if base_page.endswith('.html'):
+                if base_page in ['insights/index.html', 'insights.html', 'insights', 'insights/']:
+                    p_prefix = '/' if self.lang == 'en' else f'/{self.lang}/'
+                    attrs_dict[key] = f'{p_prefix}insights.html{query_part}{hash_part}'
+                elif base_page.endswith('.html'):
                     p_name = base_page[:-5]
                     if p_name in PAGES:
                         p_prefix = '/' if self.lang == 'en' else f'/{self.lang}/'
@@ -232,6 +238,8 @@ class Localizer(HTMLParser):
                     self.count += 1
                     self.out.append(escape(translated, quote=False))
                     return
+                elif self.lang != 'en':
+                    self.missing.add(f"data-i18n:{i18n_key}")
             self.out.append(escape(self.tr(data), quote=False))
 
 def generate():
@@ -245,7 +253,13 @@ def generate():
             p = Localizer(lang, page)
             p.feed(src_file.read_text(encoding='utf-8'))
             (target / (page + '.html')).write_text(''.join(p.out), encoding='utf-8')
-            results.append({'language': lang, 'page': page, 'translated_items': p.count, 'missing': 0})
+            results.append({
+                'language': lang,
+                'page': page,
+                'translated_items': p.count,
+                'missing': len(p.missing),
+                'missing_items': sorted(list(p.missing))[:5]
+            })
     print(json.dumps({'pages': len(results), 'coverage': results}, ensure_ascii=False))
 
 if __name__ == '__main__':

@@ -31,12 +31,12 @@
   var state = { lang: 'EN', adapterMode: 'unconfigured', sessionId: '', lastFocused: null, pollTimer: null };
 
   function detectInitialLang() {
-    try {
-      var q = (new URLSearchParams(window.location.search).get('lang') || '').toUpperCase();
-      if (I18N[q]) return q;
-      var saved = (window.sessionStorage.getItem('anthai_lang') || '').toUpperCase();
-      if (I18N[saved]) return saved;
-    } catch (e) {}
+    var p = window.location.pathname || '';
+    if (p.indexOf('/zh/') !== -1 || p.endsWith('/zh') || p.endsWith('/zh/')) return 'ZH';
+    if (p.indexOf('/th/') !== -1 || p.endsWith('/th') || p.endsWith('/th/')) return 'TH';
+    var docLang = (document.documentElement && document.documentElement.lang ? document.documentElement.lang : '').toLowerCase();
+    if (docLang.indexOf('zh') !== -1) return 'ZH';
+    if (docLang.indexOf('th') !== -1) return 'TH';
     return 'EN';
   }
 
@@ -323,17 +323,80 @@
   if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
   if (drawer) drawer.addEventListener('click', function (e) { if (e.target === drawer) closeDrawer(); });
 
-  var mobileBtn = document.getElementById('mobileMenuBtn');
-  var mobileNav = document.getElementById('mobileNav');
-  if (mobileBtn && mobileNav) {
-    mobileBtn.addEventListener('click', function () {
-      var open = mobileNav.classList.toggle('is-open');
-      mobileBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  var menuBtn = document.querySelector ? (document.querySelector('.menu-btn') || document.querySelector('.menu-toggle') || document.querySelector('#mobileMenuBtn')) : null;
+  var navLinks = document.querySelector ? (document.querySelector('.nav-links') || document.querySelector('.nav-menu') || document.querySelector('#mobileNav')) : null;
+  function setMenu(open) {
+    if (navLinks && navLinks.classList) {
+      if (navLinks.classList.toggle) {
+        navLinks.classList.toggle('open', open);
+        navLinks.classList.toggle('is-open', open);
+      }
+    }
+    if (menuBtn && menuBtn.setAttribute) {
+      menuBtn.setAttribute('aria-expanded', String(open));
+      menuBtn.setAttribute('aria-label', open ? (menuBtn.getAttribute('data-close-label') || 'Close menu') : (menuBtn.getAttribute('data-open-label') || 'Open menu'));
+    }
+    if (open && navLinks && navLinks.querySelector) {
+      var firstA = navLinks.querySelector('a');
+      if (firstA && firstA.focus) firstA.focus();
+    }
+  }
+  if (menuBtn && menuBtn.addEventListener) {
+    menuBtn.addEventListener('click', function () {
+      setMenu(menuBtn.getAttribute('aria-expanded') !== 'true');
     });
   }
-  document.querySelectorAll('.lang-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () { applyLang(btn.getAttribute('data-lang')); });
+  if (navLinks && navLinks.querySelectorAll) {
+    navLinks.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () { setMenu(false); });
+    });
+  }
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && menuBtn && menuBtn.getAttribute && menuBtn.getAttribute('aria-expanded') === 'true') {
+      setMenu(false);
+      if (menuBtn.focus) menuBtn.focus();
+    }
   });
+  document.addEventListener('click', function (event) {
+    if (event.target && event.target.closest && !event.target.closest('.site-header')) setMenu(false);
+  });
+  if (window.matchMedia) {
+    var mql = window.matchMedia('(min-width: 1121px)');
+    if (mql && mql.addEventListener) mql.addEventListener('change', function () { setMenu(false); });
+  }
+  if (document.querySelectorAll) {
+    document.querySelectorAll('.lang-btn').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        var targetLang = (btn.getAttribute('data-lang') || '').toUpperCase();
+        if (!targetLang) return;
+        try { window.sessionStorage.setItem('anthai_lang', targetLang); } catch (err) {}
+
+        var href = btn.getAttribute('href');
+        if (href && href !== '#' && !href.startsWith('javascript:')) {
+          var targetUrl = new URL(href, window.location.origin);
+          targetUrl.search = window.location.search;
+          targetUrl.hash = window.location.hash;
+          window.location.href = targetUrl.href;
+          e.preventDefault();
+          return;
+        }
+
+        var p = window.location.pathname || '/';
+        var segments = p.split('/').filter(Boolean);
+        var filename = segments.pop() || 'index.html';
+        if (filename === 'zh' || filename === 'th') filename = 'index.html';
+        if (!filename.endsWith('.html')) filename = 'index.html';
+
+        var newPath = '/';
+        if (targetLang === 'ZH') newPath = '/zh/' + filename;
+        else if (targetLang === 'TH') newPath = '/th/' + filename;
+        else newPath = '/' + filename;
+
+        window.location.href = newPath + window.location.search + window.location.hash;
+        e.preventDefault();
+      });
+    });
+  }
 
   // Brief & Contact Form (Unified website_url honeypot)
   function buildBrief(f) {
@@ -441,7 +504,61 @@
     });
   }
 
-  applyLang(detectInitialLang());
+  var initialLang = detectInitialLang();
+  state.lang = initialLang;
+  if (document.querySelectorAll) {
+    document.querySelectorAll('.lang-btn').forEach(function (btn) {
+      var bLang = (btn.getAttribute('data-lang') || btn.getAttribute('data-language') || '').toUpperCase();
+      var isCur = (bLang === initialLang);
+      btn.setAttribute('aria-pressed', isCur ? 'true' : 'false');
+      if (isCur) btn.setAttribute('aria-current', 'true');
+      else btn.removeAttribute('aria-current');
+    });
+  }
+  syncStatusUI();
+
+  // Baseline data-quote-form compatibility handler
+  var quoteForm = document.querySelector ? document.querySelector('[data-quote-form]') : null;
+  if (quoteForm) {
+    var qLang = (document.documentElement && document.documentElement.lang) || 'en';
+    var qCopy = qLang.startsWith('zh') ? {
+      category:'设备类别', requirements:'需求', enquiry:'安泰询价', labels:['姓名','公司','邮箱','联系方式','需求类型'],
+      status:'询盘内容已准备好，请在邮件应用中发送。如未打开邮件应用，请联系 anthaicheng@gmail.com 或通过 LINE ID: rachada2018 联系。本网站不会提交表单，也不会创建客户记录。',
+      categories:['桩身完整性检测仪器','高应变／动力桩基检测系统','声波透射／超声检测系统','静载试验测量仪器','岩土与现场检测设备','材料／实验室检测设备','荷载传感器／传感器／数据采集系统','安装／培训／技术支持']
+    } : qLang === 'th' ? {
+      category:'หมวดหมู่เครื่องมือ', requirements:'ข้อกำหนด', enquiry:'สอบถาม AN-THAI', labels:['ชื่อ','บริษัท','อีเมล','ช่องทางติดต่อ','ประเภทคำสอบถาม'],
+      status:'เตรียมคำสอบถามแล้ว โปรดส่งจากแอปอีเมล หากแอปไม่เปิด ให้ติดต่อ anthaicheng@gmail.com หรือ LINE ID: rachada2018 เว็บไซต์นี้ไม่ส่งแบบฟอร์มหรือสร้างข้อมูลลูกค้า',
+      categories:['เครื่องมือทดสอบความสมบูรณ์ของเสาเข็ม','ระบบทดสอบเสาเข็มแบบพลศาสตร์ความเครียดสูง','ระบบทดสอบคลื่นเสียงผ่านท่อ / อัลตราโซนิก','เครื่องมือวัดสำหรับการทดสอบรับน้ำหนักแบบสถิต','เครื่องมือทดสอบปฐพีและภาคสนาม','เครื่องมือทดสอบวัสดุ / ห้องปฏิบัติการ','โหลดเซลล์ / เซนเซอร์ / ระบบเก็บข้อมูล','การติดตั้ง / ฝึกอบรม / สนับสนุนทางเทคนิค']
+    } : {category:'Equipment category',requirements:'Requirements',enquiry:'AN-THAI enquiry',labels:['Name','Company','Email','Phone','Request'],status:'Your enquiry is prepared. Send it from your email app. If no app opens, email anthaicheng@gmail.com or add LINE ID: rachada2018. This website does not transmit the form or create a customer record.'};
+    var qParams = new URLSearchParams(window.location.search);
+    var qTypes = {testing:'Engineering services',engineering:'Engineering services',equipment:'Testing instruments',instruments:'Testing instruments',steel:'Steel / space-structure cooperation',powder:'CNBM powder-equipment cooperation'};
+    if (quoteForm.elements && quoteForm.elements.requestType && Object.prototype.hasOwnProperty.call(qTypes, qParams.get('type'))) {
+      quoteForm.elements.requestType.value = qTypes[qParams.get('type')];
+    }
+    var qCategories = {
+      pile: 'Pile Integrity Testing Instruments', dynamic: 'High-Strain / Dynamic Pile Testing Systems',
+      ultrasonic: 'CSL / Ultrasonic Testing Systems', static: 'Static Load Test Instrumentation',
+      field: 'Geotechnical & Field Testing Equipment', lab: 'Material / Laboratory Testing Equipment',
+      measurement: 'Load Cells / Sensors / DAQ', support: 'Setup / Training / Technical Support'
+    };
+    var qCatIndex = Object.keys(qCategories).indexOf(qParams.get('category'));
+    var qCat = qCatIndex >= 0 ? (qCopy.categories && qCopy.categories[qCatIndex] ? qCopy.categories[qCatIndex] : qCategories[qParams.get('category')]) : null;
+    if (['equipment','instruments'].indexOf(qParams.get('type')) !== -1 && qCat && quoteForm.elements && quoteForm.elements.message) {
+      quoteForm.elements.message.value = qCopy.category + ': ' + qCat + '\n\n' + qCopy.requirements + ': ';
+    }
+    quoteForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      var data = new FormData(quoteForm);
+      var type = (quoteForm.elements && quoteForm.elements.requestType && quoteForm.elements.requestType.selectedOptions && quoteForm.elements.requestType.selectedOptions[0] && quoteForm.elements.requestType.selectedOptions[0].textContent) || data.get('requestType') || qCopy.enquiry;
+      var body = ['name','company','email','phone'].map(function (key, i) { return qCopy.labels[i] + ': ' + (data.get(key) || ''); }).join('\n') + '\n' + qCopy.labels[4] + ': ' + type + '\n\n' + (data.get('message') || '');
+      var mailto = 'mailto:anthaicheng@gmail.com?subject=' + encodeURIComponent(qCopy.enquiry + ': ' + type) + '&body=' + encodeURIComponent(body);
+      var noteEl = document.getElementById('enquiry-note');
+      if (noteEl) noteEl.textContent = qCopy.status;
+      window.location.href = mailto;
+    });
+    var qSubmit = quoteForm.querySelector ? quoteForm.querySelector('button[type="submit"]') : null;
+    if (qSubmit) qSubmit.disabled = false;
+  }
   initAdapter();
 
   // === V5.3 Additions: Services Dropdown + Mobile Accordion + Multi-Tag Insights Filter + Conditional Updates ===

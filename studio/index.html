@@ -3,17 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AN-THAI · Employee Workspace &amp; AI Living Website Studio (V5.4)</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <title>AN-THAI · Living Workspace &amp; AI Living Website Studio (V5.4 Demo Prototype)</title>
   <link rel="stylesheet" href="./studio.css" />
 </head>
 <body>
+  <input type="file" id="photoFileInput" accept="image/*" multiple style="display:none;" />
   <!-- HEADER & WORKSPACE AUTH IDENTITY -->
   <header class="studio-header">
     <div class="studio-brand">
       <span class="brand-badge">AT</span>
       <div class="brand-meta">
-        <span class="brand-title">AN-THAI · LIVING WORKSPACE (V5.4)</span>
-        <span class="brand-sub">Employee-First Chat · Lite CRM · AI Content Studio</span>
+        <span class="brand-title">AN-THAI · LIVING WORKSPACE (V5.4 DEMO PROTOTYPE)</span>
+        <span class="brand-sub">Internal Staging Prototype — Excluded From Production Build</span>
       </div>
     </div>
 
@@ -101,7 +103,7 @@
       </div>
 
       <form id="chatComposer" class="composer-input-row">
-        <button id="addPhotoBtn" type="button" class="btn btn-outline" title="Attach site photos (EXIF auto-strip)">
+        <button id="addPhotoBtn" type="button" class="btn btn-outline" title="Attach site photos">
           📷 Photos (<span id="photoBadge">0</span>)
         </button>
         <button id="addVoiceBtn" type="button" class="btn btn-outline" title="Attach voice note">

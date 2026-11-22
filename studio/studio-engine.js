@@ -102,7 +102,7 @@
     var photos = Array.isArray(d.photos) ? d.photos : [];
     var photoStrip = photos.length
       ? '<div class="tpl-photos">' + photos.map(function (ph) {
-          return '<figure class="tpl-figure"><div class="tpl-ph-box">' + esc(ph.name) + ' · EXIF stripped</div><figcaption>' + esc(ph.caption || 'Field verification photo') + '</figcaption></figure>';
+          return '<figure class="tpl-figure"><div class="tpl-ph-box">' + esc(ph.name) + '</div><figcaption>' + esc(ph.caption || 'Field verification photo') + '</figcaption></figure>';
         }).join('') + '</div>'
       : '';
 

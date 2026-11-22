@@ -58,7 +58,7 @@ const sampleDraft = {
 const html = Engine.renderTemplateHtml(sampleDraft);
 assert.ok(html.includes('FIELD UPDATE'));
 assert.ok(html.includes('Rayong CSL Testing 36 Bored Piles'));
-assert.ok(html.includes('EXIF stripped'));
+assert.ok(html.includes('pile-test-1.jpg'));
 assert.ok(html.includes('client_approved_public'));
 console.log('✓ Fixed template rendering verified.');
 

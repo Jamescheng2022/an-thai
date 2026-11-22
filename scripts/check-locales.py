@@ -21,8 +21,8 @@ class Doc(HTMLParser):
 for preview in (root/'_qa').glob('*.html'):
     assert 'noindex,nofollow' in preview.read_text(encoding='utf-8'), preview
 docs={p.relative_to(root).as_posix():Doc(p.read_text(encoding='utf-8')) for p in root.rglob('*.html') if '_qa' not in p.relative_to(root).parts and not p.relative_to(root).as_posix().startswith('studio/')}
-expected_docs = len(docs)
-assert len(docs) >= 30, f"Expected at least 30 docs, got {len(docs)}"
+expected_docs = 43
+assert len(docs) == expected_docs, f"Expected {expected_docs} docs, got {len(docs)}"
 links=0
 for name,d in docs.items():
     language='zh-CN' if name.startswith('zh/') else 'th' if name.startswith('th/') else 'en'
@@ -36,16 +36,22 @@ for name,d in docs.items():
     assert len(lang_switches) in (0, 3), name
     for t,a in d.tags:
         if t=='img':assert a.get('alt','').strip(),name
-        for key in ['href','src']:
-            if key not in a:continue
-            u=urlsplit(a[key])
+        urls = []
+        if 'href' in a: urls.append(a['href'])
+        if 'src' in a: urls.append(a['src'])
+        if 'srcset' in a:
+            for item in a['srcset'].split(','):
+                item = item.strip()
+                if item: urls.append(item.split()[0])
+        for target_url in urls:
+            u=urlsplit(target_url)
             if u.netloc and u.netloc!='an-thai.com':continue
             if u.scheme and u.scheme not in ['http','https']:continue
             target=u.path.lstrip('/') if u.path.startswith('/') else str(Path(name).parent/u.path)
             if not u.path:target=name
             if target.endswith('/') or target in ['', '.']:target=target.rstrip('/')+'/index.html' if target not in ['', '.'] else 'index.html'
-            assert (root/target).exists(),(name,a[key],target)
-            if u.fragment and target in docs:assert unquote(u.fragment) in docs[target].ids,(name,a[key])
+            assert (root/target).exists(),(name,target_url,target)
+            if u.fragment and target in docs:assert unquote(u.fragment) in docs[target].ids,(name,target_url)
             links+=1
     if language in ['en','th'] and not name.endswith('insights.html'):assert not re.search('[\u3400-\u9fff]', ''.join(d.text).replace('中文','')),name
     print('PASS',name,language,'navigation, alternate languages, links, images, metadata, JSON-LD')

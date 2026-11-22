@@ -583,6 +583,78 @@ html, body {
 
 /* RESPONSIVE BREAKPOINTS */
 @media (max-width: 640px) {
+  .studio-header {
+    padding: 6px 10px;
+    gap: 6px;
+  }
+  .brand-title {
+    font-size: 11px;
+  }
+  .brand-sub {
+    display: none;
+  }
+  .channel-selector {
+    order: 3;
+    width: 100%;
+    gap: 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+  }
+  .user-identity-badge {
+    padding: 2px 6px;
+    font-size: 10px;
+  }
+  .role-select {
+    font-size: 10px;
+    padding: 2px 4px;
+  }
+  .studio-nav {
+    padding: 0 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 2px;
+  }
+  .nav-tab-btn {
+    padding: 8px 8px;
+    font-size: 11px;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .studio-container {
+    padding: 8px;
+    padding-bottom: 100px;
+  }
+  .chat-composer-bar {
+    padding: 6px 8px;
+  }
+  .composer-input-row {
+    gap: 4px;
+    width: 100%;
+  }
+  #addPhotoBtn {
+    padding: 6px 6px;
+    font-size: 11px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  #addVoiceBtn {
+    padding: 6px 6px;
+    font-size: 11px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .composer-input {
+    min-width: 0;
+    flex: 1;
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+  .composer-input-row button[type="submit"] {
+    padding: 6px 10px !important;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
   .message-bubble {
     max-width: 95%;
   }

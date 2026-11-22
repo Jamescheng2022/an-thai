@@ -57,8 +57,10 @@ import hashlib
 for a in manifest['assets']:
  p=ROOT/a['path'];check(p.is_file() and hashlib.sha256(p.read_bytes()).hexdigest()==a['sha256'],f'asset hash {a["path"]}')
 locs=[x.text for x in ET.parse(ROOT/'sitemap.xml').iter() if x.tag.endswith('}loc')]
-expected_routes={'https://an-thai.com/'+('' if p=='index.html' else p) for p in pages if p not in ['404.html', 'services.html', 'equipment.html', 'portfolio.html', 'insights.html']} | {'https://an-thai.com/cases/', 'https://an-thai.com/insights/'}
-check(expected_routes.issubset(set(locs)),'sitemap routes')
+vercel_cfg = json.loads((ROOT / 'vercel.json').read_text(encoding='utf-8'))
+redirect_sources = {r['source'].lstrip('/') for r in vercel_cfg.get('redirects', [])}
+expected_sitemap = {'https://an-thai.com/' + ('' if p == 'index.html' else p) for p in pages if p != '404.html' and p not in redirect_sources} | {'https://an-thai.com/cases/', 'https://an-thai.com/insights/'}
+check(set(locs) == expected_sitemap, 'sitemap routes')
 check('Sitemap: https://an-thai.com/sitemap.xml' in (ROOT/'robots.txt').read_text(encoding='utf-8'),'robots sitemap')
 check(not list((ROOT/'assets').rglob('*.b64')),'legacy image chunks')
 check('loadBrochureSprite' not in (ROOT/'assets/js/site.js').read_text(encoding='utf-8'),'legacy sprite JS')

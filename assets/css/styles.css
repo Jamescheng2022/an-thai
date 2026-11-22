@@ -61,8 +61,9 @@ button { cursor: pointer; }
 
 .header-controls { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .lang-switch { display: inline-flex; border: 1px solid var(--line-soft); background: #fff; padding: 2px; }
-.lang-btn { border: 0; background: transparent; padding: 4px 7px; font-size: 11px; font-weight: 700; color: var(--ink-muted); }
-.lang-btn[aria-pressed="true"] { background: var(--ink); color: #fff; }
+.lang-btn { border: 0; background: transparent; padding: 4px 7px; font-size: 11px; font-weight: 700; color: var(--ink-muted); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+.lang-btn:hover { color: var(--ink); }
+.lang-btn[aria-pressed="true"], .lang-btn[aria-current="true"] { background: var(--ink); color: #fff; }
 .desk-btn { display: none; height: 30px; padding: 0 11px; border: 1px solid var(--ink); background: var(--ink); color: #fff; font-size: 11px; font-weight: 700; align-items: center; gap: 6px; }
 .desk-btn:hover { background: var(--accent); border-color: var(--accent); }
 @media (min-width: 640px) { .desk-btn { display: inline-flex; } }

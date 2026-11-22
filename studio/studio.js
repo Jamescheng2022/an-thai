@@ -323,29 +323,70 @@
       });
     });
 
-    // 5. Photos Button (EXIF Stripped)
+    // 5. Photos Button (real file picker; no client-side EXIF processing)
     var photoBtn = document.getElementById('addPhotoBtn');
-    if (photoBtn) {
+    var photoInput = document.getElementById('photoFileInput');
+    if (photoBtn && photoInput) {
+      photoBtn.addEventListener('click', function () {
+        photoInput.click();
+      });
+      photoInput.addEventListener('change', function () {
+        if (!photoInput.files || photoInput.files.length === 0) return;
+        Array.from(photoInput.files).forEach(function (file) {
+          state.pendingPhotos.push({
+            name: file.name,
+            caption: 'Site Photo: ' + file.name
+          });
+        });
+        updateCounters();
+        showFeedback('Attached ' + photoInput.files.length + ' photo(s)', false);
+        photoInput.value = '';
+      });
+    } else if (photoBtn) {
       photoBtn.addEventListener('click', function () {
         var idx = state.pendingPhotos.length + 1;
         state.pendingPhotos.push({
-          name: 'field-photo-site-' + idx + '.jpg',
-          caption: 'Pile testing setup photo #' + idx + ' (Rayong / EEC site)'
+          name: 'field-record-' + idx + '.jpg',
+          caption: 'Site Record Photo #' + idx
         });
         updateCounters();
-        showFeedback('Attached photo #' + idx + ' (EXIF metadata automatically stripped)', false);
+        showFeedback('Attached photo #' + idx, false);
       });
     }
 
-    // 6. Voice Button (STT Transcription)
+    // 6. Voice Button (Microphone Recording / STT or Prompt)
     var voiceBtn = document.getElementById('addVoiceBtn');
     if (voiceBtn) {
       voiceBtn.addEventListener('click', function () {
-        state.pendingVoice = true;
-        var input = document.getElementById('chatInput');
-        if (input) {
-          input.value = '【语音转录】现场36根桩全部完成声测，地层与图纸符合，正在准备原始记录表。';
-          input.focus();
+        var SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRec) {
+          try {
+            var rec = new SpeechRec();
+            rec.lang = 'zh-CN';
+            rec.onstart = function () { showFeedback('Listening for voice input...', false); };
+            rec.onresult = function (ev) {
+              var transcript = ev.results[0][0].transcript;
+              var input = document.getElementById('chatInput');
+              if (input) {
+                input.value = (input.value ? input.value + ' ' : '') + transcript;
+                input.focus();
+              }
+              showFeedback('Voice transcribed successfully.', false);
+            };
+            rec.onerror = function (ev) {
+              showFeedback('Voice recognition notice: ' + (ev.error || 'canceled'), false);
+            };
+            rec.start();
+            return;
+          } catch (e) {}
+        }
+        var manualVoice = window.prompt ? window.prompt('Voice recording simulation — please speak or enter field voice memo:') : '';
+        if (manualVoice) {
+          var input = document.getElementById('chatInput');
+          if (input) {
+            input.value = (input.value ? input.value + ' ' : '') + manualVoice;
+            input.focus();
+          }
         }
       });
     }
@@ -381,28 +422,33 @@
         if (state.pendingPhotos.length > 0 || /桩|钢|粉体|测试|检测|client|customer/i.test(text)) {
           var slug = E.slugify(crmCandidate.objects.project.title);
           draftId = 'draft-' + Date.now().toString(36).slice(-5);
+          var detectedScope = 'unknown';
+          if (/(\d+)\s*(根|piles?)[^，。\n]*/i.test(text)) {
+            var m = text.match(/(\d+)\s*(根|piles?)[^，。\n]*/i);
+            detectedScope = m ? m[0] : 'unknown';
+          }
           var draftInput = {
             location: crmCandidate.objects.project.location,
-            actualScope: 'Direct AN-THAI pile testing execution (36 CSL bored piles)',
+            actualScope: detectedScope,
             photoRights: 'unknown'
           };
           var questions = E.buildInterviewQuestions(draftInput);
 
-          var newDraft = {
-            id: draftId,
-            slug: slug,
-            contentType: 'field_update',
-            status: 'draft',
-            sourceMessageId: msgId,
-            followUpQuestions: questions,
-            templateData: {
-              title: crmCandidate.objects.project.title,
-              location: crmCandidate.objects.project.location,
-              serviceUnit: crmCandidate.objects.project.serviceUnit,
-              date: new Date().toISOString().slice(0, 10),
-              summary: text.slice(0, 200),
-              actualScope: draftInput.actualScope,
-              photoRights: 'unknown',
+        var newDraft = {
+          id: draftId,
+          slug: slug,
+          contentType: 'field_update',
+          status: 'draft',
+          sourceMessageId: msgId,
+          followUpQuestions: questions,
+          templateData: {
+            title: crmCandidate.objects.project.title,
+            location: crmCandidate.objects.project.location,
+            serviceUnit: crmCandidate.objects.project.serviceUnit,
+            date: new Date().toISOString().slice(0, 10),
+            summary: text.slice(0, 200),
+            actualScope: detectedScope,
+            photoRights: 'unknown',
               photos: state.pendingPhotos.slice()
             },
             approvals: [

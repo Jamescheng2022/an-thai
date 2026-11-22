@@ -49,6 +49,7 @@ class Localizer(HTMLParser):
         self.json_script = False
         self.count = 0
         self.tag_stack = []
+        self.in_lang_switch = False
 
     def tr(self, value):
         key = value.strip()
@@ -65,12 +66,46 @@ class Localizer(HTMLParser):
             return value
         return value
 
-    def handle_decl(self, decl): self.out.append('<!' + decl + '>')
-    def handle_comment(self, data): self.out.append('<!--' + data + '-->')
+    def handle_decl(self, decl):
+        if not self.in_lang_switch:
+            self.out.append('<!' + decl + '>')
+
+    def handle_comment(self, data):
+        if not self.in_lang_switch:
+            self.out.append('<!--' + data + '-->')
 
     def handle_starttag(self, tag, attrs):
         attrs_dict = dict(attrs)
         self.tag_stack.append((tag, attrs_dict))
+
+        if tag in ['div', 'nav'] and 'lang-switch' in attrs_dict.get('class', ''):
+            self.in_lang_switch = True
+            links = []
+            for l, l_upper, label, code in [('en', 'EN', 'EN', 'en'), ('zh', 'ZH', '中文', 'zh-CN'), ('th', 'TH', 'ไทย', 'th')]:
+                l_url = f'/{l}/{self.page}.html' if l != 'en' else f'/{self.page}.html'
+                if self.page == 'index':
+                    l_url = f'/{l}/index.html' if l != 'en' else '/index.html'
+                is_cur = (l == self.lang)
+                curr_attr = ' aria-current="true" aria-pressed="true"' if is_cur else ' aria-pressed="false"'
+                links.append(f'<a href="{l_url}" class="lang-btn" data-language="{l}" data-lang="{l_upper}" lang="{code}" hreflang="{code}"{curr_attr}>{label}</a>')
+            self.out.append(f'<nav class="lang-switch" aria-label="{LABELS[self.lang][0]}">{"".join(links)}</nav>')
+            return
+
+        if self.in_lang_switch:
+            return
+
+        if tag == 'div' and attrs_dict.get('class') == 'nav-actions':
+            self.out.append('<div class="nav-actions">')
+            links = []
+            for l, l_upper, label, code in [('en', 'EN', 'EN', 'en'), ('zh', 'ZH', '中文', 'zh-CN'), ('th', 'TH', 'ไทย', 'th')]:
+                l_url = f'/{l}/{self.page}.html' if l != 'en' else f'/{self.page}.html'
+                if self.page == 'index':
+                    l_url = f'/{l}/index.html' if l != 'en' else '/index.html'
+                is_cur = (l == self.lang)
+                curr_attr = ' aria-current="true" aria-pressed="true"' if is_cur else ' aria-pressed="false"'
+                links.append(f'<a href="{l_url}" class="lang-btn" data-language="{l}" data-lang="{l_upper}" lang="{code}" hreflang="{code}"{curr_attr}>{label}</a>')
+            self.out.append(f'<nav class="language-switch" aria-label="{LABELS[self.lang][0]}">{"".join(links)}</nav>')
+            return
 
         if tag == 'html':
             attrs_dict['lang'] = {'en':'en','zh':'zh-CN','th':'th'}[self.lang]
@@ -99,7 +134,24 @@ class Localizer(HTMLParser):
         if tag == 'link' and attrs_dict.get('rel') == 'canonical':
             attrs_dict['href'] = url(self.lang, self.page)
 
-        for key in ['href', 'src', 'srcset']:
+        if 'srcset' in attrs_dict and attrs_dict['srcset']:
+            candidates = []
+            for item in attrs_dict['srcset'].split(','):
+                item = item.strip()
+                if not item: continue
+                tokens = item.split()
+                url_candidate = tokens[0]
+                desc = ' ' + ' '.join(tokens[1:]) if len(tokens) > 1 else ''
+                if url_candidate.startswith('assets/'):
+                    url_candidate = '/' + url_candidate
+                elif url_candidate.startswith('./assets/'):
+                    url_candidate = '/' + url_candidate[2:]
+                elif url_candidate.startswith('../assets/'):
+                    url_candidate = '/' + url_candidate[3:]
+                candidates.append(url_candidate + desc)
+            attrs_dict['srcset'] = ', '.join(candidates)
+
+        for key in ['href', 'src']:
             if key not in attrs_dict or not attrs_dict[key]: continue
             value = attrs_dict[key]
             if value.startswith('assets/'):
@@ -108,6 +160,16 @@ class Localizer(HTMLParser):
                 attrs_dict[key] = '/' + value[2:]
             elif value.startswith('../assets/'):
                 attrs_dict[key] = '/' + value[3:]
+            elif key == 'href':
+                clean_href = value.lstrip('./').lstrip('/')
+                base_page = clean_href.split('#')[0].split('?')[0]
+                hash_part = ('#' + clean_href.split('#')[1]) if '#' in clean_href else ''
+                query_part = ('?' + clean_href.split('?')[1].split('#')[0]) if '?' in clean_href else ''
+                if base_page.endswith('.html'):
+                    p_name = base_page[:-5]
+                    if p_name in PAGES:
+                        p_prefix = '/' if self.lang == 'en' else f'/{self.lang}/'
+                        attrs_dict[key] = f'{p_prefix}{p_name}.html{query_part}{hash_part}'
 
         attr_str = ''.join(' ' + k + ('' if v is None else '="' + escape(v, quote=True) + '"') for k, v in attrs_dict.items())
         self.out.append('<' + tag + attr_str + '>')
@@ -119,6 +181,12 @@ class Localizer(HTMLParser):
     def handle_endtag(self, tag):
         if self.tag_stack:
             self.tag_stack.pop()
+
+        if self.in_lang_switch:
+            if tag in ['div', 'nav']:
+                self.in_lang_switch = False
+            return
+
         if tag == 'head':
             for lang in ['en','zh','th']:
                 self.out.append('<link rel="alternate" hreflang="'+({'zh':'zh-CN'}.get(lang,lang))+'" href="'+url(lang,self.page)+'">')
@@ -128,6 +196,8 @@ class Localizer(HTMLParser):
         self.out.append('</' + tag + '>')
 
     def handle_data(self, data):
+        if self.in_lang_switch:
+            return
         if self.script:
             if self.json_script:
                 try:

@@ -29,6 +29,17 @@ PAGES = [
     'testing-instruments.html',
     'about.html',
     'contact.html',
+    'services.html',
+    'equipment.html',
+    'portfolio.html',
+    'zh/index.html',
+    'zh/services.html',
+    'zh/equipment.html',
+    'zh/portfolio.html',
+    'th/index.html',
+    'th/services.html',
+    'th/equipment.html',
+    'th/portfolio.html',
     'cases/index.html',
     'cases/case-template.html',
     'insights/index.html',
@@ -42,6 +53,12 @@ PAGES = [
 VIEWPORTS = [390, 768, 1024, 1440]
 
 class QuietHandler(SimpleHTTPRequestHandler):
+    def translate_path(self, path):
+        clean = path.split('?', 1)[0].split('#', 1)[0]
+        if clean.startswith('/studio/'):
+            return str(ROOT / clean.lstrip('/'))
+        return super().translate_path(path)
+
     def log_message(self, format, *args):
         pass  # Quiet logs
 
@@ -123,19 +140,40 @@ def run_tests():
             assert drop_btn.get_attribute("aria-expanded") == "false"
             print("PASS: Services dropdown opens and closes via Escape.")
 
-            # 2.2 Language Switcher
-            print("\n--- Testing Language Switcher (EN -> ZH -> EN) ---")
+            # 2.2 Language Switcher & Fresh Visitor Locale Protection (B1 Gate)
+            print("\n--- Testing Fresh Visitor Static Locale Protection (/zh/ and /th/) ---")
+            zh_page = browser.new_page()
+            zh_page.goto(f"{base_url}/zh/index.html", wait_until="networkidle")
+            zh_lang = zh_page.evaluate("document.documentElement.lang")
+            assert zh_lang == "zh-CN", f"Expected zh-CN on /zh/index.html, got {zh_lang}"
+            zh_pressed = zh_page.locator('.lang-btn[data-lang="ZH"]').get_attribute("aria-pressed")
+            assert zh_pressed == "true", f"ZH button should have aria-pressed=true on /zh/index.html, got {zh_pressed}"
+            zh_chars = zh_page.evaluate("document.body.innerText.match(/[\u4e00-\u9fa5]/g)?.length || 0")
+            assert zh_chars >= 200, f"Expected >200 Chinese chars on /zh/index.html, got {zh_chars}"
+            zh_page.close()
+            print(f"PASS: /zh/index.html loaded clean ({zh_chars} Chinese characters, zero English overwrite).")
+
+            th_page = browser.new_page()
+            th_page.goto(f"{base_url}/th/index.html", wait_until="networkidle")
+            th_lang = th_page.evaluate("document.documentElement.lang")
+            assert th_lang == "th", f"Expected th on /th/index.html, got {th_lang}"
+            th_pressed = th_page.locator('.lang-btn[data-lang="TH"]').get_attribute("aria-pressed")
+            assert th_pressed == "true", f"TH button should have aria-pressed=true on /th/index.html, got {th_pressed}"
+            th_page.close()
+            print("PASS: /th/index.html loaded clean (Thai language intact).")
+
+            # In-page language navigation
             zh_btn = page.locator('.lang-btn[data-lang="ZH"]')
             zh_btn.click()
             page.wait_for_timeout(100)
-            assert zh_btn.get_attribute("aria-pressed") == "true"
-            print("PASS: Switched to Chinese.")
+            assert page.locator('.lang-btn[data-lang="ZH"]').get_attribute("aria-pressed") == "true"
+            print("PASS: Navigated to Chinese via language switcher.")
 
             en_btn = page.locator('.lang-btn[data-lang="EN"]')
             en_btn.click()
             page.wait_for_timeout(100)
-            assert en_btn.get_attribute("aria-pressed") == "true"
-            print("PASS: Switched back to English.")
+            assert page.locator('.lang-btn[data-lang="EN"]').get_attribute("aria-pressed") == "true"
+            print("PASS: Navigated back to English.")
 
             # 2.3 Inquiry Desk Drawer
             print("\n--- Testing Inquiry Desk Drawer ---")
@@ -170,6 +208,39 @@ def run_tests():
             assert mobile_svc_btn.get_attribute("aria-expanded") == "true"
             assert page.locator("#mobileServicesPanel").is_visible()
             print("PASS: Mobile menu and services accordion verified.")
+
+            # 3.1 Living Studio Mobile Ergonomics & Bounds Check @ 390px
+            print("\n--- Testing Living Studio @ 390px Mobile Viewport (Zero Bounds Clipping) ---")
+            page.goto(f"{base_url}/studio/index.html", wait_until="networkidle")
+            page.wait_for_timeout(100)
+
+            # Check composer bounding boxes - no element should overflow 390px
+            composer_box = page.locator("#chatComposer").bounding_box()
+            assert composer_box["x"] >= 0 and (composer_box["x"] + composer_box["width"]) <= 390, f"Composer overflow: {composer_box}"
+
+            send_btn = page.locator("#chatComposer button[type='submit']")
+            send_box = send_btn.bounding_box()
+            assert send_box["x"] >= 0 and (send_box["x"] + send_box["width"]) <= 390, f"Send button clipped at 390px: {send_box}"
+            assert send_btn.is_visible()
+
+            photo_btn = page.locator("#addPhotoBtn")
+            photo_box = photo_btn.bounding_box()
+            assert photo_box["x"] >= 0 and (photo_box["x"] + photo_box["width"]) <= 390, f"Photo button overflow: {photo_box}"
+
+            # Verify all 4 tabs are clickable and accessible at 390px
+            for tab_name in ["chat", "crm", "studio", "brief"]:
+                tab_btn = page.locator(f'.nav-tab-btn[data-tab="{tab_name}"]')
+                tab_btn.click()
+                page.wait_for_timeout(60)
+                assert page.locator(f"#tab-{tab_name}").is_visible(), f"Tab {tab_name} pane not visible at 390px"
+
+            # Switch back to chat and send message at 390px
+            page.locator('.nav-tab-btn[data-tab="chat"]').click()
+            page.locator("#chatInput").fill("36根灌注桩声测完成，罗勇工地")
+            send_btn.click()
+            page.wait_for_timeout(150)
+            assert "36根灌注桩" in page.locator("#chatFeed").inner_text()
+            print("PASS: Studio 390px layout verified (composer, buttons, tabs all within viewport, zero clipping).")
 
             # 4. Living Studio Workflow @ 1280px
             print("\n--- Testing Living Studio Workflow ---")
@@ -243,8 +314,8 @@ def run_tests():
             assert "confirmed projects" in brief_text_lower
             print("PASS: Daily Brief confirmed with zero-fabrication metrics.")
 
-            # Final console error check
-            critical_errors = [e for e in console_errors if "Failed to load resource" not in e]
+            # Final console error check (zero tolerance, including resource 404s)
+            critical_errors = console_errors.copy()
             assert not critical_errors, f"Critical console errors detected: {critical_errors}"
 
             browser.close()

@@ -141,11 +141,59 @@
 
     <section class="section">
       <div class="container" style="display:flex;flex-direction:column;gap:20px;">
-        <div class="grid-4">
-          <article class="card"><h2 class="h3" data-i18n="t1Title">Load Testing (Static / PDA)</h2><p class="muted" data-i18n="t1Desc">Static load testing (kentledge or reaction frame) per approved plan, plus High-Strain Dynamic Testing (PDA) for bearing capacity estimation under suitable test conditions.</p></article>
-          <article class="card"><h2 class="h3" data-i18n="t2Title">Pile Integrity (PIT / CSL)</h2><p class="muted" data-i18n="t2Desc">Low-strain PIT screening and Crosshole Sonic Logging (CSL) evaluating concrete acoustic uniformity between access tube paths alongside construction records.</p></article>
-          <article class="card"><h2 class="h3" data-i18n="t3Title">Ground Investigation</h2><p class="muted" data-i18n="t3Desc">Borehole drilling, soil sampling, and laboratory soil testing coordinated around foundation design inputs.</p></article>
-          <article class="card"><h2 class="h3" data-i18n="t4Title">Monitoring &amp; Engineering Support</h2><p class="muted" data-i18n="t4Desc">Field settlement/structural monitoring and Thai drawing/submission coordination where contracted.</p></article>
+        <div class="grid-3">
+          <article class="card">
+            <div style="margin-bottom:8px;"><span class="tag-pill tag-accent" data-i18n="tMethodSlt">ASTM D1143 · DIRECT CAPACITY</span></div>
+            <h2 class="h3" data-i18n="t1Title">Static Load Testing (SLT)</h2>
+            <p class="muted" style="font-size:13px;margin-top:6px;" data-i18n="t1Desc">Definitive axial compressive, uplift (ASTM D3689), or lateral (ASTM D3966) pile capacity determination using calibrated hydraulic jacks and reaction kentledge/frames. Provides real load-settlement curves and Davisson failure criterion verification.</p>
+          </article>
+
+          <article class="card">
+            <div style="margin-bottom:8px;"><span class="tag-pill tag-accent" data-i18n="tMethodPda">ASTM D4945 · DYNAMIC</span></div>
+            <h2 class="h3" data-i18n="t2Title">High-Strain Dynamic Testing (PDA)</h2>
+            <p class="muted" style="font-size:13px;margin-top:6px;" data-i18n="t2Desc">Accelerometers and strain transducers under drop-hammer impact. CAPWAP signal-matching numerical analysis delivers dynamic soil resistance and estimated static capacity alongside driving stress monitoring.</p>
+          </article>
+
+          <article class="card">
+            <div style="margin-bottom:8px;"><span class="tag-pill tag-accent" data-i18n="tMethodPit">ASTM D5882 · INTEGRITY ONLY</span></div>
+            <h2 class="h3" data-i18n="t3Title">Low-Strain Integrity Testing (PIT)</h2>
+            <p class="muted" style="font-size:13px;margin-top:6px;" data-i18n="t3Desc">Sonic echo / transient response screening with calibrated impact hammer and motion transducer. Evaluates pile shaft continuity, length, and necking/voids. Note: PIT is strictly an integrity screening method, not a direct bearing capacity measurement.</p>
+          </article>
+
+          <article class="card">
+            <div style="margin-bottom:8px;"><span class="tag-pill tag-accent" data-i18n="tMethodCsl">ASTM D6760 · ULTRASONIC</span></div>
+            <h2 class="h3" data-i18n="t4Title">Crosshole Sonic Logging (CSL)</h2>
+            <p class="muted" style="font-size:13px;margin-top:6px;" data-i18n="t4Desc">Multi-channel acoustic transmission across water-filled access tubes in deep bored piles and diaphragm walls. Generates full-depth acoustic velocity profiles to distinguish genuine concrete flaws from tube debonding anomalies.</p>
+          </article>
+
+          <article class="card">
+            <div style="margin-bottom:8px;"><span class="tag-pill tag-accent" data-i18n="tMethodGi">ASTM D1586 · SOIL DRILLING</span></div>
+            <h2 class="h3" data-i18n="t5Title">Geotechnical Ground Investigation</h2>
+            <p class="muted" style="font-size:13px;margin-top:6px;" data-i18n="t5Desc">Borehole drilling (rotary wash), Standard Penetration Testing (SPT), undisturbed Shelby tube sampling, groundwater observation, and accredited laboratory soil mechanics testing for foundation engineering design.</p>
+          </article>
+
+          <article class="card">
+            <div style="margin-bottom:8px;"><span class="tag-pill tag-accent" data-i18n="tMethodMon">INSTRUMENTATION · SAFETY</span></div>
+            <h2 class="h3" data-i18n="t6Title">Excavation &amp; Structural Monitoring</h2>
+            <p class="muted" style="font-size:13px;margin-top:6px;" data-i18n="t6Desc">Real-time geotechnical and structural monitoring: inclinometers for diaphragm wall lateral movement, vibrating-wire piezometers, settlement arrays, tilt sensors, and adjacent vibration monitoring with alarm triggers.</p>
+          </article>
+        </div>
+
+        <!-- Cross-Cutting Highlight: Thai Drawing Conversion, PE Review & Statutory Submission -->
+        <div class="card" style="padding:22px;border-left:4px solid var(--accent);background:var(--surface);">
+          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;">
+            <div>
+              <span class="mono" style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;" data-i18n="tPermitEyebrow">CROSS-CUTTING ENGINEERING SERVICE</span>
+              <h2 class="h2" style="font-size:20px;margin-top:4px;" data-i18n="tPermitTitle">Thai Drawing Conversion, PE Review &amp; Statutory Submission Coordination</h2>
+              <p class="muted" style="margin-top:6px;max-width:760px;font-size:13px;" data-i18n="tPermitDesc">Converting international structural and geotechnical engineering drawings into Thai statutory formats (EIT / TIS codes). Licensed Thai Professional Engineers (Senior / Professional level) review structural calculations, recalculate local seismic and wind loads, and coordinate building permit (Or.1) technical documentation with municipal authorities, BMA, and IEAT industrial estates.</p>
+            </div>
+            <button type="button" class="btn btn-accent" style="padding:8px 14px;font-size:12px;white-space:normal;max-width:100%;text-align:center;" data-open-desk="01 Foundation Testing &amp; Geotech" data-i18n="tPermitCta">Consult PE Review Scope →</button>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft);font-size:12px;">
+            <div><strong data-i18n="tPermitD1">Deliverable:</strong> <span class="muted" data-i18n="tPermitD1V">Bilingual converted drawing set &amp; calculation book</span></div>
+            <div><strong data-i18n="tPermitD2">Authority:</strong> <span class="muted" data-i18n="tPermitD2V">Council of Engineers Thailand Licensed PE Stamp</span></div>
+            <div><strong data-i18n="tPermitD3">Coverage:</strong> <span class="muted" data-i18n="tPermitD3V">BMA Bangkok · EEC Industrial Estates · All Provinces</span></div>
+          </div>
         </div>
 
         <div class="diagram-box">

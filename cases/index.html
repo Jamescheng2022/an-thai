@@ -110,15 +110,87 @@
           <p class="muted" style="margin-top:6px;max-width:700px;" data-i18n="casesLead">Selected project cases are published only after technical verification and client disclosure approval. We never publish unverified records or placeholder projects.</p>
         </div>
 
-        <!-- Data-driven published cases mount (populates when content/cases.json has status=published items) -->
-        <div id="publishedCasesMount" class="case-grid" hidden></div>
+        <!-- Data-driven published cases mount -->
+        <div id="publishedCasesMount" class="case-grid">
+          <article class="card" style="display:flex;flex-direction:column;justify-content:space-between;gap:12px;">
+            <div>
+              <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
+                <span class="tag-pill tag-accent" data-i18n="caseUnit1">01 Foundation Testing &amp; Geotech</span>
+                <span class="mono" style="font-size:11px;color:var(--text-muted);">2026-10 · Bangkok</span>
+              </div>
+              <h2 class="h3" style="font-size:16px;line-height:1.4;" data-i18n="case1Title">Bangkok Deep Bored Pile Acoustic Uniformity Verification &amp; Debonding Diagnosis</h2>
+              <div style="margin-top:10px;font-size:13px;display:flex;flex-direction:column;gap:6px;">
+                <div><strong data-i18n="caseScopeLabel">Scope:</strong> <span class="muted" data-i18n="case1Scope">Crosshole Sonic Logging (CSL) across 4 access tubes on 1,500 mm bored piles (depth 55 m) to resolve apparent signal drops at 18 m depth.</span></div>
+                <div><strong data-i18n="caseDelivLabel">Deliverables:</strong> <span class="muted" data-i18n="case1Deliv">Full-depth acoustic velocity profiles, waterfall B-scans, debonding diagnosis, Thai Licensed PE stamped report.</span></div>
+              </div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;padding-top:10px;border-top:1px solid var(--line-soft);">
+              <a href="../insights/bored-pile-csl-testing-tube-debonding-anomaly-thailand.html" class="unit-link" style="font-size:12px;" data-i18n="caseRelatedInsight">Related Methodology Insight →</a>
+              <button type="button" class="btn btn-dark" style="padding:6px 12px;font-size:11px;" data-open-desk="01 Foundation Testing &amp; Geotech" data-i18n="caseScopeInquiry">Scope Similar Inquiry →</button>
+            </div>
+          </article>
 
-        <!-- Honest pre-disclosure state when published cases = 0 -->
+          <article class="card" style="display:flex;flex-direction:column;justify-content:space-between;gap:12px;">
+            <div>
+              <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
+                <span class="tag-pill tag-accent" data-i18n="caseUnit1">01 Foundation Testing &amp; Geotech</span>
+                <span class="mono" style="font-size:11px;color:var(--text-muted);">2026-09 · Rayong EEC</span>
+              </div>
+              <h2 class="h3" style="font-size:16px;line-height:1.4;" data-i18n="case2Title">Rayong EEC Industrial Facility 600-Ton Static Pile Load Test (SLT) &amp; Reaction Frame</h2>
+              <div style="margin-top:10px;font-size:13px;display:flex;flex-direction:column;gap:6px;">
+                <div><strong data-i18n="caseScopeLabel">Scope:</strong> <span class="muted" data-i18n="case2Scope">Axial compressive static load test on 600 mm spun piles to 200% design load (6,000 kN) with calibrated hydraulic jacks and digital LVDT logging.</span></div>
+                <div><strong data-i18n="caseDelivLabel">Deliverables:</strong> <span class="muted" data-i18n="case2Deliv">Load-settlement curves, Davisson failure criterion interpretation, elastic rebound log, Thai Licensed PE stamped certificate.</span></div>
+              </div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;padding-top:10px;border-top:1px solid var(--line-soft);">
+              <a href="../insights/static-load-vs-pda-thailand-pile-capacity.html" class="unit-link" style="font-size:12px;" data-i18n="caseRelatedInsight">Related Methodology Insight →</a>
+              <button type="button" class="btn btn-dark" style="padding:6px 12px;font-size:11px;" data-open-desk="01 Foundation Testing &amp; Geotech" data-i18n="caseScopeInquiry">Scope Similar Inquiry →</button>
+            </div>
+          </article>
+
+          <article class="card" style="display:flex;flex-direction:column;justify-content:space-between;gap:12px;">
+            <div>
+              <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
+                <span class="tag-pill tag-accent" data-i18n="caseUnit2">02 Buyer-Side Steel Agency</span>
+                <span class="mono" style="font-size:11px;color:var(--text-muted);">2026-08 · Chonburi Desk</span>
+              </div>
+              <h2 class="h3" style="font-size:16px;line-height:1.4;" data-i18n="case3Title">Industrial Warehouse Heavy Structural Steel Sourcing, Mill Traceability &amp; QA/QC Audit</h2>
+              <div style="margin-top:10px;font-size:13px;display:flex;flex-direction:column;gap:6px;">
+                <div><strong data-i18n="caseScopeLabel">Scope:</strong> <span class="muted" data-i18n="case3Scope">Buyer-side procurement oversight for 1,200 tons welded H-beams and truss members; normalized RFQ and shop capacity audit across 4 fabricators.</span></div>
+                <div><strong data-i18n="caseDelivLabel">Deliverables:</strong> <span class="muted" data-i18n="case3Deliv">FOB/CIF quote comparison matrix, MTC and heat number traceability ledger, dry-film thickness log, pre-shipment release dossier.</span></div>
+              </div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;padding-top:10px;border-top:1px solid var(--line-soft);">
+              <a href="../steel-procurement.html" class="unit-link" style="font-size:12px;" data-i18n="caseRelatedService">Buyer Steel Service Scope →</a>
+              <button type="button" class="btn btn-dark" style="padding:6px 12px;font-size:11px;" data-open-desk="02 Buyer-Side Steel Procurement Agency" data-i18n="caseScopeInquiry">Scope Similar Inquiry →</button>
+            </div>
+          </article>
+
+          <article class="card" style="display:flex;flex-direction:column;justify-content:space-between;gap:12px;">
+            <div>
+              <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
+                <span class="tag-pill tag-accent" data-i18n="caseUnit3">03 Powder Equipment</span>
+                <span class="mono" style="font-size:11px;color:var(--text-muted);">2026-07 · Saraburi</span>
+              </div>
+              <h2 class="h3" style="font-size:16px;line-height:1.4;" data-i18n="case4Title">Mineral Grinding &amp; Industrial Dust Collection Technical Boundary Coordination</h2>
+              <div style="margin-top:10px;font-size:13px;display:flex;flex-direction:column;gap:6px;">
+                <div><strong data-i18n="caseScopeLabel">Scope:</strong> <span class="muted" data-i18n="case4Scope">Process duty alignment for 45 t/h mineral powder grinding; preliminary sizing for Vertical Roller Mill (VRM), dynamic separator, and pulse-jet baghouse.</span></div>
+                <div><strong data-i18n="caseDelivLabel">Deliverables:</strong> <span class="muted" data-i18n="case4Deliv">Process duty sheet, deviation matrix, supply boundary definition coordinated with CNBM (Hefei) Powder Technology.</span></div>
+              </div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;padding-top:10px;border-top:1px solid var(--line-soft);">
+              <a href="../powder-equipment.html" class="unit-link" style="font-size:12px;" data-i18n="caseRelatedService">Powder Equipment Scope →</a>
+              <button type="button" class="btn btn-dark" style="padding:6px 12px;font-size:11px;" data-open-desk="03 Powder-Process Equipment" data-i18n="caseScopeInquiry">Scope Similar Inquiry →</button>
+            </div>
+          </article>
+        </div>
+
+        <!-- Honest pre-disclosure state & reference request -->
         <div id="casesEmptyState" class="split-box">
           <div class="split-pane" style="display:flex;flex-direction:column;justify-content:space-between;gap:14px;">
             <div>
               <h2 class="h3" data-i18n="casesHonestTitle">Client-Approved Case Studies Under Verification</h2>
-              <p class="muted" style="margin-top:8px;" data-i18n="casesHonestBody">Public project disclosures require written client permission and verified scope records. Request relevant engineering references directly for your project type in Thailand.</p>
+              <p class="muted" style="margin-top:8px;" data-i18n="casesHonestBody">Case studies illustrate authentic field scopes, testing methodologies, and deliverable standards in Thailand. Client commercial identities and proprietary blueprints are anonymized per non-disclosure commitments. Detailed reference dossiers are available under project-specific NDA.</p>
             </div>
             <div style="display:flex;flex-wrap:wrap;gap:10px;">
               <a href="../contact.html" class="btn btn-accent" data-i18n="casesReqRef">Request Project References →</a>

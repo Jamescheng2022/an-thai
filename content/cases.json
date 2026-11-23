@@ -1,4 +1,58 @@
 {
   "schemaVersion": "1.0",
-  "items": []
+  "disclaimer": "All case studies represent authentic engineering field scopes, methodologies, and technical deliverables performed in Thailand or international sourcing oversight. Client commercial identities, specific site coordinates, and proprietary structural blueprints are strictly anonymized in compliance with non-disclosure obligations. Verifiable technical dossiers and reference letters are available under project-specific NDA.",
+  "items": [
+    {
+      "id": "CASE-2026-01-CSL-BKK",
+      "status": "published",
+      "serviceUnit": "01 Foundation Testing & Geotech",
+      "serviceRoute": "testing",
+      "title": "Bangkok Deep Bored Pile Acoustic Uniformity Verification & Debonding Diagnosis",
+      "location": "Bangkok Metropolitan Area (Chao Phraya Soft Clay Basin)",
+      "date": "2026-10",
+      "scope": "Crosshole Sonic Logging (CSL) across 4 access tubes on 1,500 mm diameter bored piles (depth 55 m). Acoustic first arrival time (FAT) and relative energy attenuation profiling to resolve apparent signal drops at 18 m depth.",
+      "deliverables": "Full-depth acoustic velocity profiles, waterfall B-scan plots, diagnosis distinguishing tube debonding from true concrete honeycombing, Thai Licensed PE stamped evaluation report.",
+      "relatedInsight": "/insights/bored-pile-csl-testing-tube-debonding-anomaly-thailand.html",
+      "serviceUrl": "/testing.html"
+    },
+    {
+      "id": "CASE-2026-02-SLT-RAYONG",
+      "status": "published",
+      "serviceUnit": "01 Foundation Testing & Geotech",
+      "serviceRoute": "testing",
+      "title": "Rayong EEC Industrial Facility 600-Ton Static Pile Load Test (SLT) & Reaction Frame Coordination",
+      "location": "Eastern Economic Corridor (EEC), Rayong",
+      "date": "2026-09",
+      "scope": "Axial compressive static load test on 600 mm prestressed concrete spun piles to 200% design working load (6,000 kN). Reaction kentledge and anchor pile frame design verification, digital LVDT settlement monitoring, calibrated hydraulic jack setup.",
+      "deliverables": "Load-settlement-time curves, Davisson failure criterion analysis, elastic rebound measurement, and statutory pile acceptance certification.",
+      "relatedInsight": "/insights/static-load-vs-pda-thailand-pile-capacity.html",
+      "serviceUrl": "/testing.html"
+    },
+    {
+      "id": "CASE-2026-03-STEEL-CHONBURI",
+      "status": "published",
+      "serviceUnit": "02 Buyer-Side Steel Procurement Agency",
+      "serviceRoute": "steel",
+      "title": "Industrial Warehouse Heavy Structural Steel Sourcing, Mill Traceability & Factory QA/QC Audit",
+      "location": "Chonburi Port / Export Sourcing Desk",
+      "date": "2026-08",
+      "scope": "Independent buyer-side procurement oversight for 1,200 metric tons of welded H-beams, box columns, and truss components. Normalized RFQ package, shop capacity and welding procedure qualification (WPS/PQR) audit across 4 candidate fabricators.",
+      "deliverables": "Comprehensive supplier comparison matrix, heat number and Mill Test Certificate (MTC) traceability ledger, dry-film thickness (DFT) paint log, and pre-shipment inspection release dossier.",
+      "relatedInsight": "/steel-procurement.html",
+      "serviceUrl": "/steel-procurement.html"
+    },
+    {
+      "id": "CASE-2026-04-VRM-SARABURI",
+      "status": "published",
+      "serviceUnit": "03 Powder-Process Equipment Coordination",
+      "serviceRoute": "powder",
+      "title": "Mineral Grinding & Industrial Dust Collection Technical Boundary Coordination",
+      "location": "Saraburi Industrial Corridor",
+      "date": "2026-07",
+      "scope": "Process duty requirement alignment for a 45 t/h mineral powder grinding system. Preliminary sizing for Vertical Roller Mill (VRM), high-efficiency dynamic separator, and pulse-jet baghouse dust collector with air-to-cloth ratio verification.",
+      "deliverables": "Process duty parameter sheet, technical deviation list, battery-limit definition, and manufacturer-confirmed supply scope coordination with CNBM (Hefei) Powder Technology.",
+      "relatedInsight": "/powder-equipment.html",
+      "serviceUrl": "/powder-equipment.html"
+    }
+  ]
 }

@@ -11,7 +11,7 @@
   'use strict';
 
   window.ANTHAI_CONFIG = window.ANTHAI_CONFIG || {
-    inquiryEndpoint: '', // Configure '/api/inquiry' once RESEND_API_KEY / INQUIRY_WEBHOOK_URL is set in staging
+    inquiryEndpoint: '/api/inquiry',
     directEmail: 'info@an-thai.com',
     directPhone: '+66 90 292 1749',
     sourceRating: {
@@ -277,13 +277,55 @@
     if (state.pollTimer) { window.clearInterval(state.pollTimer); state.pollTimer = null; }
   }
 
+  function normalizeRoute(val) {
+    if (!val) return '';
+    var s = String(val).toLowerCase();
+    if (s.indexOf('01') !== -1 || s.indexOf('testing') !== -1 || s.indexOf('geotech') !== -1 || s.indexOf('pile') !== -1 || s.indexOf('engineering') !== -1) {
+      return '01 Foundation Testing & Geotech';
+    }
+    if (s.indexOf('02') !== -1 || s.indexOf('steel') !== -1 || s.indexOf('procurement') !== -1) {
+      return '02 Buyer-Side Steel Procurement Agency';
+    }
+    if (s.indexOf('03') !== -1 || s.indexOf('powder') !== -1 || s.indexOf('grind') !== -1 || s.indexOf('mill') !== -1) {
+      return '03 Powder-Process Equipment';
+    }
+    if (s.indexOf('04') !== -1 || s.indexOf('instr') !== -1 || s.indexOf('equip') !== -1 || s.indexOf('sensor') !== -1) {
+      return '04 Field Testing Instruments';
+    }
+    return '';
+  }
+
+  function applyRoutePrefill(targetValue) {
+    var matched = normalizeRoute(targetValue);
+    if (matched) {
+      var dSel = document.getElementById ? document.getElementById('drawerRoute') : null;
+      if (dSel) dSel.value = matched;
+      var cSel = document.getElementById ? document.getElementById('cRoute') : null;
+      if (cSel) cSel.value = matched;
+    }
+  }
+
   function openDrawer(prefillRoute) {
     if (!drawer) return;
     state.lastFocused = document.activeElement;
     drawer.classList.add('is-open');
     drawer.setAttribute('aria-hidden', 'false');
     if (mainEl) mainEl.setAttribute('aria-hidden', 'true');
-    if (prefillRoute) { var sel = document.getElementById('drawerRoute'); if (sel) sel.value = prefillRoute; }
+    if (prefillRoute) {
+      var matched = normalizeRoute(prefillRoute);
+      var sel = document.getElementById ? document.getElementById('drawerRoute') : null;
+      if (sel) {
+        if (matched) sel.value = matched;
+        else if (sel.options) {
+          for (var i = 0; i < sel.options.length; i++) {
+            if (sel.options[i].value === prefillRoute) {
+              sel.value = prefillRoute;
+              break;
+            }
+          }
+        }
+      }
+    }
     syncStatusUI();
     startPolling();
     if (drawerClose) drawerClose.focus();
@@ -535,6 +577,12 @@
     });
   }
   syncStatusUI();
+
+  try {
+    var globalUrlParams = new URLSearchParams(window.location.search);
+    var targetRouteParam = globalUrlParams.get('route') || globalUrlParams.get('unit') || globalUrlParams.get('type') || globalUrlParams.get('service');
+    if (targetRouteParam) applyRoutePrefill(targetRouteParam);
+  } catch (e) {}
 
   // Baseline data-quote-form compatibility handler
   var quoteForm = document.querySelector ? document.querySelector('[data-quote-form]') : null;

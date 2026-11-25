@@ -1,0 +1,60 @@
+{
+  "reviewed_commit": "4dfb7118470403fa3b1055eba6686c49d916977d",
+  "pages": [
+    {
+      "page": 1,
+      "min_extracted_pt": 6.8,
+      "small_spans_below_5_5": 0
+    },
+    {
+      "page": 2,
+      "min_extracted_pt": 5.6,
+      "small_spans_below_5_5": 0
+    },
+    {
+      "page": 3,
+      "min_extracted_pt": 4.9,
+      "small_spans_below_5_5": 17
+    },
+    {
+      "page": 4,
+      "min_extracted_pt": 4.9,
+      "small_spans_below_5_5": 8
+    },
+    {
+      "page": 5,
+      "min_extracted_pt": 4.41,
+      "small_spans_below_5_5": 13
+    },
+    {
+      "page": 6,
+      "min_extracted_pt": 5.2,
+      "small_spans_below_5_5": 4
+    },
+    {
+      "page": 7,
+      "min_extracted_pt": 5.3,
+      "small_spans_below_5_5": 7
+    },
+    {
+      "page": 8,
+      "min_extracted_pt": 5.3,
+      "small_spans_below_5_5": 4
+    },
+    {
+      "page": 9,
+      "min_extracted_pt": 5.4,
+      "small_spans_below_5_5": 3
+    },
+    {
+      "page": 10,
+      "min_extracted_pt": 5.7,
+      "small_spans_below_5_5": 0
+    }
+  ],
+  "note": "Span counts include separate combining marks; these are not independent defect counts.",
+  "pdf_sha256": {
+    "an-thai-engineering-brochure-th-en-original10-REVIEW.pdf": "cf174a61b555c85dedd6b08b06eec75f2388d333ff8afae210daab542283cab9",
+    "an-thai-engineering-brochure-cn-en.pdf": "04848cb6ef00f66041cbc9780bd4652b24995a07c1296834465bddd324a27698"
+  }
+}

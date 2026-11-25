@@ -237,7 +237,9 @@ def run_tests():
             print("PASS: ZH/TH Insights (5 articles + badges), Cases (3 cleared cards + filters/search), detail & nested lang switcher verified.")
             zh_page.close()
 
-            # Check query prefill (?type=equipment&category=measurement AND ?route=04 Field Testing Instruments)
+            # Check query prefill (?type=equipment&category=measurement AND ?route=03 / 04 exact unit routing)
+            page.goto(f"{base_url}/contact.html?route=03%20Powder-Process%20Equipment", wait_until="networkidle")
+            assert page.locator("#cRoute").input_value() == "03 Powder-Process Equipment"
             page.goto(f"{base_url}/contact.html?route=04%20Field%20Testing%20Instruments", wait_until="networkidle")
             assert page.locator("#cRoute").input_value() == "04 Field Testing Instruments"
             page.goto(f"{base_url}/contact.html?type=equipment&category=measurement", wait_until="networkidle")

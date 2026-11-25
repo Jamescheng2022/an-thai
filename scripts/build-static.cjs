@@ -26,7 +26,7 @@ if (fs.existsSync(path.join(root, 'assets'))) {
 }
 if (fs.existsSync(path.join(root, 'cases'))) fs.cpSync(path.join(root, 'cases'), path.join(output, 'cases'), {recursive: true});
 if (fs.existsSync(path.join(root, 'content'))) {
-  const excludedContent = new Set(['project-references-review.json', 'cases.json', 'cases-ai-index.json']);
+  const excludedContent = new Set(['project-references-review.json', 'cases.json', 'cases-ai-index.json', 'image_evidence.json']);
   fs.cpSync(path.join(root, 'content'), path.join(output, 'content'), {
     recursive: true,
     filter: (src) => !excludedContent.has(path.basename(src))

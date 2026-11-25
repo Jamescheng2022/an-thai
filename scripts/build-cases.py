@@ -586,6 +586,7 @@ def valid_https_url(raw):
         return False
     try:
         p = urlsplit(raw)
+        _ = p.port
         return p.scheme == 'https' and bool(p.hostname) and not p.username and not p.password
     except ValueError:
         return False
@@ -602,9 +603,9 @@ def is_publicly_cleared(item):
     img = item.get('imageEvidence', {})
     if img.get('commercialRightsApproved') is not True:
         return False
-    if not isinstance(img.get('displayWidth'), int) or img['displayWidth'] <= 0:
+    if type(img.get('displayWidth')) is not int or img['displayWidth'] <= 0:
         return False
-    if not isinstance(img.get('displayHeight'), int) or img['displayHeight'] <= 0:
+    if type(img.get('displayHeight')) is not int or img['displayHeight'] <= 0:
         return False
     if not valid_https_url(item.get('sourceUrl')):
         return False

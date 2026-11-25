@@ -146,11 +146,11 @@ CREATE TABLE IF NOT EXISTS content_drafts (
   updated_at timestamptz NOT NULL DEFAULT now(),
   published_at timestamptz,
   UNIQUE (workspace_id, slug),
-  -- V1.0 P2 audit fix: enforce strict JSON boolean disclosure clearance in DB regardless of application caller
+  -- V1.0 P2 audit fix: enforce strict non-null JSON boolean disclosure clearance in DB regardless of application caller
   CONSTRAINT content_drafts_publish_requires_clearance CHECK (
     status <> 'published' OR (
       COALESCE(template_data->>'photoRights', 'unknown') = 'client_approved_public'
-      AND (template_data->'disclosureApproved') = 'true'::jsonb
+      AND COALESCE(template_data->'disclosureApproved', 'false'::jsonb) = 'true'::jsonb
     )
   )
 );
@@ -225,13 +225,13 @@ CREATE POLICY tenant_update_drafts ON content_drafts FOR UPDATE
       OR (
         EXISTS (
           SELECT 1 FROM workspace_memberships m
-          WHERE m.workspace_id = workspace_id
+          WHERE m.workspace_id = content_drafts.workspace_id
             AND m.user_id = auth.uid()
             AND m.revoked_at IS NULL
-            AND m.role IN ('owner', 'admin', 'publisher')
+            AND m.role IN ('publisher', 'admin')
         )
         AND COALESCE(template_data->>'photoRights', 'unknown') = 'client_approved_public'
-        AND (template_data->'disclosureApproved') = 'true'::jsonb
+        AND COALESCE(template_data->'disclosureApproved', 'false'::jsonb) = 'true'::jsonb
       )
     )
   );

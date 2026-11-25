@@ -282,16 +282,22 @@
   function normalizeRoute(val) {
     if (!val) return '';
     var s = String(val).toLowerCase();
-    if (s.indexOf('04') !== -1 || s.indexOf('instr') !== -1 || s.indexOf('equip') !== -1 || s.indexOf('sensor') !== -1) {
-      return '04 Field Testing Instruments';
-    }
-    if (s.indexOf('03') !== -1 || s.indexOf('powder') !== -1 || s.indexOf('grind') !== -1 || s.indexOf('mill') !== -1) {
+    // Match explicit unit codes first so keywords like "Equipment" in "03 Powder-Process Equipment"
+    // or "Testing" in "04 Field Testing Instruments" never cross-route.
+    if (/\b01\b/.test(s)) return '01 Foundation Testing & Geotech';
+    if (/\b02\b/.test(s)) return '02 Buyer-Side Steel Procurement Agency';
+    if (/\b03\b/.test(s)) return '03 Powder-Process Equipment';
+    if (/\b04\b/.test(s)) return '04 Field Testing Instruments';
+    if (s.indexOf('powder') !== -1 || s.indexOf('grind') !== -1 || s.indexOf('mill') !== -1) {
       return '03 Powder-Process Equipment';
     }
-    if (s.indexOf('02') !== -1 || s.indexOf('steel') !== -1 || s.indexOf('procurement') !== -1) {
+    if (s.indexOf('instr') !== -1 || s.indexOf('equip') !== -1 || s.indexOf('sensor') !== -1) {
+      return '04 Field Testing Instruments';
+    }
+    if (s.indexOf('steel') !== -1 || s.indexOf('procurement') !== -1) {
       return '02 Buyer-Side Steel Procurement Agency';
     }
-    if (s.indexOf('01') !== -1 || s.indexOf('testing') !== -1 || s.indexOf('geotech') !== -1 || s.indexOf('pile') !== -1 || s.indexOf('engineering') !== -1 || s.indexOf('consult') !== -1 || s.indexOf('precast') !== -1) {
+    if (s.indexOf('testing') !== -1 || s.indexOf('geotech') !== -1 || s.indexOf('pile') !== -1 || s.indexOf('engineering') !== -1 || s.indexOf('consult') !== -1 || s.indexOf('precast') !== -1) {
       return '01 Foundation Testing & Geotech';
     }
     return '';

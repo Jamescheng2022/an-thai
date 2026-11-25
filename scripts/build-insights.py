@@ -69,6 +69,26 @@ def parse_svg_dimensions(svg_path):
     return None
 
 
+
+def parse_webp_dimensions(path):
+    """Get actual WebP dimensions with stdlib; reject mismatched metadata."""
+    data = Path(path).read_bytes()
+    assert len(data) >= 30 and data[:4] == b'RIFF' and data[8:12] == b'WEBP', (path,'invalid WebP file')
+    codec = data[12:16]
+    chunk = data[20:]
+    if codec == b'VP8X':
+        assert len(chunk)>=10, (path,'short extended WebP')
+        return (1+int.from_bytes(chunk[4:7],'little'),1+int.from_bytes(chunk[7:10],'little'))
+    if codec == b'VP8 ':
+        assert len(chunk)>=10 and chunk[3:6]==b'\x9d\x01\x2a', (path,'invalid VP8 frame header')
+        return (int.from_bytes(chunk[6:8],'little')&0x3fff,int.from_bytes(chunk[8:10],'little')&0x3fff)
+    if codec == b'VP8L':
+        assert len(chunk)>=5 and chunk[0]==0x2f, (path,'invalid VP8L header')
+        bits=int.from_bytes(chunk[1:5],'little')
+        return (1+(bits&0x3fff),1+((bits>>14)&0x3fff))
+    raise AssertionError((path,'unsupported WebP codec'))
+
+
 def count_words(a):
     text_chunks = [a['title'], a['description']]
     for s in a.get('sections', []):
@@ -102,6 +122,8 @@ def load_articles(directory):
         assert all(type(a[k]) is int and a[k] > 0 for k in ['image_width', 'image_height']), source
         if canonical_cover.endswith('.svg'):
             assert parse_svg_dimensions(ROOT/canonical_cover) == (a['image_width'], a['image_height']), (source, 'cover SVG dimensions mismatch')
+        if canonical_cover.endswith('.webp'):
+            assert parse_webp_dimensions(ROOT/canonical_cover) == (a['image_width'], a['image_height']), (source, 'cover WebP dimensions mismatch')
         assert a['sections'] and all(s['heading'] and s['paragraphs'] for s in a['sections']), source
 
         # Validate inline body visuals per visual contract
@@ -122,6 +144,8 @@ def load_articles(directory):
                 assert all(type(fig.get(k)) is int and fig[k] > 0 for k in ['width', 'height']), (source, 'figure dimensions')
                 if canonical_fig.endswith('.svg'):
                     assert parse_svg_dimensions(ROOT/canonical_fig) == (fig['width'], fig['height']), (source, 'figure SVG dimensions mismatch')
+                if canonical_fig.endswith('.webp'):
+                    assert parse_webp_dimensions(ROOT/canonical_fig) == (fig['width'], fig['height']), (source, 'figure WebP dimensions mismatch')
                 fig['image'] = canonical_fig
                 if any(key in fig for key in ('mobile_image', 'mobile_width', 'mobile_height')):
                     assert all(key in fig for key in ('mobile_image', 'mobile_width', 'mobile_height')), (source, 'incomplete mobile figure fields')
@@ -194,8 +218,9 @@ def render(a, articles, shell):
                     f'<source media="(max-width: 600px)" srcset="/{e(fig["mobile_image"], quote=True)}" width="{fig["mobile_width"]}" height="{fig["mobile_height"]}">'
                     + img + '</picture>'
                 )
+            media_class = 'insight-body-figure--photo' if fig['image'].lower().endswith(('.webp', '.jpg', '.jpeg', '.png')) else 'insight-body-figure--diagram'
             figures_html += (
-                '<figure class="insight-body-figure">' + img
+                '<figure class="insight-body-figure ' + media_class + '">' + img
                 + '<figcaption>'
                 f'<span class="figure-caption">{e(fig["caption"])}</span>'
                 f'<span class="figure-declaration">{e(fig["declaration"])}</span>'

@@ -970,3 +970,42 @@ html[lang="th"]{font-family:Tahoma,"Leelawadee UI",sans-serif}html[lang="th"] h1
  .contact-direct-actions{margin-top:12px}
 }
 
+
+
+/* AN-THAI Insights v2: photographic editorial treatment, 2026-11-01.
+   Technical graphs remain for evidence; brochure photographs receive their
+   own treatment. Article prose stays on a readable narrow measure. */
+.insight-article{max-width:72ch;width:min(72ch,calc(100% - 42px));padding-top:50px}
+.insight-article .insight-breadcrumb{font-size:.78rem;line-height:1.5}
+.insight-header{margin-bottom:30px}
+.insight-title{font-size:clamp(2.15rem,5vw,3.8rem);line-height:1.12;letter-spacing:-.045em;max-width:22ch}
+.insight-meta{padding-bottom:24px;border-color:#d8e0e2}
+.insight-lead-figure{width:min(970px,calc(100vw - 52px));max-width:none;position:relative;left:50%;transform:translateX(-50%);margin:36px 0 46px;border:0;background:#f0f3f3;box-shadow:0 18px 40px rgba(9,32,47,.13)}
+.insight-lead-image{width:100%;height:auto;aspect-ratio:2 / 1;object-fit:cover;max-height:none}
+.insight-lead-caption{background:#f5f5f1;border-top:0;font-size:.84rem;padding:16px clamp(18px,4vw,32px);line-height:1.55}
+.insight-prose section{margin:0 0 44px;padding-top:32px;border-top:1px solid #e6eaeb}
+.insight-prose section:first-child{border-top:0;padding-top:0}
+.insight-prose h2{margin:0 0 24px;font-size:clamp(1.6rem,3vw,2.15rem);line-height:1.22}
+.insight-prose p{font-size:1.055rem;line-height:1.79;letter-spacing:.002em;margin:0 0 20px;color:#213746}
+.insight-prose section:first-child>p:first-of-type{font-size:1.16rem;line-height:1.72;color:#183849}
+.insight-body-figure{margin:30px 0 36px;border:0;background:#f1f3f3;box-shadow:0 8px 26px rgba(8,32,43,.075)}
+.insight-body-figure--photo{background:#132a37}
+.insight-body-figure--photo img{object-fit:contain;background:#132a37;max-height:580px}
+.insight-body-figure--diagram{background:#f5f7f8;border:1px solid #e0e7e9;box-shadow:none}
+.insight-body-figure figcaption{background:#f6f7f5;padding:14px 20px;border:0}
+.insight-body-figure .figure-caption{font-size:.91rem;font-weight:650;line-height:1.57}
+.insight-body-figure .figure-declaration{font-size:.75rem;line-height:1.55;letter-spacing:0;text-transform:none;font-weight:450;color:#64777c}
+@media(min-width:1024px){
+  .insight-body-figure--photo{margin-left:-34px;margin-right:-34px}
+}
+@media(max-width:680px){
+ .insight-article{width:calc(100% - 32px);padding-top:28px}
+ .insight-title{font-size:clamp(2rem,8vw,2.75rem)}
+ .insight-lead-figure{width:calc(100vw - 20px);margin-top:24px;margin-bottom:35px}
+ .insight-lead-image{aspect-ratio:1.55 / 1;object-fit:cover}
+ .insight-prose section{padding-top:26px;margin-bottom:34px}
+ .insight-prose p{font-size:1.025rem;line-height:1.75}
+ .insight-prose section:first-child>p:first-of-type{font-size:1.1rem}
+ .insight-body-figure{margin:25px 0 28px}
+ .insight-body-figure figcaption{padding:12px 15px}
+}

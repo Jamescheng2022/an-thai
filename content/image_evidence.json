@@ -1,13 +1,14 @@
 {
-  "auditVersion": "1.0",
-  "generatedAt": "2026-11-24T13:45:00+07:00",
-  "policy": "Strict Zero-AI, Zero-Stock-Photo authentic evidence ledger directly derived from verified corporate websites paco-group.com and roge.co.th.",
+  "auditVersion": "1.1",
+  "generatedAt": "2026-11-24T14:15:00+07:00",
+  "policy": "Strict Zero-AI, Zero-Stock-Photo authentic evidence ledger directly derived from verified corporate websites paco-group.com and roge.co.th. Images represent verified corporate showcase banners and divisional capability graphics; they are not site-specific project construction photos.",
   "items": [
     {
       "caseId": "CASE-PACO-EMBASSY-SPUN-PILE",
-      "projectTitle": "Royal Thai Embassy (Singapore) Spun Pile Export & Deep Foundation QA/QC",
+      "projectTitle": "Royal Thai Embassy (Singapore) Spun Pile Export",
       "organization": "Pathumthani Concrete Co., Ltd. (PACO Group)",
       "sourceUrl": "https://www.paco-group.com/",
+      "imageNature": "PACO Factory & Production Team Promotional Banner (Official Homepage Showcase, Not Site Photo)",
       "originalImageUrl": "https://itp1.itopfile.com/ImageServer/b28f5d21ab5ff6a3/1280/0/iTopPlus1140045912647.webp",
       "originalFormat": "WEBP",
       "originalDimensions": [
@@ -27,10 +28,11 @@
       "verified": true
     },
     {
-      "caseId": "CASE-PACO-EASTVILLE-FOUNDATION",
-      "projectTitle": "Central Festival EastVille Large Commercial Complex Precast Deep Foundation",
+      "caseId": "CASE-PACO-CENTRAL-FESTIVAL",
+      "projectTitle": "CentralFestival Inn Ville Project (โครงการเซ็นทรัลเฟสติวัล อินท์ วิลล์)",
       "organization": "Pathumthani Concrete Co., Ltd. (PACO Group)",
       "sourceUrl": "https://www.paco-group.com/",
+      "imageNature": "PACO Spun Pile Logistics Transport Fleet Promotional Banner (Official Homepage Showcase, Not Site Photo)",
       "originalImageUrl": "https://itp1.itopfile.com/ImageServer/b28f5d21ab5ff6a3/1280/0/iTopPlus1250496051699.webp",
       "originalFormat": "WEBP",
       "originalDimensions": [
@@ -50,10 +52,11 @@
       "verified": true
     },
     {
-      "caseId": "CASE-ROGE-BMA-BOX-GIRDER",
-      "projectTitle": "Bangkok Metropolitan Administration (BMA) Municipal Bridges & Elevated Box Girders",
-      "organization": "Roge & Associates Co., Ltd. / PACO Group",
-      "sourceUrl": "https://roge.co.th/1Bridges/1Bridges.html",
+      "caseId": "CASE-PACO-BMA-BOX-GIRDER",
+      "projectTitle": "Precast Box Girders Fabricated per BMA Public Works Design (1985 Onwards)",
+      "organization": "Pathumthani Concrete Co., Ltd. (PACO Group)",
+      "sourceUrl": "https://www.paco-group.com/",
+      "imageNature": "ROGE Official Website Showcase Graphic - Bridges & Highway Division (Website Capability Graphic, Not Specific Project Photo)",
       "originalImageUrl": "https://roge.co.th/1Bridges/bridges%20(1).jpg",
       "originalFormat": "JPEG",
       "originalDimensions": [
@@ -73,10 +76,11 @@
       "verified": true
     },
     {
-      "caseId": "CASE-ROGE-WATER-RESOURCES",
-      "projectTitle": "Thailand National Water Resource Management & Regional Flood Protection Infrastructure",
-      "organization": "Roge & Associates Co., Ltd. (Ministry of Finance Grade A Consultant)",
-      "sourceUrl": "https://roge.co.th/4Water/4Water.html",
+      "caseId": "CASE-ROGE-GRADE-A-CONSULTANT",
+      "projectTitle": "Roge & Associates Corporate Engineering Consulting Profile",
+      "organization": "Roge & Associates Co., Ltd.",
+      "sourceUrl": "https://roge.co.th/About-Us/About-Us.html",
+      "imageNature": "ROGE Official Website Showcase Graphic - Water Resources Division (Website Capability Graphic, Not Specific Project Photo)",
       "originalImageUrl": "https://roge.co.th/4Water/water.jpg",
       "originalFormat": "JPEG",
       "originalDimensions": [

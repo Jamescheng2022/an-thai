@@ -8,7 +8,7 @@
 - Base: Bangkok, Thailand.
 - Public office address: 1339 Arwan Building, Pracharat 1 Rd, Wongsawang, Bangsue District, Bangkok 10800, Thailand.
 - Service coverage stated by the company: Thailand.
-- Public contact: +66 90 292 1749; info@an-thai.com; anthaicheng@gmail.com.
+- Public contact: +66 90 292 1749; info@an-thai.com.
 - Core business logic: AN-THAI performs engineering testing and coordination in Thailand, supports testing-instrument selection around real measurement workflows, and coordinates selected project opportunities with relevant partners or manufacturers.
 
 ## Engineering testing and inspection

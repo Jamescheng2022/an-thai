@@ -86,7 +86,13 @@
     }
     var statusEl = document.getElementById('contactApiStatus');
     if (statusEl) {
-      statusEl.textContent = state.inquiryApiConfigured ? t('contactApiReadyNotice') : t('contactApiOfflineNotice');
+      if (state.inquiryApiConfigured) {
+        statusEl.textContent = t('contactApiReadyNotice');
+        statusEl.hidden = false;
+      } else {
+        statusEl.textContent = '';
+        statusEl.hidden = true;
+      }
     }
   }
 

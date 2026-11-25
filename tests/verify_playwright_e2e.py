@@ -46,10 +46,6 @@ PAGES = [
     'th/insights/index.html',
     'th/cases/index.html',
     'cases/index.html',
-    'cases/paco-royal-thai-embassy-singapore-spun-pile-export.html',
-    'cases/roge-associates-grade-a-engineering-consultancy.html',
-    'zh/cases/paco-royal-thai-embassy-singapore-spun-pile-export.html',
-    'th/cases/roge-associates-grade-a-engineering-consultancy.html',
     'insights/index.html',
     'insights/global-foundation-full-spectrum-engineering-inspection.html',
     'insights/bored-pile-csl-testing-tube-debonding-anomaly-thailand.html',
@@ -70,7 +66,6 @@ KEY_SNAPSHOT_PAGES = [
     ('testing-instruments.html', 'unit4_instruments'),
     ('cases/index.html', 'cases_index_en'),
     ('zh/cases/index.html', 'cases_index_zh'),
-    ('cases/paco-royal-thai-embassy-singapore-spun-pile-export.html', 'case_detail_en'),
     ('insights/index.html', 'insights_index_en'),
     ('zh/insights/index.html', 'insights_index_zh'),
     ('about.html', 'about_en'),
@@ -213,20 +208,11 @@ def run_tests():
             assert "2026-11-24" in zh_page.locator(".insights-grid .insight-card").first.inner_text(), "Newest article must be first"
             assert "EN 英文原稿" in zh_page.locator(".insights-grid").inner_text()
 
-            # Check /zh/cases/index.html multi-filter + search + detail page + lang switcher route preservation
+            # Check /zh/cases/index.html clean capabilities landing + /th/cases/index.html + lang switcher
             zh_page.goto(f"{base_url}/zh/cases/index.html", wait_until="networkidle")
-            assert zh_page.locator("[data-case-card]").count() == 3
-            zh_page.locator('[data-filter-attr="roge_original"]').click()
-            assert zh_page.locator("[data-case-card]:not([hidden])").count() == 1
-            zh_page.locator('[data-filter-attr="all"]').click()
-            zh_page.locator('#casesSearchInput').fill("BMA")
-            assert zh_page.locator("[data-case-card]:not([hidden])").count() == 1
-            zh_page.locator('[data-case-card]:not([hidden]) a.unit-link').first.click()
-            zh_page.wait_for_timeout(80)
-            assert "/zh/cases/paco-bma-precast-box-girder-1985.html" in zh_page.url
-            # Verify language switcher preserves nested /cases/<slug>.html route
+            assert zh_page.locator(".case-card").count() == 4
             en_switch_href = zh_page.locator('.lang-btn[data-language="en"]').get_attribute("href")
-            assert en_switch_href == "/cases/paco-bma-precast-box-girder-1985.html", f"Unexpected EN href: {en_switch_href}"
+            assert en_switch_href == "/cases/index.html", f"Unexpected EN href: {en_switch_href}"
             # Verify TH insights index also has EN origin badge and 5 articles
             zh_page.goto(f"{base_url}/th/insights/index.html", wait_until="networkidle")
             assert zh_page.locator(".insights-grid .insight-card").count() == 5
@@ -234,7 +220,7 @@ def run_tests():
             # Verify EN article keeps canonical slug in EN switcher link
             zh_page.goto(f"{base_url}/insights/global-foundation-full-spectrum-engineering-inspection.html", wait_until="networkidle")
             assert zh_page.locator('.lang-btn[data-language="en"]').get_attribute("href") == "/insights/global-foundation-full-spectrum-engineering-inspection.html"
-            print("PASS: ZH/TH Insights (5 articles + badges), Cases (3 cleared cards + filters/search), detail & nested lang switcher verified.")
+            print("PASS: ZH/TH Insights (5 articles + badges), clean Cases capabilities & nested lang switcher verified.")
             zh_page.close()
 
             # Check query prefill (?type=equipment&category=measurement AND ?route=03 / 04 exact unit routing)
@@ -246,7 +232,13 @@ def run_tests():
             page.wait_for_timeout(80)
             assert page.locator("#cRoute").input_value() == "04 Field Testing Instruments"
             assert "Load Cells / Sensors / DAQ" in page.locator("#cNotes").input_value()
-            assert "Real Delivery BLOCKED" in page.locator("#contactApiStatus").inner_text() or "unconfigured" in page.locator("#contactApiStatus").inner_text().lower()
+            # Customer-facing gate: internal API / RESEND_API_KEY banner must stay hidden when unconfigured
+            assert page.locator("#contactApiStatus").is_hidden(), "#contactApiStatus must remain hidden on V1.0 public pages"
+            for check_pg in ["index.html", "about.html", "contact.html", "zh/index.html", "zh/about.html", "zh/contact.html", "th/index.html", "th/about.html", "th/contact.html", "cases/index.html"]:
+                page.goto(f"{base_url}/{check_pg}", wait_until="networkidle")
+                vis_txt = page.locator("body").inner_text().lower()
+                for banned in ["owner gate", "unconfigured", "sourcerating", "resend_api_key", "real delivery blocked", "publishedcount", "paco", "roge", "centralfestival", "live chat activates", "暂未配置", "尚未配置", "待授权", "ยังไม่เชื่อมต่อ", "ยังไม่เปิดใช้งาน"]:
+                    assert banned not in vis_txt, f"Banned internal/unapproved phrase {banned!r} visible on {check_pg}"
 
             # Check zero >1.5x upscaled bitmap images on key article pages (258x576 / 413x500 fix)
             page.goto(f"{base_url}/insights/global-foundation-full-spectrum-engineering-inspection.html", wait_until="networkidle")

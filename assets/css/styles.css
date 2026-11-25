@@ -525,6 +525,7 @@ main { flex: 1; padding-bottom: 64px; }
 .contact-channels-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .btn-whatsapp{background:#16a34a;border-color:#15803d;color:#fff}
 .btn-whatsapp:hover{background:#15803d}
+.sr-hero-badge,.sr-status-dot{display:none!important}
 
 /* Insights Directory Grid Cards */
 .insights-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:20px}

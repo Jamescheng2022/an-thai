@@ -137,7 +137,8 @@
               <div style="font-weight:700;">AN-THAI Engineering Company Limited</div>
               <a href="tel:+66902921749" style="text-decoration:underline;">+66 90 292 1749</a>
               <a href="mailto:info@an-thai.com" style="text-decoration:underline;">info@an-thai.com</a>
-              <a href="mailto:anthaicheng@gmail.com" style="text-decoration:underline;">anthaicheng@gmail.com</a>
+              <a href="https://wa.me/66902921749" target="_blank" rel="noopener noreferrer" style="text-decoration:underline;">WhatsApp +66 90 292 1749</a>
+              <a href="https://line.me/ti/p/~rachada2018" target="_blank" rel="noopener noreferrer nofollow" style="text-decoration:underline;">LINE ID: rachada2018</a>
             </div>
           </div>
 
@@ -164,10 +165,12 @@
               <div class="field"><label for="cContact" data-i18n="fContact">Email or Phone / WhatsApp *</label><input id="cContact" name="contact" type="text" required data-i18n-ph="fContactPh" placeholder="name@company.com / +66..." /></div>
             </div>
             <div class="field"><label for="cNotes" data-i18n="fNotes">Technical Requirements &amp; Schedule *</label><textarea id="cNotes" name="notes" rows="3" required data-i18n-ph="fNotesPh" placeholder="Standards, drawing status, or target timeline..."></textarea></div>
-            <div class="notice-box is-neutral" data-i18n="fPrivacy">Privacy: Details are used solely to respond to your inquiry and are not stored in browser localStorage. Without a configured server endpoint, submit opens an email to info@an-thai.com.</div>
+            <div id="contactApiStatus" class="notice-box" data-i18n="contactApiOfflineNotice">Server email delivery (RESEND_API_KEY) is currently unconfigured. Use Direct Email (info@an-thai.com), WhatsApp (+66 90 292 1749), LINE (rachada2018), or Copy Brief — guaranteed real contact.</div>
+            <div class="notice-box is-neutral" data-i18n="fPrivacy">Privacy: Details are used solely to respond to your inquiry and are not stored in browser localStorage. Without configured server mail credentials, clicking prepares an email directly to info@an-thai.com.</div>
             <div id="contactFeedback" class="notice-box" hidden role="status" aria-live="polite"></div>
             <div style="display:flex;flex-wrap:wrap;gap:10px;">
               <button id="contactSubmitBtn" type="submit" class="btn btn-accent" style="flex:1;" data-i18n="fSubmitEmail">Prepare Email to info@an-thai.com →</button>
+              <a href="https://wa.me/66902921749" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" data-i18n="sendViaWhatsApp">WhatsApp Direct (+66 90 292 1749)</a>
               <button id="contactCopyBtn" type="button" class="btn btn-outline" data-i18n="fCopyBtn">Copy Brief</button>
             </div>
           </form>

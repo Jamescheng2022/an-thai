@@ -1,13 +1,9 @@
 /**
- * Vercel Serverless Function: POST /api/inquiry (V5.2 Hardened)
- * Audit remediations:
- * - Safe JSON.parse with try/catch and 16 KB raw payload cap
- * - Strict length limits on ALL fields (contact, notes, route, location, scale, sourceUrl)
- * - Unified honeypot field (`website_url`) sent by frontend and checked server-side
- * - Optional shared persistence webhook (`INQUIRY_STORE_WEBHOOK_URL`) + honest
- *   `accepted_for_delivery` receipt semantics (never promises inbox delivery)
- * - Note: In-memory Map rate limit is a baseline guard only; production requires
- *   Vercel Firewall / Upstash Redis shared rate limiting across serverless instances.
+ * Vercel Serverless Function: GET/POST /api/inquiry (V1.0 Hardened)
+ * - GET: returns non-secret readiness status so frontend honestly hides/downgrades
+ *        server submission when RESEND_API_KEY / INQUIRY_WEBHOOK_URL are not configured.
+ * - POST: safe JSON.parse, 16 KB cap, field length bounds, honeypot (`website_url`),
+ *         503 when unconfigured, optional Resend/webhook forwarding.
  */
 const MAX_BODY_BYTES = 16 * 1024;
 const RATE_WINDOW_MS = 60 * 1000;
@@ -21,6 +17,21 @@ function makeReceiptId() {
 }
 
 export default async function handler(req, res) {
+  const resendKey = process.env.RESEND_API_KEY || '';
+  const webhookUrl = process.env.INQUIRY_WEBHOOK_URL || '';
+  const storeWebhookUrl = process.env.INQUIRY_STORE_WEBHOOK_URL || '';
+  const toEmail = process.env.INQUIRY_TO_EMAIL || 'info@an-thai.com';
+
+  if (req.method === 'GET') {
+    res.setHeader('Cache-Control', 'no-store');
+    return res.status(200).json({
+      ok: true,
+      configured: Boolean(resendKey || webhookUrl),
+      backend: resendKey ? 'resend' : (webhookUrl ? 'webhook' : 'unconfigured'),
+      recipient: toEmail
+    });
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ ok: false, error: 'METHOD_NOT_ALLOWED' });
   }
@@ -73,11 +84,6 @@ export default async function handler(req, res) {
   ) {
     return res.status(400).json({ ok: false, error: 'VALIDATION_FAILED' });
   }
-
-  const resendKey = process.env.RESEND_API_KEY || '';
-  const webhookUrl = process.env.INQUIRY_WEBHOOK_URL || '';
-  const storeWebhookUrl = process.env.INQUIRY_STORE_WEBHOOK_URL || '';
-  const toEmail = process.env.INQUIRY_TO_EMAIL || 'info@an-thai.com';
 
   if (!resendKey && !webhookUrl) {
     return res.status(503).json({ ok: false, error: 'INQUIRY_BACKEND_UNCONFIGURED' });

@@ -35,18 +35,23 @@ PAGES = [
     'equipment.html',
     'portfolio.html',
     'zh/index.html',
-    'zh/insights.html',
-    'zh/services.html',
-    'zh/equipment.html',
-    'zh/portfolio.html',
+    'zh/about.html',
+    'zh/contact.html',
+    'zh/insights/index.html',
+    'zh/cases/index.html',
+    'zh/steel-procurement.html',
     'th/index.html',
-    'th/insights.html',
-    'th/services.html',
-    'th/equipment.html',
-    'th/portfolio.html',
+    'th/about.html',
+    'th/contact.html',
+    'th/insights/index.html',
+    'th/cases/index.html',
     'cases/index.html',
-    'cases/case-template.html',
+    'cases/paco-royal-thai-embassy-singapore-spun-pile-export.html',
+    'cases/roge-associates-grade-a-engineering-consultancy.html',
+    'zh/cases/paco-royal-thai-embassy-singapore-spun-pile-export.html',
+    'th/cases/roge-associates-grade-a-engineering-consultancy.html',
     'insights/index.html',
+    'insights/global-foundation-full-spectrum-engineering-inspection.html',
     'insights/bored-pile-csl-testing-tube-debonding-anomaly-thailand.html',
     'insights/pit-pretest-site-readiness-owner-checklist.html',
     'insights/static-load-vs-pda-thailand-pile-capacity.html',
@@ -63,12 +68,38 @@ KEY_SNAPSHOT_PAGES = [
     ('steel-procurement.html', 'unit2_steel'),
     ('powder-equipment.html', 'unit3_powder'),
     ('testing-instruments.html', 'unit4_instruments'),
+    ('cases/index.html', 'cases_index_en'),
+    ('zh/cases/index.html', 'cases_index_zh'),
+    ('cases/paco-royal-thai-embassy-singapore-spun-pile-export.html', 'case_detail_en'),
     ('insights/index.html', 'insights_index_en'),
-    ('zh/insights.html', 'insights_index_zh'),
+    ('zh/insights/index.html', 'insights_index_zh'),
+    ('about.html', 'about_en'),
     ('contact.html', 'contact')
 ]
 
 class QuietHandler(SimpleHTTPRequestHandler):
+    def do_GET(self):
+        if self.path.split('?')[0] == '/api/inquiry':
+            body = b'{"ok":true,"configured":false,"backend":"unconfigured","recipient":"info@an-thai.com"}'
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Content-Length', str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
+        super().do_GET()
+
+    def do_POST(self):
+        if self.path.split('?')[0] == '/api/inquiry':
+            body = b'{"ok":false,"error":"INQUIRY_BACKEND_UNCONFIGURED","recipient":"info@an-thai.com"}'
+            self.send_response(503)
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Content-Length', str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
+        self.send_error(405)
+
     def log_message(self, format, *args):
         pass  # Quiet logs
 
@@ -172,15 +203,56 @@ def run_tests():
             assert chinese_chars > 300, f"Expected >300 Chinese characters on clean /zh/index.html, got {chinese_chars}"
             print(f"PASS: /zh/index.html rendered with {chinese_chars} Chinese characters in fresh visitor context.")
 
-            # 2.3 Multilingual Navigation Routing (/zh/ -> /zh/insights.html)
-            print("\n--- Testing Multilingual Navigation Routing ---")
+            # 2.3 Multilingual Navigation Routing (/zh/ -> /zh/insights/index.html + /zh/cases/index.html + V1.0 checks)
+            print("\n--- Testing Multilingual Navigation, Cases Filters, Insights & Query Prefill ---")
             zh_page.locator('a[data-page-id="insights"]').first.click()
             zh_page.wait_for_timeout(80)
-            assert "/zh/insights.html" in zh_page.url, f"Expected /zh/insights.html, got {zh_page.url}"
-            assert "技术专栏" in zh_page.locator("h1").inner_text()
+            assert "/zh/insights/index.html" in zh_page.url, f"Expected /zh/insights/index.html, got {zh_page.url}"
+            assert "工程技术洞察" in zh_page.locator("h1").inner_text() or "技术专栏" in zh_page.locator("h1").inner_text()
+            assert zh_page.locator(".insights-grid .insight-card").count() == 5, "Expected all 5 articles on insights index"
+            assert "2026-11-24" in zh_page.locator(".insights-grid .insight-card").first.inner_text(), "Newest article must be first"
             assert "EN 英文原稿" in zh_page.locator(".insights-grid").inner_text()
-            print("PASS: Chinese navigation stays in /zh/ context (/zh/insights.html) with authentic EN origin badges.")
+
+            # Check /zh/cases/index.html multi-filter + search + detail page + lang switcher route preservation
+            zh_page.goto(f"{base_url}/zh/cases/index.html", wait_until="networkidle")
+            assert zh_page.locator("[data-case-card]").count() == 4
+            zh_page.locator('[data-filter-attr="roge_original"]').click()
+            assert zh_page.locator("[data-case-card]:not([hidden])").count() == 1
+            zh_page.locator('[data-filter-attr="all"]').click()
+            zh_page.locator('#casesSearchInput').fill("BMA")
+            assert zh_page.locator("[data-case-card]:not([hidden])").count() == 1
+            zh_page.locator('[data-case-card]:not([hidden]) a.unit-link').first.click()
+            zh_page.wait_for_timeout(80)
+            assert "/zh/cases/paco-bma-precast-box-girder-1985.html" in zh_page.url
+            # Verify language switcher preserves nested /cases/<slug>.html route
+            en_switch_href = zh_page.locator('.lang-btn[data-language="en"]').get_attribute("href")
+            assert en_switch_href == "/cases/paco-bma-precast-box-girder-1985.html", f"Unexpected EN href: {en_switch_href}"
+            print("PASS: Chinese Insights (5 articles), Cases filters/search, crawlable detail & nested lang switcher verified.")
             zh_page.close()
+
+            # Check query prefill (?type=equipment&category=measurement) on contact.html + honest API offline status
+            page.goto(f"{base_url}/contact.html?type=equipment&category=measurement", wait_until="networkidle")
+            page.wait_for_timeout(80)
+            assert page.locator("#cRoute").input_value() == "04 Field Testing Instruments"
+            assert "Load Cells / Sensors / DAQ" in page.locator("#cNotes").input_value()
+            assert "Real Delivery BLOCKED" in page.locator("#contactApiStatus").inner_text() or "unconfigured" in page.locator("#contactApiStatus").inner_text().lower()
+
+            # Check zero >1.5x upscaled bitmap images on key article pages (258x576 / 413x500 fix)
+            page.goto(f"{base_url}/insights/global-foundation-full-spectrum-engineering-inspection.html", wait_until="networkidle")
+            upscaled = page.evaluate('''() => {
+                const bad = [];
+                for (const img of document.images) {
+                    if (!img.naturalWidth || img.src.endsWith('.svg')) continue;
+                    const rect = img.getBoundingClientRect();
+                    if (rect.width > img.naturalWidth * 1.55) {
+                        bad.push({ src: img.getAttribute('src'), naturalWidth: img.naturalWidth, renderedWidth: rect.width });
+                    }
+                }
+                return bad;
+            }''')
+            assert not upscaled, f"Upscaled images detected: {upscaled}"
+            print("PASS: Query prefill, honest API status banner, and zero upscaled article images verified.")
+            page.goto(f"{base_url}/index.html", wait_until="networkidle")
 
             # 2.4 Inquiry Desk Drawer Open & Close
             print("\n--- Testing Inquiry Desk Drawer Interactivity ---")
@@ -198,9 +270,12 @@ def run_tests():
             assert drawer.get_attribute("aria-hidden") == "true"
             print("PASS: Inquiry drawer opens and closes correctly.")
 
-            # 3. Mobile Navigation & Inquiry Fallback UX @ 390px (B5 & P1-4 Gates)
-            print("\n--- Testing Mobile Menu & Inquiry Fallback UX @ 390px ---")
+            # 3. Mobile Navigation, Responsive Flowcharts & Inquiry Fallback UX @ 390px (B5 & P1-4 Gates)
+            print("\n--- Testing Mobile Menu, Responsive Flowchart & Inquiry Fallback UX @ 390px ---")
             page.set_viewport_size({"width": 390, "height": 844})
+            page.goto(f"{base_url}/testing.html", wait_until="networkidle")
+            assert page.locator(".workflow-mobile-steps .wf-m-step").first.is_visible(), "Mobile vertical workflow cards must be visible @ 390px"
+            assert not page.locator(".diagram-box.has-mobile-flow .diagram-svg-wrap").first.is_visible(), "Tiny wide SVG must hide @ 390px"
             page.goto(f"{base_url}/index.html", wait_until="networkidle")
             page.wait_for_timeout(100)
 

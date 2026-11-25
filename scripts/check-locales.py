@@ -21,14 +21,16 @@ class Doc(HTMLParser):
 for preview in (root/'_qa').glob('*.html'):
     assert 'noindex,nofollow' in preview.read_text(encoding='utf-8'), preview
 docs={p.relative_to(root).as_posix():Doc(p.read_text(encoding='utf-8')) for p in root.rglob('*.html') if '_qa' not in p.relative_to(root).parts and not p.relative_to(root).as_posix().startswith('studio/')}
-expected_docs = 43
+expected_docs = 59
 assert len(docs) == expected_docs, f"Expected {expected_docs} docs, got {len(docs)}"
+assert not (root/'content/project-references-review.json').exists(), 'Internal review-only leads must not be packaged in dist'
+assert not (root/'cases/case-template.html').exists(), 'Case template must not be packaged in dist/cases'
 links=0
 for name,d in docs.items():
     language='zh-CN' if name.startswith('zh/') else 'th' if name.startswith('th/') else 'en'
     assert ('html',{'lang':language}) in d.tags, name
     alternatives=[a for t,a in d.tags if t=='link' and a.get('rel')=='alternate']
-    standalone = name.startswith('insights/') or name.startswith('cases/')
+    standalone = (name.startswith('insights/') and name != 'insights/index.html')
     assert {a['hreflang'] for a in alternatives}==(set() if standalone else {'en','zh-CN','th','x-default'}),name
     assert len([a for t,a in d.tags if t=='link' and a.get('rel')=='canonical'])==1,name
     assert len([a for t,a in d.tags if t=='h1'])==1,name
@@ -53,7 +55,7 @@ for name,d in docs.items():
             assert (root/target).exists(),(name,target_url,target)
             if u.fragment and target in docs:assert unquote(u.fragment) in docs[target].ids,(name,target_url)
             links+=1
-    if language in ['en','th'] and not name.endswith('insights.html'):assert not re.search('[\u3400-\u9fff]', ''.join(d.text).replace('中文','')),name
+    if language in ['en','th'] and not name.endswith(('insights.html', 'insights/index.html')):assert not re.search('[\u3400-\u9fff]', ''.join(d.text).replace('中文','')),name
     print('PASS',name,language,'navigation, alternate languages, links, images, metadata, JSON-LD')
 if (root/'steel-procurement.html').exists():
     sitemap_text = (root/'sitemap.xml').read_text(encoding='utf-8')

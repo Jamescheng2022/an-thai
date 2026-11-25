@@ -1,0 +1,260 @@
+{
+  "version": "review-v1",
+  "publicPublished": false,
+  "notice": "Internal review database only (excluded from public dist/). Historical PACO and ROGE reference leads must NOT be published or represented as AN-THAI direct contracts until contract scope, entity clearance, and image rights are individually verified.",
+  "items": [
+    {
+      "id": "PACO-S01",
+      "title": "Bang Yai Square",
+      "category": "Commercial",
+      "company": "Pathumthani Concrete (PACO)",
+      "sourceUrl": "https://www.paco-group.com/โครงการ_Und_บางใหญ่_Und_แสควร์/58f5bd861130c40001dce2d8",
+      "sourceKind": "PACO named project menu",
+      "verification": "Name recorded; specific role, scope, dates and image rights not verified",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "PACO-S02",
+      "title": "Champs Elysees Tiwanon — Suan Somdet Junction",
+      "category": "Residential",
+      "company": "Pathumthani Concrete (PACO)",
+      "sourceUrl": "https://www.paco-group.com/โครงการติวานนท์_Und_ฌ็องเซลิเซ่_Und_แยกสวนสมเด็จฯ/58f5bd8e0a431a000160aa0b",
+      "sourceKind": "PACO named project menu",
+      "verification": "Name recorded; specific role, scope, dates and image rights not verified",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "PACO-S03",
+      "title": "Lumpini Ville Prachachuen–Phongphet",
+      "category": "Residential",
+      "company": "Pathumthani Concrete (PACO)",
+      "sourceUrl": "https://www.paco-group.com/ลุมพินีวิลล์_Und_ประชาชื่น-พงษ์เพชร/58f5bd970a431a000160aa21",
+      "sourceKind": "PACO named project menu",
+      "verification": "Name recorded; specific role, scope, dates and image rights not verified",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "PACO-S04",
+      "title": "Champs Elysees Tiwanon — Phase 3",
+      "category": "Residential",
+      "company": "Pathumthani Concrete (PACO)",
+      "sourceUrl": "https://www.paco-group.com/โครงการติวานนท์_Und_ฌ็องเซลิเซ่_Und_โครงการ3_Und_ปากเกร็ด/58f5bda00a431a000160aa36",
+      "sourceKind": "PACO named project menu",
+      "verification": "Name recorded; specific role, scope, dates and image rights not verified",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "PACO-S05",
+      "title": "Tawandang German Brewery — Chaeng Watthana",
+      "category": "Commercial",
+      "company": "Pathumthani Concrete (PACO)",
+      "sourceUrl": "https://www.paco-group.com/อาคารโรงเบียร์เยอรมันตะวันแดง_Und_ถนนแจ้งวัฒนะ/58f5bdaa69649b0001a4a4e4",
+      "sourceKind": "PACO named project menu",
+      "verification": "Name recorded; specific role, scope, dates and image rights not verified",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "PACO-S06",
+      "title": "NACC Training Accommodation Building",
+      "category": "Commercial",
+      "company": "Pathumthani Concrete (PACO)",
+      "sourceUrl": "https://www.paco-group.com/อาคารที่พักผู้รับการฝึกอบรม_Und_สนง_Dot_ปปช_Dot__Und_จ_Dot_นนทบุรี/58f5bdc969649b0001a4a50a",
+      "sourceKind": "PACO named project menu",
+      "verification": "Name recorded; specific role, scope, dates and image rights not verified",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "PACO-S07",
+      "title": "AEC Market",
+      "category": "Commercial",
+      "company": "Pathumthani Concrete (PACO)",
+      "sourceUrl": "https://www.paco-group.com/AEC_Und_Market/58f4857a69649b0001a4858c",
+      "sourceKind": "PACO named project menu",
+      "verification": "Name recorded; specific role, scope, dates and image rights not verified",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "PACO-S08",
+      "title": "Solar Power Plant — Unnamed",
+      "category": "Industrial",
+      "company": "Pathumthani Concrete (PACO)",
+      "sourceUrl": "https://www.paco-group.com/โรงไฟฟ้าแสงอาทิตย์/58f4858469649b0001a4859b",
+      "sourceKind": "PACO named project menu",
+      "verification": "Name recorded; specific role, scope, dates and image rights not verified",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "PACO-S09",
+      "title": "CentralFestival Inn Ville (Identity / Record Under Review)",
+      "category": "Commercial",
+      "company": "Pathumthani Concrete (PACO)",
+      "sourceUrl": "https://www.paco-group.com/โครงการเซ็นทรัลเฟสติวัล_Und_อินท์_Und_วิลล์/58f5bdd669649b0001a4a522",
+      "sourceKind": "PACO named project menu",
+      "verification": "Name and C60A PD Pure Drive recorded on public page; commercial photo rights and contract links under review",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "PACO-I01",
+      "title": "Shell Oil Refinery",
+      "category": "Industrial",
+      "company": "Pathumthani Concrete (PACO)",
+      "sourceUrl": "https://www.paco-group.com/Files/Name2/CONTENT98825509528099.pdf",
+      "sourceKind": "PACO 2017 company introduction",
+      "verification": "Historical name reference only; contract scope and dates not verified",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "PACO-I02",
+      "title": "Esso Oil Refinery",
+      "category": "Industrial",
+      "company": "Pathumthani Concrete (PACO)",
+      "sourceUrl": "https://www.paco-group.com/Files/Name2/CONTENT98825509528099.pdf",
+      "sourceKind": "PACO 2017 company introduction",
+      "verification": "Historical name reference only; contract scope and dates not verified",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "PACO-I03",
+      "title": "Thai Oil Refinery",
+      "category": "Industrial",
+      "company": "Pathumthani Concrete (PACO)",
+      "sourceUrl": "https://www.paco-group.com/Files/Name2/CONTENT98825509528099.pdf",
+      "sourceKind": "PACO 2017 company introduction",
+      "verification": "Historical name reference only; contract scope and dates not verified",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "PACO-I04",
+      "title": "IRPC (TPI) Refinery",
+      "category": "Industrial",
+      "company": "Pathumthani Concrete (PACO)",
+      "sourceUrl": "https://www.paco-group.com/Files/Name2/CONTENT98825509528099.pdf",
+      "sourceKind": "PACO 2017 company introduction",
+      "verification": "Historical name reference only; contract scope and dates not verified",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "PACO-I05",
+      "title": "Indorama Petrochemical",
+      "category": "Industrial",
+      "company": "Pathumthani Concrete (PACO)",
+      "sourceUrl": "https://www.paco-group.com/Files/Name2/CONTENT98825509528099.pdf",
+      "sourceKind": "PACO 2017 company introduction",
+      "verification": "Historical name reference only; contract scope and dates not verified",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "PACO-I06",
+      "title": "SCG Dow Chemicals",
+      "category": "Industrial",
+      "company": "Pathumthani Concrete (PACO)",
+      "sourceUrl": "https://www.paco-group.com/Files/Name2/CONTENT98825509528099.pdf",
+      "sourceKind": "PACO 2017 company introduction",
+      "verification": "Historical name reference only; contract scope and dates not verified",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "PACO-I07",
+      "title": "Ford Assembly Plant",
+      "category": "Industrial",
+      "company": "Pathumthani Concrete (PACO)",
+      "sourceUrl": "https://www.paco-group.com/Files/Name2/CONTENT98825509528099.pdf",
+      "sourceKind": "PACO 2017 company introduction",
+      "verification": "Historical name reference only; contract scope and dates not verified",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "PACO-I08",
+      "title": "BHP BlueScope New Plant — Historic Reference",
+      "category": "Industrial",
+      "company": "Pathumthani Concrete (PACO)",
+      "sourceUrl": "https://www.paco-group.com/Files/Name2/CONTENT98825509528099.pdf",
+      "sourceKind": "PACO 2017 company introduction",
+      "verification": "Historical name reference only; contract scope and dates not verified",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "PACO-I09",
+      "title": "Shin-Etsu Chemicals",
+      "category": "Industrial",
+      "company": "Pathumthani Concrete (PACO)",
+      "sourceUrl": "https://www.paco-group.com/Files/Name2/CONTENT98825509528099.pdf",
+      "sourceKind": "PACO 2017 company introduction",
+      "verification": "Historical name reference only; contract scope and dates not verified",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "PACO-I10",
+      "title": "Map Ta Phut Hospital",
+      "category": "Commercial",
+      "company": "Pathumthani Concrete (PACO)",
+      "sourceUrl": "https://www.paco-group.com/Files/Name2/CONTENT98825509528099.pdf",
+      "sourceKind": "PACO 2017 company introduction",
+      "verification": "Historical name reference only; contract scope and dates not verified",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "PACO-I11",
+      "title": "Ta Tung Chemicals",
+      "category": "Industrial",
+      "company": "Pathumthani Concrete (PACO)",
+      "sourceUrl": "https://www.paco-group.com/Files/Name2/CONTENT98825509528099.pdf",
+      "sourceKind": "PACO 2017 company introduction",
+      "verification": "Historical name reference only; contract scope and dates not verified",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "ROGE-P01",
+      "title": "Suvarnabhumi International Airport",
+      "category": "Infrastructure",
+      "company": "ROGE & Associates",
+      "sourceUrl": "https://www2.jica.go.jp/en/evaluation/pdf/2011_TXXV-4_4_f.pdf",
+      "sourceKind": "JICA consultant reference",
+      "verification": "Consulting association noted; exact ROGE work scope needs confirmation",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "ROGE-P02",
+      "title": "Phetchaburi Irrigation O&M Feasibility Study",
+      "category": "Water",
+      "company": "ROGE & Associates",
+      "sourceUrl": "https://www.progress.co.th/html_en/WTP/references_24-WTP.html",
+      "sourceKind": "External consultant reference",
+      "verification": "Association and exact assignment need confirmation",
+      "imageUrl": null,
+      "reviewOnly": true
+    },
+    {
+      "id": "ROGE-P03",
+      "title": "Nong Ruea Irrigation Water Management Consultancy",
+      "category": "Water",
+      "company": "ROGE & Associates",
+      "sourceUrl": "https://www.ceat.or.th/index.php/component/content/article/consultancy-services-for-water-resource-management-and-community-participation-on-irrigation-project?Itemid=227&catid=17",
+      "sourceKind": "CEAT consultancy reference",
+      "verification": "Project / consulting role needs document check",
+      "imageUrl": null,
+      "reviewOnly": true
+    }
+  ]
+}

@@ -145,7 +145,14 @@ CREATE TABLE IF NOT EXISTS content_drafts (
   created_by uuid NOT NULL,
   updated_at timestamptz NOT NULL DEFAULT now(),
   published_at timestamptz,
-  UNIQUE (workspace_id, slug)
+  UNIQUE (workspace_id, slug),
+  -- V1.0 P2 audit fix: enforce disclosure clearance in DB regardless of application caller
+  CONSTRAINT content_drafts_publish_requires_clearance CHECK (
+    status <> 'published' OR (
+      COALESCE(template_data->>'photoRights', 'unknown') = 'client_approved_public'
+      AND COALESCE((template_data->>'disclosureApproved')::boolean, false) = true
+    )
+  )
 );
 
 CREATE TABLE IF NOT EXISTS content_revisions (
@@ -206,4 +213,15 @@ ALTER TABLE audit_events ENABLE ROW LEVEL SECURITY;
 -- Example tenant policy (replicated across all workspace tables)
 CREATE POLICY tenant_select_drafts ON content_drafts FOR SELECT USING (is_active_workspace_member(workspace_id));
 CREATE POLICY tenant_insert_drafts ON content_drafts FOR INSERT WITH CHECK (is_active_workspace_member(workspace_id));
-CREATE POLICY tenant_update_drafts ON content_drafts FOR UPDATE USING (is_active_workspace_member(workspace_id));
+CREATE POLICY tenant_update_drafts ON content_drafts FOR UPDATE
+  USING (is_active_workspace_member(workspace_id))
+  WITH CHECK (
+    is_active_workspace_member(workspace_id)
+    AND (
+      status <> 'published'
+      OR (
+        COALESCE(template_data->>'photoRights', 'unknown') = 'client_approved_public'
+        AND COALESCE((template_data->>'disclosureApproved')::boolean, false) = true
+      )
+    )
+  );

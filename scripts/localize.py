@@ -168,13 +168,16 @@ class Localizer(HTMLParser):
                 base_page = clean_href.split('#')[0].split('?')[0]
                 hash_part = ('#' + clean_href.split('#')[1]) if '#' in clean_href else ''
                 query_part = ('?' + clean_href.split('?')[1].split('#')[0]) if '?' in clean_href else ''
-                if base_page in ['insights/index.html', 'insights.html', 'insights', 'insights/']:
-                    p_prefix = '/' if self.lang == 'en' else f'/{self.lang}/'
+                p_prefix = '/' if self.lang == 'en' else f'/{self.lang}/'
+                if base_page in ['insights/index.html', 'insights', 'insights/']:
+                    attrs_dict[key] = f'{p_prefix}insights/index.html{query_part}{hash_part}'
+                elif base_page == 'insights.html':
                     attrs_dict[key] = f'{p_prefix}insights.html{query_part}{hash_part}'
+                elif base_page in ['cases/index.html', 'cases', 'cases/']:
+                    attrs_dict[key] = f'{p_prefix}cases/index.html{query_part}{hash_part}'
                 elif base_page.endswith('.html'):
                     p_name = base_page[:-5]
                     if p_name in PAGES:
-                        p_prefix = '/' if self.lang == 'en' else f'/{self.lang}/'
                         attrs_dict[key] = f'{p_prefix}{p_name}.html{query_part}{hash_part}'
 
         attr_str = ''.join(' ' + k + ('' if v is None else '="' + escape(v, quote=True) + '"') for k, v in attrs_dict.items())

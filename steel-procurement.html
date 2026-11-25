@@ -149,40 +149,114 @@
           <article class="card"><h2 class="h3" data-i18n="s4Title">Shipment Verification</h2><p class="muted" data-i18n="s4Desc">Witness dimensional checks, final NDT, export packing lists, and issue pre-shipment review dossier.</p></article>
         </div>
 
-        <div class="diagram-box">
+        <div class="diagram-box has-mobile-flow">
           <div class="diagram-head">
             <span class="mono" style="font-size:11px;font-weight:700;color:#fb923c;text-transform:uppercase;" data-i18n="steelFlowTitle">Buyer-Side Procurement Agency Flow</span>
             <button type="button" class="btn btn-accent" style="padding:7px 13px;font-size:11px;" data-open-desk="02 Buyer-Side Steel Procurement Agency" data-i18n="steelCta">Submit Buyer Brief →</button>
           </div>
-          <svg class="diagram-svg" viewBox="0 0 985 120" role="img" aria-label="Workflow diagram">
-          <g transform="translate(20, 18)">
-            <rect width="210" height="84" fill="#181c24" stroke="#333947" stroke-width="1.2"/>
-            <rect width="210" height="3" fill="#d44800"/>
-            <text x="14" y="26" fill="#fb923c" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">01 · RFQ</text>
-            <text x="14" y="48" fill="#ffffff" font-family="Inter, sans-serif" font-size="13" font-weight="700">Scope & BOQ Lock</text>
-            <text x="14" y="68" fill="#a1a1aa" font-family="Inter, sans-serif" font-size="10.5">Grades · welds · coating</text>
-          </g><line x1="230" y1="60" x2="259" y2="60" stroke="#fb923c" stroke-width="1.5"/><polygon points="258,55 265,60 258,65" fill="#fb923c"/>
-          <g transform="translate(265, 18)">
-            <rect width="210" height="84" fill="#181c24" stroke="#333947" stroke-width="1.2"/>
-            <rect width="210" height="3" fill="#64748b"/>
-            <text x="14" y="26" fill="#fb923c" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">02 · SOURCE</text>
-            <text x="14" y="48" fill="#ffffff" font-family="Inter, sans-serif" font-size="13" font-weight="700">Shortlist & Audit</text>
-            <text x="14" y="68" fill="#a1a1aa" font-family="Inter, sans-serif" font-size="10.5">Comparable FOB/CIF/DDP</text>
-          </g><line x1="475" y1="60" x2="504" y2="60" stroke="#fb923c" stroke-width="1.5"/><polygon points="503,55 510,60 503,65" fill="#fb923c"/>
-          <g transform="translate(510, 18)">
-            <rect width="210" height="84" fill="#181c24" stroke="#333947" stroke-width="1.2"/>
-            <rect width="210" height="3" fill="#64748b"/>
-            <text x="14" y="26" fill="#fb923c" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">03 · SHOP QC</text>
-            <text x="14" y="48" fill="#ffffff" font-family="Inter, sans-serif" font-size="13" font-weight="700">MTC & Fabrication</text>
-            <text x="14" y="68" fill="#a1a1aa" font-family="Inter, sans-serif" font-size="10.5">Heat no. · NDT · DFT</text>
-          </g><line x1="720" y1="60" x2="749" y2="60" stroke="#fb923c" stroke-width="1.5"/><polygon points="748,55 755,60 748,65" fill="#fb923c"/>
-          <g transform="translate(755, 18)">
-            <rect width="210" height="84" fill="#181c24" stroke="#333947" stroke-width="1.2"/>
-            <rect width="210" height="3" fill="#d44800"/>
-            <text x="14" y="26" fill="#fb923c" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">04 · RELEASE</text>
-            <text x="14" y="48" fill="#ffffff" font-family="Inter, sans-serif" font-size="13" font-weight="700">Pre-Shipment Pack</text>
-            <text x="14" y="68" fill="#a1a1aa" font-family="Inter, sans-serif" font-size="10.5">Packing · review log</text>
-          </g></svg>
+          <div class="diagram-swipe-hint" data-i18n="diagramSwipeHint">Swipe horizontally to view full workflow diagram →</div>
+          <div class="diagram-svg-wrap">
+            <svg class="diagram-svg" viewBox="0 0 985 120" role="img" aria-label="Workflow diagram">
+            <g transform="translate(20, 18)">
+              <rect width="210" height="84" fill="#181c24" stroke="#333947" stroke-width="1.2"/>
+              <rect width="210" height="3" fill="#d44800"/>
+              <text x="14" y="26" fill="#fb923c" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">01 · RFQ</text>
+              <text x="14" y="48" fill="#ffffff" font-family="Inter, sans-serif" font-size="13" font-weight="700">Scope & BOQ Lock</text>
+              <text x="14" y="68" fill="#a1a1aa" font-family="Inter, sans-serif" font-size="10.5">Grades · welds · coating</text>
+            </g><line x1="230" y1="60" x2="259" y2="60" stroke="#fb923c" stroke-width="1.5"/><polygon points="258,55 265,60 258,65" fill="#fb923c"/>
+            <g transform="translate(265, 18)">
+              <rect width="210" height="84" fill="#181c24" stroke="#333947" stroke-width="1.2"/>
+              <rect width="210" height="3" fill="#64748b"/>
+              <text x="14" y="26" fill="#fb923c" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">02 · SOURCE</text>
+              <text x="14" y="48" fill="#ffffff" font-family="Inter, sans-serif" font-size="13" font-weight="700">Shortlist & Audit</text>
+              <text x="14" y="68" fill="#a1a1aa" font-family="Inter, sans-serif" font-size="10.5">Comparable FOB/CIF/DDP</text>
+            </g><line x1="475" y1="60" x2="504" y2="60" stroke="#fb923c" stroke-width="1.5"/><polygon points="503,55 510,60 503,65" fill="#fb923c"/>
+            <g transform="translate(510, 18)">
+              <rect width="210" height="84" fill="#181c24" stroke="#333947" stroke-width="1.2"/>
+              <rect width="210" height="3" fill="#64748b"/>
+              <text x="14" y="26" fill="#fb923c" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">03 · SHOP QC</text>
+              <text x="14" y="48" fill="#ffffff" font-family="Inter, sans-serif" font-size="13" font-weight="700">MTC & Fabrication</text>
+              <text x="14" y="68" fill="#a1a1aa" font-family="Inter, sans-serif" font-size="10.5">Heat no. · NDT · DFT</text>
+            </g><line x1="720" y1="60" x2="749" y2="60" stroke="#fb923c" stroke-width="1.5"/><polygon points="748,55 755,60 748,65" fill="#fb923c"/>
+            <g transform="translate(755, 18)">
+              <rect width="210" height="84" fill="#181c24" stroke="#333947" stroke-width="1.2"/>
+              <rect width="210" height="3" fill="#d44800"/>
+              <text x="14" y="26" fill="#fb923c" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">04 · RELEASE</text>
+              <text x="14" y="48" fill="#ffffff" font-family="Inter, sans-serif" font-size="13" font-weight="700">Pre-Shipment Pack</text>
+              <text x="14" y="68" fill="#a1a1aa" font-family="Inter, sans-serif" font-size="10.5">Packing · review log</text>
+            </g></svg>
+          </div>
+          <div class="workflow-mobile-steps" aria-label="Mobile workflow steps">
+            <div class="wf-m-step"><span class="wf-m-code" data-i18n="wfSteel1Code">01 · RFQ</span><p class="wf-m-title" data-i18n="wfSteel1Title">Scope &amp; BOQ Lock</p><p class="wf-m-sub" data-i18n="wfSteel1Sub">IFC · steel grades · coat</p></div>
+            <div class="wf-m-step wf-m-step--muted"><span class="wf-m-code" data-i18n="wfSteel2Code">02 · BID</span><p class="wf-m-title" data-i18n="wfSteel2Title">Shortlist &amp; Audit</p><p class="wf-m-sub" data-i18n="wfSteel2Sub">Like-for-like pricing</p></div>
+            <div class="wf-m-step wf-m-step--muted"><span class="wf-m-code" data-i18n="wfSteel3Code">03 · QA</span><p class="wf-m-title" data-i18n="wfSteel3Title">MTC &amp; Fabrication</p><p class="wf-m-sub" data-i18n="wfSteel3Sub">Heat traceability · NDT</p></div>
+            <div class="wf-m-step"><span class="wf-m-code" data-i18n="wfSteel4Code">04 · SHIP</span><p class="wf-m-title" data-i18n="wfSteel4Title">Pre-Shipment Pack</p><p class="wf-m-sub" data-i18n="wfSteel4Sub">Packing · review log</p></div>
+          </div>
+        </div>
+
+        <!-- Preserved PR #27 Visual Capabilities & Steel Structure Categories -->
+        <div>
+          <h2 class="h2" style="margin-bottom:12px;" data-i18n="steelSolTitle">Buyer-Side Sourcing Options</h2>
+          <div class="grid-3">
+            <article class="card" style="padding:0;overflow:hidden;">
+              <img src="/assets/images/steel/steel-fabrication.webp" width="800" height="1000" loading="lazy" class="steel-sol-img" alt="Structural steel fabrication in a manufacturing workshop, illustrative industry photograph" />
+              <div style="padding:14px 16px;">
+                <h3 class="h3" data-i18n="steelSol1Title">Your Factory or Ours</h3>
+                <details class="steel-detail"><summary><span data-i18n="steelSol1Summary">See sourcing options</span><span>+</span></summary><p data-i18n="steelSol1Body">Already have a manufacturer? Keep them. Or ask us to shortlist qualified fabricators in China or Vietnam against your drawings, standards, and schedule.</p></details>
+              </div>
+            </article>
+            <article class="card" style="padding:0;overflow:hidden;">
+              <img src="/assets/images/steel/steel-structure.webp" width="1300" height="1733" loading="lazy" class="steel-sol-img" alt="Structural steelwork engineering and coordination, illustrative industry photograph" />
+              <div style="padding:14px 16px;">
+                <h3 class="h3" data-i18n="steelSol2Title">Detailing &amp; Compliance</h3>
+                <details class="steel-detail"><summary><span data-i18n="steelSol2Summary">See technical support</span><span>+</span></summary><p data-i18n="steelSol2Body">Optional Tekla shop-detailing coordination, MTOs, RFIs, and drawing review. Structural design and substitutions remain approved by the qualified engineer.</p></details>
+              </div>
+            </article>
+            <article class="card" style="padding:0;overflow:hidden;">
+              <img src="/assets/images/steel/steel-welding.webp" width="900" height="506" loading="lazy" class="steel-sol-img" alt="Welding inspection in a steel fabrication workshop, illustrative industry photograph" />
+              <div style="padding:14px 16px;">
+                <h3 class="h3" data-i18n="steelSol3Title">Inspection &amp; Delivery</h3>
+                <details class="steel-detail"><summary><span data-i18n="steelSol3Summary">See QA &amp; shipment scope</span><span>+</span></summary><p data-i18n="steelSol3Body">Set inspection hold points, track mill certificates, welding/NDT, and coordinate export packing and FOB/CFR/CIF documentation.</p></details>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="h2" style="margin-bottom:12px;" data-i18n="steelProdHeading">Steel Structures We Source</h2>
+          <div class="steel-products-grid">
+            <article class="steel-product-card">
+              <div class="steel-product-thumb"><img src="/assets/images/steel/steel-warehouse.webp" width="900" height="1219" loading="lazy" alt="Industrial prefabricated steel buildings, illustrative industry photograph" /></div>
+              <div class="steel-product-body"><h3 class="h3" data-i18n="steelProd1Title">PEB Buildings</h3><details class="steel-detail"><summary><span data-i18n="steelProdScope">Scope &amp; examples</span><span>+</span></summary><p data-i18n="steelProd1Desc">Primary frames, secondary members, purlins, and cladding-support steelwork built to your spans, loads, and design code.</p></details></div>
+            </article>
+            <article class="steel-product-card">
+              <div class="steel-product-thumb"><img src="/assets/images/steel/steel-fabrication.webp" width="800" height="1000" loading="lazy" alt="Heavy fabricated steel structures, illustrative industry photograph" /></div>
+              <div class="steel-product-body"><h3 class="h3" data-i18n="steelProd2Title">Heavy Steel</h3><details class="steel-detail"><summary><span data-i18n="steelProdScope">Scope &amp; examples</span><span>+</span></summary><p data-i18n="steelProd2Desc">Plate girders, built-up columns, machine supports, industrial platforms, and custom structural weldments.</p></details></div>
+            </article>
+            <article class="steel-product-card">
+              <div class="steel-product-thumb"><img src="/assets/images/steel/steel-structure.webp" width="1300" height="1733" loading="lazy" alt="Industrial steel pipe racks and support frames, illustrative industry photograph" /></div>
+              <div class="steel-product-body"><h3 class="h3" data-i18n="steelProd3Title">Pipe Racks</h3><details class="steel-detail"><summary><span data-i18n="steelProdScope">Scope &amp; examples</span><span>+</span></summary><p data-i18n="steelProd3Desc">Fabricated pipe-rack modules and support framing (site piping installation excluded from supply-only scope).</p></details></div>
+            </article>
+            <article class="steel-product-card">
+              <div class="steel-product-thumb"><img src="/assets/images/steel/steel-truss.webp" width="850" height="637" loading="lazy" alt="Large span steel roof truss and space frame, illustrative industry photograph" /></div>
+              <div class="steel-product-body"><h3 class="h3" data-i18n="steelProd4Title">Space Frames</h3><details class="steel-detail"><summary><span data-i18n="steelProdScope">Scope &amp; examples</span><span>+</span></summary><p data-i18n="steelProd4Desc">Long-span roof trusses and bolted-node space-frame systems per project engineering approval.</p></details></div>
+            </article>
+            <article class="steel-product-card">
+              <div class="steel-product-thumb"><img src="/assets/images/steel/steel-cta.webp" width="850" height="650" loading="lazy" alt="Steel plates and fabricated components, illustrative industry photograph" /></div>
+              <div class="steel-product-body"><h3 class="h3" data-i18n="steelProd5Title">Steel Components</h3><details class="steel-detail"><summary><span data-i18n="steelProdScope">Scope &amp; examples</span><span>+</span></summary><p data-i18n="steelProd5Desc">Connection plates, gussets, base plates, anchors, and fabricated assemblies to approved shop drawings.</p></details></div>
+            </article>
+          </div>
+          <p class="disclosure-bar" data-i18n="steelPhotoDisc">Illustrative industrial photographs only, not claimed as AN-THAI completed jobsites. Site installation excluded from supply-only inquiries.</p>
+        </div>
+
+        <div>
+          <h2 class="h2" style="margin-bottom:12px;" data-i18n="steelOptHeading">Optional Project Coordination</h2>
+          <div class="steel-option-grid">
+            <div class="card"><h3 class="h3" data-i18n="steelOpt1Title">Optional Detailing Support</h3><p class="muted" data-i18n="steelOpt1Body">Tekla shop drawings, MTOs, and revision tracking scoped separately; design approval stays with the project engineer.</p></div>
+            <div class="card"><h3 class="h3" data-i18n="steelOpt2Title">Flexible Factory Options</h3><p class="muted" data-i18n="steelOpt2Body">Work with your designated fabricator or request independent assessment of China / Vietnam shops.</p></div>
+            <div class="card"><h3 class="h3" data-i18n="steelOpt3Title">QC Hold Points &amp; MTC</h3><p class="muted" data-i18n="steelOpt3Body">Witnessed dimensional, weld/NDT, and coating checks tied to traceable mill test certificates.</p></div>
+            <div class="card"><h3 class="h3" data-i18n="steelOpt4Title">FOB / CFR / CIF Delivery</h3><p class="muted" data-i18n="steelOpt4Body">Delivery basis, export packaging, freight, and document handoff confirmed explicitly per quotation.</p></div>
+          </div>
         </div>
 
         <div class="receive-box">

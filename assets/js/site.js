@@ -1,11 +1,10 @@
 /**
- * AN-THAI Engineering v5.2 — Audited Site Controller
- * Fixes:
- * - Preserves liveInput text if adapter.sendMessage fails (never loses user input)
- * - Shows localized session-reset notice when 401 recreated a new anonymous session
- * - 100% i18n for all live errors, statuses, and role labels (no hardcoded English)
- * - Sends unified `website_url` honeypot to /api/inquiry
- * - Supports Insights category filter tabs & 5s live polling while drawer is open
+ * AN-THAI Engineering V1.0 — Production Site Controller
+ * Fixes & enhancements:
+ * - Preserves nested routes (/cases/*, /insights/*) during language switching (Codex P2 #2)
+ * - Maps ?type=...&category=...&route=... query params onto BOTH #contactScopeForm and #deskDrawer (Codex P2 #1)
+ * - Checks GET /api/inquiry readiness before rendering "Submit Inquiry"; keeps honest Email/WhatsApp/Copy Brief active when unconfigured
+ * - Never fabricates email delivery or live AI chat availability
  */
 (function () {
   'use strict';
@@ -15,7 +14,7 @@
     directEmail: 'info@an-thai.com',
     directPhone: '+66 90 292 1749',
     sourceRating: {
-      apiBaseUrl: '', // Configure verified SourceRating staging origin
+      apiBaseUrl: '',
       workspaceKey: 'an-thai-th'
     }
   };
@@ -28,12 +27,12 @@
   };
 
   var I18N = window.ANTHAI_I18N || { EN: {} };
-  var state = { lang: 'EN', adapterMode: 'unconfigured', sessionId: '', lastFocused: null, pollTimer: null };
+  var state = { lang: 'EN', adapterMode: 'unconfigured', inquiryApiConfigured: false, sessionId: '', lastFocused: null, pollTimer: null };
 
   function detectInitialLang() {
     var p = window.location.pathname || '';
-    if (p.indexOf('/zh/') !== -1 || p.endsWith('/zh') || p.endsWith('/zh/')) return 'ZH';
-    if (p.indexOf('/th/') !== -1 || p.endsWith('/th') || p.endsWith('/th/')) return 'TH';
+    if (p.indexOf('/zh/') !== -1 || p === '/zh') return 'ZH';
+    if (p.indexOf('/th/') !== -1 || p === '/th') return 'TH';
     var docLang = (document.documentElement && document.documentElement.lang ? document.documentElement.lang : '').toLowerCase();
     if (docLang.indexOf('zh') !== -1) return 'ZH';
     if (docLang.indexOf('th') !== -1) return 'TH';
@@ -80,36 +79,40 @@
     if (liveFooter) liveFooter.hidden = !isLive;
   }
 
-  function applyLang(lang) {
-    if (!I18N[lang]) lang = 'EN';
-    state.lang = lang;
-    document.documentElement.lang = lang === 'ZH' ? 'zh-CN' : (lang === 'TH' ? 'th' : 'en');
-    try { window.sessionStorage.setItem('anthai_lang', lang); } catch (e) {}
-
-    document.querySelectorAll('[data-i18n]').forEach(function (el) {
-      var k = el.getAttribute('data-i18n');
-      if (k) el.textContent = t(k);
-    });
-    document.querySelectorAll('[data-i18n-ph]').forEach(function (el) {
-      var k = el.getAttribute('data-i18n-ph');
-      if (k) el.setAttribute('placeholder', t(k));
-    });
-    document.querySelectorAll('.lang-btn').forEach(function (btn) {
-      btn.setAttribute('aria-pressed', btn.getAttribute('data-lang') === lang ? 'true' : 'false');
-    });
+  function syncContactSubmitMode() {
     var submitBtn = document.getElementById('contactSubmitBtn');
-    if (submitBtn) submitBtn.textContent = window.ANTHAI_CONFIG.inquiryEndpoint ? t('fSubmitApi') : t('fSubmitEmail');
-    syncStatusUI();
-    if (adapter && state.adapterMode === 'live') renderLiveMessages(adapter.messages || []);
+    if (submitBtn) {
+      submitBtn.textContent = state.inquiryApiConfigured ? t('fSubmitApi') : t('fSubmitEmail');
+    }
+    var statusEl = document.getElementById('contactApiStatus');
+    if (statusEl) {
+      statusEl.textContent = state.inquiryApiConfigured ? t('contactApiReadyNotice') : t('contactApiOfflineNotice');
+    }
   }
 
-  // Insights category filter
+  async function probeInquiryBackend() {
+    if (!window.ANTHAI_CONFIG.inquiryEndpoint || window.location.protocol === 'file:') return;
+    if (!document.getElementById('contactScopeForm')) return;
+    try {
+      var res = await fetch(window.ANTHAI_CONFIG.inquiryEndpoint, { method: 'GET', headers: { Accept: 'application/json' } });
+      if (!res.ok) return;
+      var payload = await res.json().catch(function () { return {}; });
+      state.inquiryApiConfigured = Boolean(payload && payload.configured === true);
+      syncContactSubmitMode();
+    } catch (e) {
+      state.inquiryApiConfigured = false;
+      syncContactSubmitMode();
+    }
+  }
+
+  // Insights category filter (multi-tag via data-article-units / data-article-unit)
   document.querySelectorAll('.filter-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var unit = btn.getAttribute('data-filter');
       document.querySelectorAll('.filter-btn').forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
-      document.querySelectorAll('[data-article-unit]').forEach(function (card) {
-        card.hidden = !(unit === 'all' || card.getAttribute('data-article-unit') === unit);
+      document.querySelectorAll('[data-article-units], [data-article-unit]').forEach(function (card) {
+        var tags = (card.getAttribute('data-article-units') || card.getAttribute('data-article-unit') || '').split(/\s+/).filter(Boolean);
+        card.hidden = !(unit === 'all' || tags.indexOf(unit) !== -1);
       });
     });
   });
@@ -122,7 +125,7 @@
     a.addEventListener('click', function () { window.ANTHAI_TRACK('phone_click', { href: a.href }); });
   });
 
-  // SourceRating Live Adapter & 100% i18n UI
+  // SourceRating Live Adapter & i18n UI
   var adapter = null;
   var liveMount = document.getElementById('liveMessagesMount');
   var liveFeedback = document.getElementById('liveFeedback');
@@ -182,7 +185,6 @@
       showLiveFeedback('', '');
       var res = await adapter.sendMessage({ text: text, context: { page: window.location.pathname, lang: state.lang } });
       if (!res.ok) {
-        // P0-1 Fix: Preserve unsent text in input box on failure!
         showLiveFeedback(t('liveErrSend') + (res.error ? ' (' + res.error + ')' : ''), 'err');
         return;
       }
@@ -253,7 +255,7 @@
     });
   }
 
-  // Drawer Accessibility + Focus Trap + 5s Live Polling
+  // Drawer Accessibility + Focus Trap
   var drawer = document.getElementById('deskDrawer');
   var drawerClose = document.getElementById('drawerCloseBtn');
   var mainEl = document.getElementById('main-content');
@@ -280,7 +282,7 @@
   function normalizeRoute(val) {
     if (!val) return '';
     var s = String(val).toLowerCase();
-    if (s.indexOf('01') !== -1 || s.indexOf('testing') !== -1 || s.indexOf('geotech') !== -1 || s.indexOf('pile') !== -1 || s.indexOf('engineering') !== -1) {
+    if (s.indexOf('01') !== -1 || s.indexOf('testing') !== -1 || s.indexOf('geotech') !== -1 || s.indexOf('pile') !== -1 || s.indexOf('engineering') !== -1 || s.indexOf('consult') !== -1 || s.indexOf('precast') !== -1) {
       return '01 Foundation Testing & Geotech';
     }
     if (s.indexOf('02') !== -1 || s.indexOf('steel') !== -1 || s.indexOf('procurement') !== -1) {
@@ -295,13 +297,40 @@
     return '';
   }
 
-  function applyRoutePrefill(targetValue) {
-    var matched = normalizeRoute(targetValue);
+  var CATEGORY_MAP = {
+    pile: 'Pile Integrity Testing Instruments',
+    dynamic: 'High-Strain / Dynamic Pile Testing Systems',
+    ultrasonic: 'CSL / Ultrasonic Testing Systems',
+    static: 'Static Load Test Instrumentation',
+    field: 'Geotechnical & Field Testing Equipment',
+    lab: 'Material / Laboratory Testing Equipment',
+    measurement: 'Load Cells / Sensors / DAQ',
+    support: 'Setup / Training / Technical Support'
+  };
+
+  function applyQueryContextPrefill(targetRoute, categoryParam, refParam) {
+    var matched = normalizeRoute(targetRoute);
     if (matched) {
       var dSel = document.getElementById ? document.getElementById('drawerRoute') : null;
       if (dSel) dSel.value = matched;
       var cSel = document.getElementById ? document.getElementById('cRoute') : null;
       if (cSel) cSel.value = matched;
+    }
+    var notesLines = [];
+    if (categoryParam && CATEGORY_MAP[String(categoryParam).toLowerCase()]) {
+      notesLines.push('Equipment Category: ' + CATEGORY_MAP[String(categoryParam).toLowerCase()]);
+    } else if (categoryParam) {
+      notesLines.push('Category: ' + String(categoryParam));
+    }
+    if (refParam) {
+      notesLines.push('Reference ID: ' + String(refParam));
+    }
+    if (notesLines.length) {
+      var prefillText = notesLines.join('\n') + '\nRequirements: ';
+      var cNotes = document.getElementById ? document.getElementById('cNotes') : null;
+      if (cNotes && !cNotes.value.trim()) cNotes.value = prefillText;
+      var dNotes = document.getElementById ? document.getElementById('drawerNotes') : null;
+      if (dNotes && !dNotes.value.trim()) dNotes.value = prefillText;
     }
   }
 
@@ -406,10 +435,30 @@
     var mql = window.matchMedia('(min-width: 1121px)');
     if (mql && mql.addEventListener) mql.addEventListener('change', function () { setMenu(false); });
   }
+
+  // Codex P2 #2 Fix: Preserve nested routes (/cases/, /cases/<slug>.html, /insights/, etc.) across EN/ZH/TH
+  function resolveLocalizedPath(pathname, targetLang) {
+    var p = pathname || '/';
+    var clean = p.replace(/^\/(zh|th)(?=\/|$)/, '') || '/';
+    if (clean === '/') clean = '/index.html';
+    else if (clean.endsWith('/')) clean = clean + 'index.html';
+
+    // Individual English technical articles stay at /insights/<slug>.html (canonical EN)
+    if (clean.indexOf('/insights/') === 0 && clean !== '/insights/index.html') {
+      if (targetLang === 'ZH') return '/zh/insights/index.html';
+      if (targetLang === 'TH') return '/th/insights/index.html';
+      return clean;
+    }
+
+    if (targetLang === 'ZH') return '/zh' + (clean.charAt(0) === '/' ? clean : '/' + clean);
+    if (targetLang === 'TH') return '/th' + (clean.charAt(0) === '/' ? clean : '/' + clean);
+    return clean;
+  }
+
   if (document.querySelectorAll) {
     document.querySelectorAll('.lang-btn').forEach(function (btn) {
       btn.addEventListener('click', function (e) {
-        var targetLang = (btn.getAttribute('data-lang') || '').toUpperCase();
+        var targetLang = (btn.getAttribute('data-lang') || btn.getAttribute('data-language') || '').toUpperCase();
         if (!targetLang) return;
         try { window.sessionStorage.setItem('anthai_lang', targetLang); } catch (err) {}
 
@@ -423,17 +472,7 @@
           return;
         }
 
-        var p = window.location.pathname || '/';
-        var segments = p.split('/').filter(Boolean);
-        var filename = segments.pop() || 'index.html';
-        if (filename === 'zh' || filename === 'th') filename = 'index.html';
-        if (!filename.endsWith('.html')) filename = 'index.html';
-
-        var newPath = '/';
-        if (targetLang === 'ZH') newPath = '/zh/' + filename;
-        else if (targetLang === 'TH') newPath = '/th/' + filename;
-        else newPath = '/' + filename;
-
+        var newPath = resolveLocalizedPath(window.location.pathname, targetLang);
         window.location.href = newPath + window.location.search + window.location.hash;
         e.preventDefault();
       });
@@ -464,12 +503,12 @@
     el.className = 'notice-box is-neutral';
     var waUrl = 'https://wa.me/66902921749?text=' + encodeURIComponent(brief);
     el.innerHTML = [
-      '<div style="font-weight:700;margin-bottom:6px;">' + t('mailtoOpenedMsg') + '</div>',
-      '<div style="font-size:12px;margin-bottom:8px;line-height:1.4;">' + t('mailtoFallbackHelp') + '</div>',
-      '<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">',
-        '<a href="' + waUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-sm" style="background:#25D366;color:#fff;padding:6px 12px;font-size:12px;display:inline-flex;align-items:center;gap:4px;border-radius:4px;text-decoration:none;font-weight:600;">📱 ' + t('sendViaWhatsApp') + '</a>',
-        '<button type="button" class="btn btn-sm btn-outline" style="padding:6px 12px;font-size:12px;border-radius:4px;" data-inquiry-copy="">📋 ' + t('copyBriefBtn') + '</button>',
-        '<a href="mailto:info@an-thai.com" class="btn btn-sm" style="padding:6px 12px;font-size:12px;border-radius:4px;text-decoration:none;">✉️ info@an-thai.com</a>',
+      '<div style="font-weight:700;margin-bottom:6px;">' + esc(t('mailtoOpenedMsg')) + '</div>',
+      '<div style="font-size:12px;margin-bottom:8px;line-height:1.4;">' + esc(t('mailtoFallbackHelp')) + '</div>',
+      '<div class="contact-channels-row">',
+        '<a href="' + waUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" style="padding:6px 12px;font-size:11px;">WhatsApp +66 90 292 1749</a>',
+        '<button type="button" class="btn btn-outline" style="padding:6px 12px;font-size:11px;" data-inquiry-copy="">' + esc(t('copyBriefBtn')) + '</button>',
+        '<a href="mailto:info@an-thai.com" class="btn btn-outline" style="padding:6px 12px;font-size:11px;">info@an-thai.com</a>',
       '</div>'
     ].join('');
     el.hidden = false;
@@ -537,7 +576,7 @@
         if (contactFeedback) { contactFeedback.className = 'notice-box is-err'; contactFeedback.textContent = t('validationMsg'); contactFeedback.hidden = false; }
         return;
       }
-      if (window.ANTHAI_CONFIG.inquiryEndpoint) {
+      if (state.inquiryApiConfigured && window.ANTHAI_CONFIG.inquiryEndpoint) {
         try {
           var res = await fetch(window.ANTHAI_CONFIG.inquiryEndpoint, {
             method: 'POST',
@@ -557,7 +596,7 @@
             return;
           }
         } catch (err) {
-          // Gracefully fall through to multi-channel contact fallback
+          // Honest fallback below
         }
       }
       if (f.website_url) return;
@@ -577,39 +616,39 @@
     });
   }
   syncStatusUI();
+  syncContactSubmitMode();
+  probeInquiryBackend();
 
   try {
     var globalUrlParams = new URLSearchParams(window.location.search);
     var targetRouteParam = globalUrlParams.get('route') || globalUrlParams.get('unit') || globalUrlParams.get('type') || globalUrlParams.get('service');
-    if (targetRouteParam) applyRoutePrefill(targetRouteParam);
+    var targetCatParam = globalUrlParams.get('category');
+    var targetRefParam = globalUrlParams.get('ref');
+    if (targetRouteParam || targetCatParam || targetRefParam) {
+      applyQueryContextPrefill(targetRouteParam, targetCatParam, targetRefParam);
+    }
   } catch (e) {}
 
-  // Baseline data-quote-form compatibility handler
+  // Baseline data-quote-form compatibility handler (unified destination info@an-thai.com)
   var quoteForm = document.querySelector ? document.querySelector('[data-quote-form]') : null;
   if (quoteForm) {
     var qLang = (document.documentElement && document.documentElement.lang) || 'en';
     var qCopy = qLang.startsWith('zh') ? {
       category:'设备类别', requirements:'需求', enquiry:'安泰询价', labels:['姓名','公司','邮箱','联系方式','需求类型'],
-      status:'询盘内容已准备好，请在邮件应用中发送。如未打开邮件应用，请联系 anthaicheng@gmail.com 或通过 LINE ID: rachada2018 联系。本网站不会提交表单，也不会创建客户记录。',
+      status:'询盘内容已准备好，请在邮件应用中发送至 info@an-thai.com。如未打开邮件应用，请联系 info@an-thai.com 或通过 LINE ID: rachada2018 联系。本网站不会提交表单，也不会创建客户记录。',
       categories:['桩身完整性检测仪器','高应变／动力桩基检测系统','声波透射／超声检测系统','静载试验测量仪器','岩土与现场检测设备','材料／实验室检测设备','荷载传感器／传感器／数据采集系统','安装／培训／技术支持']
     } : qLang === 'th' ? {
       category:'หมวดหมู่เครื่องมือ', requirements:'ข้อกำหนด', enquiry:'สอบถาม AN-THAI', labels:['ชื่อ','บริษัท','อีเมล','ช่องทางติดต่อ','ประเภทคำสอบถาม'],
-      status:'เตรียมคำสอบถามแล้ว โปรดส่งจากแอปอีเมล หากแอปไม่เปิด ให้ติดต่อ anthaicheng@gmail.com หรือ LINE ID: rachada2018 เว็บไซต์นี้ไม่ส่งแบบฟอร์มหรือสร้างข้อมูลลูกค้า',
+      status:'เตรียมคำสอบถามแล้ว โปรดส่งจากแอปอีเมลไปยัง info@an-thai.com หากแอปไม่เปิด ให้ติดต่อ info@an-thai.com หรือ LINE ID: rachada2018 เว็บไซต์นี้ไม่ส่งแบบฟอร์มหรือสร้างข้อมูลลูกค้า',
       categories:['เครื่องมือทดสอบความสมบูรณ์ของเสาเข็ม','ระบบทดสอบเสาเข็มแบบพลศาสตร์ความเครียดสูง','ระบบทดสอบคลื่นเสียงผ่านท่อ / อัลตราโซนิก','เครื่องมือวัดสำหรับการทดสอบรับน้ำหนักแบบสถิต','เครื่องมือทดสอบปฐพีและภาคสนาม','เครื่องมือทดสอบวัสดุ / ห้องปฏิบัติการ','โหลดเซลล์ / เซนเซอร์ / ระบบเก็บข้อมูล','การติดตั้ง / ฝึกอบรม / สนับสนุนทางเทคนิค']
-    } : {category:'Equipment category',requirements:'Requirements',enquiry:'AN-THAI enquiry',labels:['Name','Company','Email','Phone','Request'],status:'Your enquiry is prepared. Send it from your email app. If no app opens, email anthaicheng@gmail.com or add LINE ID: rachada2018. This website does not transmit the form or create a customer record.'};
+    } : {category:'Equipment category',requirements:'Requirements',enquiry:'AN-THAI enquiry',labels:['Name','Company','Email','Phone','Request'],status:'Your enquiry is prepared for info@an-thai.com. Send it from your email app, or contact info@an-thai.com / LINE ID: rachada2018. This website does not transmit the form or create a customer record.'};
     var qParams = new URLSearchParams(window.location.search);
     var qTypes = {testing:'Engineering services',engineering:'Engineering services',equipment:'Testing instruments',instruments:'Testing instruments',steel:'Steel / space-structure cooperation',powder:'CNBM powder-equipment cooperation'};
     if (quoteForm.elements && quoteForm.elements.requestType && Object.prototype.hasOwnProperty.call(qTypes, qParams.get('type'))) {
       quoteForm.elements.requestType.value = qTypes[qParams.get('type')];
     }
-    var qCategories = {
-      pile: 'Pile Integrity Testing Instruments', dynamic: 'High-Strain / Dynamic Pile Testing Systems',
-      ultrasonic: 'CSL / Ultrasonic Testing Systems', static: 'Static Load Test Instrumentation',
-      field: 'Geotechnical & Field Testing Equipment', lab: 'Material / Laboratory Testing Equipment',
-      measurement: 'Load Cells / Sensors / DAQ', support: 'Setup / Training / Technical Support'
-    };
-    var qCatIndex = Object.keys(qCategories).indexOf(qParams.get('category'));
-    var qCat = qCatIndex >= 0 ? (qCopy.categories && qCopy.categories[qCatIndex] ? qCopy.categories[qCatIndex] : qCategories[qParams.get('category')]) : null;
+    var qCatIndex = Object.keys(CATEGORY_MAP).indexOf(qParams.get('category'));
+    var qCat = qCatIndex >= 0 ? (qCopy.categories && qCopy.categories[qCatIndex] ? qCopy.categories[qCatIndex] : CATEGORY_MAP[qParams.get('category')]) : null;
     if (['equipment','instruments'].indexOf(qParams.get('type')) !== -1 && qCat && quoteForm.elements && quoteForm.elements.message) {
       quoteForm.elements.message.value = qCopy.category + ': ' + qCat + '\n\n' + qCopy.requirements + ': ';
     }
@@ -618,7 +657,7 @@
       var data = new FormData(quoteForm);
       var type = (quoteForm.elements && quoteForm.elements.requestType && quoteForm.elements.requestType.selectedOptions && quoteForm.elements.requestType.selectedOptions[0] && quoteForm.elements.requestType.selectedOptions[0].textContent) || data.get('requestType') || qCopy.enquiry;
       var body = ['name','company','email','phone'].map(function (key, i) { return qCopy.labels[i] + ': ' + (data.get(key) || ''); }).join('\n') + '\n' + qCopy.labels[4] + ': ' + type + '\n\n' + (data.get('message') || '');
-      var mailto = 'mailto:anthaicheng@gmail.com?subject=' + encodeURIComponent(qCopy.enquiry + ': ' + type) + '&body=' + encodeURIComponent(body);
+      var mailto = 'mailto:info@an-thai.com?subject=' + encodeURIComponent(qCopy.enquiry + ': ' + type) + '&body=' + encodeURIComponent(body);
       var noteEl = document.getElementById('enquiry-note');
       if (noteEl) noteEl.textContent = qCopy.status;
       window.location.href = mailto;
@@ -628,9 +667,8 @@
   }
   initAdapter();
 
-  // === V5.3 Additions: Services Dropdown + Mobile Accordion + Multi-Tag Insights Filter + Conditional Updates ===
+  // Services Dropdown + Mobile Accordion + Conditional Updates
   (function () {
-    // Desktop Services Dropdown (click, Enter/Space, Esc, outside-click)
     var dBtn = document.getElementById('desktopServicesBtn');
     var dMenu = document.getElementById('desktopServicesMenu');
     function closeDesktopServices() {
@@ -651,7 +689,6 @@
       });
     }
 
-    // Mobile Services Accordion (only 6 top-level rows visible initially)
     var mSvcBtn = document.getElementById('mobileServicesBtn');
     var mSvcPanel = document.getElementById('mobileServicesPanel');
     if (mSvcBtn && mSvcPanel) {
@@ -662,26 +699,13 @@
       });
     }
 
-    // Multi-tag Insights filter (space-separated tokens in data-article-units)
-    document.querySelectorAll('.filter-btn').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var unit = btn.getAttribute('data-filter');
-        document.querySelectorAll('.filter-btn').forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
-        document.querySelectorAll('[data-article-units]').forEach(function (card) {
-          var tags = (card.getAttribute('data-article-units') || '').split(/\s+/).filter(Boolean);
-          card.hidden = !(unit === 'all' || tags.indexOf(unit) !== -1);
-        });
-      });
-    });
-
-    // Conditional Home "From the Field" renderer (never displays empty box or fake items)
     var updatesSec = document.getElementById('fieldUpdatesSection');
     var updatesMount = document.getElementById('fieldUpdatesMount');
     if (updatesSec && updatesMount && Array.isArray(window.ANTHAI_PUBLISHED_UPDATES) && window.ANTHAI_PUBLISHED_UPDATES.length > 0) {
       var pub = window.ANTHAI_PUBLISHED_UPDATES.filter(function (x) { return x && x.status === 'published'; });
       if (pub.length > 0) {
         updatesMount.innerHTML = pub.slice(0, 3).map(function (item) {
-          return '<article class="insight-card"><div><div class="insight-meta"><span>' + String(item.location || '') + '</span><span>' + String(item.date || '') + '</span></div><h3 class="h3" style="margin-top:6px;">' + String(item.title || '') + '</h3><p class="muted" style="margin-top:6px;font-size:12px;">' + String(item.summary || '') + '</p></div></article>';
+          return '<article class="insight-card"><div><div class="insight-meta"><span>' + esc(item.location || '') + '</span><span>' + esc(item.date || '') + '</span></div><h3 class="h3" style="margin-top:6px;">' + esc(item.title || '') + '</h3><p class="muted" style="margin-top:6px;font-size:12px;">' + esc(item.summary || '') + '</p></div></article>';
         }).join('');
         updatesSec.hidden = false;
       }

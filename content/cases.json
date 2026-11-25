@@ -1,82 +1,251 @@
 {
-  "schemaVersion": "1.0",
-  "disclaimer": "All case studies represent authentic engineering project track records and technical capabilities performed under the 40+ year corporate group heritage of Pathumthani Concrete (PACO, founded 1978, manufacturer of TIS 398-2563 spun piles Ø250–800 mm, JIP jack-in piling introduced with CSCG Singapore, and FC-PTG copyright registration No. 8251) and Roge & Associates (founded 1983, Thai Ministry of Finance Grade A Consultant). Detailed technical calculation books and verifiable reference documents are available under project-specific bilateral NDA.",
+  "schemaVersion": "2.0",
+  "policy": "Strict evidence-gated V1.0 registry. Every record explicitly distinguishes separate legal entity attribution (PACO / ROGE / AN-THAI), verified factual scope, and three-part image evidence (sourceVerified, projectMatch, commercialRightsApproved). No external commercial images without verified reuse permission are rendered publicly.",
+  "anThaiDirectStatus": {
+    "publishedCount": 0,
+    "status": "nda_clearance_pending",
+    "note": "AN-THAI Engineering direct client contracts are subject to bilateral NDA confidentiality and are published only after signed client disclosure approval and authorized jobsite photography clearance."
+  },
   "items": [
     {
-      "id": "CASE-PACO-EMBASSY-SPUN-PILE",
-      "status": "published",
+      "id": "REF-PACO-EMBASSY-SPUN-PILE",
+      "slug": "paco-royal-thai-embassy-singapore-spun-pile-export",
+      "status": "published_reference",
       "verified": true,
-      "source": "official company site",
-      "source_url": "https://www.paco-group.com/",
-      "organization": "Pathumthani Concrete Co., Ltd. (PACO Group)",
-      "serviceUnit": "01 Foundation Testing & Geotech",
-      "serviceRoute": "testing",
-      "title": "Royal Thai Embassy (Singapore) Spun Pile Export",
-      "location": "Singapore",
-      "date": "2005",
-      "scope": "In 2005, Pathumthani Concrete exported prestressed concrete spun piles to Singapore for several projects, including the Royal Thai Embassy.",
-      "deliverables": "Prestressed concrete spun pile manufacturing and export delivery per official site records.",
-      "image": "/assets/images/cases/case-paco-embassy-spun-pile.webp",
-      "imageCaption": "PACO Factory & Production Team Promotional Banner (Official Homepage Showcase, Not Site Photo)",
-      "relatedInsight": "/insights/static-load-vs-pda-thailand-pile-capacity.html",
-      "serviceUrl": "/testing.html"
+      "attributionType": "paco_original",
+      "organization": "Pathumthani Concrete Co., Ltd. (PACO)",
+      "organizationTh": "บริษัท ปทุมธานีคอนกรีต จำกัด (PACO)",
+      "organizationZh": "巴吞他尼混凝土有限公司（PACO）",
+      "entityRelationship": "External Thai manufacturer historical track record (separate legal entity; NOT an AN-THAI direct contract; formal corporate affiliation documentation pending Owner confirmation).",
+      "serviceUnit": "Precast Spun Piles",
+      "serviceFilter": "precast",
+      "projectType": "Institutional Export",
+      "region": "Singapore",
+      "year": "2005",
+      "title": {
+        "en": "Royal Thai Embassy (Singapore) — Spun Pile Export Reference (2005)",
+        "zh": "泰国驻新加坡大使馆等项目 — 离心管桩出口实绩参考（2005年）",
+        "th": "โครงการส่งออกเสาเข็มสปันไปยังประเทศสิงคโปร์ รวมถึงสถานเอกอัครราชทูตไทย (พ.ศ. 2548)"
+      },
+      "summary": {
+        "en": "Historical record from PACO corporate history: in 2005 (B.E. 2548), Pathumthani Concrete exported prestressed concrete spun piles to Singapore for several projects, including the Royal Thai Embassy.",
+        "zh": "PACO 官网历史实绩：2005年（佛历2548年）巴吞他尼混凝土向新加坡出口预应力混凝土离心管桩，用于包括泰国驻新加坡大使馆在内的多个项目。",
+        "th": "บันทึกประวัติผลงานทางการของ PACO: พ.ศ. 2548 บริษัท ปทุมธานีคอนกรีต จำกัด ส่งออกเสาเข็มคอนกรีตอัดแรงหล่อเหวี่ยง (Spun Pile) ไปยังประเทศสิงคโปร์ เพื่อใช้ในหลายโครงการ รวมถึงโครงการสถานเอกอัครราชทูตไทย"
+      },
+      "engineeringData": {
+        "en": "Product family: Prestressed Concrete Spun Piles (PACO published baseline specification: TIS 398-2563, Ø250–800 mm; official export record states 2005 shipment without project-specific diameter or test logs).",
+        "zh": "产品类别：预应力混凝土离心管桩（PACO 官网公布基线规范为 มอก. 398-2563，Ø250–800 mm；本出口历史记录仅载明 2005 年出口事实，未公开单项目具体桩径与检测数据）。",
+        "th": "ประเภทผลิตภัณฑ์: เสาเข็มคอนกรีตอัดแรงหล่อเหวี่ยง (ข้อมูลมาตรฐานบนเว็บไซต์ PACO ระบุ มอก. 398-2563 ขนาด Ø250–800 มม. โดยบันทึกปี พ.ศ. 2548 มิได้ระบุขนาดเส้นผ่านศูนย์กลางเฉพาะโครงการ)"
+      },
+      "verifiedDeliverables": {
+        "en": "Prestressed concrete spun pile manufacturing and export supply as stated in official PACO corporate history.",
+        "zh": "预应力混凝土离心管桩生产与出口供货（严格依据 PACO 官网历史公布，无未核实检测报告扩写）。",
+        "th": "การผลิตและส่งมอบเสาเข็มคอนกรีตอัดแรงหล่อเหวี่ยงเพื่อการส่งออกตามบันทึกประวัติผลงานทางการของ PACO"
+      },
+      "sourceName": "paco-group.com (Corporate History)",
+      "sourceUrl": "https://www.paco-group.com/",
+      "imageEvidence": {
+        "displayImage": "/assets/images/hero-field.webp",
+        "displayWidth": 900,
+        "displayHeight": 687,
+        "sourceVerified": true,
+        "projectMatch": false,
+        "commercialRightsApproved": true,
+        "caption": {
+          "en": "Representative foundation piling photograph (AN-THAI brochure asset — not a jobsite photo of this 2005 export; external PACO homepage banner withheld pending commercial reuse sign-off).",
+          "zh": "工程桩基施工示意真图（AN-THAI 宣传册授权图片，非 2005 年出口现场照；外部 PACO 官网横幅暂不展示，待商业使用授权确认）。",
+          "th": "ภาพประกอบงานฐานรากเสาเข็ม (ภาพจากเอกสาร AN-THAI ไม่ใช่ภาพหน้างานจริงในปี พ.ศ. 2548; งดแสดงภาพแบนเนอร์ภายนอกจนกว่าจะได้รับอนุญาตเชิงพาณิชย์)"
+        }
+      },
+      "aiSimilarityMetadata": {
+        "serviceUnit": "Precast Spun Piles",
+        "projectType": "Institutional Export",
+        "standards": ["TIS 398-2563"],
+        "testMethods": [],
+        "soilOrGround": "Singapore overseas foundation context",
+        "structuralElements": ["Prestressed Concrete Spun Pile"],
+        "tags": ["spun-pile", "export", "singapore", "institutional", "paco-reference"]
+      }
     },
     {
-      "id": "CASE-PACO-CENTRAL-FESTIVAL",
-      "status": "published",
+      "id": "REF-PACO-CENTRAL-FESTIVAL",
+      "slug": "paco-centralfestival-inn-ville-spun-pile",
+      "status": "published_reference",
       "verified": true,
-      "source": "official company site",
-      "source_url": "https://www.paco-group.com/",
-      "organization": "Pathumthani Concrete Co., Ltd. (PACO Group)",
-      "serviceUnit": "01 Foundation Testing & Geotech",
-      "serviceRoute": "testing",
-      "title": "CentralFestival Inn Ville Project (โครงการเซ็นทรัลเฟสติวัล อินท์ วิลล์)",
-      "location": "Bangkok",
-      "date": "Official Record",
-      "scope": "Foundation piling utilizing C60A prestressed concrete spun piles driven by PD (Pure Drive) system per official project records.",
-      "deliverables": "C60A prestressed concrete spun pile manufacturing and PD Pure Drive system pile driving execution.",
-      "image": "/assets/images/cases/case-paco-eastville-foundation.webp",
-      "imageCaption": "PACO Spun Pile Logistics Transport Fleet Promotional Banner (Official Homepage Showcase, Not Site Photo)",
-      "relatedInsight": "/insights/pit-pretest-site-readiness-owner-checklist.html",
-      "serviceUrl": "/testing.html"
+      "attributionType": "paco_original",
+      "organization": "Pathumthani Concrete Co., Ltd. (PACO)",
+      "organizationTh": "บริษัท ปทุมธานีคอนกรีต จำกัด (PACO)",
+      "organizationZh": "巴吞他尼混凝土有限公司（PACO）",
+      "entityRelationship": "External Thai manufacturer historical track record (separate legal entity; NOT an AN-THAI direct contract; formal corporate affiliation documentation pending Owner confirmation).",
+      "serviceUnit": "Precast Spun Piles & Driving",
+      "serviceFilter": "precast",
+      "projectType": "Commercial Building",
+      "region": "Bangkok",
+      "year": "PACO Record",
+      "title": {
+        "en": "CentralFestival Inn Ville Project — C60A Spun Pile & PD Pure Drive Reference",
+        "zh": "CentralFestival Inn Ville 商业项目 — C60A 离心管桩与 PD Pure Drive 沉桩参考",
+        "th": "โครงการเซ็นทรัลเฟสติวัล อินท์ วิลล์ — เสาเข็มสปัน C60A ระบบ PD Pure Drive"
+      },
+      "summary": {
+        "en": "Historical project record published on PACO past performance page: CentralFestival Inn Ville (โครงการเซ็นทรัลเฟสติวัล อินท์ วิลล์), utilizing C60A spun piles driven by PD Pure Drive system.",
+        "zh": "PACO 官网过往业绩记载：CentralFestival Inn Ville 项目（เซ็นทรัลเฟสติวัล อินท์ วิลล์），采用 C60A 离心管桩，由 PD 系统（Pure Drive）沉桩施工。",
+        "th": "บันทึกผลงานโครงการที่ผ่านมาบนเว็บไซต์ PACO: โครงการเซ็นทรัลเฟสติวัล อินท์ วิลล์ ใช้เสาเข็มสปัน C60A ตอกโดย PD ระบบ PURE DRIVE"
+      },
+      "engineeringData": {
+        "en": "Pile type: C60A Spun Pile; Driving method stated by source: PD Pure Drive system (note: PACO separately holds FC-PTG copyright registration No. 8251 and JIP system cooperation with CSCG Singapore; no JIP press or settlement records are stated for this project).",
+        "zh": "桩型：C60A 预应力离心管桩；原文载明工法：PD ระบบ PURE DRIVE 沉桩系统（注：PACO 官网另载与新加坡 CSCG 合作引进 JIP 及 FC-PTG 著作权登记号 8251，但本项目页面未提及 JIP 或沉降监测记录）。",
+        "th": "ประเภทเสาเข็ม: เสาเข็มสปัน C60A; ระบบตอกตามบันทึก: ตอกโดย PD ระบบ PURE DRIVE (หมายเหตุ: บนหน้าโครงการมิได้ระบุระบบ JIP หรือบันทึกการทรุดตัว)"
+      },
+      "verifiedDeliverables": {
+        "en": "C60A prestressed concrete spun pile supply and PD Pure Drive pile driving execution as stated on the PACO record page.",
+        "zh": "C60A 预应力离心管桩制造及 PD Pure Drive 系统沉桩施工（严格按原文记录，无未核实监测报告扩写）。",
+        "th": "การจัดส่งเสาเข็มสปัน C60A และงานตอกโดย PD ระบบ PURE DRIVE ตามบันทึกผลงานทางการ"
+      },
+      "sourceName": "paco-group.com (Past Performance)",
+      "sourceUrl": "https://www.paco-group.com/",
+      "imageEvidence": {
+        "displayImage": "/assets/images/static-load.webp",
+        "displayWidth": 900,
+        "displayHeight": 389,
+        "sourceVerified": true,
+        "projectMatch": false,
+        "commercialRightsApproved": true,
+        "caption": {
+          "en": "Representative foundation field photograph (AN-THAI brochure asset — not a jobsite photo of CentralFestival Inn Ville; external PACO fleet banner withheld pending commercial reuse sign-off).",
+          "zh": "基础工程现场示意真图（AN-THAI 宣传册授权图片，非本项目施工现场照；外部 PACO 车队横幅暂不展示，待商业使用授权确认）。",
+          "th": "ภาพประกอบงานฐานราก (ภาพจากเอกสาร AN-THAI ไม่ใช่ภาพหน้างานจริงของโครงการนี้; งดแสดงภาพแบนเนอร์ภายนอกจนกว่าจะได้รับอนุญาตเชิงพาณิชย์)"
+        }
+      },
+      "aiSimilarityMetadata": {
+        "serviceUnit": "Precast Spun Piles & Driving",
+        "projectType": "Commercial Building",
+        "standards": ["TIS 398-2563"],
+        "testMethods": [],
+        "soilOrGround": "Bangkok metropolitan commercial site",
+        "structuralElements": ["C60A Spun Pile", "PD Pure Drive System"],
+        "tags": ["spun-pile", "c60a", "pure-drive", "commercial", "bangkok", "paco-reference"]
+      }
     },
     {
-      "id": "CASE-PACO-BMA-BOX-GIRDER",
-      "status": "published",
+      "id": "REF-PACO-BMA-BOX-GIRDER",
+      "slug": "paco-bma-precast-box-girder-1985",
+      "status": "published_reference",
       "verified": true,
-      "source": "official company site",
-      "source_url": "https://www.paco-group.com/",
-      "organization": "Pathumthani Concrete Co., Ltd. (PACO Group)",
-      "serviceUnit": "01 Foundation Testing & Geotech",
-      "serviceRoute": "testing",
-      "title": "Precast Box Girders Fabricated per BMA Public Works Design (1985 Onwards)",
-      "location": "Bangkok",
-      "date": "1985",
-      "scope": "Starting in 1985, Pathumthani Concrete commenced fabrication of precast prestressed concrete box girders in accordance with the standard designs of the Department of Public Works, Bangkok Metropolitan Administration (BMA).",
-      "deliverables": "Precast prestressed concrete box girder manufacturing per BMA standard designs.",
-      "image": "/assets/images/cases/case-roge-bma-bridges.webp",
-      "imageCaption": "ROGE Official Website Showcase Graphic - Bridges & Highway Division (Official Website Graphic, Not Specific Project Photo)",
-      "relatedInsight": "/insights/pile-integrity-test-report-review-checklist.html",
-      "serviceUrl": "/testing.html"
+      "attributionType": "paco_original",
+      "organization": "Pathumthani Concrete Co., Ltd. (PACO)",
+      "organizationTh": "บริษัท ปทุมธานีคอนกรีต จำกัด (PACO)",
+      "organizationZh": "巴吞他尼混凝土有限公司（PACO）",
+      "entityRelationship": "External Thai manufacturer historical track record (separate legal entity; NOT an AN-THAI direct contract; formal corporate affiliation documentation pending Owner confirmation).",
+      "serviceUnit": "Precast Structural Girders",
+      "serviceFilter": "precast",
+      "projectType": "Infrastructure & Bridges",
+      "region": "Bangkok",
+      "year": "1985+",
+      "title": {
+        "en": "Precast Box Girders Fabricated per BMA Public Works Design (Since 1985)",
+        "zh": "按曼谷公共工程局（BMA）标准设计生产预制箱梁（1985年起）",
+        "th": "การผลิตคานคอนกรีตอัดแรงรูปกล่องตามแบบสำนักการโยธา กรุงเทพมหานคร (ตั้งแต่ พ.ศ. 2528)"
+      },
+      "summary": {
+        "en": "Historical record from PACO corporate history: starting in 1985 (B.E. 2528), Pathumthani Concrete produced precast prestressed concrete box girders in accordance with designs of the Department of Public Works, Bangkok Metropolitan Administration (BMA).",
+        "zh": "PACO 官网历史实绩：自1985年（佛历2528年）起，巴吞他尼混凝土开始按照曼谷大京都民政公用工程局（สำนักการโยธา กรุงเทพมหานคร）图纸设计生产预应力混凝土箱梁。",
+        "th": "บันทึกประวัติผลงานทางการของ PACO: พ.ศ. 2528 บริษัท ปทุมธานีคอนกรีต จำกัด เริ่มผลิตคานคอนกรีตอัดแรงรูปกล่อง (Box Girder) ตามแบบสำนักการโยธา กรุงเทพมหานคร"
+      },
+      "engineeringData": {
+        "en": "Structural element: Precast prestressed concrete box girder manufactured to BMA Public Works standard design drawings (no pier testing or PE dossier claims implied).",
+        "zh": "结构构件：按曼谷公共工程局标准图纸制造的预制预应力混凝土箱梁（不涉及未证实的桩基试验或签章卷宗扩写）。",
+        "th": "ชิ้นส่วนโครงสร้าง: คานคอนกรีตอัดแรงรูปกล่อง (Box Girder) ผลิตตามแบบมาตรฐานสำนักการโยธา กรุงเทพมหานคร"
+      },
+      "verifiedDeliverables": {
+        "en": "Precast prestressed concrete box girder manufacturing per BMA Public Works Department designs (PACO history record).",
+        "zh": "按曼谷公共工程局（BMA）标准设计生产预制混凝土箱梁（PACO 官网历史实绩）。",
+        "th": "การผลิตคานคอนกรีตอัดแรงรูปกล่องตามแบบสำนักการโยธา กรุงเทพมหานคร ตามประวัติผลงาน PACO"
+      },
+      "sourceName": "paco-group.com (Corporate History)",
+      "sourceUrl": "https://www.paco-group.com/",
+      "imageEvidence": {
+        "displayImage": "/assets/images/steel/steel-structure.webp",
+        "displayWidth": 1300,
+        "displayHeight": 1733,
+        "sourceVerified": true,
+        "projectMatch": false,
+        "commercialRightsApproved": true,
+        "caption": {
+          "en": "Representative infrastructure structural engineering photograph (AN-THAI licensed asset — not a jobsite photo of BMA girders; unrelated external bridge thumbnail withdrawn for resolution and source consistency).",
+          "zh": "基础设施工程结构示意真图（AN-THAI 授权图片，非 BMA 箱梁现场照；已移除分辨率不足且归属跨站的外部桥梁缩略图）。",
+          "th": "ภาพประกอบโครงสร้างพื้นฐาน (ภาพสิทธิ์ใช้งานของ AN-THAI ไม่ใช่ภาพคาน BMA จริง; นำภาพประกอบความละเอียดต่ำจากภายนอกออกแล้ว)"
+        }
+      },
+      "aiSimilarityMetadata": {
+        "serviceUnit": "Precast Structural Girders",
+        "projectType": "Infrastructure & Bridges",
+        "standards": ["BMA Public Works Standard Design"],
+        "testMethods": [],
+        "soilOrGround": "Bangkok urban infrastructure",
+        "structuralElements": ["Precast Prestressed Box Girder"],
+        "tags": ["box-girder", "precast", "bma", "bridges", "bangkok", "paco-reference"]
+      }
     },
     {
-      "id": "CASE-ROGE-GRADE-A-CONSULTANT",
-      "status": "published",
+      "id": "REF-ROGE-GRADE-A-CONSULTANT",
+      "slug": "roge-associates-grade-a-engineering-consultancy",
+      "status": "published_reference",
       "verified": true,
-      "source": "official company site",
-      "source_url": "https://roge.co.th/About-Us/About-Us.html",
+      "attributionType": "roge_original",
       "organization": "Roge & Associates Co., Ltd.",
-      "serviceUnit": "01 Foundation Testing & Geotech",
-      "serviceRoute": "testing",
-      "title": "Roge & Associates Corporate Engineering Consulting Profile",
-      "location": "Bangkok, Thailand",
-      "date": "1983",
-      "scope": "Founded in 1983 by a group of Thai engineers; registered as a Grade A consulting firm with the Fiscal Policy Office, Ministry of Finance; team of more than 105 permanent professional staff.",
-      "deliverables": "Multi-disciplined engineering consultancy, planning, feasibility studies, design, and construction supervision.",
-      "image": "/assets/images/cases/case-roge-water-resources.webp",
-      "imageCaption": "ROGE Official Website Showcase Graphic - Water Resources Division (Official Website Graphic, Not Specific Project Photo)",
-      "relatedInsight": "/insights/bored-pile-csl-testing-tube-debonding-anomaly-thailand.html",
-      "serviceUrl": "/testing.html"
+      "organizationTh": "บริษัท โรจน์ แอนด์ แอสโซซิเอทส์ จำกัด",
+      "organizationZh": "罗捷工程顾问有限公司（Roge & Associates）",
+      "entityRelationship": "External Thai engineering consultancy profile (separate legal entity; NOT AN-THAI's own MOF registration or staff headcount; formal corporate affiliation documentation pending Owner confirmation).",
+      "serviceUnit": "Civil Engineering Consultancy",
+      "serviceFilter": "consultancy",
+      "projectType": "Engineering Consultancy Profile",
+      "region": "Thailand",
+      "year": "1983",
+      "title": {
+        "en": "Roge & Associates — Thai Engineering Consultancy Qualification Profile (Est. 1983)",
+        "zh": "Roge & Associates 泰国工程咨询机构资质简介参考（创立于1983年）",
+        "th": "ข้อมูลคุณสมบัตินิติบุคคลที่ปรึกษา บริษัท โรจน์ แอนด์ แอสโซซิเอทส์ จำกัด (ก่อตั้ง พ.ศ. 2526)"
+      },
+      "summary": {
+        "en": "Corporate qualification profile from roge.co.th About Us: founded in 1983 by Thai engineers; registered as a Grade A consulting firm with the Fiscal Policy Office, Ministry of Finance; comprising more than 105 permanent professional staff.",
+        "zh": "Roge & Associates 官网关于我们原文记录：于1983年（佛历2526年）由泰国工程师团队创立；在泰国财政部财政经济办公室（Fiscal Policy Office）注册为 Grade A 工程咨询机构；拥有105名以上常驻专职专业人员。",
+        "th": "ข้อมูลทางการจากหน้า About Us เว็บไซต์ roge.co.th: ก่อตั้งเมื่อ พ.ศ. 2526 โดยกลุ่มวิศวกรไทย จดทะเบียนเป็นนิติบุคคลที่ปรึกษาประเภท A สำนักงานเศรษฐกิจการคลัง กระทรวงการคลัง มีบุคลากรประจำกว่า 105 คน"
+      },
+      "engineeringData": {
+        "en": "Firm facts stated on roge.co.th: Founded 1983; Head office Soi Pibulwes, Sukhumvit 71 Road, Bangkok; Registered Grade A consultant with Ministry of Finance Fiscal Policy Office; >105 permanent staff.",
+        "zh": "官网核验事实：1983年成立；总部位于曼谷 Sukhumvit 71 路 Soi Pibulwes；泰国财政部财政经济办公室 Grade A 咨询机构注册；105名以上全职常驻员工。",
+        "th": "ข้อเท็จจริงจาก roge.co.th: ก่อตั้ง พ.ศ. 2526 สำนักงานใหญ่ซอยพิบูลเวศม์ สุขุมวิท 71 กรุงเทพฯ ที่ปรึกษาประเภท A สำนักงานเศรษฐกิจการคลัง กระทรวงการคลัง บุคลากรประจำกว่า 105 คน"
+      },
+      "verifiedDeliverables": {
+        "en": "Multi-disciplined engineering consultancy capability profile: planning, feasibility studies, design, construction supervision, and project management (firm profile only, not a named client contract).",
+        "zh": "多学科工程咨询资质范围：规划、可行性研究、设计、施工监理及项目管理（机构资质概况，非具体客户中标合同案例）。",
+        "th": "ขอบเขตความเชี่ยวชาญของบริษัทที่ปรึกษา: การวางแผน การศึกษาความเหมาะสม การออกแบบ การควบคุมงานก่อสร้าง และการบริหารโครงการ (ข้อมูลโปรไฟล์องค์กร)"
+      },
+      "sourceName": "roge.co.th (About Us)",
+      "sourceUrl": "https://roge.co.th/About-Us/About-Us.html",
+      "imageEvidence": {
+        "displayImage": "/assets/images/plate-load.webp",
+        "displayWidth": 900,
+        "displayHeight": 522,
+        "sourceVerified": true,
+        "projectMatch": false,
+        "commercialRightsApproved": true,
+        "caption": {
+          "en": "Representative geotechnical & civil engineering field photograph (AN-THAI brochure asset — illustrative capability visual only; external ROGE graphic withheld pending commercial reuse sign-off).",
+          "zh": "岩土与土木工程现场示意真图（AN-THAI 宣传册授权图片，仅作能力示意；外部 ROGE 官网展示图暂不公开展示，待商业使用授权确认）。",
+          "th": "ภาพประกอบงานวิศวกรรมปฐพีและโยธา (ภาพจากเอกสาร AN-THAI ใช้แสดงประกอบเท่านั้น; งดแสดงภาพกราฟิกภายนอกจนกว่าจะได้รับอนุญาตเชิงพาณิชย์)"
+        }
+      },
+      "aiSimilarityMetadata": {
+        "serviceUnit": "Civil Engineering Consultancy",
+        "projectType": "Engineering Consultancy Profile",
+        "standards": ["Ministry of Finance Fiscal Policy Office Grade A"],
+        "testMethods": [],
+        "soilOrGround": "Thailand multi-region civil infrastructure",
+        "structuralElements": ["Planning", "Feasibility Study", "Design", "Construction Supervision"],
+        "tags": ["consultancy", "grade-a", "ministry-of-finance", "thailand", "roge-reference"]
+      }
     }
   ]
 }

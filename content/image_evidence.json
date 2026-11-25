@@ -1,103 +1,105 @@
 {
-  "auditVersion": "1.1",
-  "generatedAt": "2026-11-24T14:15:00+07:00",
-  "policy": "Strict Zero-AI, Zero-Stock-Photo authentic evidence ledger directly derived from verified corporate websites paco-group.com and roge.co.th. Images represent verified corporate showcase banners and divisional capability graphics; they are not site-specific project construction photos.",
-  "items": [
+  "auditVersion": "2.0",
+  "generatedAt": "2026-11-25T19:30:00+07:00",
+  "policy": "Three-way strict evidence ledger separating sourceVerified (file matches original source SHA-256), projectMatch (image depicts the named project jobsite), and commercialRightsApproved (written reuse permission confirmed for public AN-THAI display). Unapproved external marketing graphics are withheld from public UI (`publicDisplay: false`).",
+  "publicAuthorizedAssets": [
     {
-      "caseId": "CASE-PACO-EMBASSY-SPUN-PILE",
-      "projectTitle": "Royal Thai Embassy (Singapore) Spun Pile Export",
-      "organization": "Pathumthani Concrete Co., Ltd. (PACO Group)",
+      "assetPath": "/assets/images/hero-field.webp",
+      "dimensions": [900, 687],
+      "sourceVerified": true,
+      "projectMatch": false,
+      "commercialRightsApproved": true,
+      "usage": "Representative foundation piling photography across /cases/ (strictly captioned as AN-THAI brochure asset, not jobsite proof)"
+    },
+    {
+      "assetPath": "/assets/images/static-load.webp",
+      "dimensions": [900, 389],
+      "sourceVerified": true,
+      "projectMatch": false,
+      "commercialRightsApproved": true,
+      "usage": "Representative foundation load-testing field photography"
+    },
+    {
+      "assetPath": "/assets/images/plate-load.webp",
+      "dimensions": [900, 522],
+      "sourceVerified": true,
+      "projectMatch": false,
+      "commercialRightsApproved": true,
+      "usage": "Representative geotechnical & civil engineering field photography"
+    },
+    {
+      "assetPath": "/assets/images/steel/steel-structure.webp",
+      "dimensions": [1300, 1733],
+      "sourceVerified": true,
+      "projectMatch": false,
+      "commercialRightsApproved": true,
+      "usage": "Representative structural steel / infrastructure photography"
+    }
+  ],
+  "externalAssetsHeldPendingRights": [
+    {
+      "caseId": "REF-PACO-EMBASSY-SPUN-PILE",
+      "organization": "Pathumthani Concrete Co., Ltd. (PACO)",
       "sourceUrl": "https://www.paco-group.com/",
-      "imageNature": "PACO Factory & Production Team Promotional Banner (Official Homepage Showcase, Not Site Photo)",
+      "imageNature": "PACO Factory & Production Team Promotional Banner (Homepage showcase, NOT Embassy jobsite photo)",
       "originalImageUrl": "https://itp1.itopfile.com/ImageServer/b28f5d21ab5ff6a3/1280/0/iTopPlus1140045912647.webp",
-      "originalFormat": "WEBP",
-      "originalDimensions": [
-        1280,
-        494
-      ],
-      "originalBytes": 55976,
       "originalSha256": "1d06192e3a22f3ba96bf0e4845319b8ca44e4d50df9745a86fbd12b5caddc99d",
       "localAssetPath": "/assets/images/cases/case-paco-embassy-spun-pile.webp",
-      "assetFormat": "WEBP",
-      "assetDimensions": [
-        1280,
-        494
-      ],
-      "assetBytes": 60120,
+      "assetDimensions": [1280, 494],
       "assetSha256": "fcc1dd54e6951f00ebf0421cad4383e2b05093d762ecc1d4fc7fe3fd236fa2d4",
-      "verified": true
+      "sourceVerified": true,
+      "projectMatch": false,
+      "commercialRightsApproved": false,
+      "publicDisplay": false,
+      "holdReason": "Awaiting written commercial image reuse permission in OWNER_GATES #7; also depicts factory team rather than Singapore Embassy jobsite."
     },
     {
-      "caseId": "CASE-PACO-CENTRAL-FESTIVAL",
-      "projectTitle": "CentralFestival Inn Ville Project (โครงการเซ็นทรัลเฟสติวัล อินท์ วิลล์)",
-      "organization": "Pathumthani Concrete Co., Ltd. (PACO Group)",
+      "caseId": "REF-PACO-CENTRAL-FESTIVAL",
+      "organization": "Pathumthani Concrete Co., Ltd. (PACO)",
       "sourceUrl": "https://www.paco-group.com/",
-      "imageNature": "PACO Spun Pile Logistics Transport Fleet Promotional Banner (Official Homepage Showcase, Not Site Photo)",
+      "imageNature": "PACO Spun Pile Transport Fleet Promotional Banner (Homepage showcase, NOT CentralFestival Inn Ville jobsite photo)",
       "originalImageUrl": "https://itp1.itopfile.com/ImageServer/b28f5d21ab5ff6a3/1280/0/iTopPlus1250496051699.webp",
-      "originalFormat": "WEBP",
-      "originalDimensions": [
-        1280,
-        494
-      ],
-      "originalBytes": 127316,
       "originalSha256": "a3b5b8016bed2ef0beacca60437b3947ac0f400786c8397fe4b6fc7b6ec02af0",
       "localAssetPath": "/assets/images/cases/case-paco-eastville-foundation.webp",
-      "assetFormat": "WEBP",
-      "assetDimensions": [
-        1280,
-        494
-      ],
-      "assetBytes": 134930,
+      "assetDimensions": [1280, 494],
       "assetSha256": "4dbf42afbeda4e087cb8d12e7cffc61bd5f78b93474268569cb0d44bd6e53b5f",
-      "verified": true
+      "sourceVerified": true,
+      "projectMatch": false,
+      "commercialRightsApproved": false,
+      "publicDisplay": false,
+      "holdReason": "Awaiting written commercial image reuse permission in OWNER_GATES #7; depicts transport fleet banner."
     },
     {
-      "caseId": "CASE-PACO-BMA-BOX-GIRDER",
-      "projectTitle": "Precast Box Girders Fabricated per BMA Public Works Design (1985 Onwards)",
-      "organization": "Pathumthani Concrete Co., Ltd. (PACO Group)",
-      "sourceUrl": "https://www.paco-group.com/",
-      "imageNature": "ROGE Official Website Showcase Graphic - Bridges & Highway Division (Website Capability Graphic, Not Specific Project Photo)",
+      "caseId": "EXTERNAL-ROGE-BRIDGES-GRAPHIC",
+      "organization": "Roge & Associates Co., Ltd.",
+      "sourceUrl": "https://roge.co.th/1Bridges/1Bridges.html",
+      "imageNature": "ROGE Bridges & Highway Division showcase graphic (low-res 300x200, NOT PACO BMA box girder record)",
       "originalImageUrl": "https://roge.co.th/1Bridges/bridges%20(1).jpg",
-      "originalFormat": "JPEG",
-      "originalDimensions": [
-        300,
-        200
-      ],
-      "originalBytes": 32192,
       "originalSha256": "f20d0154d0a7acc3ece72d18540eea9f4234fce6d7b716e27aef0b8469e7fc39",
       "localAssetPath": "/assets/images/cases/case-roge-bma-bridges.webp",
-      "assetFormat": "WEBP",
-      "assetDimensions": [
-        300,
-        200
-      ],
-      "assetBytes": 27644,
+      "assetDimensions": [300, 200],
       "assetSha256": "2964ff4d86a884ebb4b7f64993b5292a9099d4ceca74c5831a79afd04d1126bd",
-      "verified": true
+      "sourceVerified": true,
+      "projectMatch": false,
+      "commercialRightsApproved": false,
+      "publicDisplay": false,
+      "holdReason": "Low-resolution 300x200 graphic, belongs to roge.co.th (not PACO BMA record), and lacks commercial reuse sign-off."
     },
     {
-      "caseId": "CASE-ROGE-GRADE-A-CONSULTANT",
-      "projectTitle": "Roge & Associates Corporate Engineering Consulting Profile",
+      "caseId": "REF-ROGE-GRADE-A-CONSULTANT",
       "organization": "Roge & Associates Co., Ltd.",
-      "sourceUrl": "https://roge.co.th/About-Us/About-Us.html",
-      "imageNature": "ROGE Official Website Showcase Graphic - Water Resources Division (Website Capability Graphic, Not Specific Project Photo)",
+      "sourceUrl": "https://roge.co.th/4Water/4Water.html",
+      "imageNature": "ROGE Water Resources Division website graphic (400x200, generic division image)",
       "originalImageUrl": "https://roge.co.th/4Water/water.jpg",
-      "originalFormat": "JPEG",
-      "originalDimensions": [
-        400,
-        200
-      ],
-      "originalBytes": 14502,
       "originalSha256": "7cec9a30b9837d9485c62461dfd65294d979e24e1ab332bd3ac8663a4fbd4e9e",
       "localAssetPath": "/assets/images/cases/case-roge-water-resources.webp",
-      "assetFormat": "WEBP",
-      "assetDimensions": [
-        400,
-        200
-      ],
-      "assetBytes": 18248,
+      "assetDimensions": [400, 200],
       "assetSha256": "f3d56bf1d71a3386caade113333f3bfdb0a0b136225cd1ddf92d12c0a7e13381",
-      "verified": true
+      "sourceVerified": true,
+      "projectMatch": false,
+      "commercialRightsApproved": false,
+      "publicDisplay": false,
+      "holdReason": "Low-resolution 400x200 division graphic lacking commercial reuse sign-off."
     }
   ]
 }

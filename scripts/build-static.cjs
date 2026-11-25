@@ -16,10 +16,15 @@ fs.rmSync(output, {recursive: true, force: true});
 fs.mkdirSync(output, {recursive: true});
 for (const file of files) fs.copyFileSync(path.join(root, file), path.join(output, file));
 
-// Copy public asset and content directories (exclude internal studio/ and api/)
+// Copy public asset and content directories (exclude internal studio/, api/, and internal review-only leads)
 if (fs.existsSync(path.join(root, 'assets'))) fs.cpSync(path.join(root, 'assets'), path.join(output, 'assets'), {recursive: true});
 if (fs.existsSync(path.join(root, 'cases'))) fs.cpSync(path.join(root, 'cases'), path.join(output, 'cases'), {recursive: true});
-if (fs.existsSync(path.join(root, 'content'))) fs.cpSync(path.join(root, 'content'), path.join(output, 'content'), {recursive: true});
+if (fs.existsSync(path.join(root, 'content'))) {
+  fs.cpSync(path.join(root, 'content'), path.join(output, 'content'), {
+    recursive: true,
+    filter: (src) => path.basename(src) !== 'project-references-review.json'
+  });
+}
 if (fs.existsSync(path.join(root, 'insights'))) fs.cpSync(path.join(root, 'insights'), path.join(output, 'insights'), {recursive: true});
 
 // Run localizer (generates static /zh/ and /th/ pages)
@@ -27,6 +32,9 @@ require('node:child_process').execFileSync('python3', [path.join(root, 'scripts/
 
 // Run full insights compiler (compiles content/insights/*.json into full articles in dist/insights/)
 require('node:child_process').execFileSync('python3', [path.join(root, 'scripts/build-insights.py')], {stdio:'inherit', env: {...process.env, PYTHONUTF8: '1'}});
+
+// Run V1.0 cases compiler (compiles verified reference cases + AI similarity index into dist/cases/, /zh/cases/, /th/cases/)
+require('node:child_process').execFileSync('python3', [path.join(root, 'scripts/build-cases.py')], {stdio:'inherit', env: {...process.env, PYTHONUTF8: '1'}});
 
 require('./inject-analytics.cjs')(output);
 

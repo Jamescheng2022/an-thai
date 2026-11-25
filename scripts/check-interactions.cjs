@@ -12,7 +12,7 @@ function setup(search) {
   const menu = {getAttribute:k=>attrs[k],setAttribute:(k,v)=>attrs[k]=v, addEventListener:(e,f)=>buttonHandlers[e]=f,focus:()=>states.focused=true};
   const nav = {querySelector:()=>({focus:()=>states.linkFocused=true}),classList:{toggle:(k,v)=>states[k]=v},querySelectorAll:()=>[{addEventListener:(e,f)=>linkHandlers[e]=f}]};
   const location = {search,href:''};
-  const ctx = {URLSearchParams,encodeURIComponent,FormData:class{get(k){return {requestType:elements.requestType.value,name:'QA & 中文',company:'Test + Co',email:'qa@example.test',phone:'+66 123',message:elements.message.value}[k];}},document:{documentElement:{classList:{add(){}}},querySelector:s=>s==='.menu-btn'?menu:s==='.nav-links'?nav:form,addEventListener:(e,f)=>handlers[e]=f,getElementById:()=>note},window:{location,matchMedia:()=>({addEventListener:(e,f)=>handlers.resize=f})}};
+  const ctx = {URLSearchParams,encodeURIComponent,FormData:class{get(k){return {requestType:elements.requestType.value,name:'QA & 中文',company:'Test + Co',email:'qa@example.test',phone:'+66 123',message:elements.message.value}[k];}},document:{documentElement:{classList:{add(){}}},querySelector:s=>s==='.menu-btn'?menu:s==='.nav-links'?nav:form,querySelectorAll:s=>[],addEventListener:(e,f)=>handlers[e]=f,getElementById:id=>id==='enquiry-note'?note:null},window:{location,matchMedia:()=>({addEventListener:(e,f)=>handlers.resize=f})}};
   vm.runInNewContext(source,ctx);
   return {handlers,buttonHandlers,attrs,linkHandlers,states,elements,submit,note,formHandlers,location};
 }
@@ -22,7 +22,7 @@ assert.match(s.elements.message.value,/Load Cells \/ Sensors \/ DAQ/);
 assert.equal(s.submit.disabled,false);
 s.formHandlers.submit({preventDefault(){}});
 const u=new URL(s.location.href);
-assert.equal(u.protocol,'mailto:');assert.equal(u.pathname,'anthaicheng@gmail.com');
+assert.equal(u.protocol,'mailto:');assert.equal(u.pathname,'info@an-thai.com');
 assert.equal(u.searchParams.get('subject'),'AN-THAI enquiry: Testing instruments');
 assert.match(u.searchParams.get('body'),/Name: QA & 中文/);assert.match(u.searchParams.get('body'),/Company: Test \+ Co/);
 assert.match(s.note.textContent,/does not transmit the form or create a customer record/);

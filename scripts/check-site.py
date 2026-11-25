@@ -28,7 +28,11 @@ for name,d in pages.items():
  if name=='404.html':check(any(a.get('name')=='robots' and 'noindex' in a.get('content','') for _,a in d.tags),'404: noindex')
  else:
   check(canonical==['https://an-thai.com/'+('' if name=='index.html' else name)],f'{name}: canonical')
-  types={g['@type'] for s in d.scripts for g in s.get('@graph',[])}
+  types = set()
+  for s in d.scripts:
+   items = s if isinstance(s, list) else s.get('@graph', [s])
+   for g in items:
+    if isinstance(g, dict) and '@type' in g: types.add(g['@type'])
   check({'Organization','ProfessionalService'}<=types,f'{name}: business schema')
   if name in ['services.html','equipment.html']:check('Service' in types,f'{name}: service schema')
  labels={a.get('for') for t,a in d.tags if t=='label'}
@@ -53,7 +57,10 @@ import hashlib
 for a in manifest['assets']:
  p=ROOT/a['path'];check(p.is_file() and hashlib.sha256(p.read_bytes()).hexdigest()==a['sha256'],f'asset hash {a["path"]}')
 locs=[x.text for x in ET.parse(ROOT/'sitemap.xml').iter() if x.tag.endswith('}loc')]
-check(set(locs)=={'https://an-thai.com/'+('' if p=='index.html' else p) for p in pages if p!='404.html'},'sitemap routes')
+vercel_cfg = json.loads((ROOT / 'vercel.json').read_text(encoding='utf-8'))
+redirect_sources = {r['source'].lstrip('/') for r in vercel_cfg.get('redirects', [])}
+expected_sitemap = {'https://an-thai.com/' + ('' if p == 'index.html' else p) for p in pages if p != '404.html' and p not in redirect_sources} | {'https://an-thai.com/cases/', 'https://an-thai.com/insights/'}
+check(set(locs) == expected_sitemap, 'sitemap routes')
 check('Sitemap: https://an-thai.com/sitemap.xml' in (ROOT/'robots.txt').read_text(encoding='utf-8'),'robots sitemap')
 check(not list((ROOT/'assets').rglob('*.b64')),'legacy image chunks')
 check('loadBrochureSprite' not in (ROOT/'assets/js/site.js').read_text(encoding='utf-8'),'legacy sprite JS')

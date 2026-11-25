@@ -1,0 +1,46 @@
+name: Extract Gemini An-Thai V5.3/V5.4 handoff sources
+on:
+  push:
+    branches:
+      - agent/anthai-v53-v54-gemini-handoff-20261121
+    paths:
+      - 'handoff/gemini-20261121/*.zip'
+      - '.github/workflows/extract-gemini-anthai-handoff.yml'
+permissions:
+  contents: write
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout isolated branch
+        uses: actions/checkout@v4
+      - name: Safely expand ZIPs without executing prototype code
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+          output = Path('experiments/gemini-20261121').resolve()
+          output.mkdir(parents=True, exist_ok=True)
+          for name in ('AnThai_V5_3_Website_Package.zip','AnThai_V5_4_Living_Studio_Package.zip'):
+              source = Path('handoff/gemini-20261121') / name
+              with ZipFile(source) as archive:
+                  for entry in archive.infolist():
+                      target = (output / entry.filename).resolve()
+                      if not target.is_relative_to(output):
+                          raise ValueError(f'Unsafe ZIP path: {entry.filename}')
+                      if entry.file_size > 10000000:
+                          raise ValueError(f'Unexpected large entry: {entry.filename}')
+                  archive.extractall(output)
+          PY
+      - name: Commit inspected source on handoff branch only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add experiments/gemini-20261121/an-thai-site-v5-3 experiments/gemini-20261121/an-thai-living-studio-v5-4
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(handoff): extract Gemini V5.3 and V5.4 source into isolated directories"
+            git push origin HEAD:agent/anthai-v53-v54-gemini-handoff-20261121
+          fi

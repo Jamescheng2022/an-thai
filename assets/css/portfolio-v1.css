@@ -1,0 +1,48 @@
+/* AN-THAI Engineering V1.0 Cases Directory & Crawlable Detail Styles */
+.cases-shell{display:flex;flex-direction:column;gap:20px}
+.cases-top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
+.cases-search{min-width:220px;width:min(320px,100%);background:#fff;border:1px solid var(--line);padding:9px 12px;font-size:13px;border-radius:0}
+.cases-search:focus{outline:2px solid var(--accent);outline-offset:1px}
+
+.cases-filter-stack{display:flex;flex-direction:column;gap:10px;border:1px solid var(--line);background:#fff;padding:14px 16px}
+.cases-filter-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.cases-filter-label{font-family:var(--font-mono);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--ink-muted);min-width:110px}
+.cases-filter-btn{border:1px solid var(--line-soft);background:var(--surface-alt);padding:5px 11px;font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--ink-muted);cursor:pointer}
+.cases-filter-btn:hover{color:var(--ink);border-color:var(--ink)}
+.cases-filter-btn[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* Visual-first discipline mosaic (uses AN-THAI authorized high-res brochure imagery >=900px) */
+.cases-mosaic{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.cases-sector-tile{position:relative;display:block;overflow:hidden;border:1px solid var(--line);padding:0;background:#14161a;color:#fff;text-align:left;cursor:pointer;aspect-ratio:16/10}
+.cases-sector-tile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}
+.cases-sector-tile:hover img{transform:scale(1.04)}
+.cases-sector-tile::after{content:"";position:absolute;inset:32% 0 0;background:linear-gradient(transparent,rgba(12,14,18,0.86));pointer-events:none}
+.cases-sector-name{position:absolute;bottom:22px;left:12px;right:12px;z-index:1;font-size:14px;font-weight:800;line-height:1.2}
+.cases-sector-note{position:absolute;bottom:7px;left:12px;right:12px;z-index:1;font-family:var(--font-mono);font-size:9.5px;color:#fcd34d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+@media(max-width:960px){.cases-mosaic{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.cases-mosaic{grid-template-columns:1fr}.cases-filter-label{min-width:100%}}
+
+/* Evidence-transparent cards */
+.case-card{border:1px solid var(--line);background:#fff;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.case-card-media{position:relative;aspect-ratio:16/9;background:#14161a;overflow:hidden;border-bottom:1px solid var(--line)}
+.case-card-media img{width:100%;height:100%;object-fit:cover;display:block}
+.case-card-attr{position:absolute;top:8px;left:8px;background:rgba(15,17,21,0.9);color:#fb923c;padding:3px 7px;font-family:var(--font-mono);font-size:10px;font-weight:700;text-transform:uppercase;border:1px solid rgba(251,146,60,0.4)}
+.case-card-imgtag{position:absolute;bottom:8px;right:8px;left:8px;background:rgba(15,17,21,0.82);color:#e5e7eb;padding:3px 8px;font-family:var(--font-mono);font-size:9.5px;line-height:1.3}
+.case-card-body{padding:16px 18px;display:flex;flex-direction:column;gap:9px;flex:1}
+.case-card-footer{padding:12px 18px;border-top:1px solid var(--line-soft);background:var(--surface-alt);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px}
+.case-evidence-row{display:flex;flex-wrap:wrap;gap:6px;font-family:var(--font-mono);font-size:10px}
+.ev-pill{padding:2px 6px;border:1px solid var(--line-soft);background:var(--surface-alt);color:var(--ink)}
+.ev-pill--ok{background:#ecfdf5;border-color:#86efac;color:#14532d}
+.ev-pill--warn{background:#fffbeb;border-color:#fde68a;color:#78350f}
+
+/* Crawlable Case Detail Layout */
+.case-detail-wrap{max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.case-detail-hero{border:1px solid var(--line);background:#fff;overflow:hidden}
+.case-detail-hero img{width:100%;max-height:400px;object-fit:cover;display:block;border-bottom:1px solid var(--line)}
+.case-detail-caption{padding:10px 16px;font-family:var(--font-mono);font-size:11px;color:var(--ink-muted);background:var(--surface-alt)}
+.case-spec-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--line);background:#fff}
+.case-spec-cell{padding:14px 16px;border-bottom:1px solid var(--line-soft)}
+.case-spec-cell + .case-spec-cell{border-left:1px solid var(--line-soft)}
+@media(max-width:767px){.case-spec-grid{grid-template-columns:1fr}.case-spec-cell + .case-spec-cell{border-left:0}}
+.team-extension-box{border:1px dashed var(--line);background:var(--surface-alt);padding:18px 20px;display:flex;flex-direction:column;gap:8px}

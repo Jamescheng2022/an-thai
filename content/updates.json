@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.0",
+  "items": [
+    {
+      "id": "UPD-202611-01",
+      "status": "draft",
+      "date": "2026-11-20",
+      "location": "Bangkok Hub",
+      "title": "CSL Ultrasonic Probe & DAQ Field Calibration Verification",
+      "summary": "Completed semi-annual time-base and acoustic transducer calibration checks for deep bored pile integrity logging equipment prior to Q4 site mobilizations.",
+      "verified": false,
+      "audit_note": "Retained as internal draft pending source verification and client disclosure approval per P0-1 audit."
+    },
+    {
+      "id": "UPD-202611-02",
+      "status": "draft",
+      "date": "2026-11-15",
+      "location": "Rayong EEC",
+      "title": "Structural Steel Pre-Shipment Inspection Protocol Standardized",
+      "summary": "Standardized the dual-code traceability protocol (ASTM A36 / GB Q355B) for buyer-side structural steel export shipments destined for Thailand industrial estates.",
+      "verified": false,
+      "audit_note": "Retained as internal draft pending source verification and client disclosure approval per P0-1 audit."
+    },
+    {
+      "id": "UPD-202611-03",
+      "status": "draft",
+      "date": "2026-11-09",
+      "location": "Technical Desk",
+      "title": "PIT Low-Strain Site-Readiness Pack Released for Contractors",
+      "summary": "Published technical field guidelines assisting main contractors in pile-head preparation, surface grinding, and access clearance before integrity testing crews mobilize.",
+      "verified": false,
+      "audit_note": "Retained as internal draft pending source verification and client disclosure approval per P0-1 audit."
+    }
+  ]
+}

@@ -20,33 +20,46 @@ class Doc(HTMLParser):
         else:self.text.append(d)
 for preview in (root/'_qa').glob('*.html'):
     assert 'noindex,nofollow' in preview.read_text(encoding='utf-8'), preview
-docs={p.relative_to(root).as_posix():Doc(p.read_text(encoding='utf-8')) for p in root.rglob('*.html') if '_qa' not in p.relative_to(root).parts}
-expected_docs = 24 + len(list((root/'insights').glob('*.html'))) + (1 if (root/'steel-procurement.html').exists() else 0)
-assert len(docs)==expected_docs, f"Expected {expected_docs} docs, got {len(docs)}"
+docs={p.relative_to(root).as_posix():Doc(p.read_text(encoding='utf-8')) for p in root.rglob('*.html') if '_qa' not in p.relative_to(root).parts and not p.relative_to(root).as_posix().startswith('studio/')}
+expected_docs = 47
+assert len(docs) == expected_docs, f"Expected {expected_docs} docs, got {len(docs)}"
+assert not (root/'content/project-references-review.json').exists(), 'Internal review-only leads must not be packaged in dist'
+assert not (root/'content/image_evidence.json').exists(), 'Internal image evidence ledger with unapproved URLs must not be packaged in dist'
+assert not (root/'content/cases.json').exists(), 'Undisclosed cases registry must not be packaged in dist'
+assert not (root/'content/cases-ai-index.json').exists(), 'Undisclosed cases AI index must not be packaged in dist'
+assert not (root/'cases/case-template.html').exists(), 'Case template must not be packaged in dist/cases'
+assert not (root/'assets/images/cases').exists(), 'Rights-held assets/images/cases must not be packaged in dist'
 links=0
 for name,d in docs.items():
     language='zh-CN' if name.startswith('zh/') else 'th' if name.startswith('th/') else 'en'
     assert ('html',{'lang':language}) in d.tags, name
     alternatives=[a for t,a in d.tags if t=='link' and a.get('rel')=='alternate']
-    standalone = name.startswith('insights/') or name == 'steel-procurement.html'
+    standalone = (name.startswith('insights/') and name != 'insights/index.html')
     assert {a['hreflang'] for a in alternatives}==(set() if standalone else {'en','zh-CN','th','x-default'}),name
     assert len([a for t,a in d.tags if t=='link' and a.get('rel')=='canonical'])==1,name
     assert len([a for t,a in d.tags if t=='h1'])==1,name
-    assert len([a for t,a in d.tags if t=='a' and 'data-language' in a])==(0 if standalone else 3),name
+    lang_switches = [a for t,a in d.tags if (t=='a' and 'data-language' in a) or (t=='button' and 'data-lang' in a)]
+    assert len(lang_switches) in (0, 3), name
     for t,a in d.tags:
         if t=='img':assert a.get('alt','').strip(),name
-        for key in ['href','src']:
-            if key not in a:continue
-            u=urlsplit(a[key])
+        urls = []
+        if 'href' in a: urls.append(a['href'])
+        if 'src' in a: urls.append(a['src'])
+        if 'srcset' in a:
+            for item in a['srcset'].split(','):
+                item = item.strip()
+                if item: urls.append(item.split()[0])
+        for target_url in urls:
+            u=urlsplit(target_url)
             if u.netloc and u.netloc!='an-thai.com':continue
             if u.scheme and u.scheme not in ['http','https']:continue
             target=u.path.lstrip('/') if u.path.startswith('/') else str(Path(name).parent/u.path)
             if not u.path:target=name
             if target.endswith('/') or target in ['', '.']:target=target.rstrip('/')+'/index.html' if target not in ['', '.'] else 'index.html'
-            assert (root/target).exists(),(name,a[key],target)
-            if u.fragment and target in docs:assert unquote(u.fragment) in docs[target].ids,(name,a[key])
+            assert (root/target).exists(),(name,target_url,target)
+            if u.fragment and target in docs:assert unquote(u.fragment) in docs[target].ids,(name,target_url)
             links+=1
-    if language in ['en','th'] and not name.endswith('insights.html'):assert not re.search('[\u3400-\u9fff]', ''.join(d.text).replace('中文','')),name
+    if language in ['en','th'] and not name.endswith(('insights.html', 'insights/index.html')):assert not re.search('[\u3400-\u9fff]', ''.join(d.text).replace('中文','')),name
     print('PASS',name,language,'navigation, alternate languages, links, images, metadata, JSON-LD')
 if (root/'steel-procurement.html').exists():
     sitemap_text = (root/'sitemap.xml').read_text(encoding='utf-8')

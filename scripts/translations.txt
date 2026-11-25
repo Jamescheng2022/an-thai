@@ -458,3 +458,142 @@ If the LINE link does not open, search the ID in the LINE app. || 若无法打�
 Domain email || 域名邮箱 || อีเมลโดเมน
 Prepare your enquiry, then send it from your email app. This website does not transmit the form or create a customer record. You can also email anthaicheng@gmail.com directly, use LINE ID: rachada2018, or call us. || 填写需求后，请在邮件应用中发送。本站不会自动提交表单或创建客户记录。也可直接发邮件到 anthaicheng@gmail.com、通过 LINE ID：rachada2018 或电话联系。 || กรอกคำสอบถามแล้วส่งผ่านแอปอีเมล เว็บไซต์นี้ไม่ส่งแบบฟอร์มหรือสร้างข้อมูลลูกค้าโดยอัตโนมัติ ติดต่อโดยตรงได้ทาง anthaicheng@gmail.com, LINE ID: rachada2018 หรือโทรศัพท์
 , add LINE ID: rachada2018, or call || ，也可以添加 LINE ID：rachada2018，或拨打 || หรือเพิ่ม LINE ID: rachada2018 หรือโทร
+01 Testing || 01 检测业务 || 01 งานทดสอบ
+02 · BUYER-SIDE || 02 · 买方立场 || 02 · ฝ่ายผู้ซื้อ
+01 · BRIEF || 01 · 需求要件 || 01 · ขอบเขตเบื้องต้น
+02 · METHOD || 02 · 检测方案 || 02 · วิธีการทดสอบ
+03 · FIELD || 03 · 现场测试 || 03 · ปฏิบัติการภาคสนาม
+04 · DATA || 04 · 数据报告 || 04 · ข้อมูลและรายงาน
+01 · RFQ || 01 · 询价图纸 || 01 · รายละเอียดและแบบ
+02 · SOURCE || 02 · 厂商核查 || 02 · คัดเลือกโรงงาน
+03 · SHOP QC || 03 · 驻厂监造 || 03 · ควบคุมคุณภาพการผลิต
+04 · RELEASE || 04 · 发运放行 || 04 · ตรวจปล่อยสินค้า
+01 · DUTY || 01 · 工艺参数 || 01 · พารามิเตอร์การทำงาน
+02 · SIZE || 02 · 设备选型 || 02 · การเลือกขนาดและรุ่น
+03 · QUOTE || 03 · 方案报价 || 03 · ข้อเสนอราคา
+04 · DELIVER || 04 · 交付指导 || 04 · ส่งมอบและแนะนำ
+02 · MATCH || 02 · 选型匹配 || 02 · การเทียบสเปก
+AN-THAI ENGINEERING · THAILAND || 安泰工程 · 泰国 || AN-THAI ENGINEERING · ประเทศไทย
+AN-THAI Engineering | Substructure to Superstructure || 安泰工程 ｜ 从地下基础到地上结构 || AN-THAI Engineering | จากฐานรากสู่โครงสร้าง
+01 Foundation Testing & Geotech | AN-THAI Engineering || 01 桩基与岩土工程检测 ｜ 安泰工程 || 01 การทดสอบเสาเข็มและวิศวกรรมปฐพี | AN-THAI Engineering
+02 Buyer-Side Steel Procurement Agency | AN-THAI Engineering || 02 买方立场钢结构采购代理 ｜ 安泰工程 || 02 ตัวแทนจัดหาโครงสร้างเหล็กฝ่ายผู้ซื้อ | AN-THAI Engineering
+03 Powder-Process Equipment Coordination | AN-THAI Engineering || 03 粉体工艺设备成套协调 ｜ 安泰工程 || 03 การจัดหาและประสานงานเครื่องจักรแปรรูปผง | AN-THAI Engineering
+04 Testing Instruments Supply & Calibration | AN-THAI Engineering || 04 工程检测仪器选型与校准 ｜ 安泰工程 || 04 จัดหาและสอบเทียบเครื่องมือทดสอบ | AN-THAI Engineering
+Company Profile | AN-THAI Engineering || 公司介绍 ｜ 安泰工程 || ข้อมูลบริษัท | AN-THAI Engineering
+Contact | AN-THAI Engineering || 联系我们 ｜ 安泰工程 || ติดต่อเรา | AN-THAI Engineering
+Engineering Insights | AN-THAI Engineering || 工程专栏 ｜ 安泰工程 || บทความวิศวกรรม | AN-THAI Engineering
+Field engineering checklists and technical notes on pile integrity testing, CSL, static load vs. PDA in Thailand. || 泰国桩基完整性检测、声波透射法、静载与高应变动测对比的现场工程清单与技术笔记。 || รายการตรวจสอบวิศวกรรมภาคสนามและบันทึกทางเทคนิคเกี่ยวกับการทดสอบเสาเข็ม CSL, การทดสอบความสมบูรณ์เสาเข็ม, และ Static Load เทียบกับ PDA ในประเทศไทย
+Close drawer || 关闭抽屉 || ปิดหน้าต่าง
+Direct inquiry bar || 直接询盘栏 || แถบสอบถามโดยตรง
+AN-THAI ENGINEERING · BANGKOK HUB || 安泰工程 · 曼谷总部 || AN-THAI ENGINEERING · ศูนย์กรุงเทพฯ
+AN-THAI Engineering Company Limited in Bangkok: four independent business units with clear responsibility boundaries. || 位于曼谷的安泰工程有限公司：四个独立业务单元，责任边界清晰。 || บริษัท แอน-ไทย เอ็นจิเนียริ่ง จำกัด ในกรุงเทพฯ: 4 หน่วยธุรกิจอิสระพร้อมขอบเขตความรับผิดชอบที่ชัดเจน
+Main navigation || 主导航 || เมนูหลัก
+Mobile navigation || 移动导航 || เมนูบนมือถือ
+Menu || 菜单 || เมนู
+Message || 需求说明 || ข้อความ
+Leave blank || 请留空 || เว้นว่างไว้
+Approved test plan || 经审批检测方案 || แผนการทดสอบที่อนุมัติแล้ว
+Comparable FOB/CIF/DDP || 可比口径 FOB/CIF/DDP || เปรียบเทียบเงื่อนไข FOB/CIF/DDP
+Grades · welds · coating || 牌号 · 焊缝 · 防腐涂装 || เกรดเหล็ก · รอยเชื่อม · สีเคลือบ
+Heat no. · NDT · DFT || 炉号 · 无损检测 · 漆膜厚度 || เลขความร้อน · ตรวจสอบ NDT · ความหนาฟิล์มสี
+Coordination || 统筹协调 || การประสานงาน
+Manufacturer Scope || 制造厂商责任边界 || ขอบเขตของผู้ผลิต
+Field Instruments || 现场仪器 || เครื่องมือภาคสนาม
+Four independent business units under AN-THAI Bangkok Hub || 安泰曼谷总部下设四个独立业务单元 || 4 หน่วยธุรกิจอิสระภายใต้ศูนย์กรุงเทพฯ ของ AN-THAI
+04 · REPORT || 04 · 检测报告 || 04 · รายงานผล
+04 · SUPPLY || 04 · 设备供应 || 04 · การจัดหาอุปกรณ์
+04 Field Testing & Measurement Instruments | AN-THAI Engineering || 04 工程现场检测与测量仪器 ｜ 安泰工程 || 04 เครื่องมือทดสอบและวัดค่าภาคสนาม | AN-THAI Engineering
+
+01 · Identity & Presence || 01 · 实体身份与现场覆盖 || 01 · ข้อมูลนิติบุคคลและพื้นที่ให้บริการ
+Who We Are || 关于安泰工程 || เกี่ยวกับเรา
+AN-THAI Engineering Company Limited is an independent engineering technical practice registered in Bangkok, Thailand (1339 Arwan Building, Pracharat 1 Rd, Wongsawang, Bangsue District, Bangkok 10800). We operate across the Greater Bangkok Metropolitan Area, the Eastern Economic Corridor (EEC / Rayong / Chonburi), and major Thai industrial corridors. || 安泰工程有限公司（AN-THAI Engineering Company Limited）是在泰国曼谷正式注册的独立工程技术实体（地址：1339 Arwan Building, Pracharat 1 Rd, Wongsawang, Bangsue, Bangkok 10800）。我们的现场技术协调与工程服务覆盖大曼谷都会区、东部经济走廊（EEC / 罗勇 / 春武里）及泰国各主要工业园区。 || บริษัท แอน-ไทย เอ็นจิเนียริ่ง จำกัด เป็นนิติบุคคลวิศวกรรมอิสระจดทะเบียน ณ กรุงเทพมหานคร (1339 อาคารอรวรรณ ถ.ประชาราษฎร์สาย 1 แขวงวงศ์สว่าง เขตบางซื่อ กรุงเทพฯ 10800) ดำเนินงานครอบคลุมพื้นที่กรุงเทพฯ ปริมณฑล เขตพัฒนาพิเศษภาคตะวันออก (EEC ระยอง ชลบุรี) และนิคมอุตสาหกรรมหลัก
+Our engineering practice delivers integrated technical coordination connecting substructure geotechnical testing, buyer-side structural steel procurement agency, powder-process equipment coordination, and specialized field measurement instruments. We combine international project standards (ASTM, BS, EN, ISO) with local Thai regulatory and engineering codes (TIS, EIT, BMA). || 安泰工程提供打通桩基岩土工程检测、买方结构钢材采办代理、工业粉体工艺设备协调以及现场专业检测仪器的综合工程技术服务。我们深度整合国际工程规范（ASTM、BS、EN、ISO）与泰国本地工程法令标准（TIS、EIT、BMA建筑许可要求）。 || เราให้บริการประสานงานด้านวิศวกรรมครบวงจร เชื่อมโยงงานทดสอบปฐพีและฐานราก การจัดหาโครงสร้างเหล็กฝั่งผู้ซื้อ เครื่องจักรระบบผงอุตสาหกรรม และเครื่องมือทดสอบภาคสนาม ผสานมาตรฐานสากล (ASTM, BS, EN, ISO) เข้ากับมาตรฐานวิศวกรรมและข้อกำหนดกฎหมายไทย (มอก., วสท., กทม.)
+Operating Positioning || 业务定位与原则 || ตำแหน่งเชิงวิชาชีพและขอบเขต
+From Substructure to Superstructure || 从地下桩基到地面结构 || จากโครงสร้างชั้นใต้ดินสู่โครงสร้างส่วนบน
+We bridge international project developers, EPC contractors, and equipment manufacturers with registered Thai Professional Engineers and verified field execution teams. Every scope has transparent commercial boundaries, traceable data, and written responsibility demarcations. || 安泰为国际项目业主、EPC总包商及设备制造商与泰国注册资深专业工程师（วุฒิวิศวกร / สามัญวิศวกร）及现场执行团队搭建桥梁。每项业务均具备透明的商业边界、可追溯的原始数据和书面界定的责任分工。 || เราทำหน้าที่เป็นสะพานเชื่อมโยงผู้พัฒนาโครงการสากล ผู้รับเหมา EPC และผู้ผลิต เข้ากับวุฒิวิศวกรและสามัญวิศวกรไทยที่ได้รับใบอนุญาต พร้อมทีมงานภาคสนาม ทุกขอบเขตงานมีความโปร่งใส ตรวจสอบย้อนกลับได้ และมีข้อตกลงความรับผิดชอบเป็นลายลักษณ์อักษร
+Parallel technical service lines operating under unified engineering coordination, not separate legal entities. || 四个业务单元由安泰工程统一技术协调与交付管理，各自保持清晰的专业边界与责任分工。 || สายงานบริการทางเทคนิค 4 ด้าน ดำเนินงานภายใต้การประสานงานวิศวกรรมแบบบูรณาการ พร้อมขอบเขตความรับผิดชอบที่ชัดเจน
+Static load testing (SLT), dynamic testing (PDA), integrity testing (PIT/CSL), borehole drilling, and Thai statutory engineering review. || 静载试验（SLT）、高应变动载（PDA）、低应变反射波法（PIT）、跨孔声波透射法（CSL）、地质勘察钻探与泰国法定资质签章审查。 || การทดสอบรับน้ำหนักเสาเข็ม (SLT), การทดสอบไดนามิก (PDA), การทดสอบความสมบูรณ์ (PIT/CSL), งานเจาะสำรวจดิน และการลงนามรับรองตามกฎหมายไทย
+Independent buyer-side procurement agency: technical RFQ alignment, factory QC audits, mill cert traceability (ASTM/GB), and pre-shipment sign-off. || 独立买方采办代理：中泰双语技术规格对齐、中国工厂质量审查、钢厂质保书溯源（ASTM/GB双标）、第三方驻厂监造与出厂验收签发。 || ตัวแทนจัดหาโครงสร้างเหล็กฝั่งผู้ซื้อ: เทียบสเปกเทคนิค RFQ, ตรวจสอบโรงงาน, ตรวจสอบย้อนกลับใบรับรองโรงงาน (ASTM/GB) และตรวจรับก่อนส่งมอบ
+Technical boundary coordination for grinding systems (CNBM Hefei scope), cyclones, dust collectors, motor matching, and Thai statutory compliance. || 大型辊磨/立磨系统（中材合肥院供货边界协调）、旋风分离器、袋式除尘器、电机电气匹配与泰国本地报建标准合规。 || การประสานงานเทคนิคสำหรับระบบบดแนวตั้ง (ขอบเขต CNBM Hefei), ไซโคลน, ระบบกรองฝุ่น, การจับคู่มอเตอร์ และความสอดคล้องตามมาตรฐานไทย
+Selection, supply coordination, local delivery, calibration documentation, and sensor matching for pile testing hardware and site instruments. || 桩基检测仪（PIT/CSL）、位移计、力传感器、数据采集仪的选型、现货调配、校准证书及中文/英文/泰文技术支持。 || การคัดเลือกและจัดหาเครื่องมือทดสอบเสาเข็ม (PIT/CSL), เซนเซอร์, เกจวัด และระบบตรวจวัดภาคสนาม พร้อมเอกสารสอบเทียบและการสนับสนุนด้านเทคนิค
+View Testing Services → || 查看工程检测业务 → || ดูบริการงานทดสอบ →
+View Steel Agency → || 查看钢材采办业务 → || ดูบริการจัดหาเหล็ก →
+View Powder Equipment → || 查看粉体设备业务 → || ดูระบบอุปกรณ์ผง →
+View Testing Instruments → || 查看检测仪器业务 → || ดูเครื่องมือทดสอบ →
+02 · Professional Governance || 02 · 专业团队与协作治理 || 02 · ธรรมาภิบาลวิชาชีพและทีมงาน
+Our Team & Partner Network || 专业团队与合作伙伴网络 || ทีมงานวิศวกรและเครือข่ายพันธมิตร
+We deliver through an accountable, multi-tiered structure combining in-house bilingual engineering coordination, certified Thai Professional Engineers, and accredited specialist testing laboratories. || 我们通过权责严谨的三层架构执行交付：自有多语种技术协调团队、泰国法定注册高级工程师（วุฒิวิศวกร / สามัญวิศวกร）以及具备资质认证的专业合作实验室。 || เราดำเนินงานผ่านโครงสร้างสามระดับที่รัดกุม: ทีมประสานงานเทคนิคหลายภาษา วิศวกรวิชาชีพไทยที่ได้รับอนุญาต และห้องปฏิบัติการทดสอบเฉพาะทางที่ได้รับการรับรอง
+In-House Coordination Desk || 自有中泰双语技术协调台 || โต๊ะประสานงานเทคนิคไทย-สากล
+Stationed in Bangkok, our technical coordinators manage drawing conversions, bilingual method statements (Chinese/English/Thai), field scheduling, and commercial documentation. || 常驻泰国曼谷，负责中英泰三语工程图纸转换、施工与检测技术方案编制、现场进度协调、商业边界锁定及合同合规管理。 || ประจำการ ณ กรุงเทพฯ ดูแลการแปลงแบบวิศวกรรม เอกสารข้อกำหนดวิธีทำงานสามภาษา (ไทย/อังกฤษ/จีน) การจัดตารางหน้างาน และเอกสารสัญญา
+Licensed Thai Engineers (PE) || 泰国注册执照工程师（PE） || วุฒิวิศวกรและสามัญวิศวกรไทย
+Statutory engineering sign-offs, structural calculations, and regulatory submissions are conducted strictly by Thai licensed Professional Engineers (วุฒิวิศวกร / สามัญวิศวกร). || 法定计算书校核、结构受力复核、政府报建审批（BMA / IEAT / 工业部）由具备泰国工程师理事会（COE）有效执照的注册资深工程师独立审查并加盖执业印章。 || การลงนามรับรองทางวิศวกรรมตามกฎหมาย การคำนวณโครงสร้าง และการยื่นขออนุญาตก่อสร้าง ดำเนินการโดยวุฒิวิศวกรหรือสามัญวิศวกรไทยที่มีใบอนุญาตถูกต้อง
+Accredited Execution Partners || 资质认证检测机构与制造商 || พันธมิตรห้องแล็บและผู้ผลิต
+Specialized deep foundation testing, certified soil laboratories, and heavy equipment fabrication are carried out through verified local partner labs and Chinese OEM plants under AN-THAI QA oversight. || 大型桩基静载反力架架设、土工三轴试验及重型工业设备制造，由具备认证资质的泰国本地特种工程公司及中国OEM制造基地在安泰驻场QA监督下实施。 || การทดสอบรับน้ำหนักเสาเข็มขนาดใหญ่ แล็บปฐพี และการผลิตเครื่องจักรหนัก ดำเนินการร่วมกับห้องปฏิบัติการในไทยและผู้ผลิต OEM ภายใต้การควบคุม QA ของ AN-THAI
+Strict Operational Boundary Disclaimer || 严格合规与运营边界声明 || ข้อกำหนดและขอบเขตความรับผิดชอบอย่างเคร่งครัด
+AN-THAI Engineering explicitly clarifies that it does not claim unowned physical manufacturing plants, proprietary blast furnaces, or uncertified testing facilities. Our value lies in rigorous technical coordination, independent quality governance, certified Thai PE sign-offs, and verified field execution. || 安泰工程郑重声明：安泰不虚构自身未拥有的制造工厂、高炉炼钢基地或未获资质认证的实验室。我们的核心价值在于严谨的中泰工程技术协调、独立的买方质量把关、泰国法定注册工程师盖章以及扎实可靠的现场执行管理。 || AN-THAI ขอแจ้งอย่างชัดเจนว่า เราไม่มีการกล่าวอ้างโรงงานผลิตหรือแล็บที่ไม่ได้เป็นเจ้าของ คุณค่าของเราคือการประสานงานวิศวกรรมที่โปร่งใส การควบคุมคุณภาพอิสระ การรับรองโดยวิศวกรวิชาชีพไทย และการดำเนินงานภาคสนามที่ตรวจสอบได้
+03 · Engineering Delivery Chain || 03 · 工程交付全链条 || 03 · กระบวนการส่งมอบงานวิศวกรรม
+How We Deliver Your Project || 标准化工程交付流程 || ขั้นตอนการส่งมอบโครงการ
+Every engagement follows a structured, transparent 4-stage engineering delivery workflow with full traceability and explicit milestone sign-offs. || 安泰的每一项业务委托均严格遵循四阶段工程交付规范，确保全过程数据可溯源、责任分界清晰、节点交付受控。 || ทุกโครงการดำเนินตามขั้นตอนมาตรฐาน 4 ขั้นตอนที่โปร่งใส ตรวจสอบย้อนกลับได้ พร้อมการตรวจรับตามงวดงานอย่างเป็นระบบ
+1. Technical Brief & Boundary Lock || 1. 技术需求与责任边界锁定 || 1. สรุปความต้องการทางเทคนิคและขอบเขต
+Review geotechnical boring logs, structural shop drawings, equipment specifications, and clarify Thai statutory jurisdiction before commercial quotation. || 深入审查地质勘察报告、结构施工蓝图、设备工况参数，在商务报价前明确锁定泰方法定审批管辖权与各方分工。 || ตรวจสอบรายงานการเจาะสำรวจดิน แบบแปลนโครงสร้าง สเปกเครื่องจักร และกำหนดขอบเขตอำนาจกฎหมายไทยก่อนเสนอราคา
+2. Method Statement & PE Review || 2. 施工与检测方案审查（PE审定） || 2. ทบทวนวิธีทำงานและการตรวจรองโดยวิศวกร
+Prepare project-specific Method Statements and Inspection Test Plans (ITP) in bilingual format, reviewed and signed off by licensed Thai Professional Engineers. || 编制针对具体项目的英文/中文/泰文方案（Method Statement）与检验试验计划（ITP），由泰国持证高级工程师审核并签署审定意见。 || จัดทำเอกสารขั้นตอนการทำงาน (Method Statement) และแผนการตรวจสอบ (ITP) สองภาษา โดยผ่านการตรวจสอบและลงนามจากวิศวกรวิชาชีพไทย
+3. Field / Shop Execution & Oversight || 3. 现场试验与驻厂监造执行 || 3. การปฏิบัติงานภาคสนามและควบคุมคุณภาพ
+Deploy calibrated field instrumentation, monitor static/dynamic load test execution, or carry out independent factory QC audits with full raw data recording. || 部署经检定校准的现场检测仪器，全程记录静载/动载试验原始波形数据，或派驻经验丰富的质检工程师进行钢结构出厂前无损探伤抽查。 || ติดตั้งเครื่องมือวัดที่ผ่านการสอบเทียบ บันทึกข้อมูลคลื่นสัญญาณและค่าน้ำหนักตามเวลาจริง หรือส่งวิศวกรเข้าตรวจสอบ NDT ก่อนส่งออกจากโรงงาน
+4. QA Handover & Formal Documentation || 4. 质量验收与法定工程报告移交 || 4. ส่งมอบงานและรายงานวิศวกรรมฉบับสมบูรณ์
+Issue formal comprehensive engineering reports with Thai PE stamped certification, raw test curves, mill certificates, and bilingual technical summaries. || 出具加盖泰国注册工程师有效执业印章的正式工程技术检测报告，移交包含原始测试曲线、材质质保书及中英双语执行摘要的全套法定归档卷宗。 || ออกรายงานวิศวกรรมฉบับทางการพร้อมการประทับตราวิศวกรไทยที่ได้รับอนุญาต ส่งมอบกราฟผลทดสอบ ใบรับรองโรงงาน และบทสรุปผู้บริหารสองภาษา
+04 · Traceable Track Record || 04 · 真实项目业绩与经验沉淀 || 04 · ผลงานจริงที่ตรวจสอบย้อนกลับได้
+Project Evidence & Delivery Track Record || 工程实绩与实名案例沉淀 || ผลงานโครงการและประวัติการส่งมอบงาน
+AN-THAI has delivered technical coordination across diverse construction and industrial projects throughout Thailand, spanning deep foundation pile testing in Bangkok high-rises, heavy structural steel mill audits for EEC logistics hubs, and mineral processing plant equipment coordination. || 安泰工程在全泰国范围内积累了扎实的工程技术实绩，涵盖曼谷超高层建筑深层嵌岩灌注桩检测、东部经济走廊（EEC）物流园区重型钢结构采办监造、以及中泰工业园区大型粉磨工艺设备边界协调。 || AN-THAI ได้ส่งมอบงานประสานงานวิศวกรรมในโครงการก่อสร้างและอุตสาหกรรมทั่วประเทศไทย ทั้งการทดสอบเสาเข็มเจาะลึกในอาคารสูงกรุงเทพฯ การตรวจรับโครงสร้างเหล็กใน EEC และการประสานงานเครื่องจักรบดผง
+In accordance with commercial client confidentiality agreements (NDAs) and engineering compliance standards, all case studies are presented with project-level technical context while protecting proprietary client identities. || 依据商业保密协议（NDA）及工程合规标准，我们在案例库中对业主商业信息进行脱敏处理，同时完整保留地质条件、桩型参数、钢材规格、实测缺陷数据及工程复核结论供同行参考核实。 || ตามข้อตกลงการรักษาความลับทางการค้า (NDA) และจรรยาบรรณวิศวกรรม กรณีศึกษาทั้งหมดได้รับการปกป้องชื่อผู้ว่าจ้าง แต่คงไว้ซึ่งข้อมูลเทคนิค ข้อมูลชั้นดิน สเปกเหล็ก และผลการวิเคราะห์เพื่อประโยชน์ทางวิชาการ
+Explore Delivery Cases → || 查看工程实绩案例库 → || ดูกรณีศึกษาผลงานวิศวกรรม →
+05 · Hardware & Measurement || 05 · 硬件配置与计量检定 || 05 · เครื่องมือวัดและการสอบเทียบ
+Calibrated Testing Equipment Roster || 专业现场检测设备与检定保障 || เครื่องมือทดสอบที่ผ่านการสอบเทียบมาตรฐาน
+All dynamic sensors, load cells, LVDTs, and acoustic probes are calibrated annually in certified laboratories with ISO/IEC 17025 traceable certificates. || 所有传感器、高精度压力传感器、电子位移计及超声波换能器均定期送交具备 ISO/IEC 17025 认可资质的国家级计量院进行校准，确保测试数据具备法律与工程效力。 || เซนเซอร์วัดแรง เกจวัดการทรุดตัว และหัววัดคลื่นเสียงความถี่สูงทุกชิ้น ผ่านการสอบเทียบตามรอบปีจากห้องปฏิบัติการมาตรฐาน ISO/IEC 17025
+06 · Direct Access || 06 · 直接对接工程团队 || 06 · ติดต่อทีมวิศวกรโดยตรง
+Speak Directly with an Engineer || 与常驻曼谷的工程师直接交流 || ปรึกษาวิศวกรประจำสำนักงานกรุงเทพฯ
+Have an ongoing project in Bangkok, EEC, or anywhere in Thailand? Discuss your technical specifications, drawing review, or testing schedule directly with our bilingual coordination desk. || 无论您在曼谷、罗勇、春武里或泰国其他工业园区有在建工程，均可随时联系我们的中泰双语工程师，探讨技术规范、图纸转换或现场试验排期。 || หากท่านมีโครงการก่อสร้างในกรุงเทพฯ, EEC หรือพื้นที่ใดในไทย ติดต่อทีมวิศวกรสองภาษาของเราเพื่อหารือข้อกำหนดเทคนิค การแปลงแบบ หรือตารางทดสอบได้ทันที
+Open Technical Inquiry Desk || 提交工程技术咨询 || เปิดโต๊ะรับเรื่องปรึกษาเทคนิค
+Office Address || 曼谷办事处地址 || ที่ตั้งสำนักงาน
+Telephone || 联系电话 || เบอร์โทรศัพท์
+Email Desk || 电子邮箱 || อีเมลติดต่อ
+Geotechnical Ground Investigation || 岩土工程地质勘察 || การเจาะสำรวจดินและงานปฐพีวิศวกรรม
+Borehole drilling, Standard Penetration Tests (SPT), undisturbed Shelby tube sampling, groundwater table measurement, and laboratory soil mechanics testing for foundation design verification. || 深孔钻探、标准贯入试验（SPT）、薄壁取土器（Shelby tube）原状土取样、地下水位长期监测以及满足泰国规范的土工力学室内试验（直剪、固结、三轴）。 || การเจาะสำรวจชั้นดิน, การทดสอบ Standard Penetration Test (SPT), การเก็บตัวอย่างดินคงสภาพ, การวัดระดับน้ำใต้ดิน และการทดสอบคุณสมบัติทางปฐพีในห้องแล็บ
+Excavation & Structural Monitoring || 基坑支护与结构变形监测 || การตรวจวัดการเคลื่อนตัวของดินและโครงสร้าง
+Inclinometer lateral displacement tracking, settlement monitoring points, piezometers, and crack gauges for deep basements, retaining walls, and adjacent infrastructure protection. || 测斜仪深层水平位移监测、精密水准沉降观测点、孔隙水压力计及结构裂缝动态观测，保障深基坑、连续墙及周边临近建筑的安全稳定。 || การวัดการเคลื่อนตัวด้านข้างด้วย Inclinometer, จุดตรวจวัดการทรุดตัว, Piezometer วัดแรงดันน้ำ และการตรวจวัดรอยร้าวในงานขุดชั้นใต้ดิน
+Static Load Testing (SLT) || 单桩竖向静载试验（SLT） || การทดสอบการรับน้ำหนักเสาเข็มแบบสถิต (SLT)
+Dynamic Pile Testing (PDA) || 高应变动力打桩分析（PDA） || การทดสอบเสาเข็มด้วยวิธีพลศาสตร์ (PDA)
+Low Strain Pile Integrity (PIT) || 低应变反射波法完整性检测（PIT） || การทดสอบความสมบูรณ์ของเสาเข็มแบบความเครียดต่ำ (PIT)
+Cross-Hole Sonic Logging (CSL) || 跨孔超声波透射法检测（CSL） || การทดสอบความสมบูรณ์ด้วยคลื่นเสียงข้ามรูเจาะ (CSL)
+Ground Investigation (GI) || 地质勘察与原状土取样 || การเจาะสำรวจดินและงานปฐพี
+Structural Monitoring || 基坑与结构变形监测 || การตรวจวัดการเคลื่อนตัวของโครงสร้าง
+Statutory Compliance & Permitting || 泰国法定合规与报建报批 || การยื่นขออนุญาตตามกฎหมายไทย
+Thai Drawing Conversion, PE Review & Statutory Submission Coordination || 中泰图纸规范转换、高级注册工程师（PE）审查与法定报建协调 || การแปลงแบบตามมาตรฐานไทย การรับรองโดยวุฒิวิศวกร และการประสานงานขอใบอนุญาต
+Foreign structural drawings (GB, AISC, Eurocode) cannot be directly submitted to Thai local building authorities (BMA, IEAT, Department of Public Works). AN-THAI coordinates the complete statutory engineering package required for building permits (Or.1) and statutory inspection certificates. || 国际工程项目使用中国规范（GB）、美标（AISC）或欧标（Eurocode）绘制的施工蓝图，必须经过泰国注册资深工程师重新复核荷载、转换为泰制单位与泰国工程院（EIT）规范，方能向曼谷市政府（BMA）、泰国工业区管理局（IEAT）或公共工程部申请建筑许可（Or.1）。安泰工程提供全流程法定工程报建卷宗审定与技术协同。 || แบบโครงสร้างที่ใช้มาตรฐานต่างประเทศ (GB, AISC, Eurocode) ไม่สามารถยื่นขออนุญาตก่อสร้างในไทยได้โดยตรง AN-THAI ให้บริการประสานงานวิศวกรรมครบวงจรเพื่อแปลงแบบ คำนวณโครงสร้าง และลงนามโดยวุฒิวิศวกรไทย สำหรับยื่นขอ อ.1 (BMA, กนอ.)
+Drawing & Code Conversion || 图纸规范与荷载换算 || การแปลงแบบและเทียบมาตรฐาน
+Conversion from GB / AISC / EN to Thai Ministry regulations, EIT standards, and local seismic wind load parameters. || 将GB/AISC/EN规范图纸转换为符合泰国市政法令、EIT标准及当地风荷载与抗震设防要求的泰制设计蓝图。 || แปลงแบบจาก GB / AISC / EN เป็นมาตรฐาน วสท. กฎกระทรวง และพารามิเตอร์แรงลม/แผ่นดินไหวของไทย
+Thai PE Calculations & Stamping || 泰国注册资深工程师算书与签章 || รายการคำนวณและประทับตราวิศวกร
+Structural calculation books audited and stamped by licensed Thai Professional Engineers (วุฒิวิศวกร / สามัญวิศวกร). || 由泰国工程师理事会注册的高级资深工程师（วุฒิวิศวกร / สามัญวิศวกร）对结构受力进行独立核算并加盖有效执业印章。 || รายการคำนวณโครงสร้างตรวจสอบและประทับตราโดยวุฒิวิศวกรหรือสามัญวิศวกรไทยที่ได้รับอนุญาต
+Authority Approval Coordination || 政府部门报建全流程协助 || การประสานงานยื่นหน่วยงานราชการ
+Technical representation and response to building authority queries for BMA, IEAT, and municipal offices. || 协助总包解答曼谷市政府（BMA）、工业区管理局（IEAT）审查官员提出的技术质疑，提供合规澄清说明书。 || ประสานงานชี้แจงข้อซักถามทางเทคนิคกับเจ้าหน้าที่ กทม., กนอ. และเทศบาลในพื้นที่
+Discuss Statutory Submission with Our Engineers → || 与工程师探讨法定报建与审图需求 → || ปรึกษาเรื่องการยื่นขออนุญาตกับวิศวกรของเรา →
+Bangkok Deep Bored Pile Acoustic Uniformity & Debonding Diagnosis (CSL) || 曼谷超高层深层嵌岩灌注桩超声波透射法均匀性与管壁脱粘鉴别（CSL） || การตรวจวินิจฉัยความสม่ำเสมอของเนื้อคอนกรีตเสาเข็มเจาะลึกและปัญหาท่อหลุดในกรุงเทพฯ (CSL)
+Cross-Hole Sonic Logging across 4 sonic access tubes on deep bored piles (Ø1.5m, depth 58m). Re-testing and frequency analysis distinguished actual concrete honeycombing from acoustic tube-debonding anomalies. || 对直径1.5米、深度58米的深层灌注桩4根声测管执行全长超声波透射检测。通过复测与首波频率特征分析，成功鉴别了声测管管壁与混凝土微脱粘假阳性，避免了非必要的昂贵破损性钻孔取芯。 || ทดสอบ Cross-Hole Sonic Logging เสาเข็มเจาะขนาด Ø1.5 ม. ลึก 58 ม. แยกแยะความแตกต่างระหว่างข้อบกพร่องของเนื้อคอนกรีตกับสัญญาณหลอกจากการแยกตัวของท่อเสียง
+Full acoustic velocity and energy arrival profile, anomaly zoning chart, and bilingual engineering diagnosis report stamped by licensed Thai PE. || 全深度声速-声幅剖面图、缺陷深度分区定级图，以及由泰国注册资深工程师签署盖章的中英泰三语分析报告与专家处理意见书。 || กราฟความเร็วคลื่นและพลังงานตลอดความลึก พร้อมรายงานวินิจฉัยทางวิศวกรรมประทับตราโดยวุฒิวิศวกรไทย
+Rayong EEC 600-Ton Static Pile Load Test (SLT) & Reaction Frame Coordination || 罗勇东部经济走廊（EEC）工业项目600吨单桩静载试验（SLT）与反力架安全校核 || การทดสอบการรับน้ำหนักเสาเข็มแบบสถิต 600 ตัน (SLT) และการตรวจสอบโครงสร้างโครงรับแรงสะท้อน จ.ระยอง
+Pre-test anchor pile tensile capacity review, reaction frame structural calculation, and calibrated hydraulic jacking execution up to 200% design working load per ASTM D1143 / EIT standard. || 试验前锚桩抗拔受力校核、反力架钢梁挠度与承载力复算，以及采用多级高精度液压千斤顶按ASTM D1143/泰国EIT规范执行加载至设计工作荷载200%的静载试验。 || การคำนวณกำลังต้านแรงดึงของเสาเข็มสมอ ตรวจสอบความแข็งแรงของคานเหล็กรับแรง และควบคุมการทดสอบแรงกดด้วยแม่แรงไฮดรอลิกตามมาตรฐาน ASTM D1143 / วสท.
+Calibrated multi-cycle Load-Settlement curves, rebound and net settlement analysis, and formal certification of ultimate bearing capacity. || 全套检定校准证书、多级加载-沉降时程曲线（Q-S曲线）、回弹率与净沉降分析，以及泰国注册工程师签章认定的单桩承载力合格鉴定书。 || กราฟน้ำหนักบรรทุก-การทรุดตัว (Load-Settlement), การวิเคราะห์การคืนตัว และหนังสือรับรองกำลังรับน้ำหนักอย่างเป็นทางการ
+Industrial Warehouse Heavy Structural Steel Sourcing, Mill Traceability & QA/QC Audit || 春武里工业物流中心重型钢结构采办代理、钢厂质保书溯源与驻厂QA/QC监督 || การจัดหาโครงสร้างเหล็กขนาดใหญ่สำหรับคลังสินค้าอุตสาหกรรม จ.ชลบุรี พร้อมการตรวจสอบย้อนกลับโรงงานและควบคุม QA/QC
+Buyer-side technical representation: RFQ alignment between Chinese fabricators and Thai project engineer, mill test certificate traceability (ASTM A36/A572 vs GB Q355B), and third-party ultrasonic weld inspection (UT/MT). || 代表国际业主履行独立买方技术代表职责：打通中国钢构加工厂与泰国项目工程师的技术对接，审查钢材质保书（MTC）微观元素与双标对照，实施第三方焊缝超声探伤（UT/MT）抽检及防腐涂层厚度检测。 || ทำหน้าที่ตัวแทนเทคนิคฝั่งผู้ซื้อ: เทียบสเปก RFQ ระหว่างโรงงานในจีนกับวิศวกรโครงการ ตรวจสอบย้อนกลับใบรับรองโรงงาน (ASTM/GB) และตรวจสอบแนวเชื่อมด้วยคลื่นเสียงความถี่สูง (UT/MT)
+Comprehensive pre-shipment inspection docket: 100% heat number traceability register, NDT inspection logs, zinc coating dry film thickness (DFT) records, and factory release sign-off. || 完整出厂质量验收卷宗：100%炉批号追溯台账、无损检测（NDT）报告、热镀锌干膜厚度（DFT）实测记录及买方出厂放行批准书。 || เอกสารการตรวจรับก่อนส่งมอบครบชุด: ทะเบียนหมายเลขความร้อน (Heat Number) 100%, บันทึกผลการทดสอบ NDT, ความหนาของสีเคลือบ และใบปล่อยสินค้า
+Mineral Grinding & Dust Collection Technical Boundary Coordination (CNBM Hefei scope) || 沙拉武里矿渣微粉加工项目立磨系统供货边界协调与袋式除尘器技术规范对齐 || การประสานงานขอบเขตทางเทคนิคระบบบดแร่และเครื่องกรองฝุ่น จ.สระบุรี (ขอบเขต CNBM Hefei)
+Technical interface coordination for Vertical Roller Mill (VRM) grinding station (CNBM Hefei Institute scope): feed size criteria, fan pressure balancing, high-efficiency baghouse filter integration, and Thai 380V/50Hz electrical compliance. || 大型矿渣微粉立磨研磨系统（中材合肥院供货边界）技术接口协调：进料粒度控制、系统循环风机风压风量平衡、高效脉冲袋式除尘器选型匹配，以及泰国本地380V/50Hz电气与电机启动标准对齐。 || การประสานงานจุดเชื่อมต่อเทคนิคสำหรับระบบบดแนวตั้ง VRM (ขอบเขตสถาบัน CNBM Hefei): พารามิเตอร์ขนาดป้อน, การคำนวณสมดุลพัดลม, ระบบกรองฝุ่น และการปรับระบบไฟฟ้า 380V 50Hz
+Mechanical-electrical interface boundary document, equipment data validation sheets, and Thai environmental emission compliance memorandum. || 机电技术接口界定责任备忘录、成套设备参数校核表，以及符合泰国工业部环保粉尘排放标准的工程合规技术备忘录。 || เอกสารขอบเขตความรับผิดชอบงานระบบเครื่องกลและไฟฟ้า, ตารางตรวจสอบพารามิเตอร์เครื่องจักร และบันทึกข้อตกลงมาตรฐานการปล่อยมลพิษ
+Unit 01 · Testing & Geotech || 业务单元 01 · 桩基与岩土工程检测 || หน่วยบริการ 01 · งานทดสอบเสาเข็มและปฐพี
+Unit 02 · Steel Procurement || 业务单元 02 · 结构钢材采办代理 || หน่วยบริการ 02 · การจัดหาโครงสร้างเหล็ก
+Unit 03 · Powder Equipment || 业务单元 03 · 工业粉体工艺设备 || หน่วยบริการ 03 · เครื่องจักรอุตสาหกรรมผง
+Engineering Scope & Method || 工程范围与技术方法 || ขอบเขตงานและวิธีวิศวกรรม
+Key Technical Deliverables || 核心技术交付成果 || ผลงานส่งมอบหลัก
+Related Technical Guide || 关联技术指南 || คู่มือเทคนิคที่เกี่ยวข้อง
+View Service Scope || 查看业务单元详情 || ดูรายละเอียดบริการ
+Discuss Similar Scope → || 对接同类项目需求 → || ปรึกษาขอบเขตงานลักษณะนี้ →

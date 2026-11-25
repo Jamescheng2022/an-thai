@@ -146,11 +146,11 @@ CREATE TABLE IF NOT EXISTS content_drafts (
   updated_at timestamptz NOT NULL DEFAULT now(),
   published_at timestamptz,
   UNIQUE (workspace_id, slug),
-  -- V1.0 P2 audit fix: enforce disclosure clearance in DB regardless of application caller
+  -- V1.0 P2 audit fix: enforce strict JSON boolean disclosure clearance in DB regardless of application caller
   CONSTRAINT content_drafts_publish_requires_clearance CHECK (
     status <> 'published' OR (
       COALESCE(template_data->>'photoRights', 'unknown') = 'client_approved_public'
-      AND COALESCE((template_data->>'disclosureApproved')::boolean, false) = true
+      AND (template_data->'disclosureApproved') = 'true'::jsonb
     )
   )
 );
@@ -212,7 +212,10 @@ ALTER TABLE audit_events ENABLE ROW LEVEL SECURITY;
 
 -- Example tenant policy (replicated across all workspace tables)
 CREATE POLICY tenant_select_drafts ON content_drafts FOR SELECT USING (is_active_workspace_member(workspace_id));
-CREATE POLICY tenant_insert_drafts ON content_drafts FOR INSERT WITH CHECK (is_active_workspace_member(workspace_id));
+CREATE POLICY tenant_insert_drafts ON content_drafts FOR INSERT WITH CHECK (
+  is_active_workspace_member(workspace_id)
+  AND status <> 'published'
+);
 CREATE POLICY tenant_update_drafts ON content_drafts FOR UPDATE
   USING (is_active_workspace_member(workspace_id))
   WITH CHECK (
@@ -220,8 +223,15 @@ CREATE POLICY tenant_update_drafts ON content_drafts FOR UPDATE
     AND (
       status <> 'published'
       OR (
-        COALESCE(template_data->>'photoRights', 'unknown') = 'client_approved_public'
-        AND COALESCE((template_data->>'disclosureApproved')::boolean, false) = true
+        EXISTS (
+          SELECT 1 FROM workspace_memberships m
+          WHERE m.workspace_id = workspace_id
+            AND m.user_id = auth.uid()
+            AND m.revoked_at IS NULL
+            AND m.role IN ('owner', 'admin', 'publisher')
+        )
+        AND COALESCE(template_data->>'photoRights', 'unknown') = 'client_approved_public'
+        AND (template_data->'disclosureApproved') = 'true'::jsonb
       )
     )
   );

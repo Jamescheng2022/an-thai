@@ -128,12 +128,17 @@ ${notes}`
     }
 
     if (storeWebhookUrl) {
-      const stRes = await fetch(storeWebhookUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ requestId, receivedAt, status: 'accepted_for_delivery', providerMessageId, route, location, scale, contact })
-      });
-      persistedToStore = stRes.ok;
+      try {
+        const stRes = await fetch(storeWebhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ requestId, receivedAt, status: 'accepted_for_delivery', providerMessageId, route, location, scale, contact })
+        });
+        persistedToStore = stRes.ok;
+      } catch (storeErr) {
+        console.error('[AN-THAI /api/inquiry store error]', storeErr);
+        persistedToStore = false;
+      }
     }
 
     return res.status(200).json({

@@ -21,10 +21,11 @@ class Doc(HTMLParser):
 for preview in (root/'_qa').glob('*.html'):
     assert 'noindex,nofollow' in preview.read_text(encoding='utf-8'), preview
 docs={p.relative_to(root).as_posix():Doc(p.read_text(encoding='utf-8')) for p in root.rglob('*.html') if '_qa' not in p.relative_to(root).parts and not p.relative_to(root).as_posix().startswith('studio/')}
-expected_docs = 59
+expected_docs = 56
 assert len(docs) == expected_docs, f"Expected {expected_docs} docs, got {len(docs)}"
 assert not (root/'content/project-references-review.json').exists(), 'Internal review-only leads must not be packaged in dist'
 assert not (root/'cases/case-template.html').exists(), 'Case template must not be packaged in dist/cases'
+assert not (root/'assets/images/cases').exists(), 'Rights-held assets/images/cases must not be packaged in dist'
 links=0
 for name,d in docs.items():
     language='zh-CN' if name.startswith('zh/') else 'th' if name.startswith('th/') else 'en'

@@ -1,7 +1,9 @@
 """Build V1.0 static Cases Directory, localized crawlable detail pages, and SourceRating AI index."""
 from html import escape
 from pathlib import Path
+from urllib.parse import urlsplit
 import json
+import re
 
 ROOT = Path(__file__).resolve().parent.parent
 BASE = 'https://an-thai.com/'
@@ -475,7 +477,7 @@ def build_index_body(items, lang):
 
         <div class="notice-box is-neutral">
           <strong style="display:block;margin-bottom:4px;">{e(ui["honestTitle"])}</strong>
-          <span>{e(ui["honestBody"])}</span>
+          <span>{e(ui["honestBody"].replace(" 4 ", f" {len(items)} ").replace("จำนวน 4 ", f"จำนวน {len(items)} "))}</span>
         </div>
 
         <div>
@@ -577,7 +579,39 @@ def build_detail_body(item, lang):
     </section>'''
 
 
-def write_ai_index(data, dist):
+def valid_https_url(raw):
+    if not isinstance(raw, str) or not raw.startswith('https://'):
+        return False
+    if any(c.isspace() or ord(c) < 32 or ord(c) == 127 for c in raw):
+        return False
+    try:
+        p = urlsplit(raw)
+        return p.scheme == 'https' and bool(p.hostname) and not p.username and not p.password
+    except ValueError:
+        return False
+
+
+def is_publicly_cleared(item):
+    if item.get('status') != 'published_reference':
+        return False
+    if item.get('verified') is not True or item.get('publicCleared') is not True:
+        return False
+    slug = item.get('slug', '')
+    if not isinstance(slug, str) or not re.fullmatch(r'[a-z0-9]+(?:-[a-z0-9]+)*', slug):
+        return False
+    img = item.get('imageEvidence', {})
+    if img.get('commercialRightsApproved') is not True:
+        return False
+    if not isinstance(img.get('displayWidth'), int) or img['displayWidth'] <= 0:
+        return False
+    if not isinstance(img.get('displayHeight'), int) or img['displayHeight'] <= 0:
+        return False
+    if not valid_https_url(item.get('sourceUrl')):
+        return False
+    return True
+
+
+def write_ai_index(data, cleared_items, dist):
     payload = {
         'schemaVersion': '1.0',
         'sourceSite': 'an-thai.com',
@@ -609,22 +643,29 @@ def write_ai_index(data, dist):
                 'imageEvidence': item['imageEvidence'],
                 'aiSimilarityMetadata': item['aiSimilarityMetadata'],
             }
-            for item in data['items']
+            for item in cleared_items
         ],
     }
     raw = json.dumps(payload, ensure_ascii=False, indent=2) + '\n'
     (ROOT / 'content/cases-ai-index.json').write_text(raw, encoding='utf-8')
     if (dist / 'content').is_dir():
         (dist / 'content/cases-ai-index.json').write_text(raw, encoding='utf-8')
+        sanitized_cases = {
+            'schemaVersion': data.get('schemaVersion', '2.0'),
+            'policy': data.get('policy', ''),
+            'anThaiDirectStatus': data['anThaiDirectStatus'],
+            'items': cleared_items,
+        }
+        (dist / 'content/cases.json').write_text(json.dumps(sanitized_cases, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 
 
 def generate():
     dist = ROOT / 'dist'
     data = json.loads((ROOT / 'content/cases.json').read_text(encoding='utf-8'))
-    items = [x for x in data['items'] if x.get('verified')]
+    items = [x for x in data['items'] if is_publicly_cleared(x)]
     i18n = load_i18n()
 
-    write_ai_index(data, dist)
+    write_ai_index(data, items, dist)
 
     sitemap_path = dist / 'sitemap.xml' if (dist / 'sitemap.xml').is_file() else ROOT / 'sitemap.xml'
     sitemap = sitemap_path.read_text(encoding='utf-8')

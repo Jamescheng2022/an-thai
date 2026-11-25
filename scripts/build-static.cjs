@@ -16,13 +16,20 @@ fs.rmSync(output, {recursive: true, force: true});
 fs.mkdirSync(output, {recursive: true});
 for (const file of files) fs.copyFileSync(path.join(root, file), path.join(output, file));
 
-// Copy public asset and content directories (exclude internal studio/, api/, and internal review-only leads)
-if (fs.existsSync(path.join(root, 'assets'))) fs.cpSync(path.join(root, 'assets'), path.join(output, 'assets'), {recursive: true});
+// Copy public asset and content directories (exclude internal studio/, api/, review-only leads, raw cases registry, and rights-held external case banners)
+if (fs.existsSync(path.join(root, 'assets'))) {
+  const heldCasesDir = path.join(root, 'assets', 'images', 'cases');
+  fs.cpSync(path.join(root, 'assets'), path.join(output, 'assets'), {
+    recursive: true,
+    filter: (src) => src !== heldCasesDir && !src.startsWith(heldCasesDir + path.sep)
+  });
+}
 if (fs.existsSync(path.join(root, 'cases'))) fs.cpSync(path.join(root, 'cases'), path.join(output, 'cases'), {recursive: true});
 if (fs.existsSync(path.join(root, 'content'))) {
+  const excludedContent = new Set(['project-references-review.json', 'cases.json', 'cases-ai-index.json']);
   fs.cpSync(path.join(root, 'content'), path.join(output, 'content'), {
     recursive: true,
-    filter: (src) => path.basename(src) !== 'project-references-review.json'
+    filter: (src) => !excludedContent.has(path.basename(src))
   });
 }
 if (fs.existsSync(path.join(root, 'insights'))) fs.cpSync(path.join(root, 'insights'), path.join(output, 'insights'), {recursive: true});

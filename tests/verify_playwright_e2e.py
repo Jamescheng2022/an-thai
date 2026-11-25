@@ -215,7 +215,7 @@ def run_tests():
 
             # Check /zh/cases/index.html multi-filter + search + detail page + lang switcher route preservation
             zh_page.goto(f"{base_url}/zh/cases/index.html", wait_until="networkidle")
-            assert zh_page.locator("[data-case-card]").count() == 4
+            assert zh_page.locator("[data-case-card]").count() == 3
             zh_page.locator('[data-filter-attr="roge_original"]').click()
             assert zh_page.locator("[data-case-card]:not([hidden])").count() == 1
             zh_page.locator('[data-filter-attr="all"]').click()
@@ -227,10 +227,19 @@ def run_tests():
             # Verify language switcher preserves nested /cases/<slug>.html route
             en_switch_href = zh_page.locator('.lang-btn[data-language="en"]').get_attribute("href")
             assert en_switch_href == "/cases/paco-bma-precast-box-girder-1985.html", f"Unexpected EN href: {en_switch_href}"
-            print("PASS: Chinese Insights (5 articles), Cases filters/search, crawlable detail & nested lang switcher verified.")
+            # Verify TH insights index also has EN origin badge and 5 articles
+            zh_page.goto(f"{base_url}/th/insights/index.html", wait_until="networkidle")
+            assert zh_page.locator(".insights-grid .insight-card").count() == 5
+            assert "EN ต้นฉบับ" in zh_page.locator(".insights-grid").inner_text()
+            # Verify EN article keeps canonical slug in EN switcher link
+            zh_page.goto(f"{base_url}/insights/global-foundation-full-spectrum-engineering-inspection.html", wait_until="networkidle")
+            assert zh_page.locator('.lang-btn[data-language="en"]').get_attribute("href") == "/insights/global-foundation-full-spectrum-engineering-inspection.html"
+            print("PASS: ZH/TH Insights (5 articles + badges), Cases (3 cleared cards + filters/search), detail & nested lang switcher verified.")
             zh_page.close()
 
-            # Check query prefill (?type=equipment&category=measurement) on contact.html + honest API offline status
+            # Check query prefill (?type=equipment&category=measurement AND ?route=04 Field Testing Instruments)
+            page.goto(f"{base_url}/contact.html?route=04%20Field%20Testing%20Instruments", wait_until="networkidle")
+            assert page.locator("#cRoute").input_value() == "04 Field Testing Instruments"
             page.goto(f"{base_url}/contact.html?type=equipment&category=measurement", wait_until="networkidle")
             page.wait_for_timeout(80)
             assert page.locator("#cRoute").input_value() == "04 Field Testing Instruments"

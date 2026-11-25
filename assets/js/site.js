@@ -282,17 +282,17 @@
   function normalizeRoute(val) {
     if (!val) return '';
     var s = String(val).toLowerCase();
-    if (s.indexOf('01') !== -1 || s.indexOf('testing') !== -1 || s.indexOf('geotech') !== -1 || s.indexOf('pile') !== -1 || s.indexOf('engineering') !== -1 || s.indexOf('consult') !== -1 || s.indexOf('precast') !== -1) {
-      return '01 Foundation Testing & Geotech';
-    }
-    if (s.indexOf('02') !== -1 || s.indexOf('steel') !== -1 || s.indexOf('procurement') !== -1) {
-      return '02 Buyer-Side Steel Procurement Agency';
+    if (s.indexOf('04') !== -1 || s.indexOf('instr') !== -1 || s.indexOf('equip') !== -1 || s.indexOf('sensor') !== -1) {
+      return '04 Field Testing Instruments';
     }
     if (s.indexOf('03') !== -1 || s.indexOf('powder') !== -1 || s.indexOf('grind') !== -1 || s.indexOf('mill') !== -1) {
       return '03 Powder-Process Equipment';
     }
-    if (s.indexOf('04') !== -1 || s.indexOf('instr') !== -1 || s.indexOf('equip') !== -1 || s.indexOf('sensor') !== -1) {
-      return '04 Field Testing Instruments';
+    if (s.indexOf('02') !== -1 || s.indexOf('steel') !== -1 || s.indexOf('procurement') !== -1) {
+      return '02 Buyer-Side Steel Procurement Agency';
+    }
+    if (s.indexOf('01') !== -1 || s.indexOf('testing') !== -1 || s.indexOf('geotech') !== -1 || s.indexOf('pile') !== -1 || s.indexOf('engineering') !== -1 || s.indexOf('consult') !== -1 || s.indexOf('precast') !== -1) {
+      return '01 Foundation Testing & Geotech';
     }
     return '';
   }
@@ -317,8 +317,9 @@
       if (cSel) cSel.value = matched;
     }
     var notesLines = [];
-    if (categoryParam && CATEGORY_MAP[String(categoryParam).toLowerCase()]) {
-      notesLines.push('Equipment Category: ' + CATEGORY_MAP[String(categoryParam).toLowerCase()]);
+    var catKey = categoryParam ? String(categoryParam).toLowerCase() : '';
+    if (catKey && Object.prototype.hasOwnProperty.call(CATEGORY_MAP, catKey)) {
+      notesLines.push('Equipment Category: ' + CATEGORY_MAP[catKey]);
     } else if (categoryParam) {
       notesLines.push('Category: ' + String(categoryParam));
     }
@@ -589,11 +590,13 @@
           });
           if (res.ok) {
             var payload = await res.json().catch(function () { return {}; });
-            var receiptId = payload.requestId || payload.id || ('HTTP-' + res.status);
-            window.ANTHAI_TRACK('rfq_submit_success', { route: f.route, receiptId: receiptId });
-            if (contactFeedback) { contactFeedback.className = 'notice-box is-ok'; contactFeedback.textContent = t('fServerOk') + receiptId; contactFeedback.hidden = false; }
-            contactForm.reset();
-            return;
+            if (payload && payload.ok === true && payload.status === 'accepted_for_delivery' && payload.requestId) {
+              var receiptId = String(payload.requestId);
+              window.ANTHAI_TRACK('rfq_submit_success', { route: f.route, receiptId: receiptId });
+              if (contactFeedback) { contactFeedback.className = 'notice-box is-ok'; contactFeedback.textContent = t('fServerOk') + receiptId; contactFeedback.hidden = false; }
+              contactForm.reset();
+              return;
+            }
           }
         } catch (err) {
           // Honest fallback below

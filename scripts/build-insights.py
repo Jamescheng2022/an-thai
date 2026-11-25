@@ -230,6 +230,14 @@ def render(a, articles, shell):
     shell = re.sub(r'<title>.*?</title>', lambda _:'<title>'+e(a['title'])+' | AN-THAI Engineering</title>', shell)
     shell = re.sub(r'<link rel="alternate"[^>]*>', '', shell)
     shell = re.sub(r'<nav class="language-switch".*?</nav>', '', shell, flags=re.S)
+    article_lang_nav = (
+        '<nav class="lang-switch" aria-label="Language">'
+        f'<a href="/insights/{e(a["slug"], quote=True)}.html" class="lang-btn" data-language="en" data-lang="EN" lang="en" hreflang="en" aria-current="true" aria-pressed="true">EN</a>'
+        '<a href="/zh/insights/index.html" class="lang-btn" data-language="zh" data-lang="ZH" lang="zh-CN" hreflang="zh-CN" aria-pressed="false">中文</a>'
+        '<a href="/th/insights/index.html" class="lang-btn" data-language="th" data-lang="TH" lang="th" hreflang="th" aria-pressed="false">ไทย</a>'
+        '</nav>'
+    )
+    shell = re.sub(r'<nav class="lang-switch"[^>]*>.*?</nav>', lambda _: article_lang_nav, shell, flags=re.S)
     shell = re.sub(r'<meta (?:name="(?:description|twitter:[^"]*)"|property="og:[^"]*")[^>]*>', '', shell)
     shell = re.sub(r'<link rel="canonical"[^>]*>', '', shell)
     shell = re.sub(r'<script type="application/ld\+json">.*?</script>', '', shell, flags=re.S)
@@ -416,17 +424,13 @@ def generate():
         ]:
             if page.exists():
                 html = page.read_text(encoding='utf-8')
-                cards_block = '<div class="insights-grid">' + build_cards(articles, lang=lang) + '</div>'
+                assert '<!-- insights:start -->' in html and '<!-- insights:end -->' in html, f'Missing insights markers in {page}'
+                cards_block = '<!-- insights:start -->\n        <div class="insights-grid">' + build_cards(articles, lang=lang) + '</div>\n        <!-- insights:end -->'
                 page.write_text(re.sub(r'<!-- insights:start -->.*?<!-- insights:end -->', lambda _: cards_block, html, flags=re.S), encoding='utf-8')
-        if (ROOT/'insights/index.html').exists():
-            html = (ROOT/'insights/index.html').read_text(encoding='utf-8')
-            cards_block = '<div class="insights-grid">' + build_cards(articles, lang='en') + '</div>'
-            (ROOT/'insights/index.html').write_text(re.sub(r'<!-- insights:start -->.*?<!-- insights:end -->', lambda _: cards_block, html, flags=re.S), encoding='utf-8')
 
-        # Update Homepage Latest Insights blocks (top 3 newest articles across EN/ZH/TH)
+        # Update Homepage Latest Insights blocks in dist/ (top 3 newest articles across EN/ZH/TH)
         for home_path, lang in [
             (dist/'index.html', 'en'), (dist/'zh/index.html', 'zh'), (dist/'th/index.html', 'th'),
-            (ROOT/'index.html', 'en'),
         ]:
             if home_path.exists():
                 home_html = home_path.read_text(encoding='utf-8')

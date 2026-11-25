@@ -484,3 +484,11 @@ main { flex: 1; padding-bottom: 64px; }
  .contact-direct-actions{margin-top:12px}
 }
 
+
+/* Preview QA: engineering flow diagrams were only ~51px high on a 390px screen.
+   Keep native readability in horizontal-scroll containers rather than shrinking every label. */
+@media (max-width:640px) {
+  .diagram-svg-wrap { overflow-x:auto!important;max-width:100%;-webkit-overflow-scrolling:touch; }
+  .diagram-svg-wrap > .diagram-svg { min-width:820px;width:820px!important;max-width:none;height:auto; }
+  .diagram-svg-wrap::before { content:"Swipe to view full diagram →";position:sticky;left:0;display:block;width:max-content;font-size:11px;color:#f7ad79;padding:0 0 8px; }
+}

@@ -115,6 +115,16 @@ class Localizer(HTMLParser):
             self.json_script = attrs_dict.get('type') == 'application/ld+json'
 
         # Translate attributes via i18n-data.js or legacy MAP
+        aria_translated = False
+        if 'data-i18n-aria' in attrs_dict:
+            aria_key = attrs_dict['data-i18n-aria']
+            if aria_key in I18N.get(self.lang_upper, {}):
+                attrs_dict['aria-label'] = I18N[self.lang_upper][aria_key]
+                aria_translated = True
+                self.count += 1
+            elif self.lang != 'en':
+                self.missing.add(f"data-i18n-aria:{aria_key}")
+
         if 'data-i18n-ph' in attrs_dict:
             ph_key = attrs_dict['data-i18n-ph']
             if ph_key in I18N.get(self.lang_upper, {}):
@@ -125,6 +135,8 @@ class Localizer(HTMLParser):
 
         for key in ['alt', 'placeholder', 'aria-label']:
             if key in attrs_dict:
+                if key == 'aria-label' and aria_translated:
+                    continue
                 attrs_dict[key] = self.tr(attrs_dict[key])
 
         if tag == 'meta':

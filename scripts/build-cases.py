@@ -33,6 +33,7 @@ LOCALE_UI = {
         'credBody': 'Representative method statements, anonymized sample test report formats, and discipline-specific track references are shared directly with prospective clients and engineering consultants during project scoping.',
         'credBtn': 'Discuss Project Scope →',
         'credWa': 'WhatsApp +66 90 292 1749',
+        'credWeChat': 'WeChat QR',
         'viewDetail': 'View Technical Record →',
         'askSimilar': 'Discuss Similar Scope',
         'srcLabel': 'Reference:',
@@ -71,6 +72,7 @@ LOCALE_UI = {
         'credBody': '如贵方处于招投标、施工方案审查或设备选型阶段，欢迎直接联系曼谷技术团队索取对应学科的方法说明、报告范本及交付能力文件。',
         'credBtn': '提交项目需求沟通 →',
         'credWa': 'WhatsApp +66 90 292 1749',
+        'credWeChat': '微信扫码',
         'viewDetail': '查看技术说明 →',
         'askSimilar': '咨询同类工程支持',
         'srcLabel': '参考来源：',
@@ -109,6 +111,7 @@ LOCALE_UI = {
         'credBody': 'หากท่านกำลังเตรียมแผนการทดสอบฐานรากหรือคัดเลือกผู้ผลิตเหล็กโครงสร้าง สามารถติดต่อทีมวิศวกรประจำกรุงเทพฯ เพื่อขอรับตัวอย่างรูปแบบรายงานและรายละเอียดขอบเขตงานได้โดยตรง',
         'credBtn': 'ปรึกษาขอบเขตโครงการ →',
         'credWa': 'WhatsApp +66 90 292 1749',
+        'credWeChat': 'WeChat QR',
         'viewDetail': 'ดูรายละเอียด →',
         'askSimilar': 'สอบถามขอบเขตงาน',
         'srcLabel': 'ข้อมูลอ้างอิง:',
@@ -262,6 +265,9 @@ def build_shell(lang, lang_code, lang_upper, subpath, title, desc, body_html, sc
             <a href="{prefix}/insights/index.html" data-i18n="navInsights">{tr("navInsights", "Insights")}</a>
             <a href="tel:+66902921749">+66 90 292 1749</a>
             <a href="mailto:info@an-thai.com">info@an-thai.com</a>
+            <a href="https://wa.me/66902921749" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            <a href="https://line.me/ti/p/p0_XsfILmH" target="_blank" rel="noopener noreferrer nofollow">LINE</a>
+            <a href="{prefix}/contact.html#direct-qr" data-i18n="navWeChatQr">{tr("navWeChatQr", "WeChat")}</a>
           </div>
         </div>
         <div class="footer-bottom">
@@ -313,6 +319,25 @@ def build_shell(lang, lang_code, lang_upper, subpath, title, desc, body_html, sc
           <div id="drawerFeedback" class="notice-box" hidden role="status" aria-live="polite"></div>
           <button id="drawerEmailBtn" type="button" class="btn btn-accent btn-full" data-i18n="drawerSendEmail">{tr("drawerSendEmail", "Open Email (info@an-thai.com) →")}</button>
           <button id="drawerCopyBtn" type="button" class="btn btn-outline btn-full" data-i18n="drawerCopyBrief">{tr("drawerCopyBrief", "Copy Structured Brief")}</button>
+          <div class="drawer-channels">
+            <div class="drawer-channels-label" data-i18n="drawerChannelsTitle">{tr("drawerChannelsTitle", "Direct Channels · Scan or Tap")}</div>
+            <div class="drawer-msg-links">
+              <a href="https://wa.me/66902921749" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" style="padding:7px 10px;font-size:11px;">WhatsApp</a>
+              <a href="https://line.me/ti/p/p0_XsfILmH" target="_blank" rel="noopener noreferrer nofollow" class="btn btn-line" style="padding:7px 10px;font-size:11px;">LINE</a>
+            </div>
+            <div class="drawer-qr-grid">
+              <a href="https://line.me/ti/p/p0_XsfILmH" target="_blank" rel="noopener noreferrer nofollow" class="qr-mini-card">
+                <div class="qr-mini-frame"><img src="/assets/images/contact-line-qr.webp" alt="LINE QR code for AN-THAI Engineering" width="600" height="600" loading="lazy" /></div>
+                <span class="qr-mini-title">LINE</span>
+                <span class="qr-mini-sub" data-i18n="lineActionLabel">{tr("lineActionLabel", "Open LINE →")}</span>
+              </a>
+              <a href="/assets/images/contact-wechat-qr.webp" target="_blank" rel="noopener noreferrer" class="qr-mini-card">
+                <div class="qr-mini-frame"><img src="/assets/images/contact-wechat-qr.webp" alt="WeChat QR code for AN-THAI Engineering (James2021)" width="600" height="600" loading="lazy" /></div>
+                <span class="qr-mini-title"><span data-i18n="wechatLabel">{tr("wechatLabel", "WeChat")}</span> · James2021</span>
+                <span class="qr-mini-sub" data-i18n="qrWechatHint">{tr("qrWechatHint", "Scan QR in WeChat")}</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -364,6 +389,8 @@ def build_capabilities_body(lang):
           <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;">
             <a href="{prefix}/contact.html" class="btn btn-accent">{e(ui["credBtn"])}</a>
             <a href="https://wa.me/66902921749" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">{e(ui["credWa"])}</a>
+            <a href="https://line.me/ti/p/p0_XsfILmH" target="_blank" rel="noopener noreferrer nofollow" class="btn btn-line">LINE</a>
+            <a href="{prefix}/contact.html#direct-qr" class="btn btn-outline">{e(ui["credWeChat"])}</a>
           </div>
         </div>
       </div>

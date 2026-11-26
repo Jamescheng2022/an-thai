@@ -318,11 +318,15 @@
       return { ok: false, persisted: false, error: 'BRIDGE_NOT_CONNECTED' };
     }
     if (!this.session || !this.session.sessionId) {
-      // First visitor message creates a Bridge session automatically
-      return this.createSession({
+      // First visitor message creates a Bridge session automatically; if requestHandoff was clicked first,
+      // follow through with a handoff message so the new session actually transitions to waiting_human.
+      var created = await this.createSession({
         message: payload.text,
         channelSlug: payload.requestHandoff ? 'handoff-request' : 'web-chat',
       });
+      if (!created || !created.ok || !created.sessionId || !payload.requestHandoff) {
+        return created;
+      }
     }
 
     var body = {

@@ -240,6 +240,19 @@ async function testAdapterAndMock() {
   assert.strictEqual(handoffRes.ok, true);
   assert.strictEqual(handoffRes.sessionStatus, 'waiting_human');
 
+  // Verify first-click requestHumanHandoff on a fresh mock adapter creates AND transitions session to waiting_human
+  const freshHandoffAdapter = new sandbox.SourceRatingEmbedAdapter({
+    bridgeEndpoint: '/api/sr-bridge',
+    workspaceKey: 'an-thai-first-handoff',
+    mockFallback: true
+  });
+  await freshHandoffAdapter.init();
+  const firstHandoff = await freshHandoffAdapter.requestHumanHandoff({ reason: 'visitor_requested' });
+  assert.strictEqual(firstHandoff.ok, true);
+  assert.strictEqual(firstHandoff.sessionStatus, 'waiting_human');
+  const firstSess = await freshHandoffAdapter.getSession();
+  assert.strictEqual(firstSess.session.status, 'waiting_human');
+
   // Simulate post correction + retraction lifecycle
   sandbox.ANTHAI_SR_MOCK.upsertPublicPost('an-thai-th', {
     id: 'TEST-ANTHAI-UPD-0001',

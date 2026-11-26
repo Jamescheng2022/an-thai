@@ -191,7 +191,8 @@
   function renderLiveMessages(messages) {
     if (!liveMount) return;
     if (!Array.isArray(messages) || messages.length === 0) {
-      liveMount.innerHTML = '<div class="notice-box is-neutral">' + esc(t('liveWelcomeEmpty')) + '</div>';
+      var emptyKey = (state.isMock || state.adapterMode === 'mock') ? 'liveWelcomeEmptyMock' : 'liveWelcomeEmpty';
+      liveMount.innerHTML = '<div class="notice-box is-neutral">' + esc(t(emptyKey)) + '</div>';
       return;
     }
     liveMount.innerHTML = messages.map(function (m) {
@@ -301,7 +302,9 @@
       }
     } catch (e) {}
     var forceOffline = srModeParam === 'offline' || srCfg.forceOffline === true;
-    var mockFallback = forceOffline ? false : (srCfg.mockFallback !== false);
+    var host = (window.location && window.location.hostname) ? String(window.location.hostname).toLowerCase() : '';
+    var isProductionHost = host === 'an-thai.com' || host === 'www.an-thai.com';
+    var mockFallback = (forceOffline || isProductionHost) ? false : (srCfg.mockFallback !== false);
 
     adapter = new window.SourceRatingEmbedAdapter({
       bridgeEndpoint: srCfg.bridgeEndpoint || '/api/sr-bridge',
@@ -331,6 +334,14 @@
     }
   }
 
+  function applySessionResetUI() {
+    state.sessionId = '';
+    state.sessionStatus = '';
+    syncStatusUI();
+    renderLiveMessages([]);
+    showLiveFeedback(t('liveSessionReset'), 'neutral');
+  }
+
   var liveForm = document.getElementById('liveMessageForm');
   var liveInput = document.getElementById('liveMsgInput');
   if (liveForm && liveInput) {
@@ -342,6 +353,7 @@
       showLiveFeedback('', '');
       var res = await adapter.sendMessage({ text: text, context: { page: window.location.pathname, lang: state.lang } });
       if (!res.ok) {
+        if (res.sessionReset) { applySessionResetUI(); return; }
         showLiveFeedback(t('liveErrSend') + (res.error ? ' (' + res.error + ')' : ''), 'err');
         return;
       }
@@ -363,15 +375,22 @@
       if (!adapter || !connected) return;
       var res = await adapter.requestHumanHandoff({ reason: 'visitor_requested', page: window.location.pathname });
       if (!res.ok) {
+        if (res.sessionReset) { applySessionResetUI(); return; }
         showLiveFeedback(t('liveErrHandoff') + (res.error ? ' (' + res.error + ')' : ''), 'err');
         return;
       }
       if (res.sessionId) state.sessionId = res.sessionId;
-      state.sessionStatus = res.sessionStatus || 'waiting_human';
+      state.sessionStatus = res.sessionStatus || res.status || '';
       syncStatusUI();
       window.ANTHAI_TRACK('human_handoff_requested', { sessionId: state.sessionId, isMock: state.isMock });
-      var ref = (res.messageId || (res.data && (res.data.handoffId || res.data.id))) ? ' #' + String(res.messageId || res.data.handoffId || res.data.id).slice(0, 8) : '';
-      showLiveFeedback(t('liveOkHandoff') + ref + (res.sessionReset ? ' ' + t('liveSessionReset') : ''), 'ok');
+      var ref = (res.messageId || res.eventId || (res.data && (res.data.handoffId || res.data.id)))
+        ? ' #' + String(res.messageId || res.eventId || res.data.handoffId || res.data.id).slice(0, 8)
+        : '';
+      if (res.isMock || state.isMock) {
+        showLiveFeedback(t('liveOkHandoffMock') + ref, 'neutral');
+      } else {
+        showLiveFeedback(t('liveOkHandoff') + ref + (res.sessionReset ? ' ' + t('liveSessionReset') : ''), 'ok');
+      }
       var listRes = await adapter.listMessages();
       if (listRes.ok) renderLiveMessages(listRes.messages);
     });
@@ -382,22 +401,33 @@
     liveRefreshBtn.addEventListener('click', async function () {
       var connected = state.adapterMode === 'live' || state.adapterMode === 'mock';
       if (!adapter || !connected) return;
-      var sRes = await adapter.getSession();
-      if (sRes && sRes.ok && sRes.status) state.sessionStatus = sRes.status;
-      var listRes = await adapter.listMessages();
       await refreshPublicPosts();
+      if (!adapter.session || !adapter.session.sessionId) {
+        state.sessionId = '';
+        state.sessionStatus = '';
+        syncStatusUI();
+        renderLiveMessages([]);
+        return;
+      }
+      var sRes = await adapter.getSession();
+      if (sRes && sRes.sessionReset) {
+        applySessionResetUI();
+        return;
+      }
+      if (sRes && sRes.ok) {
+        var nextStatus = (sRes.session && sRes.session.status) || sRes.status || '';
+        if (nextStatus) state.sessionStatus = nextStatus;
+      }
+      var listRes = await adapter.listMessages();
       if (listRes.ok) {
         if (listRes.sessionId) state.sessionId = listRes.sessionId;
+        if (listRes.status) state.sessionStatus = listRes.status;
         syncStatusUI();
         renderLiveMessages(listRes.messages);
         showLiveFeedback(listRes.sessionReset ? t('liveSessionReset') : '', 'neutral');
       } else {
         if (listRes.sessionReset) {
-          state.sessionId = '';
-          state.sessionStatus = '';
-          syncStatusUI();
-          renderLiveMessages([]);
-          showLiveFeedback(t('liveSessionReset'), 'neutral');
+          applySessionResetUI();
           return;
         }
         showLiveFeedback(t('liveErrRefresh') + (listRes.error ? ' (' + listRes.error + ')' : ''), 'err');

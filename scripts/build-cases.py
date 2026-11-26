@@ -180,6 +180,9 @@ def build_shell(lang, lang_code, lang_upper, subpath, title, desc, body_html, sc
   <meta property="og:description" content="{e(desc)}" />
   <meta property="og:url" content="{canon}" />
   <meta property="og:image" content="https://an-thai.com/assets/images/hero-field.webp" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/images/brand-logo.png" />
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png" />
   <link rel="stylesheet" href="/assets/css/styles.css" />
   <link rel="stylesheet" href="/assets/css/portfolio-v1.css" />
   <script type="application/ld+json">{schemas_json}</script>
@@ -189,7 +192,7 @@ def build_shell(lang, lang_code, lang_upper, subpath, title, desc, body_html, sc
   <header class="site-header">
     <div class="container header-inner">
       <a href="{prefix}/index.html" data-page-id="home" class="brand">
-        <span class="brand-mark" aria-hidden="true">AT</span>
+        <span class="brand-mark"><img src="/assets/images/brand-logo.webp" alt="AN-THAI" width="34" height="34" decoding="async" /></span>
         <span>
           <span class="brand-name">AN-THAI ENGINEERING</span>
           <span class="brand-sub" data-i18n="brandSub">{tr("brandSub", "THAILAND · SUBSTRUCTURE TO SUPERSTRUCTURE")}</span>
@@ -260,7 +263,10 @@ def build_shell(lang, lang_code, lang_upper, subpath, title, desc, body_html, sc
     <footer class="site-footer">
       <div class="container">
         <div class="footer-row">
-          <strong style="font-size:13px;">AN-THAI ENGINEERING COMPANY LIMITED</strong>
+          <span class="footer-brand">
+            <span class="brand-mark"><img src="/assets/images/brand-logo.webp" alt="AN-THAI" width="28" height="28" loading="lazy" decoding="async" /></span>
+            <strong style="font-size:13px;">AN-THAI ENGINEERING COMPANY LIMITED</strong>
+          </span>
           <div class="mono" style="display:flex;flex-wrap:wrap;gap:14px;font-size:12px;">
             <a href="{prefix}/insights/index.html" data-i18n="navInsights">{tr("navInsights", "Insights")}</a>
             <a href="tel:+66902921749">+66 90 292 1749</a>

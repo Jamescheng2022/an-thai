@@ -24,6 +24,36 @@
       "source": "/portfolio.html",
       "destination": "/cases/",
       "permanent": true
+    },
+    {
+      "source": "/zh/services.html",
+      "destination": "/zh/testing.html",
+      "permanent": true
+    },
+    {
+      "source": "/th/services.html",
+      "destination": "/th/testing.html",
+      "permanent": true
+    },
+    {
+      "source": "/zh/equipment.html",
+      "destination": "/zh/powder-equipment.html",
+      "permanent": true
+    },
+    {
+      "source": "/th/equipment.html",
+      "destination": "/th/powder-equipment.html",
+      "permanent": true
+    },
+    {
+      "source": "/zh/portfolio.html",
+      "destination": "/zh/cases/",
+      "permanent": true
+    },
+    {
+      "source": "/th/portfolio.html",
+      "destination": "/th/cases/",
+      "permanent": true
     }
   ],
   "headers": [

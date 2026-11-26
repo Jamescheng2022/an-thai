@@ -7,7 +7,7 @@ const files = [
   'index.html', 'about.html', 'contact.html', 'testing.html',
   'steel-procurement.html', 'powder-equipment.html', 'testing-instruments.html',
   'services.html', 'equipment.html', 'portfolio.html', 'insights.html',
-  '404.html', 'robots.txt', 'sitemap.xml', 'llms.txt'
+  '404.html', 'favicon.ico', 'robots.txt', 'sitemap.xml', 'llms.txt'
 ];
 for (const file of files) {
   if (!fs.statSync(path.join(root, file)).isFile()) throw new Error(`Missing ${file}`);

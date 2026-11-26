@@ -363,6 +363,7 @@ def _localize_insights_subdir(base_html, lang, i18n):
     if lang != 'en':
         for slug in ['index', 'testing', 'steel-procurement', 'powder-equipment', 'testing-instruments', 'about', 'contact']:
             out = out.replace(f'href="../{slug}.html', f'href="/{lang}/{slug}.html')
+            out = out.replace(f'href="/{slug}.html', f'href="/{lang}/{slug}.html')
         out = out.replace('href="../cases/index.html"', f'href="/{lang}/cases/index.html"')
         out = out.replace('href="../insights/index.html"', f'href="/{lang}/insights/index.html"')
         out = out.replace('href="/cases/index.html"', f'href="/{lang}/cases/index.html"')

@@ -515,11 +515,15 @@
     openMailto(route, brief);
     el.className = 'notice-box is-neutral';
     var waUrl = 'https://wa.me/66902921749?text=' + encodeURIComponent(brief);
+    var lineUrl = 'https://line.me/ti/p/p0_XsfILmH';
+    var wechatUrl = (state.lang === 'ZH' ? '/zh/contact.html#direct-qr' : (state.lang === 'TH' ? '/th/contact.html#direct-qr' : '/contact.html#direct-qr'));
     el.innerHTML = [
       '<div style="font-weight:700;margin-bottom:6px;">' + esc(t('mailtoOpenedMsg')) + '</div>',
       '<div style="font-size:12px;margin-bottom:8px;line-height:1.4;">' + esc(t('mailtoFallbackHelp')) + '</div>',
       '<div class="contact-channels-row">',
         '<a href="' + waUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" style="padding:6px 12px;font-size:11px;">WhatsApp +66 90 292 1749</a>',
+        '<a href="' + lineUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-line" style="padding:6px 12px;font-size:11px;">LINE</a>',
+        '<a href="' + wechatUrl + '" class="btn btn-outline" style="padding:6px 12px;font-size:11px;">' + esc(t('wechatLabel')) + ' QR</a>',
         '<button type="button" class="btn btn-outline" style="padding:6px 12px;font-size:11px;" data-inquiry-copy="">' + esc(t('copyBriefBtn')) + '</button>',
         '<a href="mailto:info@an-thai.com" class="btn btn-outline" style="padding:6px 12px;font-size:11px;">info@an-thai.com</a>',
       '</div>'
@@ -650,13 +654,13 @@
     var qLang = (document.documentElement && document.documentElement.lang) || 'en';
     var qCopy = qLang.startsWith('zh') ? {
       category:'设备类别', requirements:'需求', enquiry:'安泰询价', labels:['姓名','公司','邮箱','联系方式','需求类型'],
-      status:'询盘内容已准备好，请在邮件应用中发送至 info@an-thai.com。如未打开邮件应用，请联系 info@an-thai.com 或通过 LINE ID: rachada2018 联系。本网站不会提交表单，也不会创建客户记录。',
+      status:'询盘内容已准备好，请在邮件应用中发送至 info@an-thai.com。如未打开邮件应用，请联系 info@an-thai.com、WhatsApp (+66 90 292 1749)、LINE (https://line.me/ti/p/p0_XsfILmH) 或微信（James2021）。本网站不会提交表单，也不会创建客户记录。',
       categories:['桩身完整性检测仪器','高应变／动力桩基检测系统','声波透射／超声检测系统','静载试验测量仪器','岩土与现场检测设备','材料／实验室检测设备','荷载传感器／传感器／数据采集系统','安装／培训／技术支持']
     } : qLang === 'th' ? {
       category:'หมวดหมู่เครื่องมือ', requirements:'ข้อกำหนด', enquiry:'สอบถาม AN-THAI', labels:['ชื่อ','บริษัท','อีเมล','ช่องทางติดต่อ','ประเภทคำสอบถาม'],
-      status:'เตรียมคำสอบถามแล้ว โปรดส่งจากแอปอีเมลไปยัง info@an-thai.com หากแอปไม่เปิด ให้ติดต่อ info@an-thai.com หรือ LINE ID: rachada2018 เว็บไซต์นี้ไม่ส่งแบบฟอร์มหรือสร้างข้อมูลลูกค้า',
+      status:'เตรียมคำสอบถามแล้ว โปรดส่งจากแอปอีเมลไปยัง info@an-thai.com หากแอปไม่เปิด ให้ติดต่อ info@an-thai.com, WhatsApp (+66 90 292 1749) หรือ LINE (https://line.me/ti/p/p0_XsfILmH) เว็บไซต์นี้ไม่ส่งแบบฟอร์มหรือสร้างข้อมูลลูกค้า',
       categories:['เครื่องมือทดสอบความสมบูรณ์ของเสาเข็ม','ระบบทดสอบเสาเข็มแบบพลศาสตร์ความเครียดสูง','ระบบทดสอบคลื่นเสียงผ่านท่อ / อัลตราโซนิก','เครื่องมือวัดสำหรับการทดสอบรับน้ำหนักแบบสถิต','เครื่องมือทดสอบปฐพีและภาคสนาม','เครื่องมือทดสอบวัสดุ / ห้องปฏิบัติการ','โหลดเซลล์ / เซนเซอร์ / ระบบเก็บข้อมูล','การติดตั้ง / ฝึกอบรม / สนับสนุนทางเทคนิค']
-    } : {category:'Equipment category',requirements:'Requirements',enquiry:'AN-THAI enquiry',labels:['Name','Company','Email','Phone','Request'],status:'Your enquiry is prepared for info@an-thai.com. Send it from your email app, or contact info@an-thai.com / LINE ID: rachada2018. This website does not transmit the form or create a customer record.'};
+    } : {category:'Equipment category',requirements:'Requirements',enquiry:'AN-THAI enquiry',labels:['Name','Company','Email','Phone','Request'],status:'Your enquiry is prepared for info@an-thai.com. Send it from your email app, or reach us via info@an-thai.com, WhatsApp (+66 90 292 1749), LINE (https://line.me/ti/p/p0_XsfILmH), or WeChat (James2021). This website does not transmit the form or create a customer record.'};
     var qParams = new URLSearchParams(window.location.search);
     var qTypes = {testing:'Engineering services',engineering:'Engineering services',equipment:'Testing instruments',instruments:'Testing instruments',steel:'Steel / space-structure cooperation',powder:'CNBM powder-equipment cooperation'};
     if (quoteForm.elements && quoteForm.elements.requestType && Object.prototype.hasOwnProperty.call(qTypes, qParams.get('type'))) {

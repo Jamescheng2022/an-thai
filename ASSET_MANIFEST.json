@@ -242,6 +242,32 @@
       "sha256": "e1b456f51e4646f88204013dcf1cc0c5dc84e2edc86fa1b6109c4d6582bb3bcc",
       "bytes": 29136,
       "kind": "brochure brand image; emblem displayed using CSS crop"
+    },
+    {
+      "path": "assets/images/contact-line-qr.webp",
+      "zip_source": "owner-supplied-20261126",
+      "sha256": "daba70bd7dbb82f2a5e7a237c1d0b1c55cdb658bcea47c4a19931b090a584785",
+      "bytes": 30260,
+      "dimensions": [
+        600,
+        600
+      ],
+      "description": "Owner-supplied official LINE QR code for https://line.me/ti/p/p0_XsfILmH",
+      "provenance": "Owner-supplied direct contact QR (2026-11-26)",
+      "kind": "direct contact QR code"
+    },
+    {
+      "path": "assets/images/contact-wechat-qr.webp",
+      "zip_source": "owner-supplied-20261126",
+      "sha256": "dae16a53bd16c69c95393ac8dd7c80be8656ae018d2191c4fd861412ba465ec7",
+      "bytes": 90354,
+      "dimensions": [
+        600,
+        600
+      ],
+      "description": "Owner-supplied official WeChat QR code (James2021)",
+      "provenance": "Owner-supplied direct contact QR (2026-11-26)",
+      "kind": "direct contact QR code"
     }
   ]
 }

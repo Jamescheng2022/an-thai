@@ -128,19 +128,54 @@
 <section class="section">
       <div class="container">
         <div class="split-box">
-          <div class="split-pane" style="background:var(--ink);color:#fff;display:flex;flex-direction:column;justify-content:space-between;gap:20px;">
-            <h1 class="h2" style="color:#fff;" data-i18n="contactTitle">Direct Technical Inquiry</h1>
-            <div class="mono" style="font-size:13px;display:flex;flex-direction:column;gap:6px;border-top:1px solid rgba(255,255,255,0.16);padding-top:14px;">
-              <div style="font-weight:700;">AN-THAI Engineering Company Limited</div>
-              <a href="tel:+66902921749" style="text-decoration:underline;">+66 90 292 1749</a>
-              <a href="mailto:info@an-thai.com" style="text-decoration:underline;">info@an-thai.com</a>
-              <a href="https://wa.me/66902921749" target="_blank" rel="noopener noreferrer" style="text-decoration:underline;">WhatsApp +66 90 292 1749</a>
-              <a href="https://line.me/ti/p/~rachada2018" target="_blank" rel="noopener noreferrer nofollow" style="text-decoration:underline;">LINE ID: rachada2018</a>
+          <div class="split-pane contact-channels-pane">
+            <div>
+              <h1 class="h2" style="color:#fff;" data-i18n="contactTitle">Direct Technical Inquiry</h1>
+              <div class="mono" style="font-size:12px;color:rgba(255,255,255,0.72);margin-top:8px;">AN-THAI Engineering Company Limited · Bangkok</div>
+              <div class="contact-direct-list" style="margin-top:16px;">
+                <div class="contact-direct-row">
+                  <span class="contact-direct-label" data-i18n="lblPhone">Telephone</span>
+                  <a href="tel:+66902921749" class="contact-direct-val">+66 90 292 1749</a>
+                </div>
+                <div class="contact-direct-row">
+                  <span class="contact-direct-label" data-i18n="lblEmail">Email Desk</span>
+                  <a href="mailto:info@an-thai.com" class="contact-direct-val">info@an-thai.com</a>
+                </div>
+                <div class="contact-direct-row">
+                  <span class="contact-direct-label">WhatsApp</span>
+                  <a href="https://wa.me/66902921749" target="_blank" rel="noopener noreferrer" class="contact-direct-val">+66 90 292 1749</a>
+                </div>
+                <div class="contact-direct-row">
+                  <span class="contact-direct-label">LINE</span>
+                  <a href="https://line.me/ti/p/p0_XsfILmH" target="_blank" rel="noopener noreferrer nofollow" class="contact-direct-val" data-i18n="lineActionLabel">Open LINE →</a>
+                </div>
+                <div class="contact-direct-row">
+                  <span class="contact-direct-label" data-i18n="wechatLabel">WeChat</span>
+                  <span class="contact-direct-val">James2021</span>
+                </div>
+              </div>
+            </div>
+
+            <div id="direct-qr" class="qr-grid" aria-label="LINE and WeChat QR codes">
+              <a href="https://line.me/ti/p/p0_XsfILmH" target="_blank" rel="noopener noreferrer nofollow" class="qr-card">
+                <div class="qr-frame">
+                  <img src="./assets/images/contact-line-qr.webp" alt="LINE QR code for AN-THAI Engineering" width="600" height="600" loading="lazy" />
+                </div>
+                <div class="qr-card-title">LINE</div>
+                <div class="qr-card-hint" data-i18n="qrLineHint">Scan QR or open link →</div>
+              </a>
+              <a href="./assets/images/contact-wechat-qr.webp" target="_blank" rel="noopener noreferrer" class="qr-card">
+                <div class="qr-frame">
+                  <img src="./assets/images/contact-wechat-qr.webp" alt="WeChat QR code for AN-THAI Engineering (James2021)" width="600" height="600" loading="lazy" />
+                </div>
+                <div class="qr-card-title"><span data-i18n="wechatLabel">WeChat</span> · James2021</div>
+                <div class="qr-card-hint" data-i18n="qrWechatHint">Scan QR in WeChat</div>
+              </a>
             </div>
           </div>
 
-          <div id="enquiry-form"></div>
-          <form id="contactScopeForm" class="split-pane" style="display:flex;flex-direction:column;gap:12px;" novalidate>
+          <div id="enquiry-form" class="split-pane">
+            <form id="contactScopeForm" style="display:flex;flex-direction:column;gap:12px;" novalidate>
             <div class="honeypot" aria-hidden="true">
               <label for="cWebsiteHp">Leave blank</label>
               <input id="cWebsiteHp" name="website_url" type="text" tabindex="-1" autocomplete="off" />
@@ -161,16 +196,19 @@
               <div class="field"><label for="cScale" data-i18n="fScale">Scale / Quantity</label><input id="cScale" name="scale" type="text" data-i18n-ph="fScalePh" placeholder="40 piles / 1,200t steel / 50 t/h" /></div>
               <div class="field"><label for="cContact" data-i18n="fContact">Email or Phone / WhatsApp *</label><input id="cContact" name="contact" type="text" required data-i18n-ph="fContactPh" placeholder="name@company.com / +66..." /></div>
             </div>
-            <div class="field"><label for="cNotes" data-i18n="fNotes">Technical Requirements &amp; Schedule *</label><textarea id="cNotes" name="notes" rows="3" required data-i18n-ph="fNotesPh" placeholder="Standards, drawing status, or target timeline..."></textarea></div>
+            <div class="field"><label for="cNotes" data-i18n="fNotes">Technical Requirements &amp; Schedule *</label><textarea id="cNotes" name="notes" rows="4" required data-i18n-ph="fNotesPh" placeholder="Standards, drawing status, or target timeline..."></textarea></div>
             <div id="contactApiStatus" class="notice-box" hidden></div>
-            <div class="notice-box is-neutral" data-i18n="fPrivacy">Privacy: Details are used solely to respond to your engineering inquiry. Submitting opens an email directly to info@an-thai.com, or reach us anytime via WhatsApp (+66 90 292 1749) or LINE (rachada2018).</div>
+            <div class="notice-box is-neutral" data-i18n="fPrivacy">Privacy: Details are used solely to respond to your engineering inquiry. Submitting opens an email directly to info@an-thai.com, or contact us anytime via WhatsApp (+66 90 292 1749), LINE, or WeChat (James2021).</div>
             <div id="contactFeedback" class="notice-box" hidden role="status" aria-live="polite"></div>
-            <div style="display:flex;flex-wrap:wrap;gap:10px;">
-              <button id="contactSubmitBtn" type="submit" class="btn btn-accent" style="flex:1;" data-i18n="fSubmitEmail">Send via Email (info@an-thai.com) →</button>
-              <a href="https://wa.me/66902921749" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" data-i18n="sendViaWhatsApp">WhatsApp Direct (+66 90 292 1749)</a>
-              <button id="contactCopyBtn" type="button" class="btn btn-outline" data-i18n="fCopyBtn">Copy Brief</button>
+            <div class="contact-form-actions">
+              <button id="contactSubmitBtn" type="submit" class="btn btn-accent btn-full" data-i18n="fSubmitEmail">Send via Email (info@an-thai.com) →</button>
+              <div class="contact-form-subactions">
+                <a href="https://wa.me/66902921749" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" style="flex:1;" data-i18n="sendViaWhatsApp">WhatsApp Direct (+66 90 292 1749)</a>
+                <button id="contactCopyBtn" type="button" class="btn btn-outline" data-i18n="fCopyBtn">Copy Brief</button>
+              </div>
             </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </section>
@@ -183,6 +221,9 @@
             <a href="/insights/index.html" data-i18n="navInsights">Insights</a>
             <a href="tel:+66902921749">+66 90 292 1749</a>
             <a href="mailto:info@an-thai.com">info@an-thai.com</a>
+            <a href="https://wa.me/66902921749" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            <a href="https://line.me/ti/p/p0_XsfILmH" target="_blank" rel="noopener noreferrer nofollow">LINE</a>
+            <a href="./contact.html#direct-qr" data-i18n="navWeChatQr">WeChat</a>
           </div>
         </div>
         <div class="footer-bottom">
@@ -234,6 +275,25 @@
           <div id="drawerFeedback" class="notice-box" hidden role="status" aria-live="polite"></div>
           <button id="drawerEmailBtn" type="button" class="btn btn-accent btn-full" data-i18n="drawerSendEmail">Open Email (info@an-thai.com) →</button>
           <button id="drawerCopyBtn" type="button" class="btn btn-outline btn-full" data-i18n="drawerCopyBrief">Copy Structured Brief</button>
+          <div class="drawer-channels">
+            <div class="drawer-channels-label" data-i18n="drawerChannelsTitle">Direct Channels · Scan or Tap</div>
+            <div class="drawer-msg-links">
+              <a href="https://wa.me/66902921749" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" style="padding:7px 10px;font-size:11px;">WhatsApp</a>
+              <a href="https://line.me/ti/p/p0_XsfILmH" target="_blank" rel="noopener noreferrer nofollow" class="btn btn-line" style="padding:7px 10px;font-size:11px;">LINE</a>
+            </div>
+            <div class="drawer-qr-grid">
+              <a href="https://line.me/ti/p/p0_XsfILmH" target="_blank" rel="noopener noreferrer nofollow" class="qr-mini-card">
+                <div class="qr-mini-frame"><img src="/assets/images/contact-line-qr.webp" alt="LINE QR code for AN-THAI Engineering" width="600" height="600" loading="lazy" /></div>
+                <span class="qr-mini-title">LINE</span>
+                <span class="qr-mini-sub" data-i18n="lineActionLabel">Open LINE →</span>
+              </a>
+              <a href="/assets/images/contact-wechat-qr.webp" target="_blank" rel="noopener noreferrer" class="qr-mini-card">
+                <div class="qr-mini-frame"><img src="/assets/images/contact-wechat-qr.webp" alt="WeChat QR code for AN-THAI Engineering (James2021)" width="600" height="600" loading="lazy" /></div>
+                <span class="qr-mini-title"><span data-i18n="wechatLabel">WeChat</span> · James2021</span>
+                <span class="qr-mini-sub" data-i18n="qrWechatHint">Scan QR in WeChat</span>
+              </a>
+            </div>
+          </div>
         </div>
 
         <div id="drawerLiveView" class="drawer-stack" hidden>

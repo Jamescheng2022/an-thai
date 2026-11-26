@@ -52,8 +52,34 @@ async function testProxyHandler() {
     assert.strictEqual(res.statusCode, 503);
     assert.strictEqual(res.body.error, 'SR_BRIDGE_BASE_URL_UNCONFIGURED');
 
-    // 4. Route & UUID & Size validation
-    process.env.SR_BRIDGE_BASE_URL = 'https://sr-staging.example.vercel.app';
+    // 4. Route & UUID & Size validation + strict Staging origin & bypass gating
+    process.env.SR_BRIDGE_BASE_URL = 'https://evil.example.com';
+    process.env.SR_VERCEL_PROTECTION_BYPASS = 'dummy_bypass_token_test';
+    let leakedCall = false;
+    global.fetch = async () => { leakedCall = true; return { status: 200 }; };
+    res = createMockRes();
+    await handler({ method: 'GET', url: '/api/sr-bridge?route=health', headers: { authorization: 'Bearer visitor_secret' } }, res);
+    assert.strictEqual(res.statusCode, 503);
+    assert.strictEqual(res.body.error, 'SR_BRIDGE_BASE_URL_UNCONFIGURED');
+    assert.strictEqual(leakedCall, false);
+
+    // ALLOW_SR_BRIDGE_IN_PROD in VERCEL_ENV=production MUST NOT forward staging bypass secret
+    process.env.VERCEL_ENV = 'production';
+    process.env.ALLOW_SR_BRIDGE_IN_PROD = 'true';
+    process.env.SR_BRIDGE_BASE_URL = 'https://sourcerating-staging-test.vercel.app';
+    let prodBypassSeen;
+    global.fetch = async (url, init) => {
+      prodBypassSeen = init.headers['x-vercel-protection-bypass'];
+      return { status: 200, headers: new Map([['content-type', 'application/json']]), json: async () => ({ ok: true }) };
+    };
+    res = createMockRes();
+    await handler({ method: 'GET', url: '/api/sr-bridge?route=health', headers: {} }, res);
+    assert.strictEqual(res.statusCode, 200);
+    assert.strictEqual(prodBypassSeen, undefined);
+    delete process.env.ALLOW_SR_BRIDGE_IN_PROD;
+    process.env.VERCEL_ENV = 'preview';
+
+    process.env.SR_BRIDGE_BASE_URL = 'https://sourcerating-staging-test.vercel.app';
     res = createMockRes();
     await handler({ method: 'GET', url: '/api/sr-bridge?route=bogus', headers: {} }, res);
     assert.strictEqual(res.statusCode, 400);
@@ -122,7 +148,7 @@ async function testProxyHandler() {
       headers: { host: 'an-thai-preview.vercel.app', 'x-bridge-challenge': 'chal_123', 'x-turnstile-token': 'tok_123' },
       body: { workspaceKey: 'an-thai-th', message: 'hello' }
     }, res);
-    assert.strictEqual(capturedUrl, 'https://sr-staging.example.vercel.app/api/bridge/v1/sessions');
+    assert.strictEqual(capturedUrl, 'https://sourcerating-staging-test.vercel.app/api/bridge/v1/sessions');
     assert.strictEqual(capturedHeaders['x-vercel-protection-bypass'], 'dummy_bypass_token_test');
     assert.strictEqual(capturedHeaders['x-vercel-set-bypass-cookie'], 'false');
     assert.strictEqual(capturedHeaders.Origin, 'https://an-thai-preview.vercel.app');
@@ -143,6 +169,8 @@ async function testAdapterAndMock() {
   const store = new Map();
   let fetchMode = '302';
   let postSessionsCalls = 0;
+  let lastCreateSessionBody = null;
+  let lastHandoffPostBody = null;
 
   const sandbox = {
     window: null,
@@ -177,6 +205,7 @@ async function testAdapterAndMock() {
       }
       if (url.includes('route=sessions')) {
         postSessionsCalls += 1;
+        lastCreateSessionBody = JSON.parse((init && init.body) || '{}');
         if (postSessionsCalls === 1) {
           return { ok: false, status: 409, json: async () => ({ ok: false, error: 'IDEMPOTENCY_TOKEN_UNRECOVERABLE' }) };
         }
@@ -197,6 +226,32 @@ async function testAdapterAndMock() {
         }
         if (fetchMode === '401') {
           return { ok: false, status: 401, json: async () => ({ ok: false, error: 'Unauthorized' }) };
+        }
+        if (fetchMode === 'paginated501') {
+          const sp = new URL('http://localhost' + url).searchParams;
+          const after = Number(sp.get('afterSeq') || '0');
+          if (after < 500) {
+            const batch = Array.from({ length: 50 }, (_, i) => ({ id: 'm-' + (after + i + 1), seq: after + i + 1, senderKind: 'visitor', text: 'msg ' + (after + i + 1) }));
+            return { ok: true, status: 200, json: async () => ({ ok: true, messages: batch, nextAfterSeq: after + 50, hasMore: true }) };
+          }
+          return {
+            ok: true,
+            status: 200,
+            json: async () => ({
+              ok: true,
+              messages: [{ id: 'm-501', seq: 501, senderKind: 'staff', senderLabel: 'Engineer', text: 'reply 501' }],
+              nextAfterSeq: 501,
+              hasMore: false
+            })
+          };
+        }
+        if (fetchMode === 'handoff_human_active' && init && init.method === 'POST') {
+          lastHandoffPostBody = JSON.parse(init.body || '{}');
+          return {
+            ok: true,
+            status: 200,
+            json: async () => ({ ok: true, persisted: true, sessionStatus: 'human_active' })
+          };
         }
         if (fetchMode === 'paginated') {
           const sp = new URL('http://localhost' + url).searchParams;
@@ -326,6 +381,29 @@ async function testAdapterAndMock() {
   assert.strictEqual(pagedRes.ok, true);
   assert.strictEqual(pagedRes.messages.length, 52);
   assert.strictEqual(pagedRes.messages[51].senderKind, 'staff');
+
+  fetchMode = 'paginated501';
+  const paged501 = await liveAdapter.listMessages();
+  assert.strictEqual(paged501.ok, true);
+  assert.strictEqual(paged501.messages.length, 501);
+  assert.strictEqual(paged501.messages[500].seq, 501);
+  assert.strictEqual(paged501.messages[500].senderKind, 'staff');
+
+  // Verify live first-click handoff with explicit text never duplicates text and preserves human_active
+  const liveFirstHandoff = new sandbox.SourceRatingEmbedAdapter({
+    bridgeEndpoint: '/api/sr-bridge',
+    workspaceKey: 'an-thai-live-handoff'
+  });
+  fetchMode = 'live';
+  await liveFirstHandoff.init();
+  fetchMode = 'handoff_human_active';
+  postSessionsCalls = 1; // skip 409 retry path
+  const hRes = await liveFirstHandoff.requestHumanHandoff({ text: 'Custom first opener' });
+  assert.strictEqual(hRes.ok, true);
+  assert.strictEqual(hRes.sessionStatus, 'human_active');
+  assert.strictEqual(liveFirstHandoff.session.status, 'human_active');
+  assert.strictEqual(lastCreateSessionBody.message, 'Custom first opener');
+  assert.notStrictEqual(lastHandoffPostBody.text, 'Custom first opener');
 
   fetchMode = 'network_error';
   const netErrRes = await liveAdapter.sendMessage({ text: 'drop test' });

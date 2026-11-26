@@ -8,15 +8,23 @@ const MAX_BODY_BYTES = 16 * 1024;
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const ALLOWED_ROUTES = new Set(['health', 'sessions', 'session', 'messages', 'claim', 'claim_confirm', 'posts']);
 
+function isApprovedStagingOrigin(rawUrl) {
+  if (!rawUrl) return false;
+  try {
+    const parsed = new URL(rawUrl);
+    return parsed.protocol === 'https:' && /^sourcerating(?:-[a-z0-9-]+)?\.vercel\.app$/i.test(parsed.hostname);
+  } catch {
+    return false;
+  }
+}
+
 function isRejectedBaseUrl(rawUrl) {
   if (!rawUrl) return true;
   if (/qnozpurjtgkmwtvsrjoi/i.test(rawUrl)) return true;
+  if (isApprovedStagingOrigin(rawUrl)) return false;
   try {
     const parsed = new URL(rawUrl);
-    if (parsed.protocol !== 'https:' && parsed.hostname !== '127.0.0.1' && parsed.hostname !== 'localhost') {
-      return true;
-    }
-    return false;
+    return parsed.hostname !== '127.0.0.1' && parsed.hostname !== 'localhost';
   } catch {
     return true;
   }
@@ -97,7 +105,8 @@ export default async function handler(req, res) {
 
   const fwdHeaders = { Accept: 'application/json' };
   const bypassSecret = (process.env.SR_VERCEL_PROTECTION_BYPASS || '').trim();
-  if (!isProdRuntime && bypassSecret) {
+  const canForwardBypass = process.env.VERCEL_ENV !== 'production' && isApprovedStagingOrigin(rawBaseUrl);
+  if (canForwardBypass && bypassSecret) {
     fwdHeaders['x-vercel-protection-bypass'] = bypassSecret;
     fwdHeaders['x-vercel-set-bypass-cookie'] = 'false';
   }

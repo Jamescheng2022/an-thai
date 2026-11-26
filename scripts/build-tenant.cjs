@@ -16,21 +16,110 @@ const root = path.resolve(__dirname, '..');
 const cfgPath = path.resolve(root, cfgIdx >= 0 ? args[cfgIdx + 1] : 'config/tenants/test-demo.json');
 const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
 const workspaceKey = (cfg.sourceRating && cfg.sourceRating.workspaceKey) || cfg.workspaceKey || cfg.tenantSlug;
-const outDir = path.resolve(root, outIdx >= 0 ? args[outIdx + 1] : `dist-${cfg.tenantSlug}`);
+const rawOutArg = outIdx >= 0 ? args[outIdx + 1] : `dist-${cfg.tenantSlug}`;
+const outDir = path.resolve(root, rawOutArg);
+
+const relOut = path.relative(root, outDir);
+if (
+  !relOut ||
+  relOut.startsWith('..') ||
+  path.isAbsolute(relOut) ||
+  path.dirname(outDir) !== root ||
+  !/^dist-[a-z0-9][a-z0-9-]*$/i.test(path.basename(outDir))
+) {
+  throw new Error(`Refusing unsafe --out path (must be a dist-<slug> child of workspace): ${outDir}`);
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function safeJsonForScript(val) {
+  return JSON.stringify(val)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029');
+}
+
+function sanitizeTenantAssetContent(content) {
+  const safeHost = `${cfg.tenantSlug}.invalid`;
+  const replacements = [
+    [/https?:\/\/(?:www\.)?an-thai\.com/gi, `https://${safeHost}`],
+    [/info@an-thai\.com/gi, cfg.directEmail],
+    [/an-thai\.com/gi, safeHost],
+    [/\+?66\s*90\s*292\s*1749/g, cfg.directPhone],
+    [/66902921749/g, cfg.directPhone.replace(/[^\d]/g, '') || '0000000000'],
+    [/https?:\/\/line\.me\/ti\/p\/p0_XsfILmH/gi, '#test-line-disabled'],
+    [/p0_XsfILmH/g, 'TEST-LINE-DISABLED'],
+    [/James2021/g, 'TEST-WECHAT-DISABLED'],
+    [/1339 Arwan Building[^"'\n]*/g, cfg.officeAddress],
+    [/Arwan Building/g, cfg.officeAddress],
+    [/AN-THAI Engineering Company Limited/gi, cfg.legalName],
+    [/AN-THAI Engineering Co\.,?\s*Ltd\.?/gi, cfg.legalName],
+    [/AN-THAI Engineering/gi, cfg.legalName],
+    [/AN-THAI/gi, cfg.brandShort],
+    [/安泰工程有限公司/g, cfg.legalName],
+    [/安泰工程/g, cfg.brandShort],
+    [/an-thai-th/g, workspaceKey],
+    [/\bPACO\b/g, 'TEST-REF-A'],
+    [/\bROGE\b/g, 'TEST-REF-B'],
+  ];
+  let out = content;
+  for (const [re, sub] of replacements) {
+    out = out.replace(re, sub);
+  }
+  return out;
+}
 
 fs.rmSync(outDir, { recursive: true, force: true });
 fs.mkdirSync(path.join(outDir, 'assets/css'), { recursive: true });
 fs.mkdirSync(path.join(outDir, 'assets/js'), { recursive: true });
 fs.mkdirSync(path.join(outDir, 'assets/images'), { recursive: true });
 
-for (const f of ['assets/css/styles.css', 'assets/css/portfolio-v1.css', 'assets/js/i18n-data.js', 'assets/js/sr-bridge-mock.js', 'assets/js/sourcerating-embed-adapter.js', 'assets/js/site.js']) {
+for (const f of ['assets/css/styles.css', 'assets/css/portfolio-v1.css']) {
   const src = path.join(root, f);
   if (fs.existsSync(src)) fs.copyFileSync(src, path.join(outDir, f));
 }
+for (const f of ['assets/js/i18n-data.js', 'assets/js/sourcerating-embed-adapter.js', 'assets/js/site.js']) {
+  const src = path.join(root, f);
+  if (fs.existsSync(src)) {
+    fs.writeFileSync(path.join(outDir, f), sanitizeTenantAssetContent(fs.readFileSync(src, 'utf8')));
+  }
+}
+
+// Tenant-isolated mock fixture (only active when explicit ?sr_mode=mock is passed): zero An-Thai posts/data
+fs.writeFileSync(
+  path.join(outDir, 'assets/js/sr-bridge-mock.js'),
+  `(function (global) {
+  'use strict';
+  var STORAGE_PREFIX = 'sr_tenant_mock_state_v1_';
+  function load(ws) {
+    try { var raw = global.localStorage && global.localStorage.getItem(STORAGE_PREFIX + ws); if (raw) return JSON.parse(raw); } catch (e) {}
+    return { organizationId: '11111111-1111-4111-8111-111111111001', workspaceKey: ws, sessions: {}, posts: [] };
+  }
+  function save(ws, st) { try { if (global.localStorage) global.localStorage.setItem(STORAGE_PREFIX + ws, JSON.stringify(st)); } catch (e) {} }
+  global.ANTHAI_SR_MOCK = {
+    createTransport: function (workspaceKey) {
+      var ws = workspaceKey || ${safeJsonForScript(workspaceKey)};
+      return {
+        health: async function () { var s = load(ws); return { ok: true, configured: true, online: true, organizationId: s.organizationId, workspaceKey: ws, workspaceName: ${safeJsonForScript(cfg.legalName)}, challengeToken: 'bchk_mock_' + ws, isMock: true }; },
+        createSession: async function (p) { var s = load(ws); var id = '22222222-2222-4222-8222-' + Date.now().toString(16).padStart(12, '0').slice(-12); var tok = 'tok_' + Date.now(); var req = 'SR-MOCK-' + id.slice(0, 8).toUpperCase(); s.sessions[id] = { sessionId: id, visitorToken: tok, requestId: req, status: 'ai_active', messages: [{ id: 'm1', seq: 1, senderKind: 'visitor', senderLabel: 'Visitor', text: String((p && p.message) || 'Inquiry'), createdAt: new Date().toISOString() }] }; save(ws, s); return { ok: true, sessionId: id, visitorToken: tok, requestId: req, status: 'ai_active', isMock: true, persistedToSr: false }; },
+        getSession: async function (id) { var s = load(ws); var x = s.sessions[id]; return x ? { ok: true, session: x, isMock: true } : { ok: false, statusCode: 401, error: 'Unauthorized' }; },
+        listMessages: async function (id) { var s = load(ws); var x = s.sessions[id]; return x ? { ok: true, messages: x.messages || [], isMock: true } : { ok: false, statusCode: 401, messages: [] }; },
+        sendMessage: async function (id, tok, b) { var s = load(ws); var x = s.sessions[id]; if (!x) return { ok: false, statusCode: 401 }; if (b && b.requestHandoff) x.status = 'waiting_human'; x.messages.push({ id: 'm' + (x.messages.length + 1), seq: x.messages.length + 1, senderKind: 'visitor', senderLabel: 'Visitor', text: String((b && b.text) || ''), createdAt: new Date().toISOString() }); save(ws, s); return { ok: true, sessionStatus: x.status, isMock: true, persisted: false }; },
+        listPublicPosts: async function () { var s = load(ws); return { ok: true, posts: s.posts || [], isMock: true }; }
+      };
+    }
+  };
+})(typeof window !== 'undefined' ? window : globalThis);
+`
+);
 
 fs.writeFileSync(
   path.join(outDir, 'assets/images/tenant-logo.svg'),
-  `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="${cfg.brandShort}"><rect width="64" height="64" rx="12" fill="#0f172a"/><text x="32" y="38" text-anchor="middle" font-family="monospace" font-size="14" font-weight="700" fill="#f59e0b">TEST</text></svg>\n`
+  `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="${escapeHtml(cfg.brandShort)}"><rect width="64" height="64" rx="12" fill="#0f172a"/><text x="32" y="38" text-anchor="middle" font-family="monospace" font-size="14" font-weight="700" fill="#f59e0b">TEST</text></svg>\n`
 );
 
 const runtimeConfig = {
@@ -47,10 +136,6 @@ const locales = [
   { key: 'ZH', prefix: 'zh', htmlLang: 'zh-CN', navHome: '首页', navContact: '测试询盘', updatesTitle: 'TEST 授权动态区', submitBtn: '提交 TEST 测试询盘', contactHeading: 'TEST 隔离租户询盘台', offlineTitle: '隔离租户结构化简报' },
   { key: 'TH', prefix: 'th', htmlLang: 'th', navHome: 'หน้าแรก', navContact: 'ติดต่อทดสอบ', updatesTitle: 'อัปเดต TEST ที่ได้รับอนุญาต', submitBtn: 'ส่งคำสอบถามทดสอบ TEST', contactHeading: 'ศูนย์ทดสอบคำสอบถาม TEST', offlineTitle: 'แบบฟอร์มทดสอบแยกองค์กร' },
 ];
-
-function escapeHtml(s) {
-  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
 
 function renderPage(loc, pageName) {
   const basePath = loc.prefix ? `/${loc.prefix}` : '';
@@ -116,8 +201,8 @@ function renderPage(loc, pageName) {
 </head>
 <body>
   <header class="site-header">
-    <div class="container header-inner" style="flex-wrap:wrap;gap:8px 14px;">
-      <a href="${basePath}/index.html" class="brand" style="min-width:0;max-width:100%;"><img src="/assets/images/tenant-logo.svg" alt="${escapeHtml(cfg.brandShort)}" width="28" height="28" /><span><strong>${escapeHtml(cfg.brandShort)}</strong><small style="overflow-wrap:anywhere;">${escapeHtml(cfg.brandTagline[loc.key] || cfg.brandTagline.EN)}</small></span></a>
+    <div class="container header-inner" style="flex-wrap:wrap;gap:8px 14px;height:auto;min-height:68px;padding:10px 0;">
+      <a href="${basePath}/index.html" class="brand" style="min-width:0;max-width:100%;"><img src="/assets/images/tenant-logo.svg" alt="${escapeHtml(cfg.brandShort)}" width="28" height="28" /><span style="min-width:0;"><span class="brand-name">${escapeHtml(cfg.brandShort)}</span><small class="brand-sub" style="overflow-wrap:anywhere;">${escapeHtml(cfg.brandTagline[loc.key] || cfg.brandTagline.EN)}</small></span></a>
       <nav aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;max-width:100%;">
         <a href="${basePath}/index.html">${escapeHtml(loc.navHome)}</a>
         <a href="${basePath}/contact.html">${escapeHtml(loc.navContact)}</a>
@@ -161,14 +246,14 @@ function renderPage(loc, pageName) {
     </div>
   </div>
   <footer class="site-footer"><div class="container"><small>${escapeHtml(cfg.legalName)} · ${escapeHtml(cfg.cityRegion)} · NOINDEX</small></div></footer>
-  <script>window.ANTHAI_CONFIG = ${JSON.stringify(runtimeConfig)};</script>
+  <script>window.ANTHAI_CONFIG = ${safeJsonForScript(runtimeConfig)};</script>
   <script src="/assets/js/i18n-data.js"></script>
   <script>
     (function () {
       var d = window.ANTHAI_I18N;
       if (!d) return;
-      var email = ${JSON.stringify(cfg.directEmail)};
-      var legal = ${JSON.stringify(cfg.legalName)};
+      var email = ${safeJsonForScript(cfg.directEmail)};
+      var legal = ${safeJsonForScript(cfg.legalName)};
       ['EN', 'ZH', 'TH'].forEach(function (k) {
         if (!d[k]) return;
         d[k].fSubmitEmail = 'TEST Email (' + email + ')';
@@ -191,20 +276,33 @@ function renderPage(loc, pageName) {
 </html>\n`;
 }
 
-const forbiddenLeakTerms = ['an-thai.com', 'info@an-thai.com', '66902921749', 'James2021', 'p0_XsfILmH', 'Arwan Building', 'PACO', 'ROGE'];
+const forbiddenLeakTerms = [
+  'an-thai.com', 'info@an-thai.com', 'an-thai-th', '66902921749', '90 292 1749',
+  'James2021', 'p0_XsfILmH', 'Arwan', 'PACO', 'ROGE', 'TEST-ANTHAI-UPD', '安泰工程'
+];
 let generatedCount = 0;
 
 for (const loc of locales) {
   const dir = loc.prefix ? path.join(outDir, loc.prefix) : outDir;
   fs.mkdirSync(dir, { recursive: true });
   for (const page of ['index.html', 'contact.html']) {
-    const html = renderPage(loc, page);
-    for (const term of forbiddenLeakTerms) {
-      assert(!html.includes(term), `Forbidden An-Thai data leaked into ${cfg.tenantSlug}/${loc.key}/${page}: ${term}`);
-    }
-    fs.writeFileSync(path.join(dir, page), html);
+    fs.writeFileSync(path.join(dir, page), renderPage(loc, page));
     generatedCount += 1;
   }
 }
 fs.writeFileSync(path.join(outDir, 'robots.txt'), 'User-agent: *\nDisallow: /\n');
+
+(function verifyAllGeneratedFilesClean(dir) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) verifyAllGeneratedFilesClean(full);
+    else if (entry.isFile()) {
+      const content = fs.readFileSync(full, 'utf8');
+      for (const term of forbiddenLeakTerms) {
+        assert(!content.toLowerCase().includes(term.toLowerCase()), `Forbidden An-Thai data leaked into ${path.relative(outDir, full)}: ${term}`);
+      }
+    }
+  }
+})(outDir);
+
 console.log(`PASS: generated ${generatedCount} isolated noindex pages for "${cfg.legalName}" (workspaceKey=${workspaceKey}) in ${path.relative(root, outDir)}`);

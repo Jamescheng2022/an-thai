@@ -18,8 +18,7 @@
     "bridgeEndpoint": "/api/sr-bridge",
     "apiBaseUrl": "",
     "workspaceKey": "test-demo",
-    "callerKind": "an_thai_v1_1",
-    "mockFallback": false
+    "callerKind": "an_thai_v1_1"
   },
   "heroHeadline": {
     "EN": "[TEST] Multi-Tenant Template Verification Portal",
@@ -27,9 +26,9 @@
     "TH": "[TEST] พอร์ทัลทดสอบแม่แบบองค์กรแบบแยกผู้เช่า"
   },
   "heroLead": {
-    "EN": "Isolated synthetic tenant generated strictly from config JSON using the An-Thai site template. Zero real client records, zero external dispatch, noindex enabled.",
+    "EN": "Isolated synthetic tenant generated strictly from config JSON using the shared multi-tenant site template. Zero real client records, zero external dispatch, noindex enabled.",
     "ZH": "基于同一套网站模板仅通过替换 JSON 配置文件生成的隔离测试租户，不含任何真实企业数据与外联渠道，禁止收录与发布。",
-    "TH": "เว็บไซต์จำลองแบบแยกผู้เช่าที่สร้างจากแม่แบบเดียวกับ An-Thai โดยเปลี่ยนเฉพาะไฟล์ตั้งค่า JSON ไม่มีข้อมูลองค์กรจริงและปิดการทำดัชนี"
+    "TH": "เว็บไซต์จำลองแบบแยกผู้เช่าที่สร้างจากแม่แบบกลางโดยเปลี่ยนเฉพาะไฟล์ตั้งค่า JSON ไม่มีข้อมูลองค์กรจริงและปิดการทำดัชนี"
   },
   "serviceLines": [
     {

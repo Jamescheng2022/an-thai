@@ -74,11 +74,11 @@ if (process.env.VERCEL_ENV === 'preview') {
       const file = path.join(dir, entry.name);
       if (entry.isDirectory()) applyPreviewNoIndex(file);
       else if (entry.isFile() && entry.name.endsWith('.html')) {
-        let html = fs.readFileSync(file, 'utf8');
-        if (!/<meta\s+name=["']robots["']/i.test(html)) {
-          html = html.replace(/<\/head>/i, `${robotsMeta}\n</head>`);
-          fs.writeFileSync(file, html);
-        }
+        let html = fs.readFileSync(file, 'utf8')
+          .replace(/<meta\b[^>]*\bname\s*=\s*["']robots["'][^>]*>\s*/gi, '');
+        if (!/<\/head>/i.test(html)) throw new Error(`Missing head in ${file}`);
+        html = html.replace(/<\/head>/i, `${robotsMeta}\n</head>`);
+        fs.writeFileSync(file, html);
       }
     }
   })(output);

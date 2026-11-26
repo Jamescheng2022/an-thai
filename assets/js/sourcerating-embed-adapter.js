@@ -319,8 +319,9 @@
     try {
       var cursor = afterSeq || 0;
       var combined = [];
+      var seenKeys = Object.create(null);
       var lastData = {};
-      for (var page = 0; page < 10; page++) {
+      for (var page = 0; page < 200; page++) {
         var pageCursor = cursor;
         var out = await this._authedFetch('messages', function () { return { afterSeq: pageCursor }; }, { method: 'GET' });
         if (out.sessionReset) return { ok: false, messages: [], sessionReset: true, error: 'Unauthorized' };
@@ -328,9 +329,17 @@
         if (!out.res.ok) return { ok: false, messages: [], error: data.error || ('HTTP_' + out.res.status) };
         lastData = data;
         var batch = Array.isArray(data.messages) ? data.messages : [];
-        combined = combined.concat(batch);
+        for (var i = 0; i < batch.length; i++) {
+          var item = batch[i];
+          var msgKey = item && (item.id || (typeof item.seq !== 'undefined' ? 'seq:' + item.seq : ''));
+          if (msgKey) {
+            if (seenKeys[msgKey]) continue;
+            seenKeys[msgKey] = true;
+          }
+          combined.push(item);
+        }
         var nextCur = (typeof data.nextAfterSeq === 'number') ? data.nextAfterSeq : null;
-        if (batch.length < 50 || nextCur === null || nextCur <= pageCursor) break;
+        if (!batch.length || nextCur === null || nextCur <= pageCursor || (!data.hasMore && batch.length < 50)) break;
         cursor = nextCur;
       }
       this.messages = combined;
@@ -345,11 +354,12 @@
     if (this.mode !== 'live' && this.mode !== 'mock') {
       return { ok: false, persisted: false, error: 'BRIDGE_NOT_CONNECTED' };
     }
+    var createdThisCall = false;
     if (!this.session || !this.session.sessionId) {
       // First visitor message creates a Bridge session automatically; if requestHandoff was clicked first,
-      // initiate with a brief session opener and follow through with requestHandoff: true (avoiding duplicate text).
+      // initiate cleanly and follow through with requestHandoff: true without duplicating explicit text.
       var initialText = payload.requestHandoff && !payload.hasExplicitText
-        ? 'Technical inquiry opened from AN-THAI inquiry desk.'
+        ? 'Technical inquiry opened from inquiry desk.'
         : payload.text;
       var created = await this.createSession({
         message: initialText,
@@ -358,11 +368,16 @@
       if (!created || !created.ok || !created.sessionId || !payload.requestHandoff) {
         return created;
       }
+      createdThisCall = true;
     }
+
+    var msgText = (createdThisCall && payload.requestHandoff && payload.hasExplicitText)
+      ? 'Visitor requested engineering team handover.'
+      : String(payload.text || '').trim();
 
     var body = {
       clientMsgId: payload.clientMsgId || makeUuid(),
-      text: String(payload.text || '').trim(),
+      text: msgText,
       ...(payload.requestHandoff ? { requestHandoff: true } : {}),
       ...(payload.takeoverReason ? { takeoverReason: String(payload.takeoverReason).slice(0, 500) } : {}),
     };
@@ -396,7 +411,7 @@
     if (!out.res.ok) {
       return { ok: false, persisted: false, error: data.error || ('HTTP_' + out.res.status), isMock: false };
     }
-    var nextStatus = payload.requestHandoff ? 'waiting_human' : (data.sessionStatus || (this.session && this.session.status) || undefined);
+    var nextStatus = data.sessionStatus || (payload.requestHandoff ? 'waiting_human' : undefined) || (this.session && this.session.status) || undefined;
     if (nextStatus && this.session) {
       this._saveSession(Object.assign({}, this.session, { status: nextStatus }));
     }

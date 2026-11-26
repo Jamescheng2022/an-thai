@@ -317,8 +317,8 @@
     var forceOffline = srModeParam === 'offline' || srCfg.forceOffline === true;
     var host = (window.location && window.location.hostname) ? String(window.location.hostname).toLowerCase().replace(/\.+$/, '') : '';
     var isProductionHost = host === 'an-thai.com' || host === 'www.an-thai.com';
-    // Preview & Prod default mockFallback to false; Mock only activates when ?sr_mode=mock is explicitly passed off-prod.
-    var mockFallback = (!forceOffline && !isProductionHost && (srModeParam === 'mock' || srCfg.mockFallback === true));
+    // Preview & Prod enforce mockFallback false; Mock activates solely when ?sr_mode=mock is explicitly passed off-prod.
+    var mockFallback = (!forceOffline && !isProductionHost && srModeParam === 'mock');
 
     adapter = new window.SourceRatingEmbedAdapter({
       bridgeEndpoint: srCfg.bridgeEndpoint || '/api/sr-bridge',

@@ -244,9 +244,19 @@
       headers['x-bridge-challenge'] = this.challengeToken;
       headers['x-turnstile-token'] = this.challengeToken;
     }
+    var fetchWithDeadline = async function (targetUrl, initObj) {
+      if (typeof AbortController !== 'function') return fetch(targetUrl, initObj);
+      var ctrl = new AbortController();
+      var timer = setTimeout(function () { ctrl.abort(); }, 9000);
+      try {
+        return await fetch(targetUrl, Object.assign({}, initObj, { signal: ctrl.signal }));
+      } finally {
+        clearTimeout(timer);
+      }
+    };
     var res;
     try {
-      res = await fetch(this._buildUrl('sessions'), {
+      res = await fetchWithDeadline(this._buildUrl('sessions'), {
         method: 'POST',
         headers: headers,
         body: JSON.stringify(payload),
@@ -254,14 +264,15 @@
       if (res.status === 409) {
         // Contract 6.1: recover from 409 IDEMPOTENCY_TOKEN_UNRECOVERABLE with fresh clientRequestId
         payload.clientRequestId = makeUuid();
-        res = await fetch(this._buildUrl('sessions'), {
+        res = await fetchWithDeadline(this._buildUrl('sessions'), {
           method: 'POST',
           headers: headers,
           body: JSON.stringify(payload),
         });
       }
     } catch (e) {
-      return { ok: false, error: (e && e.message) ? e.message : 'NETWORK_ERROR', persistedToSr: false, isMock: false };
+      var errName = e && e.name ? e.name : '';
+      return { ok: false, error: errName === 'AbortError' ? 'BRIDGE_TIMEOUT' : ((e && e.message) ? e.message : 'NETWORK_ERROR'), persistedToSr: false, isMock: false };
     }
     var data = await res.json().catch(function () { return {}; });
     if (!res.ok || !data.ok) {

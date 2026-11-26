@@ -440,7 +440,7 @@ async function testEnquiryHandler() {
     assert.strictEqual(res.body.configured, false);
     assert.strictEqual(res.body.backend, 'unconfigured');
 
-    // 2. POST unconfigured fails closed 503 with delivered: false
+    // 2. POST unconfigured fails closed 503 with delivered: false; key alone without sender/recipient MUST still fail closed 503
     res = createMockRes();
     await handler({
       method: 'POST',
@@ -451,13 +451,39 @@ async function testEnquiryHandler() {
     assert.strictEqual(res.body.delivered, false);
     assert.strictEqual(res.body.error, 'RESEND_UNCONFIGURED');
 
-    // 3. POST with RESEND_API_KEY sends plain text via Resend & returns delivered: true
+    process.env.RESEND_API_KEY = 'dummy_resend_key_without_routing';
+    fn(mod.exports, mod, process, async () => { throw new Error('must not fetch'); }, AbortSignal);
+    handler = mod.exports;
+    res = createMockRes();
+    await handler({ method: 'GET', headers: {} }, res);
+    assert.strictEqual(res.body.configured, false);
+    res = createMockRes();
+    await handler({
+      method: 'POST',
+      headers: {},
+      body: { route: '01 Testing', contact: 'qa@example.invalid', notes: 'missing recipient must not send' }
+    }, res);
+    assert.strictEqual(res.statusCode, 503);
+    assert.strictEqual(res.body.error, 'RESEND_UNCONFIGURED');
+
+    // 2b. Malformed JSON null & oversized parsed object without Content-Length fail cleanly
+    res = createMockRes();
+    await handler({ method: 'POST', headers: {}, body: null }, res);
+    assert.strictEqual(res.statusCode, 400);
+    assert.strictEqual(res.body.error, 'INVALID_JSON_OBJECT');
+
+    res = createMockRes();
+    await handler({ method: 'POST', headers: {}, body: { route: '01 Testing', contact: 'a@b.c', notes: 'x'.repeat(17000) } }, res);
+    assert.strictEqual(res.statusCode, 413);
+    assert.strictEqual(res.body.error, 'PAYLOAD_TOO_LARGE');
+
+    // 3. POST with RESEND_API_KEY + explicit routing sends plain text via Resend & returns delivered: true
     process.env.RESEND_API_KEY = 'dummy_resend_key';
     process.env.ENQUIRY_FROM_EMAIL = 'AN-THAI <enquiry@an-thai.com>';
     process.env.ENQUIRY_TO_EMAIL = 'info@an-thai.com,anthaicheng@gmail.com';
     let resendReq = null;
     fn(mod.exports, mod, process, async (url, init) => {
-      resendReq = { url, body: JSON.parse(init.body), headers: init.headers };
+      resendReq = { url, body: JSON.parse(init.body), headers: init.headers, redirect: init.redirect, signal: init.signal };
       return { ok: true, status: 200, json: async () => ({ id: 're_test_123' }) };
     }, AbortSignal);
     handler = mod.exports;
@@ -465,12 +491,16 @@ async function testEnquiryHandler() {
     await handler({
       method: 'POST',
       headers: { 'x-forwarded-for': '203.0.113.10' },
-      body: { route: '01 Testing', contact: 'qa@example.invalid', notes: 'SR outage failover check', mode: 'sr_failover_backup' }
+      body: { route: "01 Testing\r\nBcc: evil@example.com", contact: 'qa@example.invalid', notes: 'SR outage failover check', mode: 'sr_failover_backup' }
     }, res);
     assert.strictEqual(res.statusCode, 200);
     assert.strictEqual(res.body.delivered, true);
+    assert.strictEqual(res.body.status, 'accepted_for_delivery');
     assert.strictEqual(res.body.providerMessageId, 're_test_123');
+    assert.strictEqual(resendReq.redirect, 'manual');
+    assert.ok(resendReq.signal);
     assert.ok(resendReq.body.subject.includes('[Resend Backup'));
+    assert.ok(!/[\r\n]/.test(resendReq.body.subject));
     assert.deepStrictEqual(resendReq.body.to, ['info@an-thai.com', 'anthaicheng@gmail.com']);
 
     // 4. Upstream Resend error returns 502 delivered: false

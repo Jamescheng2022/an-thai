@@ -316,9 +316,15 @@
     } catch (e) {}
     var forceOffline = srModeParam === 'offline' || srCfg.forceOffline === true;
     var host = (window.location && window.location.hostname) ? String(window.location.hostname).toLowerCase().replace(/\.+$/, '') : '';
-    var isProductionHost = host === 'an-thai.com' || host === 'www.an-thai.com';
-    // Preview & Prod enforce mockFallback false; Mock activates solely when ?sr_mode=mock is explicitly passed off-prod.
-    var mockFallback = (!forceOffline && !isProductionHost && srModeParam === 'mock');
+    var isAllowedMockHost = (
+      host === 'localhost' ||
+      host === '127.0.0.1' ||
+      host === '[::1]' ||
+      /\.vercel\.app$/i.test(host) ||
+      (window.location && window.location.protocol === 'file:')
+    );
+    // Allow explicit ?sr_mode=mock strictly on non-production preview/local hosts (arbitrary production domains cannot opt in).
+    var mockFallback = (!forceOffline && isAllowedMockHost && srModeParam === 'mock');
 
     adapter = new window.SourceRatingEmbedAdapter({
       bridgeEndpoint: srCfg.bridgeEndpoint || '/api/sr-bridge',
@@ -751,6 +757,7 @@
       '<div class="contact-channels-row">',
         '<button type="button" class="btn btn-outline" style="padding:5px 10px;font-size:11px;" data-inquiry-copy="">' + esc(t('copyBriefBtn')) + '</button>',
         extra,
+        '<span data-copy-status="" hidden style="font-size:11px;font-weight:700;padding:4px 8px;border:1px solid currentColor;"></span>',
       '</div>',
       renderFallbackLinksHtml(brief)
     ].join('');
@@ -771,6 +778,7 @@
       '<div class="contact-channels-row">',
         '<button type="button" class="btn btn-outline" style="padding:5px 10px;font-size:11px;" data-inquiry-copy="">' + esc(t('copyBriefBtn')) + '</button>',
         extra,
+        '<span data-copy-status="" hidden style="font-size:11px;font-weight:700;padding:4px 8px;border:1px solid currentColor;"></span>',
       '</div>',
       renderFallbackLinksHtml(brief)
     ].join('');
@@ -781,6 +789,7 @@
     }
   }
   async function copyBrief(text, el) {
+    var statusBadge = el && typeof el.querySelector === 'function' ? el.querySelector('[data-copy-status]') : null;
     try {
       if (navigator.clipboard && navigator.clipboard.writeText) await navigator.clipboard.writeText(text);
       else {
@@ -788,9 +797,11 @@
         document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
       }
       window.ANTHAI_TRACK('brief_copied', {});
-      if (el) { el.className = 'notice-box is-ok'; el.textContent = t('copiedMsg'); el.hidden = false; }
+      if (statusBadge) { statusBadge.textContent = t('copiedMsg'); statusBadge.hidden = false; }
+      else if (el) { el.className = 'notice-box is-ok'; el.textContent = t('copiedMsg'); el.hidden = false; }
     } catch (e) {
-      if (el) { el.className = 'notice-box'; el.textContent = window.ANTHAI_CONFIG.directEmail; el.hidden = false; }
+      if (statusBadge) { statusBadge.textContent = window.ANTHAI_CONFIG.directEmail; statusBadge.hidden = false; }
+      else if (el) { el.className = 'notice-box'; el.textContent = window.ANTHAI_CONFIG.directEmail; el.hidden = false; }
     }
   }
 

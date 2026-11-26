@@ -131,6 +131,9 @@ export default async function handler(req, res) {
       headers: fwdHeaders,
       body: bodyStr,
       redirect: 'manual',
+      signal: typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function'
+        ? AbortSignal.timeout(8000)
+        : undefined,
     });
 
     if (upstreamRes.status >= 300 && upstreamRes.status < 400) {
@@ -160,11 +163,12 @@ export default async function handler(req, res) {
     }
     return res.status(upstreamRes.status).json(data);
   } catch (err) {
-    return res.status(503).json({
+    const isTimeout = err && (err.name === 'TimeoutError' || err.name === 'AbortError');
+    return res.status(isTimeout ? 504 : 503).json({
       ok: false,
       configured: false,
       bridgeMode: 'unconfigured',
-      error: 'SR_STAGING_UNREACHABLE',
+      error: isTimeout ? 'SR_UPSTREAM_TIMEOUT' : 'SR_STAGING_UNREACHABLE',
     });
   }
 }

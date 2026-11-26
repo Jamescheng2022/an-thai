@@ -60,8 +60,12 @@ function sanitizeTenantAssetContent(content) {
     [/AN-THAI Engineering Co\.,?\s*Ltd\.?/gi, cfg.legalName],
     [/AN-THAI Engineering/gi, cfg.legalName],
     [/AN-THAI/gi, cfg.brandShort],
+    [/บริษัท\s*อัน-ไทย\s*เอ็นจิเนียริ่ง\s*จำกัด/g, cfg.legalName],
+    [/บริษัท\s*อัน-ไทย\s*เอ็นจิเนียริ่ง/g, cfg.legalName],
+    [/อัน-ไทย/g, cfg.brandShort],
     [/安泰工程有限公司/g, cfg.legalName],
     [/安泰工程/g, cfg.brandShort],
+    [/安泰/g, cfg.brandShort],
     [/an-thai-th/g, workspaceKey],
     [/\bPACO\b/g, 'TEST-REF-A'],
     [/\bROGE\b/g, 'TEST-REF-B'],
@@ -280,7 +284,7 @@ function renderPage(loc, pageName) {
 
 const forbiddenLeakTerms = [
   'an-thai.com', 'info@an-thai.com', 'an-thai-th', '66902921749', '90 292 1749',
-  'James2021', 'p0_XsfILmH', 'Arwan', 'PACO', 'ROGE', 'TEST-ANTHAI-UPD', '安泰工程'
+  'James2021', 'p0_XsfILmH', 'Arwan', 'PACO', 'ROGE', 'TEST-ANTHAI-UPD', '安泰', 'อัน-ไทย'
 ];
 let generatedCount = 0;
 

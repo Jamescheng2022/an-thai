@@ -15,6 +15,7 @@ const outIdx = args.indexOf('--out');
 const root = path.resolve(__dirname, '..');
 const cfgPath = path.resolve(root, cfgIdx >= 0 ? args[cfgIdx + 1] : 'config/tenants/test-demo.json');
 const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
+const workspaceKey = (cfg.sourceRating && cfg.sourceRating.workspaceKey) || cfg.workspaceKey || cfg.tenantSlug;
 const outDir = path.resolve(root, outIdx >= 0 ? args[outIdx + 1] : `dist-${cfg.tenantSlug}`);
 
 fs.rmSync(outDir, { recursive: true, force: true });
@@ -64,7 +65,7 @@ function renderPage(loc, pageName) {
   const mainHtml = pageName === 'contact.html' ? `
     <main id="main-content" class="section">
       <div class="container">
-        <div class="eyebrow">${escapeHtml(cfg.brandShort)} · workspaceKey: ${escapeHtml(cfg.workspaceKey)}</div>
+        <div class="eyebrow">${escapeHtml(cfg.brandShort)} · workspaceKey: ${escapeHtml(workspaceKey)}</div>
         <h1 class="h1" style="margin-top:8px;">${escapeHtml(loc.contactHeading)}</h1>
         <p class="muted" style="margin-top:8px;">${escapeHtml(cfg.legalName)} · ${escapeHtml(cfg.officeAddress)} · ${escapeHtml(cfg.directEmail)}</p>
         <form id="contactScopeForm" class="card" style="margin-top:18px;padding:20px;max-width:640px;">
@@ -85,7 +86,7 @@ function renderPage(loc, pageName) {
     <main id="main-content">
       <section class="section">
         <div class="container">
-          <div class="eyebrow">${escapeHtml(cfg.legalName)} · NOINDEX · workspaceKey=${escapeHtml(cfg.workspaceKey)}</div>
+          <div class="eyebrow">${escapeHtml(cfg.legalName)} · NOINDEX · workspaceKey=${escapeHtml(workspaceKey)}</div>
           <h1 class="h1" style="margin-top:8px;">${escapeHtml(cfg.heroHeadline[loc.key] || cfg.heroHeadline.EN)}</h1>
           <p class="muted" style="margin-top:10px;max-width:64ch;">${escapeHtml(cfg.heroLead[loc.key] || cfg.heroLead.EN)}</p>
           <div class="grid-2" style="margin-top:20px;">${cardsHtml}</div>
@@ -115,9 +116,9 @@ function renderPage(loc, pageName) {
 </head>
 <body>
   <header class="site-header">
-    <div class="container header-inner">
-      <a href="${basePath}/index.html" class="brand"><img src="/assets/images/tenant-logo.svg" alt="${escapeHtml(cfg.brandShort)}" width="28" height="28" /><span><strong>${escapeHtml(cfg.brandShort)}</strong><small>${escapeHtml(cfg.brandTagline[loc.key] || cfg.brandTagline.EN)}</small></span></a>
-      <nav aria-label="Primary" style="display:flex;gap:14px;align-items:center;">
+    <div class="container header-inner" style="flex-wrap:wrap;gap:8px 14px;">
+      <a href="${basePath}/index.html" class="brand" style="min-width:0;max-width:100%;"><img src="/assets/images/tenant-logo.svg" alt="${escapeHtml(cfg.brandShort)}" width="28" height="28" /><span><strong>${escapeHtml(cfg.brandShort)}</strong><small style="overflow-wrap:anywhere;">${escapeHtml(cfg.brandTagline[loc.key] || cfg.brandTagline.EN)}</small></span></a>
+      <nav aria-label="Primary" style="display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;max-width:100%;">
         <a href="${basePath}/index.html">${escapeHtml(loc.navHome)}</a>
         <a href="${basePath}/contact.html">${escapeHtml(loc.navContact)}</a>
         <a href="/index.html" class="lang-btn" data-lang="EN">EN</a>
@@ -162,6 +163,27 @@ function renderPage(loc, pageName) {
   <footer class="site-footer"><div class="container"><small>${escapeHtml(cfg.legalName)} · ${escapeHtml(cfg.cityRegion)} · NOINDEX</small></div></footer>
   <script>window.ANTHAI_CONFIG = ${JSON.stringify(runtimeConfig)};</script>
   <script src="/assets/js/i18n-data.js"></script>
+  <script>
+    (function () {
+      var d = window.ANTHAI_I18N;
+      if (!d) return;
+      var email = ${JSON.stringify(cfg.directEmail)};
+      var legal = ${JSON.stringify(cfg.legalName)};
+      ['EN', 'ZH', 'TH'].forEach(function (k) {
+        if (!d[k]) return;
+        d[k].fSubmitEmail = 'TEST Email (' + email + ')';
+        d[k].fSubmitApi = 'Submit TEST Inquiry (' + email + ')';
+        d[k].drawerStatusOffline = legal + ' · Sandbox';
+        d[k].mailtoOpenedMsg = 'Prepared sandbox brief for ' + email;
+        d[k].mailtoFallbackHelp = 'Sandbox mode — no external delivery for ' + legal;
+        d[k].bottomBarOffline = legal + ' · Sandbox Desk';
+        d[k].bottomBarBtnOffline = 'TEST Desk';
+        d[k].footerAdapterOffline = legal + ' · Offline Sandbox';
+        d[k].contactApiReadyNotice = legal + ' Sandbox Form';
+        d[k].fServerOk = 'TEST Sandbox Ref: ';
+      });
+    })();
+  </script>
   <script src="/assets/js/sr-bridge-mock.js"></script>
   <script src="/assets/js/sourcerating-embed-adapter.js"></script>
   <script src="/assets/js/site.js"></script>
@@ -185,4 +207,4 @@ for (const loc of locales) {
   }
 }
 fs.writeFileSync(path.join(outDir, 'robots.txt'), 'User-agent: *\nDisallow: /\n');
-console.log(`PASS: generated ${generatedCount} isolated noindex pages for "${cfg.legalName}" (workspaceKey=${cfg.workspaceKey}) in ${path.relative(root, outDir)}`);
+console.log(`PASS: generated ${generatedCount} isolated noindex pages for "${cfg.legalName}" (workspaceKey=${workspaceKey}) in ${path.relative(root, outDir)}`);

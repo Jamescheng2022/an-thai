@@ -192,8 +192,24 @@ async function testAdapterAndMock() {
         };
       }
       if (url.includes('route=messages')) {
+        if (fetchMode === 'network_error') {
+          throw new TypeError('network drop');
+        }
         if (fetchMode === '401') {
           return { ok: false, status: 401, json: async () => ({ ok: false, error: 'Unauthorized' }) };
+        }
+        if (fetchMode === 'paginated') {
+          const sp = new URL('http://localhost' + url).searchParams;
+          const after = Number(sp.get('afterSeq') || '0');
+          if (after === 0) {
+            const page1 = Array.from({ length: 50 }, (_, i) => ({ id: 'm-' + (i + 1), seq: i + 1, senderKind: 'visitor', text: 'msg ' + (i + 1) }));
+            return { ok: true, status: 200, json: async () => ({ ok: true, messages: page1, nextAfterSeq: 50 }) };
+          }
+          const page2 = [
+            { id: 'm-51', seq: 51, senderKind: 'staff', text: 'reply 51' },
+            { id: 'm-52', seq: 52, senderKind: 'staff', text: 'reply 52' },
+          ];
+          return { ok: true, status: 200, json: async () => ({ ok: true, messages: page2, nextAfterSeq: 52 }) };
         }
         return { ok: true, status: 200, json: async () => ({ ok: true, messages: [] }) };
       }
@@ -304,6 +320,18 @@ async function testAdapterAndMock() {
   const livePosts = await liveAdapter.listPublicPosts();
   assert.strictEqual(livePosts.posts.length, 1);
   assert.strictEqual(livePosts.posts[0].id, 'pub-1');
+
+  fetchMode = 'paginated';
+  const pagedRes = await liveAdapter.listMessages();
+  assert.strictEqual(pagedRes.ok, true);
+  assert.strictEqual(pagedRes.messages.length, 52);
+  assert.strictEqual(pagedRes.messages[51].senderKind, 'staff');
+
+  fetchMode = 'network_error';
+  const netErrRes = await liveAdapter.sendMessage({ text: 'drop test' });
+  assert.strictEqual(netErrRes.ok, false);
+  assert.strictEqual(netErrRes.persisted, false);
+  assert.ok(netErrRes.error.includes('network drop'));
 
   fetchMode = '401';
   const expiredRes = await liveAdapter.listMessages();

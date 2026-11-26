@@ -244,19 +244,24 @@
       headers['x-bridge-challenge'] = this.challengeToken;
       headers['x-turnstile-token'] = this.challengeToken;
     }
-    var res = await fetch(this._buildUrl('sessions'), {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify(payload),
-    });
-    if (res.status === 409) {
-      // Contract 6.1: recover from 409 IDEMPOTENCY_TOKEN_UNRECOVERABLE with fresh clientRequestId
-      payload.clientRequestId = makeUuid();
+    var res;
+    try {
       res = await fetch(this._buildUrl('sessions'), {
         method: 'POST',
         headers: headers,
         body: JSON.stringify(payload),
       });
+      if (res.status === 409) {
+        // Contract 6.1: recover from 409 IDEMPOTENCY_TOKEN_UNRECOVERABLE with fresh clientRequestId
+        payload.clientRequestId = makeUuid();
+        res = await fetch(this._buildUrl('sessions'), {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify(payload),
+        });
+      }
+    } catch (e) {
+      return { ok: false, error: (e && e.message) ? e.message : 'NETWORK_ERROR', persistedToSr: false, isMock: false };
     }
     var data = await res.json().catch(function () { return {}; });
     if (!res.ok || !data.ok) {
@@ -288,11 +293,15 @@
       return mOut;
     }
     if (this.mode !== 'live') return { ok: false, error: 'BRIDGE_NOT_LIVE' };
-    var out = await this._authedFetch('session', null, { method: 'GET' });
-    if (out.sessionReset) return { ok: false, sessionReset: true, error: 'Unauthorized' };
-    var data = await out.res.json().catch(function () { return {}; });
-    if (!out.res.ok) return { ok: false, error: data.error || ('HTTP_' + out.res.status) };
-    return data;
+    try {
+      var out = await this._authedFetch('session', null, { method: 'GET' });
+      if (out.sessionReset) return { ok: false, sessionReset: true, error: 'Unauthorized' };
+      var data = await out.res.json().catch(function () { return {}; });
+      if (!out.res.ok) return { ok: false, error: data.error || ('HTTP_' + out.res.status) };
+      return data;
+    } catch (e) {
+      return { ok: false, error: (e && e.message) ? e.message : 'NETWORK_ERROR' };
+    }
   };
 
   SourceRatingEmbedAdapter.prototype.listMessages = async function (afterSeq) {
@@ -307,12 +316,28 @@
       return mList;
     }
     if (this.mode !== 'live') return { ok: false, messages: [], error: 'BRIDGE_NOT_LIVE' };
-    var out = await this._authedFetch('messages', function () { return { afterSeq: afterSeq || 0 }; }, { method: 'GET' });
-    if (out.sessionReset) return { ok: false, messages: [], sessionReset: true, error: 'Unauthorized' };
-    var data = await out.res.json().catch(function () { return {}; });
-    if (!out.res.ok) return { ok: false, messages: [], error: data.error || ('HTTP_' + out.res.status) };
-    this.messages = Array.isArray(data.messages) ? data.messages : [];
-    return Object.assign({ ok: true, isMock: false }, data);
+    try {
+      var cursor = afterSeq || 0;
+      var combined = [];
+      var lastData = {};
+      for (var page = 0; page < 10; page++) {
+        var pageCursor = cursor;
+        var out = await this._authedFetch('messages', function () { return { afterSeq: pageCursor }; }, { method: 'GET' });
+        if (out.sessionReset) return { ok: false, messages: [], sessionReset: true, error: 'Unauthorized' };
+        var data = await out.res.json().catch(function () { return {}; });
+        if (!out.res.ok) return { ok: false, messages: [], error: data.error || ('HTTP_' + out.res.status) };
+        lastData = data;
+        var batch = Array.isArray(data.messages) ? data.messages : [];
+        combined = combined.concat(batch);
+        var nextCur = (typeof data.nextAfterSeq === 'number') ? data.nextAfterSeq : null;
+        if (batch.length < 50 || nextCur === null || nextCur <= pageCursor) break;
+        cursor = nextCur;
+      }
+      this.messages = combined;
+      return Object.assign({ ok: true, isMock: false }, lastData, { messages: combined });
+    } catch (e) {
+      return { ok: false, messages: this.messages || [], error: (e && e.message) ? e.message : 'NETWORK_ERROR' };
+    }
   };
 
   SourceRatingEmbedAdapter.prototype.sendMessage = async function (payload) {
@@ -354,11 +379,16 @@
       return mRes;
     }
 
-    var out = await this._authedFetch('messages', null, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
+    var out;
+    try {
+      out = await this._authedFetch('messages', null, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+    } catch (e) {
+      return { ok: false, persisted: false, error: (e && e.message) ? e.message : 'NETWORK_ERROR', isMock: false };
+    }
     if (out.sessionReset) {
       return { ok: false, sessionReset: true, persisted: false, error: 'Unauthorized', isMock: false };
     }

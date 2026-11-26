@@ -207,15 +207,16 @@
       return;
     }
     liveMount.innerHTML = messages.map(function (m) {
-      var role = String(m.sender || m.senderType || m.senderRole || m.role || 'ai').toLowerCase();
+      var role = String(m.senderKind || m.sender || m.senderType || m.senderRole || m.role || 'ai').toLowerCase();
+      var isGuestRole = (role === 'guest' || role === 'visitor' || role === 'user');
       var isHumanRole = (role === 'human' || role === 'staff' || role === 'admin' || role === 'operator' || role === 'member' || role === 'agent_human');
-      var cls = (role === 'guest' || role === 'visitor' || role === 'user') ? 'is-guest'
+      var cls = isGuestRole ? 'is-guest'
         : (isHumanRole ? 'is-human'
         : (role === 'system' ? 'is-system' : ''));
-      var roleLabel = (role === 'guest' || role === 'visitor' || role === 'user') ? t('liveRoleGuest')
-        : (isHumanRole ? (m.orgVerified ? t('liveRoleHumanVerified') : t('liveRoleHuman'))
-        : (role === 'system' ? t('liveRoleSystem') : t('liveRoleAi')));
-      var meta = roleLabel + (m.id ? ' · #' + esc(m.id) : '') + (m.createdAt ? ' · ' + esc(m.createdAt) : '');
+      var roleLabel = isGuestRole ? t('liveRoleGuest')
+        : (isHumanRole ? (m.senderLabel || (m.orgVerified ? t('liveRoleHumanVerified') : t('liveRoleHuman')))
+        : (role === 'system' ? t('liveRoleSystem') : (m.senderLabel || t('liveRoleAi'))));
+      var meta = esc(roleLabel) + (m.id ? ' · #' + esc(String(m.id).slice(0, 8)) : '') + (m.createdAt ? ' · ' + esc(m.createdAt) : '');
       return '<div class="msg-bubble ' + cls + '"><div class="msg-meta">' + meta + '</div><div>' + esc(m.text || m.body || m.content || '') + '</div></div>';
     }).join('');
     var body = document.querySelector('.drawer-body');

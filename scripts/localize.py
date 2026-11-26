@@ -115,6 +115,16 @@ class Localizer(HTMLParser):
             self.json_script = attrs_dict.get('type') == 'application/ld+json'
 
         # Translate attributes via i18n-data.js or legacy MAP
+        aria_translated = False
+        if 'data-i18n-aria' in attrs_dict:
+            aria_key = attrs_dict['data-i18n-aria']
+            if aria_key in I18N.get(self.lang_upper, {}):
+                attrs_dict['aria-label'] = I18N[self.lang_upper][aria_key]
+                aria_translated = True
+                self.count += 1
+            elif self.lang != 'en':
+                self.missing.add(f"data-i18n-aria:{aria_key}")
+
         if 'data-i18n-ph' in attrs_dict:
             ph_key = attrs_dict['data-i18n-ph']
             if ph_key in I18N.get(self.lang_upper, {}):
@@ -125,6 +135,8 @@ class Localizer(HTMLParser):
 
         for key in ['alt', 'placeholder', 'aria-label']:
             if key in attrs_dict:
+                if key == 'aria-label' and aria_translated:
+                    continue
                 attrs_dict[key] = self.tr(attrs_dict[key])
 
         if tag == 'meta':
@@ -180,12 +192,24 @@ class Localizer(HTMLParser):
                     if p_name in PAGES:
                         attrs_dict[key] = f'{p_prefix}{p_name}.html{query_part}{hash_part}'
 
-        attr_str = ''.join(' ' + k + ('' if v is None else '="' + escape(v, quote=True) + '"') for k, v in attrs_dict.items())
-        self.out.append('<' + tag + attr_str + '>')
+        svg_case_map = {
+            'viewbox': 'viewBox',
+            'preserveaspectratio': 'preserveAspectRatio',
+            'gradientunits': 'gradientUnits',
+            'gradienttransform': 'gradientTransform',
+        }
+        attrs_out = []
+        for k, v in attrs_dict.items():
+            out_k = svg_case_map.get(k, k)
+            attrs_out.append(' ' + out_k + ('' if v is None else '="' + escape(v, quote=True) + '"'))
+        self.out.append('<' + tag + ''.join(attrs_out) + '>')
 
     def handle_startendtag(self, tag, attrs):
+        html_void_tags = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'}
         self.handle_starttag(tag, attrs)
         self.tag_stack.pop()
+        if tag not in html_void_tags:
+            self.out.append('</' + tag + '>')
 
     def handle_endtag(self, tag):
         if self.tag_stack:

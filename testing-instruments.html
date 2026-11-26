@@ -144,49 +144,33 @@
           <article class="card"><h2 class="h3" data-i18n="i3Title">Configuration &amp; Support</h2><p class="muted" data-i18n="i3Desc">Model comparison, sensor/software compatibility checks, calibration documentation, and confirmed manufacturer warranty/support boundaries.</p></article>
         </div>
 
-        <div class="diagram-box has-mobile-flow">
+        <div class="diagram-box">
           <div class="diagram-head">
             <span class="mono" style="font-size:11px;font-weight:700;color:#fb923c;text-transform:uppercase;" data-i18n="instrFlowTitle">Instrument Selection &amp; Supply Chain</span>
             <button type="button" class="btn btn-accent" style="padding:7px 13px;font-size:11px;" data-open-desk="04 Field Testing Instruments" data-i18n="instrCta">Specify Instruments →</button>
           </div>
-          <div class="diagram-swipe-hint" data-i18n="diagramSwipeHint">Swipe horizontally to view full workflow diagram →</div>
-          <div class="diagram-svg-wrap">
-            <svg class="diagram-svg" viewBox="0 0 985 120" role="img" aria-label="Workflow diagram">
-            <g transform="translate(20, 18)">
-              <rect width="210" height="84" fill="#181c24" stroke="#333947" stroke-width="1.2"/>
-              <rect width="210" height="3" fill="#d44800"/>
-              <text x="14" y="26" fill="#fb923c" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">01 · METHOD</text>
-              <text x="14" y="48" fill="#ffffff" font-family="Inter, sans-serif" font-size="13" font-weight="700">Test Standard</text>
-              <text x="14" y="68" fill="#a1a1aa" font-family="Inter, sans-serif" font-size="10.5">Range · accuracy</text>
-            </g><line x1="230" y1="60" x2="259" y2="60" stroke="#fb923c" stroke-width="1.5"/><polygon points="258,55 265,60 258,65" fill="#fb923c"/>
-            <g transform="translate(265, 18)">
-              <rect width="210" height="84" fill="#181c24" stroke="#333947" stroke-width="1.2"/>
-              <rect width="210" height="3" fill="#64748b"/>
-              <text x="14" y="26" fill="#fb923c" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">02 · MATCH</text>
-              <text x="14" y="48" fill="#ffffff" font-family="Inter, sans-serif" font-size="13" font-weight="700">System & Sensors</text>
-              <text x="14" y="68" fill="#a1a1aa" font-family="Inter, sans-serif" font-size="10.5">Probes · cables · DAQ</text>
-            </g><line x1="475" y1="60" x2="504" y2="60" stroke="#fb923c" stroke-width="1.5"/><polygon points="503,55 510,60 503,65" fill="#fb923c"/>
-            <g transform="translate(510, 18)">
-              <rect width="210" height="84" fill="#181c24" stroke="#333947" stroke-width="1.2"/>
-              <rect width="210" height="3" fill="#64748b"/>
-              <text x="14" y="26" fill="#fb923c" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">03 · QUOTE</text>
-              <text x="14" y="48" fill="#ffffff" font-family="Inter, sans-serif" font-size="13" font-weight="700">Confirmed Terms</text>
-              <text x="14" y="68" fill="#a1a1aa" font-family="Inter, sans-serif" font-size="10.5">Calibration · warranty</text>
-            </g><line x1="720" y1="60" x2="749" y2="60" stroke="#fb923c" stroke-width="1.5"/><polygon points="748,55 755,60 748,65" fill="#fb923c"/>
-            <g transform="translate(755, 18)">
-              <rect width="210" height="84" fill="#181c24" stroke="#333947" stroke-width="1.2"/>
-              <rect width="210" height="3" fill="#d44800"/>
-              <text x="14" y="26" fill="#fb923c" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">04 · SUPPLY</text>
-              <text x="14" y="48" fill="#ffffff" font-family="Inter, sans-serif" font-size="13" font-weight="700">Delivery & Support</text>
-              <text x="14" y="68" fill="#a1a1aa" font-family="Inter, sans-serif" font-size="10.5">Authorized maker docs</text>
-            </g></svg>
-          </div>
-          <div class="workflow-mobile-steps" aria-label="Mobile workflow steps">
-            <div class="wf-m-step"><span class="wf-m-code" data-i18n="wfInstr1Code">01 · METHOD</span><p class="wf-m-title" data-i18n="wfInstr1Title">Test Standard</p><p class="wf-m-sub" data-i18n="wfInstr1Sub">Range · accuracy</p></div>
-            <div class="wf-m-step wf-m-step--muted"><span class="wf-m-code" data-i18n="wfInstr2Code">02 · MATCH</span><p class="wf-m-title" data-i18n="wfInstr2Title">System &amp; Sensors</p><p class="wf-m-sub" data-i18n="wfInstr2Sub">Probes · cables · DAQ</p></div>
-            <div class="wf-m-step wf-m-step--muted"><span class="wf-m-code" data-i18n="wfInstr3Code">03 · QUOTE</span><p class="wf-m-title" data-i18n="wfInstr3Title">Confirmed Terms</p><p class="wf-m-sub" data-i18n="wfInstr3Sub">Calibration · warranty</p></div>
-            <div class="wf-m-step"><span class="wf-m-code" data-i18n="wfInstr4Code">04 · SUPPLY</span><p class="wf-m-title" data-i18n="wfInstr4Title">Delivery &amp; Support</p><p class="wf-m-sub" data-i18n="wfInstr4Sub">Authorized maker docs</p></div>
-          </div>
+          <ol class="flow-pipeline" aria-label="Instrument selection workflow" data-i18n-aria="flowInstrAria">
+            <li class="flow-step is-anchor">
+              <div class="flow-step-head"><span class="flow-step-code" data-i18n="wfInstr1Code">01 · METHOD</span><span class="flow-step-dir" aria-hidden="true">→</span></div>
+              <p class="flow-step-title" data-i18n="wfInstr1Title">Test Standard</p>
+              <p class="flow-step-sub" data-i18n="wfInstr1Sub">Range · accuracy</p>
+            </li>
+            <li class="flow-step">
+              <div class="flow-step-head"><span class="flow-step-code" data-i18n="wfInstr2Code">02 · MATCH</span><span class="flow-step-dir" aria-hidden="true">→</span></div>
+              <p class="flow-step-title" data-i18n="wfInstr2Title">System &amp; Sensors</p>
+              <p class="flow-step-sub" data-i18n="wfInstr2Sub">Probes · cables · DAQ</p>
+            </li>
+            <li class="flow-step">
+              <div class="flow-step-head"><span class="flow-step-code" data-i18n="wfInstr3Code">03 · QUOTE</span><span class="flow-step-dir" aria-hidden="true">→</span></div>
+              <p class="flow-step-title" data-i18n="wfInstr3Title">Confirmed Terms</p>
+              <p class="flow-step-sub" data-i18n="wfInstr3Sub">Calibration · warranty</p>
+            </li>
+            <li class="flow-step is-anchor">
+              <div class="flow-step-head"><span class="flow-step-code" data-i18n="wfInstr4Code">04 · SUPPLY</span><span class="flow-step-dir" aria-hidden="true">✓</span></div>
+              <p class="flow-step-title" data-i18n="wfInstr4Title">Delivery &amp; Support</p>
+              <p class="flow-step-sub" data-i18n="wfInstr4Sub">Authorized maker docs</p>
+            </li>
+          </ol>
         </div>
 
         <div class="receive-box">

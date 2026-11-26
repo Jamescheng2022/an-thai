@@ -121,7 +121,7 @@ window.ANTHAI_I18N = {
     "insQueueTitle": "",
     "aboutTitle": "Company Profile · AN-THAI Engineering",
     "aboutLead": "AN-THAI Engineering Company Limited — Bangkok-based technical practice operating four independent business units with clear responsibility boundaries.",
-    "aboutFlowTitle": "Four Independent Business Units (Bangkok Hub)",
+    "aboutFlowTitle": "Four Service Lines · Bangkok Hub",
     "ab1Title": "Bangkok Base",
     "ab1Desc": "Operating from Bangkok to coordinate international project owners, EPC contractors, local testing execution, and Thai submission workflows.",
     "ab2Title": "Four Independent Units",
@@ -403,7 +403,17 @@ window.ANTHAI_I18N = {
     "lineActionLabel": "Open LINE →",
     "qrLineHint": "Scan QR or open link →",
     "qrWechatHint": "Scan QR in WeChat",
-    "drawerChannelsTitle": "Direct Channels · Scan or Tap"
+    "drawerChannelsTitle": "Direct Channels · Scan or Tap",
+    "hubRootTitle": "AN-THAI ENGINEERING · BANGKOK HUB",
+    "hubSvcLine1": "SERVICE LINE 01",
+    "hubSvcLine2": "SERVICE LINE 02",
+    "hubSvcLine3": "SERVICE LINE 03",
+    "hubSvcLine4": "SERVICE LINE 04",
+    "hubAria": "Four service lines under AN-THAI Bangkok Hub",
+    "flowTestAria": "Field testing workflow",
+    "flowSteelAria": "Buyer-side procurement agency workflow",
+    "flowPowderAria": "Equipment coordination workflow",
+    "flowInstrAria": "Instrument selection workflow"
   },
   "ZH": {
     "brandSub": "泰国工程支持 · 地基至结构",
@@ -527,7 +537,7 @@ window.ANTHAI_I18N = {
     "insQueueTitle": "",
     "aboutTitle": "企业简介 · AN-THAI Engineering",
     "aboutLead": "AN-THAI Engineering Company Limited —— 立足曼谷，并行运营四大独立工程与采购服务单元，权责清晰透明。",
-    "aboutFlowTitle": "四大独立业务能力架构（非串联工艺）",
+    "aboutFlowTitle": "四大核心业务单元 · 曼谷协调枢纽（非串联工艺）",
     "ab1Title": "曼谷本地基地",
     "ab1Desc": "立足曼谷协同国际业主、EPC 总包、泰国本地检测实施与报批流程。",
     "ab2Title": "四大独立单元",
@@ -809,7 +819,17 @@ window.ANTHAI_I18N = {
     "lineActionLabel": "打开 LINE →",
     "qrLineHint": "扫码或点击添加 LINE →",
     "qrWechatHint": "微信扫一扫添加",
-    "drawerChannelsTitle": "直连通道 · 点击或扫码联系"
+    "drawerChannelsTitle": "直连通道 · 点击或扫码联系",
+    "hubRootTitle": "AN-THAI 安泰工程 · 曼谷协调枢纽",
+    "hubSvcLine1": "业务单元 01",
+    "hubSvcLine2": "业务单元 02",
+    "hubSvcLine3": "业务单元 03",
+    "hubSvcLine4": "业务单元 04",
+    "hubAria": "AN-THAI 曼谷协调枢纽下的四大工程与采购业务单元",
+    "flowTestAria": "现场检测执行流程",
+    "flowSteelAria": "独立买方钢结构采购代理流程",
+    "flowPowderAria": "粉磨与粉体装备技术协调流程",
+    "flowInstrAria": "现场检测仪器选型与供货流程"
   },
   "TH": {
     "brandSub": "ประเทศไทย · ฐานรากสู่โครงสร้าง",
@@ -933,7 +953,7 @@ window.ANTHAI_I18N = {
     "insQueueTitle": "",
     "aboutTitle": "ข้อมูลบริษัท · AN-THAI Engineering",
     "aboutLead": "AN-THAI Engineering Company Limited ดำเนินงานจากกรุงเทพมหานคร ผ่าน 4 หน่วยธุรกิจอิสระที่มีขอบเขตความรับผิดชอบชัดเจน",
-    "aboutFlowTitle": "โครงสร้าง 4 หน่วยธุรกิจอิสระ (ศูนย์กลางกรุงเทพฯ)",
+    "aboutFlowTitle": "โครงสร้าง 4 สายงานวิศวกรรม · ศูนย์กลางกรุงเทพฯ",
     "ab1Title": "ฐานปฏิบัติการกรุงเทพฯ",
     "ab1Desc": "ดำเนินงานจากกรุงเทพฯ ประสานงานเจ้าของโครงการ EPC ทีมทดสอบภาคสนาม และขั้นตอนยื่นแบบในไทย",
     "ab2Title": "4 หน่วยธุรกิจอิสระ",
@@ -1215,6 +1235,16 @@ window.ANTHAI_I18N = {
     "lineActionLabel": "เปิด LINE →",
     "qrLineHint": "สแกน QR หรือเปิดลิงก์ →",
     "qrWechatHint": "สแกน QR ใน WeChat",
-    "drawerChannelsTitle": "ช่องทางติดต่อโดยตรง · แตะหรือสแกน QR"
+    "drawerChannelsTitle": "ช่องทางติดต่อโดยตรง · แตะหรือสแกน QR",
+    "hubRootTitle": "AN-THAI ENGINEERING · ศูนย์กลางกรุงเทพฯ",
+    "hubSvcLine1": "สายงาน 01",
+    "hubSvcLine2": "สายงาน 02",
+    "hubSvcLine3": "สายงาน 03",
+    "hubSvcLine4": "สายงาน 04",
+    "hubAria": "โครงสร้าง 4 สายงานวิศวกรรมภายใต้ศูนย์กลางกรุงเทพฯ ของ AN-THAI",
+    "flowTestAria": "ขั้นตอนการทดสอบภาคสนาม",
+    "flowSteelAria": "ขั้นตอนการทำงานตัวแทนจัดซื้อฝั่งผู้ซื้อ",
+    "flowPowderAria": "ขั้นตอนการประสานงานอุปกรณ์บดและงานผง",
+    "flowInstrAria": "ขั้นตอนการคัดเลือกและจัดหาเครื่องมือทดสอบ"
   }
 };

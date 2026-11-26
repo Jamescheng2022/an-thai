@@ -65,4 +65,24 @@ function addAdSenseVerification(dir) {
 }
 addAdSenseVerification(output);
 fs.writeFileSync(path.join(output, 'ads.txt'), 'google.com, pub-4813203643604350, DIRECT, f08c47fec0942fa0\n');
+
+// Enforce strict noindex + Disallow on Vercel Preview builds (V1.1 isolated staging)
+if (process.env.VERCEL_ENV === 'preview') {
+  const robotsMeta = '<meta name="robots" content="noindex, nofollow">';
+  (function applyPreviewNoIndex(dir) {
+    for (const entry of fs.readdirSync(dir, {withFileTypes: true})) {
+      const file = path.join(dir, entry.name);
+      if (entry.isDirectory()) applyPreviewNoIndex(file);
+      else if (entry.isFile() && entry.name.endsWith('.html')) {
+        let html = fs.readFileSync(file, 'utf8');
+        if (!/<meta\s+name=["']robots["']/i.test(html)) {
+          html = html.replace(/<\/head>/i, `${robotsMeta}\n</head>`);
+          fs.writeFileSync(file, html);
+        }
+      }
+    }
+  })(output);
+  fs.writeFileSync(path.join(output, 'robots.txt'), 'User-agent: *\nDisallow: /\n');
+}
+
 console.log('Static website packaged in dist, including V5.3 Services, Cases & Insights (Studio isolated for internal staging).');

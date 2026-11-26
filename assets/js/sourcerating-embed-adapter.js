@@ -240,7 +240,10 @@
     }
 
     var headers = { 'Content-Type': 'application/json', Accept: 'application/json' };
-    if (this.challengeToken) headers['x-turnstile-token'] = this.challengeToken;
+    if (this.challengeToken) {
+      headers['x-bridge-challenge'] = this.challengeToken;
+      headers['x-turnstile-token'] = this.challengeToken;
+    }
     var res = await fetch(this._buildUrl('sessions'), {
       method: 'POST',
       headers: headers,
@@ -319,9 +322,12 @@
     }
     if (!this.session || !this.session.sessionId) {
       // First visitor message creates a Bridge session automatically; if requestHandoff was clicked first,
-      // follow through with a handoff message so the new session actually transitions to waiting_human.
+      // initiate with a brief session opener and follow through with requestHandoff: true (avoiding duplicate text).
+      var initialText = payload.requestHandoff && !payload.hasExplicitText
+        ? 'Technical inquiry opened from AN-THAI inquiry desk.'
+        : payload.text;
       var created = await this.createSession({
-        message: payload.text,
+        message: initialText,
         channelSlug: payload.requestHandoff ? 'handoff-request' : 'web-chat',
       });
       if (!created || !created.ok || !created.sessionId || !payload.requestHandoff) {
@@ -342,6 +348,9 @@
         this._saveSession(null);
         return { ok: false, sessionReset: true, persisted: false, error: 'Unauthorized', isMock: true };
       }
+      if (mRes.ok && mRes.sessionStatus && this.session) {
+        this._saveSession(Object.assign({}, this.session, { status: mRes.sessionStatus }));
+      }
       return mRes;
     }
 
@@ -357,11 +366,15 @@
     if (!out.res.ok) {
       return { ok: false, persisted: false, error: data.error || ('HTTP_' + out.res.status), isMock: false };
     }
+    var nextStatus = payload.requestHandoff ? 'waiting_human' : (data.sessionStatus || (this.session && this.session.status) || undefined);
+    if (nextStatus && this.session) {
+      this._saveSession(Object.assign({}, this.session, { status: nextStatus }));
+    }
     return Object.assign({
       ok: true,
       persisted: true,
       isMock: false,
-      sessionStatus: payload.requestHandoff ? 'waiting_human' : (data.sessionStatus || undefined),
+      sessionStatus: nextStatus,
     }, data);
   };
 
@@ -369,6 +382,7 @@
     payload = payload || {};
     return this.sendMessage({
       text: payload.text || 'Visitor requested engineering team handover.',
+      hasExplicitText: Boolean(payload.text),
       requestHandoff: true,
       takeoverReason: payload.reason || 'visitor_requested',
     });

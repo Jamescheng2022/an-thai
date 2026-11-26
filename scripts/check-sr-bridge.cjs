@@ -102,9 +102,10 @@ async function testProxyHandler() {
     assert.strictEqual(res.statusCode, 503);
     assert.strictEqual(res.body.error, 'SR_STAGING_NON_JSON_RESPONSE');
 
-    // 7. Upstream JSON passes cleanly with headers preserved
+    // 7. Upstream JSON passes cleanly with bypass, Origin, x-bridge-challenge & x-turnstile-token headers preserved
     let capturedUrl = '';
     let capturedHeaders = null;
+    process.env.SR_VERCEL_PROTECTION_BYPASS = 'dummy_bypass_token_test';
     global.fetch = async (url, init) => {
       capturedUrl = url;
       capturedHeaders = init.headers;
@@ -118,10 +119,14 @@ async function testProxyHandler() {
     await handler({
       method: 'POST',
       url: '/api/sr-bridge?route=sessions',
-      headers: { 'x-turnstile-token': 'tok_123' },
+      headers: { host: 'an-thai-preview.vercel.app', 'x-bridge-challenge': 'chal_123', 'x-turnstile-token': 'tok_123' },
       body: { workspaceKey: 'an-thai-th', message: 'hello' }
     }, res);
     assert.strictEqual(capturedUrl, 'https://sr-staging.example.vercel.app/api/bridge/v1/sessions');
+    assert.strictEqual(capturedHeaders['x-vercel-protection-bypass'], 'dummy_bypass_token_test');
+    assert.strictEqual(capturedHeaders['x-vercel-set-bypass-cookie'], 'false');
+    assert.strictEqual(capturedHeaders.Origin, 'https://an-thai-preview.vercel.app');
+    assert.strictEqual(capturedHeaders['x-bridge-challenge'], 'chal_123');
     assert.strictEqual(capturedHeaders['x-turnstile-token'], 'tok_123');
     assert.strictEqual(res.statusCode, 201);
     assert.strictEqual(res.body.requestId, 'SR-OK-1');

@@ -22,7 +22,7 @@
       apiBaseUrl: '',
       workspaceKey: 'an-thai-th',
       callerKind: 'an_thai_v1_1',
-      mockFallback: true
+      mockFallback: false
     }
   };
 
@@ -98,6 +98,22 @@
     if (liveFooter) liveFooter.hidden = !isConnected;
   }
 
+  function renderFallbackLinksHtml(brief) {
+    var cfg = window.ANTHAI_CONFIG || {};
+    var mail = cfg.directEmail || 'info@an-thai.com';
+    var mailHref = 'mailto:' + encodeURIComponent(mail)
+      + (brief ? ('?subject=' + encodeURIComponent('[' + (cfg.brandLabel || 'AN-THAI') + '] Technical Inquiry') + '&body=' + encodeURIComponent(brief)) : '');
+    var links = [
+      '<a href="' + esc(mailHref) + '" class="btn btn-outline" style="padding:5px 10px;font-size:11px;">' + esc(mail) + '</a>'
+    ];
+    if (!cfg.hideDirectMessengers) {
+      var waHref = 'https://wa.me/66902921749' + (brief ? ('?text=' + encodeURIComponent(brief)) : '');
+      links.push('<a href="' + esc(waHref) + '" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" style="padding:5px 10px;font-size:11px;">WhatsApp +66 90 292 1749</a>');
+      links.push('<a href="https://line.me/ti/p/p0_XsfILmH" target="_blank" rel="noopener noreferrer nofollow" class="btn btn-line" style="padding:5px 10px;font-size:11px;">LINE</a>');
+    }
+    return '<div class="contact-channels-row" style="margin-top:8px;">' + links.join('') + '</div>';
+  }
+
   function syncDrawerMockNotice(liveView, isMock) {
     if (!liveView || typeof document.createElement !== 'function') return;
     var existing = liveView.querySelector('[data-sr-mock-banner]');
@@ -116,12 +132,7 @@
       }
     }
     existing.hidden = false;
-    existing.innerHTML = '<div>' + esc(t('mockDrawerNotice')) + '</div>'
-      + '<div class="contact-channels-row" style="margin-top:8px;">'
-      + '<a href="mailto:info@an-thai.com" class="btn btn-outline" style="padding:4px 9px;font-size:11px;">info@an-thai.com</a>'
-      + '<a href="https://wa.me/66902921749" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" style="padding:4px 9px;font-size:11px;">WhatsApp</a>'
-      + '<a href="https://line.me/ti/p/p0_XsfILmH" target="_blank" rel="noopener noreferrer nofollow" class="btn btn-line" style="padding:4px 9px;font-size:11px;">LINE</a>'
-      + '</div>';
+    existing.innerHTML = '<div>' + esc(t('mockDrawerNotice')) + '</div>' + renderFallbackLinksHtml('');
   }
 
   function syncContactSubmitMode() {
@@ -196,15 +207,16 @@
       return;
     }
     liveMount.innerHTML = messages.map(function (m) {
-      var role = (m.sender || m.role || 'ai').toLowerCase();
-      var cls = role === 'guest' || role === 'user' ? 'is-guest'
-        : (role === 'human' || role === 'staff' ? 'is-human'
+      var role = String(m.sender || m.senderType || m.senderRole || m.role || 'ai').toLowerCase();
+      var isHumanRole = (role === 'human' || role === 'staff' || role === 'admin' || role === 'operator' || role === 'member' || role === 'agent_human');
+      var cls = (role === 'guest' || role === 'visitor' || role === 'user') ? 'is-guest'
+        : (isHumanRole ? 'is-human'
         : (role === 'system' ? 'is-system' : ''));
-      var roleLabel = role === 'guest' || role === 'user' ? t('liveRoleGuest')
-        : (role === 'human' || role === 'staff' ? (m.orgVerified ? t('liveRoleHumanVerified') : t('liveRoleHuman'))
+      var roleLabel = (role === 'guest' || role === 'visitor' || role === 'user') ? t('liveRoleGuest')
+        : (isHumanRole ? (m.orgVerified ? t('liveRoleHumanVerified') : t('liveRoleHuman'))
         : (role === 'system' ? t('liveRoleSystem') : t('liveRoleAi')));
       var meta = roleLabel + (m.id ? ' · #' + esc(m.id) : '') + (m.createdAt ? ' · ' + esc(m.createdAt) : '');
-      return '<div class="msg-bubble ' + cls + '"><div class="msg-meta">' + meta + '</div><div>' + esc(m.text || m.content || '') + '</div></div>';
+      return '<div class="msg-bubble ' + cls + '"><div class="msg-meta">' + meta + '</div><div>' + esc(m.text || m.body || m.content || '') + '</div></div>';
     }).join('');
     var body = document.querySelector('.drawer-body');
     if (body) body.scrollTop = body.scrollHeight;
@@ -302,9 +314,10 @@
       }
     } catch (e) {}
     var forceOffline = srModeParam === 'offline' || srCfg.forceOffline === true;
-    var host = (window.location && window.location.hostname) ? String(window.location.hostname).toLowerCase() : '';
+    var host = (window.location && window.location.hostname) ? String(window.location.hostname).toLowerCase().replace(/\.+$/, '') : '';
     var isProductionHost = host === 'an-thai.com' || host === 'www.an-thai.com';
-    var mockFallback = (forceOffline || isProductionHost) ? false : (srCfg.mockFallback !== false);
+    // Preview & Prod default mockFallback to false; Mock only activates when ?sr_mode=mock is explicitly passed off-prod.
+    var mockFallback = (!forceOffline && !isProductionHost && (srModeParam === 'mock' || srCfg.mockFallback === true));
 
     adapter = new window.SourceRatingEmbedAdapter({
       bridgeEndpoint: srCfg.bridgeEndpoint || '/api/sr-bridge',
@@ -701,8 +714,9 @@
 
   // Brief & Contact Form (Unified website_url honeypot)
   function buildBrief(f) {
+    var brand = (window.ANTHAI_CONFIG && window.ANTHAI_CONFIG.brandLabel) || 'AN-THAI Engineering';
     return [
-      'AN-THAI Engineering — Technical Inquiry',
+      brand + ' — Technical Inquiry',
       'Unit: ' + (f.route || 'Not specified'),
       'Location: ' + (f.location || 'Not specified'),
       'Scale: ' + (f.scale || 'Not specified'),
@@ -712,28 +726,27 @@
     ].join('\n');
   }
   function openMailto(route, brief) {
+    var cfg = window.ANTHAI_CONFIG || {};
+    var brand = cfg.brandLabel || 'AN-THAI';
     window.ANTHAI_TRACK('email_click', { source: 'structured_brief', route: route });
-    window.location.href = 'mailto:' + encodeURIComponent(window.ANTHAI_CONFIG.directEmail)
-      + '?subject=' + encodeURIComponent('[AN-THAI] ' + (route || 'Technical Inquiry'))
+    window.location.href = 'mailto:' + encodeURIComponent(cfg.directEmail || 'info@an-thai.com')
+      + '?subject=' + encodeURIComponent('[' + brand + '] ' + (route || 'Technical Inquiry'))
       + '&body=' + encodeURIComponent(brief);
   }
   function showInquiryFeedback(el, route, brief) {
     if (!el) return;
     openMailto(route, brief);
     el.className = 'notice-box is-neutral';
-    var waUrl = 'https://wa.me/66902921749?text=' + encodeURIComponent(brief);
-    var lineUrl = 'https://line.me/ti/p/p0_XsfILmH';
-    var wechatUrl = (state.lang === 'ZH' ? '/zh/contact.html#direct-qr' : (state.lang === 'TH' ? '/th/contact.html#direct-qr' : '/contact.html#direct-qr'));
+    var cfg = window.ANTHAI_CONFIG || {};
+    var extra = cfg.hideDirectMessengers ? '' : ('<a href="/contact.html#direct-qr" class="btn btn-outline" style="padding:5px 10px;font-size:11px;">' + esc(t('wechatLabel')) + ' QR</a>');
     el.innerHTML = [
       '<div style="font-weight:700;margin-bottom:6px;">' + esc(t('mailtoOpenedMsg')) + '</div>',
       '<div style="font-size:12px;margin-bottom:8px;line-height:1.4;">' + esc(t('mailtoFallbackHelp')) + '</div>',
       '<div class="contact-channels-row">',
-        '<a href="' + waUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" style="padding:6px 12px;font-size:11px;">WhatsApp +66 90 292 1749</a>',
-        '<a href="' + lineUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-line" style="padding:6px 12px;font-size:11px;">LINE</a>',
-        '<a href="' + wechatUrl + '" class="btn btn-outline" style="padding:6px 12px;font-size:11px;">' + esc(t('wechatLabel')) + ' QR</a>',
-        '<button type="button" class="btn btn-outline" style="padding:6px 12px;font-size:11px;" data-inquiry-copy="">' + esc(t('copyBriefBtn')) + '</button>',
-        '<a href="mailto:info@an-thai.com" class="btn btn-outline" style="padding:6px 12px;font-size:11px;">info@an-thai.com</a>',
-      '</div>'
+        '<button type="button" class="btn btn-outline" style="padding:5px 10px;font-size:11px;" data-inquiry-copy="">' + esc(t('copyBriefBtn')) + '</button>',
+        extra,
+      '</div>',
+      renderFallbackLinksHtml(brief)
     ].join('');
     el.hidden = false;
     var cpBtn = el.querySelector('[data-inquiry-copy]');
@@ -819,15 +832,9 @@
             if (listRes && listRes.ok) renderLiveMessages(listRes.messages);
             if (contactFeedback) {
               if (srRes.isMock || !srRes.persistedToSr) {
-                var waHref = 'https://wa.me/66902921749?text=' + encodeURIComponent(brief);
-                var mailHref = 'mailto:' + encodeURIComponent(window.ANTHAI_CONFIG.directEmail) + '?subject=' + encodeURIComponent('[AN-THAI] ' + (f.route || 'Technical Inquiry')) + '&body=' + encodeURIComponent(brief);
                 contactFeedback.className = 'notice-box mock-notice';
                 contactFeedback.innerHTML = '<div style="font-weight:700;margin-bottom:6px;">' + esc(t('mockContactNotice')) + ' [' + esc(srRes.requestId || 'MOCK') + ']</div>'
-                  + '<div class="contact-channels-row">'
-                  + '<a href="' + mailHref + '" class="btn btn-accent" style="padding:6px 12px;font-size:11px;">' + esc(t('drawerSendEmail')) + '</a>'
-                  + '<a href="' + waHref + '" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" style="padding:6px 12px;font-size:11px;">WhatsApp +66 90 292 1749</a>'
-                  + '<a href="https://line.me/ti/p/p0_XsfILmH" target="_blank" rel="noopener noreferrer nofollow" class="btn btn-line" style="padding:6px 12px;font-size:11px;">LINE</a>'
-                  + '</div>';
+                  + renderFallbackLinksHtml(brief);
               } else {
                 contactFeedback.className = 'notice-box is-ok';
                 contactFeedback.textContent = t('liveContactSent') + (srRes.requestId || srRes.sessionId);

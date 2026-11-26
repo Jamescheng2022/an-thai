@@ -96,7 +96,18 @@ export default async function handler(req, res) {
   }
 
   const fwdHeaders = { Accept: 'application/json' };
+  const bypassSecret = (process.env.SR_VERCEL_PROTECTION_BYPASS || '').trim();
+  if (!isProdRuntime && bypassSecret) {
+    fwdHeaders['x-vercel-protection-bypass'] = bypassSecret;
+    fwdHeaders['x-vercel-set-bypass-cookie'] = 'false';
+  }
+  const reqOrigin = req.headers.origin
+    || (req.headers.host ? `https://${String(req.headers.host).replace(/^https?:\/\//i, '')}` : '')
+    || (process.env.VERCEL_URL ? `https://${String(process.env.VERCEL_URL).replace(/^https?:\/\//i, '')}` : '');
+  if (reqOrigin) fwdHeaders.Origin = String(reqOrigin);
+  if (req.headers.referer) fwdHeaders.Referer = String(req.headers.referer);
   if (req.headers.authorization) fwdHeaders.Authorization = String(req.headers.authorization);
+  if (req.headers['x-bridge-challenge']) fwdHeaders['x-bridge-challenge'] = String(req.headers['x-bridge-challenge']);
   if (req.headers['x-turnstile-token']) fwdHeaders['x-turnstile-token'] = String(req.headers['x-turnstile-token']);
   if (req.method === 'POST') fwdHeaders['Content-Type'] = 'application/json';
 

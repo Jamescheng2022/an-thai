@@ -78,9 +78,11 @@ fs.mkdirSync(path.join(outDir, 'assets/css'), { recursive: true });
 fs.mkdirSync(path.join(outDir, 'assets/js'), { recursive: true });
 fs.mkdirSync(path.join(outDir, 'assets/images'), { recursive: true });
 
-for (const f of ['assets/css/styles.css', 'assets/css/portfolio-v1.css']) {
+for (const f of ['assets/css/styles.css']) {
   const src = path.join(root, f);
-  if (fs.existsSync(src)) fs.copyFileSync(src, path.join(outDir, f));
+  if (fs.existsSync(src)) {
+    fs.writeFileSync(path.join(outDir, f), sanitizeTenantAssetContent(fs.readFileSync(src, 'utf8')));
+  }
 }
 for (const f of ['assets/js/i18n-data.js', 'assets/js/sourcerating-embed-adapter.js', 'assets/js/site.js']) {
   const src = path.join(root, f);

@@ -417,10 +417,84 @@ async function testAdapterAndMock() {
   assert.strictEqual(liveAdapter.session, null);
 }
 
+async function testEnquiryHandler() {
+  const enqSrc = fs.readFileSync(path.join(__dirname, '../api/enquiry.js'), 'utf8');
+  const mod = { exports: {} };
+  const fn = new Function('exports', 'module', 'process', 'fetch', 'AbortSignal', enqSrc.replace(/export\s+default\s+async\s+function\s+handler/, 'module.exports = async function handler'));
+
+  const origEnv = { ...process.env };
+  const origFetch = global.fetch;
+  try {
+    delete process.env.RESEND_API_KEY;
+    delete process.env.INQUIRY_WEBHOOK_URL;
+    delete process.env.ENQUIRY_FROM_EMAIL;
+    delete process.env.ENQUIRY_TO_EMAIL;
+    let handler;
+    fn(mod.exports, mod, process, global.fetch, AbortSignal);
+    handler = mod.exports;
+
+    // 1. GET unconfigured
+    let res = createMockRes();
+    await handler({ method: 'GET', headers: {} }, res);
+    assert.strictEqual(res.statusCode, 200);
+    assert.strictEqual(res.body.configured, false);
+    assert.strictEqual(res.body.backend, 'unconfigured');
+
+    // 2. POST unconfigured fails closed 503 with delivered: false
+    res = createMockRes();
+    await handler({
+      method: 'POST',
+      headers: {},
+      body: { route: '01 Testing', contact: 'qa@example.invalid', notes: 'test backup unconfigured' }
+    }, res);
+    assert.strictEqual(res.statusCode, 503);
+    assert.strictEqual(res.body.delivered, false);
+    assert.strictEqual(res.body.error, 'RESEND_UNCONFIGURED');
+
+    // 3. POST with RESEND_API_KEY sends plain text via Resend & returns delivered: true
+    process.env.RESEND_API_KEY = 'dummy_resend_key';
+    process.env.ENQUIRY_FROM_EMAIL = 'AN-THAI <enquiry@an-thai.com>';
+    process.env.ENQUIRY_TO_EMAIL = 'info@an-thai.com,anthaicheng@gmail.com';
+    let resendReq = null;
+    fn(mod.exports, mod, process, async (url, init) => {
+      resendReq = { url, body: JSON.parse(init.body), headers: init.headers };
+      return { ok: true, status: 200, json: async () => ({ id: 're_test_123' }) };
+    }, AbortSignal);
+    handler = mod.exports;
+    res = createMockRes();
+    await handler({
+      method: 'POST',
+      headers: { 'x-forwarded-for': '203.0.113.10' },
+      body: { route: '01 Testing', contact: 'qa@example.invalid', notes: 'SR outage failover check', mode: 'sr_failover_backup' }
+    }, res);
+    assert.strictEqual(res.statusCode, 200);
+    assert.strictEqual(res.body.delivered, true);
+    assert.strictEqual(res.body.providerMessageId, 're_test_123');
+    assert.ok(resendReq.body.subject.includes('[Resend Backup'));
+    assert.deepStrictEqual(resendReq.body.to, ['info@an-thai.com', 'anthaicheng@gmail.com']);
+
+    // 4. Upstream Resend error returns 502 delivered: false
+    fn(mod.exports, mod, process, async () => ({ ok: false, status: 500, json: async () => ({}) }), AbortSignal);
+    handler = mod.exports;
+    res = createMockRes();
+    await handler({
+      method: 'POST',
+      headers: { 'x-forwarded-for': '203.0.113.11' },
+      body: { route: '01 Testing', contact: 'qa@example.invalid', notes: 'Resend failure test' }
+    }, res);
+    assert.strictEqual(res.statusCode, 502);
+    assert.strictEqual(res.body.delivered, false);
+  } finally {
+    process.env = origEnv;
+    global.fetch = origFetch;
+  }
+}
+
 (async () => {
   await testProxyHandler();
   await testAdapterAndMock();
-  console.log('PASS: sr-bridge proxy fail-closed checks + adapter 409/401/offline/mock/PublicPost contract tests');
+  await testEnquiryHandler();
+  console.log('PASS: sr-bridge + /api/enquiry Resend failover proxy fail-closed checks + adapter 409/401/offline/mock/PublicPost/501 contract tests');
 })().catch((err) => {
   console.error(err);
   process.exit(1);

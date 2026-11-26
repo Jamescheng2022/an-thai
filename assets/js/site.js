@@ -14,7 +14,7 @@
   }
 
   window.ANTHAI_CONFIG = window.ANTHAI_CONFIG || {
-    inquiryEndpoint: '/api/inquiry',
+    inquiryEndpoint: '/api/enquiry',
     directEmail: 'info@an-thai.com',
     directPhone: '+66 90 292 1749',
     sourceRating: {
@@ -734,15 +734,40 @@
       + '?subject=' + encodeURIComponent('[' + brand + '] ' + (route || 'Technical Inquiry'))
       + '&body=' + encodeURIComponent(brief);
   }
+  function localizedContactQrHref() {
+    var lang = String(state.lang || 'EN').toUpperCase();
+    var prefix = lang === 'ZH' ? '/zh' : (lang === 'TH' ? '/th' : '');
+    return prefix + '/contact.html#direct-qr';
+  }
   function showInquiryFeedback(el, route, brief) {
     if (!el) return;
     openMailto(route, brief);
     el.className = 'notice-box is-neutral';
     var cfg = window.ANTHAI_CONFIG || {};
-    var extra = cfg.hideDirectMessengers ? '' : ('<a href="/contact.html#direct-qr" class="btn btn-outline" style="padding:5px 10px;font-size:11px;">' + esc(t('wechatLabel')) + ' QR</a>');
+    var extra = cfg.hideDirectMessengers ? '' : ('<a href="' + esc(localizedContactQrHref()) + '" class="btn btn-outline" style="padding:5px 10px;font-size:11px;">' + esc(t('wechatLabel')) + ' QR</a>');
     el.innerHTML = [
       '<div style="font-weight:700;margin-bottom:6px;">' + esc(t('mailtoOpenedMsg')) + '</div>',
       '<div style="font-size:12px;margin-bottom:8px;line-height:1.4;">' + esc(t('mailtoFallbackHelp')) + '</div>',
+      '<div class="contact-channels-row">',
+        '<button type="button" class="btn btn-outline" style="padding:5px 10px;font-size:11px;" data-inquiry-copy="">' + esc(t('copyBriefBtn')) + '</button>',
+        extra,
+      '</div>',
+      renderFallbackLinksHtml(brief)
+    ].join('');
+    el.hidden = false;
+    var cpBtn = el.querySelector('[data-inquiry-copy]');
+    if (cpBtn) {
+      cpBtn.addEventListener('click', function () { copyBrief(brief, el); });
+    }
+  }
+  function showDeliveryFailedFeedback(el, brief) {
+    if (!el) return;
+    el.className = 'notice-box is-err';
+    var cfg = window.ANTHAI_CONFIG || {};
+    var extra = cfg.hideDirectMessengers ? '' : ('<a href="' + esc(localizedContactQrHref()) + '" class="btn btn-outline" style="padding:5px 10px;font-size:11px;">' + esc(t('wechatLabel')) + ' QR</a>');
+    el.innerHTML = [
+      '<div style="font-weight:700;margin-bottom:6px;">' + esc(t('inquiryNotDeliveredTitle')) + '</div>',
+      '<div style="font-size:12px;margin-bottom:8px;line-height:1.4;">' + esc(t('inquiryNotDeliveredBody')) + '</div>',
       '<div class="contact-channels-row">',
         '<button type="button" class="btn btn-outline" style="padding:5px 10px;font-size:11px;" data-inquiry-copy="">' + esc(t('copyBriefBtn')) + '</button>',
         extra,
@@ -844,13 +869,28 @@
             }
             window.ANTHAI_TRACK('sr_bridge_session_created', { route: f.route, isMock: !!srRes.isMock, requestId: srRes.requestId || '' });
             openDrawer(document.getElementById('contactSubmitBtn') || null);
+            // Optional non-blocking Resend notification only after persisted live SR session (when configured on server)
+            if (srRes.persistedToSr && !srRes.isMock && state.inquiryApiConfigured && window.ANTHAI_CONFIG.inquiryEndpoint) {
+              try {
+                fetch(window.ANTHAI_CONFIG.inquiryEndpoint, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                  body: JSON.stringify({
+                    route: f.route, location: f.location, scale: f.scale,
+                    contact: f.contact, notes: f.notes, website_url: f.website_url,
+                    lang: state.lang, sourceUrl: window.location.href,
+                    mode: 'sr_notification', srRequestId: srRes.requestId || '', srSessionId: srRes.sessionId
+                  })
+                }).catch(function () {});
+              } catch (notifyErr) {}
+            }
             return;
           }
         } catch (srErr) {
-          // Degrade honestly to backend/manual paths below
+          // Automatically fail over to independent Resend backup endpoint below
         }
       }
-      if (state.inquiryApiConfigured && window.ANTHAI_CONFIG.inquiryEndpoint) {
+      if (!state.isMock && window.ANTHAI_CONFIG.inquiryEndpoint) {
         try {
           var res = await fetch(window.ANTHAI_CONFIG.inquiryEndpoint, {
             method: 'POST',
@@ -858,24 +898,24 @@
             body: JSON.stringify({
               route: f.route, location: f.location, scale: f.scale,
               contact: f.contact, notes: f.notes, website_url: f.website_url,
-              lang: state.lang, sourceUrl: window.location.href
+              lang: state.lang, sourceUrl: window.location.href, mode: 'sr_failover_backup'
             })
           });
           if (res.ok) {
             var payload = await res.json().catch(function () { return {}; });
-            if (payload && payload.ok === true && payload.status === 'accepted_for_delivery' && payload.requestId) {
+            if (payload && payload.ok === true && payload.delivered === true && payload.requestId) {
               var receiptId = String(payload.requestId);
-              window.ANTHAI_TRACK('rfq_submit_success', { route: f.route, receiptId: receiptId });
-              if (contactFeedback) { contactFeedback.className = 'notice-box is-ok'; contactFeedback.textContent = t('fServerOk') + receiptId; contactFeedback.hidden = false; }
+              window.ANTHAI_TRACK('rfq_submit_success', { route: f.route, receiptId: receiptId, backend: payload.backend || 'resend' });
+              if (contactFeedback) { contactFeedback.className = 'notice-box is-ok'; contactFeedback.textContent = t('backupResendOk') + receiptId; contactFeedback.hidden = false; }
               contactForm.reset();
               return;
             }
           }
         } catch (err) {
-          // Honest fallback below
+          // Both SR and Resend failed/unavailable -> explicit NOT DELIVERED guidance below
         }
       }
-      showInquiryFeedback(contactFeedback, f.route, brief);
+      showDeliveryFailedFeedback(contactFeedback, brief);
     });
   }
 

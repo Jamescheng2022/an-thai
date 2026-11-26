@@ -12,7 +12,12 @@ function isApprovedStagingOrigin(rawUrl) {
   if (!rawUrl) return false;
   try {
     const parsed = new URL(rawUrl);
-    return parsed.protocol === 'https:' && /^sourcerating(?:-[a-z0-9-]+)?\.vercel\.app$/i.test(parsed.hostname);
+    if (parsed.protocol !== 'https:') return false;
+    return (
+      /^sourcerating-i4-staging-preview\.vercel\.app$/i.test(parsed.hostname) ||
+      /^sourcerating-staging-test\.vercel\.app$/i.test(parsed.hostname) ||
+      /^sourcerating-[a-z0-9-]+-jamescheng2022s-projects\.vercel\.app$/i.test(parsed.hostname)
+    );
   } catch {
     return false;
   }

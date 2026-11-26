@@ -654,7 +654,7 @@
     var qLang = (document.documentElement && document.documentElement.lang) || 'en';
     var qCopy = qLang.startsWith('zh') ? {
       category:'设备类别', requirements:'需求', enquiry:'安泰询价', labels:['姓名','公司','邮箱','联系方式','需求类型'],
-      status:'询盘内容已准备好，请在邮件应用中发送至 info@an-thai.com。如未打开邮件应用，请联系 info@an-thai.com、WhatsApp (+66 90 292 1749)、LINE (https://line.me/ti/p/p0_XsfILmH) 或微信扫码添加。本网站不会提交表单，也不会创建客户记录。',
+      status:'询盘内容已准备好，请在邮件应用中发送至 info@an-thai.com。如未打开邮件应用，请联系 info@an-thai.com、WhatsApp (+66 90 292 1749)、LINE (https://line.me/ti/p/p0_XsfILmH) 或微信（James2021）。本网站不会提交表单，也不会创建客户记录。',
       categories:['桩身完整性检测仪器','高应变／动力桩基检测系统','声波透射／超声检测系统','静载试验测量仪器','岩土与现场检测设备','材料／实验室检测设备','荷载传感器／传感器／数据采集系统','安装／培训／技术支持']
     } : qLang === 'th' ? {
       category:'หมวดหมู่เครื่องมือ', requirements:'ข้อกำหนด', enquiry:'สอบถาม AN-THAI', labels:['ชื่อ','บริษัท','อีเมล','ช่องทางติดต่อ','ประเภทคำสอบถาม'],

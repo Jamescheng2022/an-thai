@@ -350,6 +350,8 @@ def build_shell(lang, lang_code, lang_upper, subpath, title, desc, body_html, sc
   </div>
 
   <script src="/assets/js/i18n-data.js"></script>
+  <script src="/assets/js/sr-bridge-mock.js"></script>
+  <script src="/assets/js/sourcerating-embed-adapter.js"></script>
   <script src="/assets/js/site.js"></script>
 </body>
 </html>'''

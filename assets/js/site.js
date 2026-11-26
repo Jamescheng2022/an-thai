@@ -18,8 +18,11 @@
     directEmail: 'info@an-thai.com',
     directPhone: '+66 90 292 1749',
     sourceRating: {
+      bridgeEndpoint: '/api/sr-bridge',
       apiBaseUrl: '',
-      workspaceKey: 'an-thai-th'
+      workspaceKey: 'an-thai-th',
+      callerKind: 'an_thai_v1_1',
+      mockFallback: true
     }
   };
 
@@ -31,7 +34,7 @@
   };
 
   var I18N = window.ANTHAI_I18N || { EN: {} };
-  var state = { lang: 'EN', adapterMode: 'unconfigured', inquiryApiConfigured: false, sessionId: '', lastFocused: null, pollTimer: null };
+  var state = { lang: 'EN', adapterMode: 'unconfigured', isMock: false, sessionStatus: '', inquiryApiConfigured: false, sessionId: '', lastFocused: null, pollTimer: null, lastPosts: [], postsIsMock: false };
 
   function detectInitialLang() {
     var p = window.location.pathname || '';
@@ -55,6 +58,8 @@
 
   function syncStatusUI() {
     var isLive = state.adapterMode === 'live';
+    var isMock = state.adapterMode === 'mock';
+    var isConnected = isLive || isMock;
     document.querySelectorAll('.sr-status-dot').forEach(function (dot) { dot.classList.toggle('is-live', isLive); });
     document.querySelectorAll('.sr-hero-badge').forEach(function (el) {
       el.classList.toggle('is-live', isLive);
@@ -62,25 +67,61 @@
       if (lbl) lbl.textContent = isLive ? t('statusBadgeLive') : t('statusBadgePending');
     });
     var headerDeskLabel = document.getElementById('headerDeskLabel');
-    if (headerDeskLabel) headerDeskLabel.textContent = isLive ? t('deskBtnLive') : t('deskBtnOffline');
+    if (headerDeskLabel) headerDeskLabel.textContent = isConnected ? t('deskBtnLive') : t('deskBtnOffline');
     var bottomText = document.getElementById('bottomBarStatusText');
-    if (bottomText) bottomText.textContent = isLive ? t('bottomBarLive') : t('bottomBarOffline');
+    if (bottomText) bottomText.textContent = isConnected ? t('bottomBarLive') : t('bottomBarOffline');
     var bottomBtn = document.getElementById('bottomBarDeskBtn');
-    if (bottomBtn) bottomBtn.textContent = isLive ? t('bottomBarBtnLive') : t('bottomBarBtnOffline');
+    if (bottomBtn) bottomBtn.textContent = isConnected ? t('bottomBarBtnLive') : t('bottomBarBtnOffline');
     var footerAdapter = document.getElementById('footerAdapterStatus');
-    if (footerAdapter) footerAdapter.textContent = isLive ? t('footerAdapterLive') : t('footerAdapterOffline');
+    if (footerAdapter) footerAdapter.textContent = isConnected ? t('footerAdapterLive') : t('footerAdapterOffline');
     var drawerStatus = document.getElementById('drawerStatusText');
     if (drawerStatus) {
-      drawerStatus.textContent = isLive
-        ? (t('drawerStatusLive') + (state.sessionId || 'active'))
-        : t('drawerStatusOffline');
+      var shortId = state.sessionId ? state.sessionId.slice(0, 8) : 'ready';
+      if (isMock) {
+        drawerStatus.textContent = t('drawerStatusMock') + shortId;
+      } else if (isLive) {
+        drawerStatus.textContent = (state.sessionStatus === 'waiting_human' ? t('drawerStatusWaitingHuman') : t('drawerStatusLive')) + (state.sessionId ? shortId : 'active');
+      } else {
+        drawerStatus.textContent = t('drawerStatusOffline');
+      }
     }
     var offlineView = document.getElementById('drawerOfflineView');
     var liveView = document.getElementById('drawerLiveView');
     var liveFooter = document.getElementById('drawerLiveFooter');
-    if (offlineView) offlineView.hidden = isLive;
-    if (liveView) liveView.hidden = !isLive;
-    if (liveFooter) liveFooter.hidden = !isLive;
+    if (offlineView) offlineView.hidden = isConnected;
+    if (liveView) {
+      liveView.hidden = !isConnected;
+      syncDrawerMockNotice(liveView, isMock);
+      var claimForm = document.getElementById('liveClaimForm');
+      if (claimForm) claimForm.hidden = true;
+    }
+    if (liveFooter) liveFooter.hidden = !isConnected;
+  }
+
+  function syncDrawerMockNotice(liveView, isMock) {
+    if (!liveView || typeof document.createElement !== 'function') return;
+    var existing = liveView.querySelector('[data-sr-mock-banner]');
+    if (!isMock) {
+      if (existing) existing.hidden = true;
+      return;
+    }
+    if (!existing) {
+      existing = document.createElement('div');
+      existing.setAttribute('data-sr-mock-banner', '1');
+      existing.className = 'mock-notice';
+      if (typeof liveView.insertBefore === 'function' && liveView.firstChild) {
+        liveView.insertBefore(existing, liveView.firstChild);
+      } else if (typeof liveView.appendChild === 'function') {
+        liveView.appendChild(existing);
+      }
+    }
+    existing.hidden = false;
+    existing.innerHTML = '<div>' + esc(t('mockDrawerNotice')) + '</div>'
+      + '<div class="contact-channels-row" style="margin-top:8px;">'
+      + '<a href="mailto:info@an-thai.com" class="btn btn-outline" style="padding:4px 9px;font-size:11px;">info@an-thai.com</a>'
+      + '<a href="https://wa.me/66902921749" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" style="padding:4px 9px;font-size:11px;">WhatsApp</a>'
+      + '<a href="https://line.me/ti/p/p0_XsfILmH" target="_blank" rel="noopener noreferrer nofollow" class="btn btn-line" style="padding:4px 9px;font-size:11px;">LINE</a>'
+      + '</div>';
   }
 
   function syncContactSubmitMode() {
@@ -168,21 +209,126 @@
     if (body) body.scrollTop = body.scrollHeight;
   }
 
+  function sanitizePostUrl(rawUrl) {
+    if (!rawUrl || typeof rawUrl !== 'string') return '';
+    var trimmed = rawUrl.trim();
+    if (trimmed.indexOf('/assets/') === 0 || trimmed.indexOf('https://') === 0 || trimmed.indexOf('http://') === 0) {
+      return trimmed;
+    }
+    return '';
+  }
+
+  function renderPublicPosts(posts, isMock) {
+    var updatesSec = document.getElementById('fieldUpdatesSection');
+    var updatesMount = document.getElementById('fieldUpdatesMount');
+    if (!updatesSec || !updatesMount) return;
+    var visible = Array.isArray(posts) ? posts.filter(function (p) {
+      return p && p.visibility === 'public' && (p.publish_status === 'published' || p.publish_status === 'corrected');
+    }) : [];
+    state.lastPosts = visible;
+    state.postsIsMock = !!isMock;
+    if (visible.length === 0) {
+      updatesMount.innerHTML = '';
+      updatesSec.hidden = true;
+      return;
+    }
+    var banner = updatesSec.querySelector('[data-sr-updates-banner]');
+    if (!banner && typeof document.createElement === 'function') {
+      banner = document.createElement('div');
+      banner.setAttribute('data-sr-updates-banner', '1');
+      if (updatesMount.parentNode && typeof updatesMount.parentNode.insertBefore === 'function') {
+        updatesMount.parentNode.insertBefore(banner, updatesMount);
+      }
+    }
+    if (banner) {
+      banner.className = isMock ? 'mock-notice' : 'mock-notice is-live';
+      banner.textContent = isMock ? t('updatesMockNotice') : t('updatesLiveNotice');
+    }
+    updatesMount.innerHTML = visible.slice(0, 6).map(function (p) {
+      var titleText = (state.lang === 'ZH' && p.title_zh) ? p.title_zh
+        : ((state.lang === 'TH' && p.title_th) ? p.title_th : (p.title || ''));
+      var bodyText = (state.lang === 'ZH' && p.body_markdown_zh) ? p.body_markdown_zh
+        : ((state.lang === 'TH' && p.body_markdown_th) ? p.body_markdown_th : (p.body_markdown || p.summary || ''));
+      var isTest = Boolean(p.is_test || (p.id && String(p.id).indexOf('TEST-') === 0));
+      var cardMock = Boolean(p.isMock || isMock);
+      var statusKey = p.publish_status === 'corrected' ? 'publicPostBadgeCorrected' : 'publicPostBadgePublished';
+      var statusCls = p.publish_status === 'corrected' ? 'is-corrected' : 'is-published';
+      var dateStamp = String(p.corrected_at || p.published_at || p.date || '').slice(0, 10);
+      var imgUrl = sanitizePostUrl(p.image_url);
+      var extUrl = sanitizePostUrl(p.external_url);
+      var badgesHtml = '<div class="post-badges">'
+        + (isTest ? '<span class="post-badge is-test">' + esc(t('publicPostBadgeTest')) + '</span>' : '')
+        + (cardMock ? '<span class="post-badge is-mock">' + esc(t('publicPostBadgeMock')) + '</span>' : '')
+        + '<span class="post-badge ' + statusCls + '">' + esc(t(statusKey)) + (p.publish_status === 'corrected' && p.revision_no ? (' v' + esc(String(p.revision_no))) : '') + '</span>'
+        + '</div>';
+      var mediaHtml = imgUrl
+        ? '<div class="post-card-media"><img src="' + esc(imgUrl) + '" alt="' + esc(titleText) + '" loading="lazy" decoding="async" />'
+          + (p.image_caption ? '<div class="post-card-caption">' + esc(p.image_caption) + '</div>' : '')
+          + '</div>'
+        : '';
+      var footerHtml = '<div class="insight-meta" style="margin-top:10px;justify-content:space-between;">'
+        + '<span>' + esc(p.provider_name || t('publicPostSourceLabel')) + '</span>'
+        + (extUrl ? '<a href="' + esc(extUrl) + '" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-weight:700;">' + esc(t('publicPostOpenRef')) + '</a>' : '')
+        + '</div>';
+      return '<article class="insight-card" id="' + esc(p.id || '') + '" data-post-id="' + esc(p.id || '') + '" data-publish-status="' + esc(p.publish_status || '') + '">'
+        + '<div>'
+        + '<div class="insight-meta" style="justify-content:space-between;">' + badgesHtml + '<span>' + esc(dateStamp) + '</span></div>'
+        + '<h3 class="h3" style="margin-top:8px;">' + esc(titleText) + '</h3>'
+        + '<p class="muted" style="margin-top:6px;font-size:12.5px;line-height:1.55;">' + esc(bodyText) + '</p>'
+        + mediaHtml
+        + footerHtml
+        + '</div></article>';
+    }).join('');
+    updatesSec.hidden = false;
+  }
+
+  async function refreshPublicPosts() {
+    if (!adapter || (state.adapterMode !== 'live' && state.adapterMode !== 'mock')) return;
+    if (typeof adapter.listPublicPosts !== 'function') return;
+    var res = await adapter.listPublicPosts();
+    if (res && res.ok) {
+      renderPublicPosts(res.posts || [], Boolean(res.isMock));
+    }
+  }
+
   async function initAdapter() {
     if (typeof window.SourceRatingEmbedAdapter !== 'function') return;
+    var srCfg = (window.ANTHAI_CONFIG && window.ANTHAI_CONFIG.sourceRating) || {};
+    var srModeParam = '';
+    try {
+      if (typeof URLSearchParams === 'function') {
+        srModeParam = (new URLSearchParams(window.location.search || '')).get('sr_mode') || '';
+      }
+    } catch (e) {}
+    var forceOffline = srModeParam === 'offline' || srCfg.forceOffline === true;
+    var mockFallback = forceOffline ? false : (srCfg.mockFallback !== false);
+
     adapter = new window.SourceRatingEmbedAdapter({
-      apiBaseUrl: window.ANTHAI_CONFIG.sourceRating.apiBaseUrl,
-      workspaceKey: window.ANTHAI_CONFIG.sourceRating.workspaceKey,
+      bridgeEndpoint: srCfg.bridgeEndpoint || '/api/sr-bridge',
+      apiBaseUrl: srCfg.apiBaseUrl || '',
+      workspaceKey: srCfg.workspaceKey || 'an-thai-th',
+      callerKind: srCfg.callerKind || 'an_thai_v1_1',
       defaultLang: detectInitialLang().toLowerCase(),
+      mockFallback: mockFallback,
+      forceOffline: forceOffline,
       onStatusChange: function (info) {
         state.adapterMode = info.mode || 'unconfigured';
+        state.isMock = Boolean(info.isMock);
         state.sessionId = info.sessionId || '';
+        state.sessionStatus = (adapter && adapter.session && adapter.session.status) || state.sessionStatus || '';
         syncStatusUI();
-        if (state.adapterMode === 'live') window.ANTHAI_TRACK('chat_session_started', { sessionId: state.sessionId });
+        if (state.adapterMode === 'live' && state.sessionId) {
+          window.ANTHAI_TRACK('chat_session_started', { sessionId: state.sessionId });
+        }
       }
     });
     var res = await adapter.init();
-    if (res && res.ok && res.mode === 'live') renderLiveMessages(res.messages || []);
+    if (res && res.ok && (res.mode === 'live' || res.mode === 'mock')) {
+      if (res.session && res.session.status) state.sessionStatus = res.session.status;
+      syncStatusUI();
+      renderLiveMessages(res.messages || []);
+      await refreshPublicPosts();
+    }
   }
 
   var liveForm = document.getElementById('liveMessageForm');
@@ -191,7 +337,8 @@
     liveForm.addEventListener('submit', async function (e) {
       e.preventDefault();
       var text = liveInput.value.trim();
-      if (!text || !adapter || state.adapterMode !== 'live') return;
+      var connected = state.adapterMode === 'live' || state.adapterMode === 'mock';
+      if (!text || !adapter || !connected) return;
       showLiveFeedback('', '');
       var res = await adapter.sendMessage({ text: text, context: { page: window.location.pathname, lang: state.lang } });
       if (!res.ok) {
@@ -199,7 +346,10 @@
         return;
       }
       liveInput.value = '';
-      if (res.sessionId) { state.sessionId = res.sessionId; syncStatusUI(); }
+      if (adapter.session && adapter.session.sessionId) state.sessionId = adapter.session.sessionId;
+      if (res.sessionId) state.sessionId = res.sessionId;
+      if (res.sessionStatus) state.sessionStatus = res.sessionStatus;
+      syncStatusUI();
       if (res.sessionReset) showLiveFeedback(t('liveSessionReset'), 'neutral');
       var listRes = await adapter.listMessages();
       if (listRes.ok) renderLiveMessages(listRes.messages);
@@ -209,15 +359,18 @@
   var liveHandoffBtn = document.getElementById('liveHandoffBtn');
   if (liveHandoffBtn) {
     liveHandoffBtn.addEventListener('click', async function () {
-      if (!adapter || state.adapterMode !== 'live') return;
+      var connected = state.adapterMode === 'live' || state.adapterMode === 'mock';
+      if (!adapter || !connected) return;
       var res = await adapter.requestHumanHandoff({ reason: 'visitor_requested', page: window.location.pathname });
       if (!res.ok) {
         showLiveFeedback(t('liveErrHandoff') + (res.error ? ' (' + res.error + ')' : ''), 'err');
         return;
       }
-      if (res.sessionId) { state.sessionId = res.sessionId; syncStatusUI(); }
-      window.ANTHAI_TRACK('human_handoff_requested', { sessionId: state.sessionId });
-      var ref = (res.data && (res.data.handoffId || res.data.id)) ? ' #' + (res.data.handoffId || res.data.id) : '';
+      if (res.sessionId) state.sessionId = res.sessionId;
+      state.sessionStatus = res.sessionStatus || 'waiting_human';
+      syncStatusUI();
+      window.ANTHAI_TRACK('human_handoff_requested', { sessionId: state.sessionId, isMock: state.isMock });
+      var ref = (res.messageId || (res.data && (res.data.handoffId || res.data.id))) ? ' #' + String(res.messageId || res.data.handoffId || res.data.id).slice(0, 8) : '';
       showLiveFeedback(t('liveOkHandoff') + ref + (res.sessionReset ? ' ' + t('liveSessionReset') : ''), 'ok');
       var listRes = await adapter.listMessages();
       if (listRes.ok) renderLiveMessages(listRes.messages);
@@ -227,13 +380,26 @@
   var liveRefreshBtn = document.getElementById('liveRefreshBtn');
   if (liveRefreshBtn) {
     liveRefreshBtn.addEventListener('click', async function () {
-      if (!adapter || state.adapterMode !== 'live') return;
+      var connected = state.adapterMode === 'live' || state.adapterMode === 'mock';
+      if (!adapter || !connected) return;
+      var sRes = await adapter.getSession();
+      if (sRes && sRes.ok && sRes.status) state.sessionStatus = sRes.status;
       var listRes = await adapter.listMessages();
+      await refreshPublicPosts();
       if (listRes.ok) {
-        if (listRes.sessionId) { state.sessionId = listRes.sessionId; syncStatusUI(); }
+        if (listRes.sessionId) state.sessionId = listRes.sessionId;
+        syncStatusUI();
         renderLiveMessages(listRes.messages);
         showLiveFeedback(listRes.sessionReset ? t('liveSessionReset') : '', 'neutral');
       } else {
+        if (listRes.sessionReset) {
+          state.sessionId = '';
+          state.sessionStatus = '';
+          syncStatusUI();
+          renderLiveMessages([]);
+          showLiveFeedback(t('liveSessionReset'), 'neutral');
+          return;
+        }
         showLiveFeedback(t('liveErrRefresh') + (listRes.error ? ' (' + listRes.error + ')' : ''), 'err');
       }
     });
@@ -244,6 +410,9 @@
     liveClearBtn.addEventListener('click', async function () {
       if (!adapter) return;
       adapter.clearSession();
+      state.sessionId = '';
+      state.sessionStatus = '';
+      showLiveFeedback('', '');
       await initAdapter();
     });
   }
@@ -252,9 +421,13 @@
   if (liveClaimForm) {
     liveClaimForm.addEventListener('submit', async function (e) {
       e.preventDefault();
+      if (!adapter || typeof adapter.claimAccount !== 'function') {
+        showLiveFeedback(t('liveClaimNotSupported'), 'neutral');
+        return;
+      }
       var emailEl = document.getElementById('liveClaimEmail');
       var email = emailEl ? emailEl.value.trim() : '';
-      if (!email || !adapter || state.adapterMode !== 'live') return;
+      if (!email || state.adapterMode !== 'live') return;
       var res = await adapter.claimAccount(email);
       if (res.ok) {
         showLiveFeedback(t('liveOkClaim') + email, 'ok');
@@ -597,6 +770,48 @@
         if (contactFeedback) { contactFeedback.className = 'notice-box is-err'; contactFeedback.textContent = t('validationMsg'); contactFeedback.hidden = false; }
         return;
       }
+      if (f.website_url) return;
+      var brief = buildBrief(f);
+      if (adapter && (state.adapterMode === 'live' || state.adapterMode === 'mock')) {
+        try {
+          var srRes = await adapter.createSession({
+            message: brief,
+            roomLabel: f.route,
+            website_url: f.website_url,
+            channelSlug: 'contact-scope-form'
+          });
+          if (srRes && srRes.status === 'filtered') return;
+          if (srRes && srRes.ok && srRes.sessionId) {
+            state.sessionId = srRes.sessionId;
+            state.sessionStatus = srRes.status || 'ai_active';
+            syncStatusUI();
+            var listRes = await adapter.listMessages();
+            if (listRes && listRes.ok) renderLiveMessages(listRes.messages);
+            if (contactFeedback) {
+              if (srRes.isMock || !srRes.persistedToSr) {
+                var waHref = 'https://wa.me/66902921749?text=' + encodeURIComponent(brief);
+                var mailHref = 'mailto:' + encodeURIComponent(window.ANTHAI_CONFIG.directEmail) + '?subject=' + encodeURIComponent('[AN-THAI] ' + (f.route || 'Technical Inquiry')) + '&body=' + encodeURIComponent(brief);
+                contactFeedback.className = 'notice-box mock-notice';
+                contactFeedback.innerHTML = '<div style="font-weight:700;margin-bottom:6px;">' + esc(t('mockContactNotice')) + ' [' + esc(srRes.requestId || 'MOCK') + ']</div>'
+                  + '<div class="contact-channels-row">'
+                  + '<a href="' + mailHref + '" class="btn btn-accent" style="padding:6px 12px;font-size:11px;">' + esc(t('drawerSendEmail')) + '</a>'
+                  + '<a href="' + waHref + '" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" style="padding:6px 12px;font-size:11px;">WhatsApp +66 90 292 1749</a>'
+                  + '<a href="https://line.me/ti/p/p0_XsfILmH" target="_blank" rel="noopener noreferrer nofollow" class="btn btn-line" style="padding:6px 12px;font-size:11px;">LINE</a>'
+                  + '</div>';
+              } else {
+                contactFeedback.className = 'notice-box is-ok';
+                contactFeedback.textContent = t('liveContactSent') + (srRes.requestId || srRes.sessionId);
+              }
+              contactFeedback.hidden = false;
+            }
+            window.ANTHAI_TRACK('sr_bridge_session_created', { route: f.route, isMock: !!srRes.isMock, requestId: srRes.requestId || '' });
+            openDrawer(document.getElementById('contactSubmitBtn') || null);
+            return;
+          }
+        } catch (srErr) {
+          // Degrade honestly to backend/manual paths below
+        }
+      }
       if (state.inquiryApiConfigured && window.ANTHAI_CONFIG.inquiryEndpoint) {
         try {
           var res = await fetch(window.ANTHAI_CONFIG.inquiryEndpoint, {
@@ -622,8 +837,7 @@
           // Honest fallback below
         }
       }
-      if (f.website_url) return;
-      showInquiryFeedback(contactFeedback, f.route, buildBrief(f));
+      showInquiryFeedback(contactFeedback, f.route, brief);
     });
   }
 
@@ -722,16 +936,12 @@
       });
     }
 
-    var updatesSec = document.getElementById('fieldUpdatesSection');
-    var updatesMount = document.getElementById('fieldUpdatesMount');
-    if (updatesSec && updatesMount && Array.isArray(window.ANTHAI_PUBLISHED_UPDATES) && window.ANTHAI_PUBLISHED_UPDATES.length > 0) {
-      var pub = window.ANTHAI_PUBLISHED_UPDATES.filter(function (x) { return x && x.status === 'published'; });
-      if (pub.length > 0) {
-        updatesMount.innerHTML = pub.slice(0, 3).map(function (item) {
-          return '<article class="insight-card"><div><div class="insight-meta"><span>' + esc(item.location || '') + '</span><span>' + esc(item.date || '') + '</span></div><h3 class="h3" style="margin-top:6px;">' + esc(item.title || '') + '</h3><p class="muted" style="margin-top:6px;font-size:12px;">' + esc(item.summary || '') + '</p></div></article>';
-        }).join('');
-        updatesSec.hidden = false;
-      }
+    if (typeof window.SourceRatingEmbedAdapter !== 'function' && Array.isArray(window.ANTHAI_PUBLISHED_UPDATES) && window.ANTHAI_PUBLISHED_UPDATES.length > 0) {
+      renderPublicPosts(window.ANTHAI_PUBLISHED_UPDATES.filter(function (x) {
+        return x && x.status === 'published';
+      }).map(function (x) {
+        return Object.assign({ visibility: 'public', publish_status: 'published' }, x);
+      }), false);
     }
   })();
 

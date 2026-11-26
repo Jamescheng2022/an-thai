@@ -629,5 +629,23 @@ a.qr-mini-card .qr-mini-sub{color:var(--accent-hover);font-weight:700}
 .insight-card__desc{margin:0;font-size:13px;color:var(--ink-muted);line-height:1.55}
 .insight-card__cta{margin-top:auto;padding-top:10px;font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--accent)}
 
+/* V1.1 I-4 SourceRating Bridge Mock & PublicPost Cards */
+.mock-notice{padding:10px 12px;border:1px solid #d97706;background:#fffbeb;color:#78350f;font-size:12px;line-height:1.45;margin-bottom:10px}
+.mock-notice.is-live{border-color:#0f766e;background:#f0fdfa;color:#115e59}
+.live-chat-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.post-badges{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.post-badge{display:inline-flex;align-items:center;padding:2px 7px;border:1px solid var(--line);font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;background:#fff;color:var(--ink)}
+.post-badge.is-test{border-color:#b45309;background:#fef3c7;color:#92400e}
+.post-badge.is-mock{border-color:#475569;background:#f1f5f9;color:#334155}
+.post-badge.is-corrected{border-color:#0369a1;background:#e0f2fe;color:#075985}
+.post-badge.is-published{border-color:#15803d;background:#dcfce7;color:#166534}
+.post-card-media{margin-top:10px;border:1px solid var(--line-soft);background:#14161a;overflow:hidden}
+.post-card-media img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.post-card-caption{padding:6px 8px;background:var(--surface-alt);font-family:var(--font-mono);font-size:10.5px;color:var(--ink-muted);border-top:1px solid var(--line-soft)}
+.sr-status-pill{display:inline-flex;align-items:center;gap:6px;padding:3px 8px;border:1px solid var(--line);font-family:var(--font-mono);font-size:10px;font-weight:700;text-transform:uppercase}
+.sr-status-pill.is-mock{border-color:#b45309;background:#fef3c7;color:#92400e}
+.sr-status-pill.is-live{border-color:#15803d;background:#dcfce7;color:#166534}
+
+
 
 

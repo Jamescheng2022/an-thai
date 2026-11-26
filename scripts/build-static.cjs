@@ -16,17 +16,15 @@ fs.rmSync(output, {recursive: true, force: true});
 fs.mkdirSync(output, {recursive: true});
 for (const file of files) fs.copyFileSync(path.join(root, file), path.join(output, file));
 
-// Copy public asset and content directories (exclude internal studio/, api/, review-only leads, raw cases registry, rights-held external case banners, unlinked legacy draft downloads, and V1.1 SourceRating embed script)
+// Copy public asset and content directories (exclude internal studio/, api/, review-only leads, raw cases registry, rights-held external case banners, unlinked legacy draft downloads; V1.1 branch includes sourcerating-embed-adapter.js & sr-bridge-mock.js)
 if (fs.existsSync(path.join(root, 'assets'))) {
   const heldCasesDir = path.join(root, 'assets', 'images', 'cases');
   const legacyDownloadsDir = path.join(root, 'assets', 'downloads');
-  const v11Adapter = path.join(root, 'assets', 'js', 'sourcerating-embed-adapter.js');
   fs.cpSync(path.join(root, 'assets'), path.join(output, 'assets'), {
     recursive: true,
     filter: (src) =>
       src !== heldCasesDir && !src.startsWith(heldCasesDir + path.sep) &&
-      src !== legacyDownloadsDir && !src.startsWith(legacyDownloadsDir + path.sep) &&
-      src !== v11Adapter
+      src !== legacyDownloadsDir && !src.startsWith(legacyDownloadsDir + path.sep)
   });
 }
 if (fs.existsSync(path.join(root, 'cases'))) fs.cpSync(path.join(root, 'cases'), path.join(output, 'cases'), {recursive: true});

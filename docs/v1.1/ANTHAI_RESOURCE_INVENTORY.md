@@ -60,7 +60,7 @@
 
 - **来源与权属严格表述**：
   - `ASSET_MANIFEST.json` **不含** `commercialRightsApproved` 布尔字段，它记录的统一来源口径为 `provenance: "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership"`。
-  - `content/image_evidence.json` 的三轴字段中，**仅 3 张宣传册照片**（`hero-field.webp`、`static-load.webp`、`plate-load.webp`）被显式记录了 `sourceVerified: true, projectMatch: false, commercialRightsApproved: true`（用作 `/cases/` 隐藏记录中的能力配图）；其余 11 张宣传册主图/派生图与 4 张 Insights 裁切图沿用手册自带配图权属（`not independent proof of project ownership`），均不得标注为某特定客户或某特定工程项目的实景。
+  - `content/image_evidence.json` 的 `publicAuthorizedAssets` 中，宣传册照片**仅 3 张**（`hero-field.webp`、`static-load.webp`、`plate-load.webp`，另有 1 张 Unsplash 摄影图 `steel/steel-structure.webp`，见 §2.3）被显式记录了 `sourceVerified: true, projectMatch: false, commercialRightsApproved: true`（用作 `/cases/` 隐藏记录中的能力配图）；其余 11 张宣传册主图/派生图与 4 张 Insights 裁切图沿用手册自带配图权属（`not independent proof of project ownership`），均不得标注为某特定客户或某特定工程项目的实景。
 
 | 文件路径（含对应 `-small`） | 尺寸 (px) | 来源说明 | EXIF 状态 | 可公开与限制边界 |
 |---|---:|---|---|---|
@@ -80,7 +80,7 @@
 
 | 组别 | 文件清单与尺寸 | 来源与许可 | EXIF 状态 | 使用约束与存量元数据冲突提醒 |
 |---|---|---|---|---|
-| **钢结构采购页配图（7 张）**<br>`assets/images/steel/` | `steel-hero.webp` (1440×960)<br>`steel-warehouse.webp` (900×1219)<br>`steel-fabrication.webp` (800×1000)<br>`steel-truss.webp` (850×637)<br>`steel-welding.webp` (900×506)<br>`steel-structure.webp` (1300×1733)<br>`steel-cta.webp` (850×650) | Unsplash 摄影师 Declan Sun、Neon Wang、Cemrecan Yurtman、Sebastian Schuster（见 `docs/STEEL_PAGE_PHOTO_SOURCES.md`） | 无 EXIF | Unsplash 商用免版税；**仅可作行业示意图**（Illustrative），严禁标注为 AN-THAI 工厂、团队或项目。<br>**存量元数据冲突备注（供 G3 清理）**：`image_evidence.json` 与 `cases.json` 中隐藏条目 `REF-PACO-BMA-BOX-GIRDER` 误将 `steel/steel-structure.webp` 标称为 `"AN-THAI licensed asset"`，实为 Sebastian Schuster 的 Unsplash 摄影作品；当前该记录已隐藏不影响线上，后续清理时须更正口径。 |
+| **钢结构采购页配图（7 张）**<br>`assets/images/steel/` | `steel-hero.webp` (1440×960)<br>`steel-warehouse.webp` (900×1219)<br>`steel-fabrication.webp` (800×1000)<br>`steel-truss.webp` (850×637)<br>`steel-welding.webp` (900×506)<br>`steel-structure.webp` (1300×1733)<br>`steel-cta.webp` (850×650) | Unsplash 摄影师 Declan Sun、Neon Wang、Cemrecan Yurtman、Sebastian Schuster（见 `docs/STEEL_PAGE_PHOTO_SOURCES.md`） | 无 EXIF | Unsplash 商用免版税；**仅可作行业示意图**（Illustrative），严禁标注为 AN-THAI 工厂、团队或项目。<br>**存量元数据冲突备注（供 G3 清理）**：`image_evidence.json` 将 `steel/steel-structure.webp` 列入 `publicAuthorizedAssets`（`commercialRightsApproved: true`），而 `cases.json` 中隐藏条目 `REF-PACO-BMA-BOX-GIRDER` 的图注将其标称为 `"AN-THAI licensed asset"`，实为 Sebastian Schuster 的 Unsplash 摄影作品；当前该记录已隐藏不影响线上，后续清理时须统一口径。 |
 | **CSL 文章纪实图（5 张）**<br>`assets/images/insights/` | `bored-pile-csl-debonding-cover.webp` (563×750)<br>`bored-pile-csl-rebar-cage.webp` (1000×750)<br>`bored-pile-cage-installation.webp` (1000×750)<br>`bored-pile-core-drilling-verification.webp` (1000×745)<br>`bored-pile-core-compression-test.webp` (619×750) | Wikimedia Commons（CC BY-SA 4.0 / CC BY 2.0 / CC BY-SA 3.0 / Public Domain） | 无 EXIF | 须保留 CC 署名声明；仅科普与技术分析插图，**不得作为公司项目实景**。 |
 | **中国大吨位配重参考照（1 张）**<br>`assets/images/insights/` | `static-load-vs-pda-thailand-pile-capacity-china-large-bags-field-photo.webp` (920×690) | Owner 提供的 2023 年中国现场交流照（已裁掉第三方梁体标识/电话） | 无 EXIF | **标明中国交流参考图**，非泰国与 AN-THAI 施工现场，不证明荷载合规。 |
 
@@ -203,7 +203,7 @@
 
 | 工作包 | 执行阶段与起止时间（`+07:00` 实际时钟） | 实际耗时 | 阶段状态与依据 |
 |---|---|---:|---|
-| **G3 第一步：An-Thai V1.1 资源盘点与配置拆解** | • 阶段 1a（`11:03:37` – `11:09:11`）：读取交接书与基线、全库 EXIF 扫描、盘点 6 大板块并提交初稿 `33a3539`<br>• 阶段 1b（`11:09:22` – `11:12:13`）：Claude Opus 5.5 首轮审核（`de45bcae`）<br>• 阶段 1c（`11:12:13` – 当前修订提交前，实录中）：按 Opus 意见修正 3 项事实口径与 3 项细节，补充第 5、8 节 | 阶段 1a+1b 已实测 **`8 分 36 秒`**；含阶段 1c 最终定稿与复核推送以提交后台账 `STATE-anthai-v5.md` 实测为准 | 进行中（本轮实录，不含推测） |
+| **G3 第一步：An-Thai V1.1 资源盘点与配置拆解** | • 阶段 1a（`11:03:37` – `11:09:11`）：读取交接书与基线、全库 EXIF 扫描、盘点 6 大板块并提交初稿 `33a3539`<br>• 阶段 1b（`11:09:22` – `11:12:13`）：Claude Opus 5.5 首轮审核（`de45bcae`）<br>• 阶段 1c（`11:12:13` – `11:14:02`）：按 Opus 意见修正 6 项细节、新增第 5 节与第 8 节并提交 `0446d39`<br>• 阶段 1d（`11:14:11` – `11:16:00`）：Claude Opus 5.5 复核 PASS（`a73a79bf`），补全微调措辞并准备单次推送建 PR | 已实测总计 **`12 分 23 秒`**（`11:03:37` – `11:16:00`，其中 1a `5m34s`、1b `2m51s`、1c `1m49s`、1d 复核与定稿 `1m49s`，含少量间隙） | 已完成文档编写与 Opus 审核 `PASS`（准备单次推送） |
 | **G3 第二步：V1.1 分支接入 SourceRating Staging（I-4）+ TEST 动态授权发布闭环** | — | 尚未开始（不估算） | 等待 SR-00 推送 I-4 契约后启动 |
 | **G3 第三步：V1.1 Preview 多视口（390/768/1440）× 三语（EN/ZH/TH）关键路径双审验收** | — | 尚未开始（不估算） | 依赖 G3 第二步完成 |
 | **G4 验证：第二家隔离 TEST 企业租户（纯改配置）与运维工时对照** | — | 尚未开始（不估算） | 须待 G3 完整验收通过后启动 |

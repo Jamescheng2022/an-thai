@@ -174,8 +174,16 @@ export default async function handler(req, res) {
         error: `RESEND_HTTP_${mailRes.status}`,
       });
     }
-    const mailJson = await mailRes.json().catch(() => null);
-    if (!mailJson || !mailJson.id) {
+    let mailJson = null;
+    try {
+      mailJson = await mailRes.json();
+    } catch (parseErr) {
+      if (parseErr && (parseErr.name === 'TimeoutError' || parseErr.name === 'AbortError')) {
+        throw parseErr;
+      }
+    }
+    const providerMessageId = mailJson && typeof mailJson.id === 'string' ? mailJson.id.trim() : '';
+    if (!providerMessageId) {
       return res.status(502).json({
         ok: false,
         delivered: false,
@@ -190,7 +198,7 @@ export default async function handler(req, res) {
       status: 'accepted_for_delivery',
       backend: 'resend',
       requestId,
-      providerMessageId: mailJson.id,
+      providerMessageId,
     });
   } catch (err) {
     const isTimeout = err && (err.name === 'TimeoutError' || err.name === 'AbortError');

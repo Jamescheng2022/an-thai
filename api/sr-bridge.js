@@ -157,7 +157,14 @@ export default async function handler(req, res) {
       });
     }
 
-    const data = await upstreamRes.json().catch(() => null);
+    let data = null;
+    try {
+      data = await upstreamRes.json();
+    } catch (parseErr) {
+      if (parseErr && (parseErr.name === 'TimeoutError' || parseErr.name === 'AbortError')) {
+        throw parseErr;
+      }
+    }
     if (!data) {
       return res.status(502).json({ ok: false, error: 'UPSTREAM_INVALID_JSON' });
     }

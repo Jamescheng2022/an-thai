@@ -156,6 +156,20 @@ async function testProxyHandler() {
     assert.strictEqual(capturedHeaders['x-turnstile-token'], 'tok_123');
     assert.strictEqual(res.statusCode, 201);
     assert.strictEqual(res.body.requestId, 'SR-OK-1');
+    // 8. Stalled body TimeoutError returns 504 SR_UPSTREAM_TIMEOUT (not 502 UPSTREAM_INVALID_JSON)
+    global.fetch = async () => ({
+      status: 200,
+      headers: new Map([['content-type', 'application/json']]),
+      json: async () => {
+        const err = new Error('body timed out');
+        err.name = 'TimeoutError';
+        throw err;
+      }
+    });
+    res = createMockRes();
+    await handler({ method: 'POST', url: '/api/sr-bridge?route=sessions', headers: { host: 'an-thai-preview.vercel.app' }, body: { workspaceKey: 'an-thai-th', message: 'hi' } }, res);
+    assert.strictEqual(res.statusCode, 504);
+    assert.strictEqual(res.body.error, 'SR_UPSTREAM_TIMEOUT');
   } finally {
     process.env = origEnv;
     global.fetch = origFetch;
@@ -178,6 +192,9 @@ async function testAdapterAndMock() {
     Date,
     Math,
     URLSearchParams,
+    AbortController,
+    setTimeout,
+    clearTimeout,
     JSON,
     crypto: require('node:crypto').webcrypto,
     localStorage: {
@@ -212,12 +229,15 @@ async function testAdapterAndMock() {
         return {
           ok: true,
           status: 201,
-          json: async () => ({
-            ok: true,
-            sessionId: '22222222-2222-4222-8222-222222222222',
-            visitorToken: 'vtok_live_123',
-            requestId: 'SR-20261126-TEST'
-          })
+          json: async () => {
+            if (init && init.signal) assert.strictEqual(init.signal.aborted, false);
+            return {
+              ok: true,
+              sessionId: '22222222-2222-4222-8222-222222222222',
+              visitorToken: 'vtok_live_123',
+              requestId: 'SR-20261126-TEST'
+            };
+          }
         };
       }
       if (url.includes('route=messages')) {
@@ -502,6 +522,30 @@ async function testEnquiryHandler() {
     assert.ok(resendReq.body.subject.includes('[Resend Backup'));
     assert.ok(!/[\r\n]/.test(resendReq.body.subject));
     assert.deepStrictEqual(resendReq.body.to, ['info@an-thai.com', 'anthaicheng@gmail.com']);
+
+    // 3b. Stalled createSession body keeps AbortSignal active during res.json() & rejects non-string/empty id
+    fn(mod.exports, mod, process, async () => ({ ok: true, status: 200, json: async () => ({ id: true }) }), AbortSignal);
+    handler = mod.exports;
+    res = createMockRes();
+    await handler({
+      method: 'POST',
+      headers: { 'x-forwarded-for': '203.0.113.12' },
+      body: { route: '01 Testing', contact: 'qa@example.invalid', notes: 'non-string id check' }
+    }, res);
+    assert.strictEqual(res.statusCode, 502);
+    assert.strictEqual(res.body.delivered, false);
+    assert.strictEqual(res.body.error, 'RESEND_UNCERTAIN_RESPONSE');
+
+    fn(mod.exports, mod, process, async () => ({ ok: true, status: 200, json: async () => ({ id: '   ' }) }), AbortSignal);
+    handler = mod.exports;
+    res = createMockRes();
+    await handler({
+      method: 'POST',
+      headers: { 'x-forwarded-for': '203.0.113.13' },
+      body: { route: '01 Testing', contact: 'qa@example.invalid', notes: 'whitespace id check' }
+    }, res);
+    assert.strictEqual(res.statusCode, 502);
+    assert.strictEqual(res.body.delivered, false);
 
     // 4. Upstream Resend error returns 502 delivered: false
     fn(mod.exports, mod, process, async () => ({ ok: false, status: 500, json: async () => ({}) }), AbortSignal);

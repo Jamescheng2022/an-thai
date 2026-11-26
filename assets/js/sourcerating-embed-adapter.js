@@ -244,27 +244,34 @@
       headers['x-bridge-challenge'] = this.challengeToken;
       headers['x-turnstile-token'] = this.challengeToken;
     }
-    var fetchWithDeadline = async function (targetUrl, initObj) {
-      if (typeof AbortController !== 'function') return fetch(targetUrl, initObj);
-      var ctrl = new AbortController();
-      var timer = setTimeout(function () { ctrl.abort(); }, 9000);
+    var fetchJsonWithDeadline = async function (targetUrl, initObj) {
+      var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
+      var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 9000) : null;
       try {
-        return await fetch(targetUrl, Object.assign({}, initObj, { signal: ctrl.signal }));
+        var r = await fetch(targetUrl, ctrl ? Object.assign({}, initObj, { signal: ctrl.signal }) : initObj);
+        var d = null;
+        try {
+          d = await r.json();
+        } catch (jsonErr) {
+          if (jsonErr && (jsonErr.name === 'AbortError' || jsonErr.name === 'TimeoutError')) throw jsonErr;
+          d = {};
+        }
+        return { res: r, data: d || {} };
       } finally {
-        clearTimeout(timer);
+        if (timer) clearTimeout(timer);
       }
     };
-    var res;
+    var callOut;
     try {
-      res = await fetchWithDeadline(this._buildUrl('sessions'), {
+      callOut = await fetchJsonWithDeadline(this._buildUrl('sessions'), {
         method: 'POST',
         headers: headers,
         body: JSON.stringify(payload),
       });
-      if (res.status === 409) {
+      if (callOut.res.status === 409) {
         // Contract 6.1: recover from 409 IDEMPOTENCY_TOKEN_UNRECOVERABLE with fresh clientRequestId
         payload.clientRequestId = makeUuid();
-        res = await fetchWithDeadline(this._buildUrl('sessions'), {
+        callOut = await fetchJsonWithDeadline(this._buildUrl('sessions'), {
           method: 'POST',
           headers: headers,
           body: JSON.stringify(payload),
@@ -272,9 +279,10 @@
       }
     } catch (e) {
       var errName = e && e.name ? e.name : '';
-      return { ok: false, error: errName === 'AbortError' ? 'BRIDGE_TIMEOUT' : ((e && e.message) ? e.message : 'NETWORK_ERROR'), persistedToSr: false, isMock: false };
+      return { ok: false, error: (errName === 'AbortError' || errName === 'TimeoutError') ? 'BRIDGE_TIMEOUT' : ((e && e.message) ? e.message : 'NETWORK_ERROR'), persistedToSr: false, isMock: false };
     }
-    var data = await res.json().catch(function () { return {}; });
+    var res = callOut.res;
+    var data = callOut.data;
     if (!res.ok || !data.ok) {
       return { ok: false, error: data.error || ('HTTP_' + res.status), statusCode: res.status, persistedToSr: false, isMock: false };
     }

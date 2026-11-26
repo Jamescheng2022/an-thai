@@ -902,8 +902,10 @@
         }
       }
       if (!state.isMock && window.ANTHAI_CONFIG.inquiryEndpoint) {
+        var bCtrl = typeof AbortController === 'function' ? new AbortController() : null;
+        var bTimer = bCtrl ? setTimeout(function () { bCtrl.abort(); }, 10000) : null;
         try {
-          var res = await fetch(window.ANTHAI_CONFIG.inquiryEndpoint, {
+          var res = await fetch(window.ANTHAI_CONFIG.inquiryEndpoint, Object.assign({
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
             body: JSON.stringify({
@@ -911,7 +913,7 @@
               contact: f.contact, notes: f.notes, website_url: f.website_url,
               lang: state.lang, sourceUrl: window.location.href, mode: 'sr_failover_backup'
             })
-          });
+          }, bCtrl ? { signal: bCtrl.signal } : {}));
           if (res.ok) {
             var payload = await res.json().catch(function () { return {}; });
             if (payload && payload.ok === true && payload.delivered === true && payload.requestId) {
@@ -923,7 +925,9 @@
             }
           }
         } catch (err) {
-          // Both SR and Resend failed/unavailable -> explicit NOT DELIVERED guidance below
+          // Both SR and Resend failed/timed out -> explicit NOT DELIVERED guidance below
+        } finally {
+          if (bTimer) clearTimeout(bTimer);
         }
       }
       showDeliveryFailedFeedback(contactFeedback, brief);

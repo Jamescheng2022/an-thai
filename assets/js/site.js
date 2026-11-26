@@ -9,6 +9,10 @@
 (function () {
   'use strict';
 
+  if (document.documentElement && document.documentElement.classList) {
+    document.documentElement.classList.add('js');
+  }
+
   window.ANTHAI_CONFIG = window.ANTHAI_CONFIG || {
     inquiryEndpoint: '/api/inquiry',
     directEmail: 'info@an-thai.com',

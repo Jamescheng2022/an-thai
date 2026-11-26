@@ -182,7 +182,7 @@ def build_shell(lang, lang_code, lang_upper, subpath, title, desc, body_html, sc
   <meta property="og:image" content="https://an-thai.com/assets/images/hero-field.webp" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="/assets/images/brand-logo.png" />
-  <link rel="apple-touch-icon" href="/assets/images/brand-logo.png" />
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png" />
   <link rel="stylesheet" href="/assets/css/styles.css" />
   <link rel="stylesheet" href="/assets/css/portfolio-v1.css" />
   <script type="application/ld+json">{schemas_json}</script>

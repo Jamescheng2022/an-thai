@@ -180,12 +180,24 @@ class Localizer(HTMLParser):
                     if p_name in PAGES:
                         attrs_dict[key] = f'{p_prefix}{p_name}.html{query_part}{hash_part}'
 
-        attr_str = ''.join(' ' + k + ('' if v is None else '="' + escape(v, quote=True) + '"') for k, v in attrs_dict.items())
-        self.out.append('<' + tag + attr_str + '>')
+        svg_case_map = {
+            'viewbox': 'viewBox',
+            'preserveaspectratio': 'preserveAspectRatio',
+            'gradientunits': 'gradientUnits',
+            'gradienttransform': 'gradientTransform',
+        }
+        attrs_out = []
+        for k, v in attrs_dict.items():
+            out_k = svg_case_map.get(k, k)
+            attrs_out.append(' ' + out_k + ('' if v is None else '="' + escape(v, quote=True) + '"'))
+        self.out.append('<' + tag + ''.join(attrs_out) + '>')
 
     def handle_startendtag(self, tag, attrs):
+        html_void_tags = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'}
         self.handle_starttag(tag, attrs)
         self.tag_stack.pop()
+        if tag not in html_void_tags:
+            self.out.append('</' + tag + '>')
 
     def handle_endtag(self, tag):
         if self.tag_stack:

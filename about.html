@@ -168,26 +168,36 @@
           <div class="diagram-box is-about-flow">
             <div class="diagram-head">
               <div>
-                <span class="mono" style="font-size:11px;font-weight:700;color:#fb923c;text-transform:uppercase;" data-i18n="aboutFlowTitle">Four Service Lines, Clearly Defined Responsibilities</span>
-                <p class="muted" style="font-size:12px;margin-top:2px;" data-i18n="aboutFlowSub">Parallel technical service lines operating under unified engineering coordination, not separate legal entities.</p>
+                <span class="mono" style="font-size:11px;font-weight:700;color:#fb923c;text-transform:uppercase;" data-i18n="aboutFlowTitle">Four Independent Business Units (Bangkok Hub)</span>
+                <p class="muted" style="font-size:12px;color:#cbd5e1;margin-top:4px;" data-i18n="aboutFlowSub">Parallel technical service lines operating under unified engineering coordination, not separate legal entities.</p>
               </div>
             </div>
-            <div class="diagram-svg-wrap" style="overflow-x:auto;">
-              <div class="diagram-swipe-hint" data-i18n="diagramSwipeHint">← Swipe horizontally to inspect architecture →</div>
-              <svg class="diagram-svg" viewBox="0 0 985 156" role="img" aria-label="Four service lines under AN-THAI Bangkok Hub with clear responsibility boundaries">
-                <rect x="300" y="8" width="385" height="34" fill="#d44800"/>
-                <text x="492" y="30" text-anchor="middle" fill="#ffffff" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700">AN-THAI ENGINEERING · BANGKOK HUB</text>
-                <line x1="492" y1="42" x2="492" y2="58" stroke="#64748b" stroke-width="1.5"/>
-                <line x1="125" y1="58" x2="860" y2="58" stroke="#64748b" stroke-width="1.5"/>
-                <line x1="125" y1="58" x2="125" y2="72" stroke="#64748b" stroke-width="1.5"/>
-                <line x1="370" y1="58" x2="370" y2="72" stroke="#64748b" stroke-width="1.5"/>
-                <line x1="615" y1="58" x2="615" y2="72" stroke="#64748b" stroke-width="1.5"/>
-                <line x1="860" y1="58" x2="860" y2="72" stroke="#64748b" stroke-width="1.5"/>
-                <g transform="translate(20,72)"><rect width="210" height="74" fill="#181c24" stroke="#333947"/><text x="14" y="24" fill="#fb923c" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700">SERVICE LINE 01</text><text x="14" y="45" fill="#fff" font-family="Inter, sans-serif" font-size="13" font-weight="700">Testing &amp; Geotech</text><text x="14" y="63" fill="#a1a1aa" font-family="Inter, sans-serif" font-size="10.5">SLT · PDA · PIT · CSL</text></g>
-                <g transform="translate(265,72)"><rect width="210" height="74" fill="#181c24" stroke="#333947"/><text x="14" y="24" fill="#fb923c" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700">SERVICE LINE 02</text><text x="14" y="45" fill="#fff" font-family="Inter, sans-serif" font-size="13" font-weight="700">Buyer Steel Agency</text><text x="14" y="63" fill="#a1a1aa" font-family="Inter, sans-serif" font-size="10.5">RFQ · Audit · QA · Release</text></g>
-                <g transform="translate(510,72)"><rect width="210" height="74" fill="#181c24" stroke="#333947"/><text x="14" y="24" fill="#fb923c" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700">SERVICE LINE 03</text><text x="14" y="45" fill="#fff" font-family="Inter, sans-serif" font-size="13" font-weight="700">Powder Equipment</text><text x="14" y="63" fill="#a1a1aa" font-family="Inter, sans-serif" font-size="10.5">VRM · Cyclone · Baghouse</text></g>
-                <g transform="translate(755,72)"><rect width="210" height="74" fill="#181c24" stroke="#333947"/><text x="14" y="24" fill="#fb923c" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700">SERVICE LINE 04</text><text x="14" y="45" fill="#fff" font-family="Inter, sans-serif" font-size="13" font-weight="700">Field Instruments</text><text x="14" y="63" fill="#a1a1aa" font-family="Inter, sans-serif" font-size="10.5">PIT · CSL · Sensors · DAQ</text></g>
-              </svg>
+            <div class="hub-diagram" aria-label="Four independent business units under AN-THAI Bangkok Hub">
+              <div class="hub-root-wrap">
+                <div class="hub-root">AN-THAI ENGINEERING · BANGKOK HUB</div>
+              </div>
+              <div class="hub-branches">
+                <a href="./testing.html" class="hub-node">
+                  <span class="hub-node-eyebrow">SERVICE LINE 01</span>
+                  <span class="hub-node-title" data-i18n="aboutSvc1Title">Testing &amp; Geotech</span>
+                  <span class="hub-node-sub" data-i18n="aboutSvc1Short">SLT · PDA · PIT · CSL</span>
+                </a>
+                <a href="./steel-procurement.html" class="hub-node">
+                  <span class="hub-node-eyebrow">SERVICE LINE 02</span>
+                  <span class="hub-node-title" data-i18n="aboutSvc2Title">Buyer Steel Agency</span>
+                  <span class="hub-node-sub" data-i18n="aboutSvc2Short">RFQ · Audit · QA · Release</span>
+                </a>
+                <a href="./powder-equipment.html" class="hub-node">
+                  <span class="hub-node-eyebrow">SERVICE LINE 03</span>
+                  <span class="hub-node-title" data-i18n="aboutSvc3Title">Powder Equipment</span>
+                  <span class="hub-node-sub" data-i18n="aboutSvc3Short">VRM · Cyclone · Baghouse</span>
+                </a>
+                <a href="./testing-instruments.html" class="hub-node">
+                  <span class="hub-node-eyebrow">SERVICE LINE 04</span>
+                  <span class="hub-node-title" data-i18n="aboutSvc4Title">Testing Instruments</span>
+                  <span class="hub-node-sub" data-i18n="aboutSvc4Short">PIT · CSL · Sensors · DAQ</span>
+                </a>
+              </div>
             </div>
           </div>
 

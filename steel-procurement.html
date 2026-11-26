@@ -146,49 +146,33 @@
           <article class="card"><h2 class="h3" data-i18n="s4Title">Shipment Verification</h2><p class="muted" data-i18n="s4Desc">Witness dimensional checks, final NDT, export packing lists, and issue pre-shipment review dossier.</p></article>
         </div>
 
-        <div class="diagram-box has-mobile-flow">
+        <div class="diagram-box">
           <div class="diagram-head">
             <span class="mono" style="font-size:11px;font-weight:700;color:#fb923c;text-transform:uppercase;" data-i18n="steelFlowTitle">Buyer-Side Procurement Agency Flow</span>
             <button type="button" class="btn btn-accent" style="padding:7px 13px;font-size:11px;" data-open-desk="02 Buyer-Side Steel Procurement Agency" data-i18n="steelCta">Submit Buyer Brief →</button>
           </div>
-          <div class="diagram-swipe-hint" data-i18n="diagramSwipeHint">Swipe horizontally to view full workflow diagram →</div>
-          <div class="diagram-svg-wrap">
-            <svg class="diagram-svg" viewBox="0 0 985 120" role="img" aria-label="Workflow diagram">
-            <g transform="translate(20, 18)">
-              <rect width="210" height="84" fill="#181c24" stroke="#333947" stroke-width="1.2"/>
-              <rect width="210" height="3" fill="#d44800"/>
-              <text x="14" y="26" fill="#fb923c" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">01 · RFQ</text>
-              <text x="14" y="48" fill="#ffffff" font-family="Inter, sans-serif" font-size="13" font-weight="700">Scope & BOQ Lock</text>
-              <text x="14" y="68" fill="#a1a1aa" font-family="Inter, sans-serif" font-size="10.5">Grades · welds · coating</text>
-            </g><line x1="230" y1="60" x2="259" y2="60" stroke="#fb923c" stroke-width="1.5"/><polygon points="258,55 265,60 258,65" fill="#fb923c"/>
-            <g transform="translate(265, 18)">
-              <rect width="210" height="84" fill="#181c24" stroke="#333947" stroke-width="1.2"/>
-              <rect width="210" height="3" fill="#64748b"/>
-              <text x="14" y="26" fill="#fb923c" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">02 · SOURCE</text>
-              <text x="14" y="48" fill="#ffffff" font-family="Inter, sans-serif" font-size="13" font-weight="700">Shortlist & Audit</text>
-              <text x="14" y="68" fill="#a1a1aa" font-family="Inter, sans-serif" font-size="10.5">Comparable FOB/CIF/DDP</text>
-            </g><line x1="475" y1="60" x2="504" y2="60" stroke="#fb923c" stroke-width="1.5"/><polygon points="503,55 510,60 503,65" fill="#fb923c"/>
-            <g transform="translate(510, 18)">
-              <rect width="210" height="84" fill="#181c24" stroke="#333947" stroke-width="1.2"/>
-              <rect width="210" height="3" fill="#64748b"/>
-              <text x="14" y="26" fill="#fb923c" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">03 · SHOP QC</text>
-              <text x="14" y="48" fill="#ffffff" font-family="Inter, sans-serif" font-size="13" font-weight="700">MTC & Fabrication</text>
-              <text x="14" y="68" fill="#a1a1aa" font-family="Inter, sans-serif" font-size="10.5">Heat no. · NDT · DFT</text>
-            </g><line x1="720" y1="60" x2="749" y2="60" stroke="#fb923c" stroke-width="1.5"/><polygon points="748,55 755,60 748,65" fill="#fb923c"/>
-            <g transform="translate(755, 18)">
-              <rect width="210" height="84" fill="#181c24" stroke="#333947" stroke-width="1.2"/>
-              <rect width="210" height="3" fill="#d44800"/>
-              <text x="14" y="26" fill="#fb923c" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">04 · RELEASE</text>
-              <text x="14" y="48" fill="#ffffff" font-family="Inter, sans-serif" font-size="13" font-weight="700">Pre-Shipment Pack</text>
-              <text x="14" y="68" fill="#a1a1aa" font-family="Inter, sans-serif" font-size="10.5">Packing · review log</text>
-            </g></svg>
-          </div>
-          <div class="workflow-mobile-steps" aria-label="Mobile workflow steps">
-            <div class="wf-m-step"><span class="wf-m-code" data-i18n="wfSteel1Code">01 · RFQ</span><p class="wf-m-title" data-i18n="wfSteel1Title">Scope &amp; BOQ Lock</p><p class="wf-m-sub" data-i18n="wfSteel1Sub">IFC · steel grades · coat</p></div>
-            <div class="wf-m-step wf-m-step--muted"><span class="wf-m-code" data-i18n="wfSteel2Code">02 · BID</span><p class="wf-m-title" data-i18n="wfSteel2Title">Shortlist &amp; Audit</p><p class="wf-m-sub" data-i18n="wfSteel2Sub">Like-for-like pricing</p></div>
-            <div class="wf-m-step wf-m-step--muted"><span class="wf-m-code" data-i18n="wfSteel3Code">03 · QA</span><p class="wf-m-title" data-i18n="wfSteel3Title">MTC &amp; Fabrication</p><p class="wf-m-sub" data-i18n="wfSteel3Sub">Heat traceability · NDT</p></div>
-            <div class="wf-m-step"><span class="wf-m-code" data-i18n="wfSteel4Code">04 · SHIP</span><p class="wf-m-title" data-i18n="wfSteel4Title">Pre-Shipment Pack</p><p class="wf-m-sub" data-i18n="wfSteel4Sub">Packing · review log</p></div>
-          </div>
+          <ol class="flow-pipeline" aria-label="Buyer-side procurement agency workflow">
+            <li class="flow-step is-anchor">
+              <div class="flow-step-head"><span class="flow-step-code" data-i18n="wfSteel1Code">01 · RFQ</span><span class="flow-step-num" aria-hidden="true">01</span></div>
+              <p class="flow-step-title" data-i18n="wfSteel1Title">Scope &amp; BOQ Lock</p>
+              <p class="flow-step-sub" data-i18n="wfSteel1Sub">IFC · steel grades · coat</p>
+            </li>
+            <li class="flow-step">
+              <div class="flow-step-head"><span class="flow-step-code" data-i18n="wfSteel2Code">02 · BID</span><span class="flow-step-num" aria-hidden="true">02</span></div>
+              <p class="flow-step-title" data-i18n="wfSteel2Title">Shortlist &amp; Audit</p>
+              <p class="flow-step-sub" data-i18n="wfSteel2Sub">Like-for-like pricing</p>
+            </li>
+            <li class="flow-step">
+              <div class="flow-step-head"><span class="flow-step-code" data-i18n="wfSteel3Code">03 · QA</span><span class="flow-step-num" aria-hidden="true">03</span></div>
+              <p class="flow-step-title" data-i18n="wfSteel3Title">MTC &amp; Fabrication</p>
+              <p class="flow-step-sub" data-i18n="wfSteel3Sub">Heat traceability · NDT</p>
+            </li>
+            <li class="flow-step is-anchor">
+              <div class="flow-step-head"><span class="flow-step-code" data-i18n="wfSteel4Code">04 · SHIP</span><span class="flow-step-num" aria-hidden="true">04</span></div>
+              <p class="flow-step-title" data-i18n="wfSteel4Title">Pre-Shipment Pack</p>
+              <p class="flow-step-sub" data-i18n="wfSteel4Sub">Packing · review log</p>
+            </li>
+          </ol>
         </div>
 
         <!-- Preserved PR #27 Visual Capabilities & Steel Structure Categories -->

@@ -484,24 +484,50 @@ main { flex: 1; padding-bottom: 64px; }
  .contact-direct-actions{margin-top:12px}
 }
 
-/* V1.0 Responsive Engineering Flowcharts: readable vertical cards on phones (<768px), crisp SVG + scroll safety on tablet */
-.diagram-svg-wrap{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
-.diagram-swipe-hint{display:none;font-family:var(--font-mono);font-size:11px;color:#fcd34d;margin-bottom:8px}
-.workflow-mobile-steps{display:none;grid-template-columns:1fr;gap:10px}
-.wf-m-step{border:1px solid #333947;border-top:3px solid var(--accent);background:#181c24;padding:12px 14px;color:#fff}
-.wf-m-step--muted{border-top-color:#64748b}
-.wf-m-code{font-family:var(--font-mono);font-size:11px;font-weight:700;color:#fb923c;margin-bottom:4px;display:block}
-.wf-m-title{font-size:14px;font-weight:700;color:#fff;margin:0}
-.wf-m-sub{font-size:12px;color:#a1a1aa;margin:3px 0 0}
+/* V1.0 Responsive Engineering Flowcharts: HTML/CSS pipeline (EN/ZH/TH localized, zero SVG collapse or overflow) */
+.flow-pipeline{margin:4px 0 0;padding:0 0 0 18px;list-style:none;display:flex;flex-direction:column;gap:10px;border-left:2px solid #2b3140}
+.flow-step{position:relative;border:1px solid #333947;border-top:3px solid #64748b;background:#181c24;padding:13px 15px;color:#fff;display:flex;flex-direction:column;justify-content:space-between;gap:5px;min-width:0}
+.flow-step.is-anchor{border-top-color:var(--accent)}
+.flow-step::before{content:"";position:absolute;left:-24px;top:16px;width:9px;height:9px;border-radius:50%;background:#64748b;border:2px solid #111318}
+.flow-step.is-anchor::before{background:#fb923c}
+.flow-step-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.flow-step-code{font-family:var(--font-mono);font-size:11px;font-weight:700;color:#fb923c;letter-spacing:0.03em}
+.flow-step-num{font-family:var(--font-mono);font-size:10px;font-weight:700;color:#94a3b8;border:1px solid #333947;padding:1px 5px}
+.flow-step-title{margin:0;font-size:14px;font-weight:700;line-height:1.35;color:#fff}
+.flow-step-sub{margin:0;font-size:12px;line-height:1.45;color:#cbd5e1}
 
-@media (max-width: 960px) and (min-width: 768px) {
-  .diagram-svg-wrap > .diagram-svg{min-width:780px}
-  .diagram-swipe-hint{display:block}
+@media (min-width: 640px) {
+  .flow-pipeline{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding-left:0;border-left:0}
+  .flow-step::before{display:none}
 }
-@media (max-width: 767px) {
-  .diagram-box.has-mobile-flow .diagram-svg-wrap{display:none}
-  .diagram-box.has-mobile-flow .workflow-mobile-steps{display:grid}
-  .diagram-box.is-about-flow{display:none}
+@media (min-width: 1024px) {
+  .flow-pipeline{grid-template-columns:repeat(4,minmax(0,1fr));gap:26px}
+  .flow-step:not(:last-child)::after{content:"→";position:absolute;right:-20px;top:50%;transform:translateY(-50%);font-family:var(--font-mono);font-size:15px;font-weight:700;color:#fb923c;line-height:1;pointer-events:none}
+}
+
+/* About Page Responsive Hub-and-Spoke Architecture */
+.hub-diagram{margin-top:6px;display:flex;flex-direction:column;align-items:stretch}
+.hub-root-wrap{display:flex;flex-direction:column;align-items:flex-start}
+.hub-root{display:inline-flex;align-items:center;justify-content:center;padding:8px 16px;background:var(--accent);color:#fff;font-family:var(--font-mono);font-size:11.5px;font-weight:700;letter-spacing:0.05em;text-align:center}
+.hub-branches{margin:0;padding:14px 0 0 18px;list-style:none;display:flex;flex-direction:column;gap:10px;border-left:2px solid #3b4254}
+.hub-node{position:relative;display:flex;flex-direction:column;gap:5px;border:1px solid #333947;border-top:3px solid var(--accent);background:#181c24;padding:13px 15px;color:#fff;transition:border-color .15s,background .15s;min-width:0}
+.hub-node:hover{border-color:#fb923c;background:#1e232e}
+.hub-node::before{content:"";position:absolute;left:-18px;top:22px;width:18px;height:2px;background:#3b4254}
+.hub-node-eyebrow{font-family:var(--font-mono);font-size:10px;font-weight:700;color:#fb923c;letter-spacing:0.05em}
+.hub-node-title{font-size:14px;font-weight:700;color:#fff;line-height:1.35}
+.hub-node-sub{font-size:11.5px;color:#cbd5e1;line-height:1.4}
+
+@media (min-width: 640px) {
+  .hub-root-wrap{align-items:center}
+  .hub-branches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:16px 0 0;border-left:0}
+  .hub-node::before{display:none}
+}
+@media (min-width: 1024px) {
+  .hub-root-wrap{position:relative;padding-bottom:18px}
+  .hub-root-wrap::after{content:"";position:absolute;left:50%;bottom:0;width:2px;height:18px;background:#475569;transform:translateX(-50%)}
+  .hub-branches{position:relative;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;padding-top:18px}
+  .hub-branches::before{content:"";position:absolute;top:0;left:calc(12.5% - 5px);right:calc(12.5% - 5px);height:2px;background:#475569}
+  .hub-node::before{display:block;left:50%;top:-21px;width:2px;height:18px;background:#475569;transform:translateX(-50%)}
 }
 
 /* V1.0 Steel Product Showcase & Expandable Scope Panels (preserves PR #27 visual capabilities in Swiss-Tech theme) */

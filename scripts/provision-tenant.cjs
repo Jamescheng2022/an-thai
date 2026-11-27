@@ -168,10 +168,16 @@ function buildChecklistPlan(cfg, rootDir, outDirRel) {
       },
       {
         id: 'SR-03',
-        stage: 'SourceRating I-4 External Workspace Binding',
+        stage: 'SourceRating I-4 External Workspace Binding (sourcerating_private.external_workspace_bindings)',
         workspaceKey: wsKey,
         callerKind: cfg.sourceRating.callerKind,
         allowedOrigins: origins,
+        requiredDbBindings: [
+          'workspace_key + caller_kind + allowed_origins + widget_config + active',
+          'external_enterprise_id + external_workspace_id (composite unique)',
+          'organization_id',
+          'default_project_id (must belong to organization_id)',
+        ],
         verifyEndpoint: `${cfg.primaryDomain}/api/sr-bridge?route=health&workspaceKey=${wsKey}`,
       },
       {
@@ -211,6 +217,7 @@ function renderChecklistMarkdown(plan) {
     if (s.envKeysPreviewOnly) lines.push(`- **Preview-Only Keys:** \`${s.envKeysPreviewOnly.join('`, `')}\``);
     if (s.envKeysSharedNames) lines.push(`- **Env Keys Required (Names Only):** \`${s.envKeysSharedNames.join('`, `')}\``);
     if (s.allowedOrigins) lines.push(`- **Allowed Origins:** \`${s.allowedOrigins.join('`, `')}\``);
+    if (s.requiredDbBindings) lines.push(`- **Required SR DB Bindings:** \`${s.requiredDbBindings.join('`, `')}\``);
     if (s.verifyEndpoint) lines.push(`- **Health Endpoint:** \`${s.verifyEndpoint}\``);
     lines.push('');
   }

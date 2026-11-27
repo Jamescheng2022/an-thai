@@ -30,6 +30,11 @@ for (const [f, outDir] of [['test-demo.json', 'dist-test-demo'], ['an-thai-pilot
   const html = fs.readFileSync(path.join(root, outDir, 'index.html'), 'utf8');
   assert(html.includes('noindex, nofollow'), `${outDir} must enforce noindex`);
   assert(plan.noindex === true && md.includes('noindex, nofollow'), `${outDir} plan/checklist must match HTML noindex policy`);
+  const sr03 = plan.steps.find((step) => step.id === 'SR-03');
+  assert(sr03 && Array.isArray(sr03.requiredDbBindings) && sr03.requiredDbBindings.length === 4, `${outDir} SR-03 must list all 4 requiredDbBindings`);
+  for (const field of ['external_enterprise_id + external_workspace_id', 'organization_id', 'default_project_id']) {
+    assert(sr03.requiredDbBindings.some((entry) => entry.includes(field)) && md.includes(field), `${outDir} SR-03 missing DB binding ${field}`);
+  }
 }
 
 // 3. Verify OWNER_GATES #7 blocks non-check-only build on paco-check-only.json

@@ -1,6 +1,6 @@
 # 四站已发布文章与内容防重总台账 (Published Articles Anti-Duplication Ledger)
 
-> **状态**：实时维护台账 | **最新归档时间**：2026-11-18 | **跟踪总条目**：111 篇/章节
+> **状态**：实时维护台账 | **最新归档时间**：2026-11-27 | **跟踪总条目**：112 篇/章节
 
 本台账记录四个站点的全部已上线历史文章与内容，**作为每次选题第一步的强制比对依据**，严格杜绝同质化、主题重叠、标题近似和虚构选题。
 
@@ -70,7 +70,7 @@
 | 21 | `In-Depth Technical` | **Precast Square Pile Installation: Handling, Pitching, Pressing and Splicing** | [`precast-square-pile-installation-site-sequence`](https://precast.world/articles/precast-square-pile-installation-site-sequence) | 灌浆套筒脱空无损检测、接头端板公差、双T板张拉、模具脱模剂、防水与耐腐蚀 |
 
 
-## 3. An-Thai Engineering 全球基础工程与全领域检测评估 (Global Foundation & Full-Spectrum Engineering Inspection) (共 5 篇/技术手册)
+## 3. An-Thai Engineering 全球基础工程与全领域检测评估 (Global Foundation & Full-Spectrum Engineering Inspection) (共 6 篇/技术手册)
 | 序号 | 发布日期 | 技术洞察标题 | Slug / 链接 | 泰国地质与规范要点 |
 | :--- | :--- | :--- | :--- | :--- |
 | 1 | 2026-11-17 | **Why CSL Sonic Logging Shows False Defects in Bangkok Bored Piles: The Acoustic Tube Debonding Trap** | [`bored-pile-csl-testing-tube-debonding-anomaly-thailand`](https://an-thai.com/insights/bored-pile-csl-testing-tube-debonding-anomaly-thailand.html) | How thermal contraction causes CSL tube debonding anomalies in Bangkok bored piles, and how Thai engineers distinguish debonding from genuine defects. |
@@ -78,7 +78,7 @@
 | 3 | 2026-11-09 | **Before Booking a Pile Integrity Test in Thailand: The Owner's Site-Readiness Pack** | [`pit-pretest-site-readiness-owner-checklist`](https://an-thai.com/insights/pit-pretest-site-readiness-owner-checklist.html) | A practical pre-test PIT checklist for Thai project owners: pile records, access, engineering scope and data handover before mobilization. |
 | 4 | 2026-11-01 | **Static Load Test vs PDA in Thailand: Building Trustworthy Pile Capacity Evidence** | [`static-load-vs-pda-thailand-pile-capacity`](https://an-thai.com/insights/static-load-vs-pda-thailand-pile-capacity.html) | How Thai engineers can combine static pile load tests, PDA/CAPWAP and auditable field records to make better pile acceptance decisions. |
 | 5 | 2026-11-24 | **Global Foundation & Full-Spectrum Engineering Inspection: Technical Field Manual & Global Practice Guide** <br>(全球桩基工程与全领域工程检测实战洞察) | [`global-foundation-full-spectrum-engineering-inspection`](https://an-thai.com/insights/global-foundation-full-spectrum-engineering-inspection.html) | 彻底打破地域局限（东南亚、中东、欧美、非洲、拉美）；双核驱动（深基础 + 7大工程试验品类全覆盖）；深挖 PIT 浅部扩颈遮蔽、大吨位 SLT 锚桩剪切与基准梁热位移失真、PAUT 根部错边假信号、火灾后 500°C 等温线损伤等现场痛点；严格对标 ASTM、ISO、EN、ACI、AWS 及 ISO/IEC 17025 实验室全流程质量溯源体系。 |
-| 6 | 2026-11-27 | **Megaton Static Pile Load Testing (SLT): Reaction Anchor Pile Pull-Out, Reference Beam Thermal Deflection, and Zone-of-Influence Distortion** <br>(大吨位基桩静载试验现场三大物理盲区：反力锚桩抗拔脱锚、基准梁热位移与地层影响区沉降失真实战指南) | [`static-pile-load-test-slt-reaction-frame-anchor-pile-failure-reference-beam-distortion`](https://an-thai.com/insights/static-pile-load-test-slt-reaction-frame-anchor-pile-failure-reference-beam-distortion.html) | 深度聚焦 400t-1500t 大吨位静载试验反力架系统三大物理破坏盲区：锚桩受拉泊松比侧阻退化与横梁侧倾偏心剪力（FS_tension >= 2.0）；基准梁地层沉降漏斗与锚桩隆起影响区干涉（净距 R >= 5D 且 >= 2.5m 刚性门禁）；太阳辐射温差（delta T = 15~25°C）诱发 20~30 米钢梁跨中 3~5mm 热弯拱失真与大地水准仪闭合校核；千斤顶高压密封圈 5%~12% 机械摩擦回滞与一体化系统标定规范（ASTM D1143 §7 / ISO 22477-1）。联动 Rayong EEC 600t 实战案例。 |
+| 6 | 2026-11-27 | **Megaton Static Pile Load Testing (SLT): Reaction Anchor Pile Pull-Out, Reference Beam Thermal Deflection, and Zone-of-Influence Distortion** <br>(大吨位基桩静载试验现场三大物理盲区：反力锚桩抗拔脱锚、基准梁热位移与地层影响区沉降失真实战指南) | [`static-pile-load-test-slt-reaction-frame-anchor-pile-failure-reference-beam-distortion`](https://an-thai.com/insights/static-pile-load-test-slt-reaction-frame-anchor-pile-failure-reference-beam-distortion.html) | 深度聚焦 400t-1500t 大吨位静载试验反力架系统物理破坏盲区：锚桩受拉泊松比侧阻退化与横梁侧倾偏心剪力（FS_tension >= 2.0）；基准梁地层沉降漏斗与锚桩隆起影响区干涉（ASTM D1143 §8.3.1/§9.1.1 与 ISO 22477-1 §4.4 净距门禁）；太阳辐射温差（delta T = 15~25°C）诱发 20~30 米钢梁跨中 43.2mm 理论热弯拱（向上起拱抬升表架产生虚假下沉）与几何水准仪直接闭合复测表架支座；压重平台（Kentledge）与锚桩选型对比；千斤顶高压密封圈 5%~12% 机械摩擦回滞与一体化系统标定规范（ASTM D1143 §§8.2.3–8.2.6 / ISO 22477-1 §4.5）。联动 Rayong EEC 600t 工程实战规程案例。 |
 
 
 ## 4. NoGodOwnsMe 原创正典小说与剧情漫画 (共 58 条正典资产)

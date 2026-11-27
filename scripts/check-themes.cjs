@@ -36,9 +36,19 @@ function stripJsComments(s) {
     return m[1] === '*' ? ' ' : '';
   });
 }
+const VALID_RM_PROPS = {
+  animation: /^(?:none|inherit|initial|unset)$/i,
+  'animation-duration': /^(?:0(?:m?s)?|0\.0+m?s|inherit|initial|unset)(?:\s*,\s*(?:0(?:m?s)?|0\.0+m?s))*$/i,
+  transition: /^(?:none|inherit|initial|unset)$/i,
+  'transition-duration': /^(?:0(?:m?s)?|0\.0+m?s|inherit|initial|unset)(?:\s*,\s*(?:0(?:m?s)?|0\.0+m?s))*$/i,
+  transform: /^(?:none|inherit|initial|unset)$/i,
+  opacity: /^(?:0(?:\.\d+)?|1(?:\.0+)?|inherit|initial|unset)$/i,
+  'stroke-dashoffset': /^(?:0(?:px|%|em|rem)?|inherit|initial|unset)$/i,
+  'scroll-behavior': /^(?:auto|inherit|initial|unset)$/i,
+};
 function hasReducedMotionRule(cssText) {
   const clean = cssText
-    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/\/\*[\s\S]*?\*\//g, ' ')
     .replace(/"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'/g, '""');
   let pos = 0;
   while (pos < clean.length) {
@@ -55,7 +65,13 @@ function hasReducedMotionRule(cssText) {
           const innerDecls = Array.from(block.matchAll(/\{([^{}]+)\}/g), (m) => m[1]).join(';');
           const hasMotionDecl = innerDecls
             .split(';')
-            .some((d) => /^(?:animation(?:-duration)?|transition(?:-duration)?|transform|opacity|stroke-dashoffset|scroll-behavior)\s*:\s*\S/i.test(d.trim()));
+            .some((d) => {
+              const colon = d.indexOf(':');
+              if (colon < 0) return false;
+              const prop = d.slice(0, colon).trim().toLowerCase();
+              const val = d.slice(colon + 1).replace(/\s*!important\s*$/i, '').trim();
+              return Object.prototype.hasOwnProperty.call(VALID_RM_PROPS, prop) && VALID_RM_PROPS[prop].test(val);
+            });
           if (hasMotionDecl) return true;
           pos = i + 1;
           break;

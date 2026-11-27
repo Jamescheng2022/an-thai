@@ -223,7 +223,7 @@ function renderPage(loc, pageName) {
   <meta name="robots" content="noindex, nofollow" />
   <title>${escapeHtml(cfg.legalName)} (${escapeHtml(loc.key)})</title>
   <link rel="icon" href="/assets/images/tenant-logo.svg" type="image/svg+xml" />
-  <script>(function(){try{var h=location.hostname.toLowerCase().replace(/\\.+$/,''),p=h==='localhost'||h==='127.0.0.1'||h==='[::1]'||/\\.vercel\\.app$/.test(h),t=p&&new URLSearchParams(location.search).get('theme');if(t==='default')document.documentElement.removeAttribute('data-theme');else if(t==='cinematic'||t==='blueprint'||t==='storytelling')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+  <script>(function(){try{var d=document,h=location.hostname.toLowerCase().replace(/\\.+$/,''),f=location.protocol==='file:',p=!f&&(h==='localhost'||h==='127.0.0.1'||h==='[::1]'||/\\.vercel\\.app$/.test(h)),t=p&&new URLSearchParams(location.search).get('theme');if(t==='default')d.documentElement.removeAttribute('data-theme');else if(t==='cinematic'||t==='blueprint'||t==='storytelling')d.documentElement.setAttribute('data-theme',t);if(!f&&(p||d.documentElement.hasAttribute('data-theme'))){var l=function(){var s=d.createElement('script');s.src='/assets/themes/motion-core.js';d.head.appendChild(s);};if(d.readyState!=='loading')l();else d.addEventListener('DOMContentLoaded',l);}}catch(e){}})();</script>
   <link rel="stylesheet" href="/assets/css/styles.css" />${themeCssLinks}
 </head>
 <body>
@@ -298,7 +298,6 @@ function renderPage(loc, pageName) {
   </script>
   <script src="/assets/js/sr-bridge-mock.js"></script>
   <script src="/assets/js/sourcerating-embed-adapter.js"></script>
-  <script defer src="/assets/themes/motion-core.js"></script>
   <script src="/assets/js/site.js"></script>
 </body>
 </html>\n`;

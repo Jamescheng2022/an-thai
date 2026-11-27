@@ -119,6 +119,16 @@ html[data-theme="cinematic"] .msg-bubble:not(.is-guest):not(.is-human):not(.is-s
   background: #1b222e;
   color: #f1f5f9;
 }
+html[data-theme="cinematic"] .msg-bubble.is-system {
+  background: #422006;
+  color: #fef3c7;
+  border-color: #f59e0b;
+}
+html[data-theme="cinematic"] .msg-bubble.is-human {
+  background: #052e16;
+  color: #ecfdf5;
+  border-color: #10b981;
+}
 html[data-theme="cinematic"] .btn-dark,
 html[data-theme="cinematic"] .desk-btn,
 html[data-theme="cinematic"] .skip-link,

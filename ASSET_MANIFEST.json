@@ -268,6 +268,123 @@
       "description": "Owner-supplied official WeChat QR code (James2021)",
       "provenance": "Owner-supplied direct contact QR (2026-11-26)",
       "kind": "direct contact QR code"
+    },
+    {
+      "path": "assets/images/hero-field-clean.webp",
+      "zip_source": "v1.1-20261128-remediation",
+      "sha256": "ec341cc959c7af9c00fbf57bf9e8d36da37d20ab00ddf31645e47f9e9d009a3e",
+      "bytes": 45334,
+      "dimensions": [
+        530,
+        318
+      ],
+      "description": "Clean crop of piling rig and static load frame from AN-THAI brochure without promotional slogan overlays",
+      "provenance": "Owner-supplied AN-THAI brochure clean photographic crop",
+      "kind": "brochure photographic crop"
+    },
+    {
+      "path": "assets/images/hero-field-clean-small.webp",
+      "zip_source": "v1.1-20261128-remediation",
+      "sha256": "5ddeeefebd6f7aaf3ce9348666984bd12a07b1e9b7d7ca9871577d65674d8f35",
+      "bytes": 28762,
+      "dimensions": [
+        440,
+        264
+      ],
+      "description": "Mobile clean crop of piling rig and static load frame from AN-THAI brochure without promotional slogan overlays",
+      "provenance": "Owner-supplied AN-THAI brochure clean photographic crop",
+      "kind": "brochure photographic crop"
+    },
+    {
+      "path": "assets/images/static-load-clean.webp",
+      "zip_source": "v1.1-20261128-remediation",
+      "sha256": "698b162aa5e75ac0d5e657964096d9a4e76123361a5980e0d2ccbc6f63ad2f49",
+      "bytes": 50148,
+      "dimensions": [
+        575,
+        350
+      ],
+      "description": "Clean uncaptioned static pile load test field photograph reused from repository insights asset for homepage Unit 01 card only",
+      "provenance": "Owner-supplied AN-THAI brochure clean photographic crop",
+      "kind": "brochure photographic crop"
+    },
+    {
+      "path": "assets/images/steel/steel-hero.webp",
+      "zip_source": "v1.1-20261128-remediation",
+      "sha256": "8b834d4764319966d43dc8269a513fd94a26c274bcfe830cf6b4a6920c7929d3",
+      "bytes": 61370,
+      "dimensions": [
+        1200,
+        670
+      ],
+      "description": "Clean structural steel fabrication bay showing H-beams undergoing welding, dimensional check, and coating inspection",
+      "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
+      "kind": "editorial industrial visualization"
+    },
+    {
+      "path": "assets/images/steel/steel-hero-small.webp",
+      "zip_source": "v1.1-20261128-remediation",
+      "sha256": "96c041d5ee9cc21a9042ce02bf88cd1bbf3873a59e8060943d3daa130f3e6bdf",
+      "bytes": 25046,
+      "dimensions": [
+        640,
+        357
+      ],
+      "description": "Mobile clean structural steel fabrication bay showing H-beams undergoing welding, dimensional check, and coating inspection",
+      "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
+      "kind": "editorial industrial visualization"
+    },
+    {
+      "path": "assets/images/cement-mining.webp",
+      "zip_source": "v1.1-20261128-remediation",
+      "sha256": "d148b16ab37c212e4a18649946553c804ee4e6a619e8b3a5d394dde3ed413783",
+      "bytes": 87922,
+      "dimensions": [
+        1200,
+        670
+      ],
+      "description": "Industrial cement and mineral processing complex showing preheater tower, grinding mill building, enclosed conveyors, and crushing screening bay",
+      "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
+      "kind": "editorial industrial visualization"
+    },
+    {
+      "path": "assets/images/cement-mining-small.webp",
+      "zip_source": "v1.1-20261128-remediation",
+      "sha256": "907f4ac8c3166cf73f3e98860ffc76e5ff8dd23f0316bd916a4bd4fc03f300a7",
+      "bytes": 29044,
+      "dimensions": [
+        640,
+        357
+      ],
+      "description": "Mobile industrial cement and mineral processing complex showing preheater tower, grinding mill building, enclosed conveyors, and crushing screening bay",
+      "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
+      "kind": "editorial industrial visualization"
+    },
+    {
+      "path": "assets/images/field-instruments.webp",
+      "zip_source": "v1.1-20261128-remediation",
+      "sha256": "e3fee56447b6970b0fbded208dbab1d7632b6711589a5b259d88630d20417a89",
+      "bytes": 109942,
+      "dimensions": [
+        1200,
+        670
+      ],
+      "description": "Portable digital pile integrity and dynamic testing analyzer connected by shielded cables to sensors on a concrete pile head",
+      "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
+      "kind": "editorial industrial visualization"
+    },
+    {
+      "path": "assets/images/field-instruments-small.webp",
+      "zip_source": "v1.1-20261128-remediation",
+      "sha256": "cfb0ef3393d00c0e74a2cf0f8e184a42e5d05bd99c84b97dad822dd98c0ba8dc",
+      "bytes": 43544,
+      "dimensions": [
+        640,
+        357
+      ],
+      "description": "Mobile portable digital pile integrity and dynamic testing analyzer connected by shielded cables to sensors on a concrete pile head",
+      "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
+      "kind": "editorial industrial visualization"
     }
   ]
 }

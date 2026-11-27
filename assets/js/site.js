@@ -577,10 +577,10 @@
     // or "Testing" in "04 Field Testing Instruments" never cross-route.
     if (/\b01\b/.test(s)) return '01 Foundation Testing & Geotech';
     if (/\b02\b/.test(s)) return '02 Buyer-Side Steel Procurement Agency';
-    if (/\b03\b/.test(s)) return '03 Powder-Process Equipment';
+    if (/\b03\b/.test(s)) return '03 Cement & Mining Equipment';
     if (/\b04\b/.test(s)) return '04 Field Testing Instruments';
-    if (s.indexOf('powder') !== -1 || s.indexOf('grind') !== -1 || s.indexOf('mill') !== -1) {
-      return '03 Powder-Process Equipment';
+    if (s.indexOf('cement') !== -1 || s.indexOf('mining') !== -1 || s.indexOf('crush') !== -1 || s.indexOf('kiln') !== -1 || s.indexOf('pyro') !== -1 || s.indexOf('powder') !== -1 || s.indexOf('grind') !== -1 || s.indexOf('mill') !== -1) {
+      return '03 Cement & Mining Equipment';
     }
     if (s.indexOf('instr') !== -1 || s.indexOf('equip') !== -1 || s.indexOf('sensor') !== -1) {
       return '04 Field Testing Instruments';
@@ -1033,7 +1033,7 @@
       categories:['เครื่องมือทดสอบความสมบูรณ์ของเสาเข็ม','ระบบทดสอบเสาเข็มแบบพลศาสตร์ความเครียดสูง','ระบบทดสอบคลื่นเสียงผ่านท่อ / อัลตราโซนิก','เครื่องมือวัดสำหรับการทดสอบรับน้ำหนักแบบสถิต','เครื่องมือทดสอบปฐพีและภาคสนาม','เครื่องมือทดสอบวัสดุ / ห้องปฏิบัติการ','โหลดเซลล์ / เซนเซอร์ / ระบบเก็บข้อมูล','การติดตั้ง / ฝึกอบรม / สนับสนุนทางเทคนิค']
     } : {category:'Equipment category',requirements:'Requirements',enquiry:'AN-THAI enquiry',labels:['Name','Company','Email','Phone','Request'],status:'Your enquiry is prepared for info@an-thai.com. Send it from your email app, or reach us via info@an-thai.com, WhatsApp (+66 90 292 1749), LINE (https://line.me/ti/p/p0_XsfILmH), or WeChat (James2021). This website does not transmit the form or create a customer record.'};
     var qParams = new URLSearchParams(window.location.search);
-    var qTypes = {testing:'Engineering services',engineering:'Engineering services',equipment:'Testing instruments',instruments:'Testing instruments',steel:'Steel / space-structure cooperation',powder:'CNBM powder-equipment cooperation'};
+    var qTypes = {testing:'Engineering services',engineering:'Engineering services',equipment:'Testing instruments',instruments:'Testing instruments',steel:'Steel / space-structure cooperation',powder:'Cement & mining equipment cooperation',cement:'Cement & mining equipment cooperation',mining:'Cement & mining equipment cooperation'};
     if (quoteForm.elements && quoteForm.elements.requestType && Object.prototype.hasOwnProperty.call(qTypes, qParams.get('type'))) {
       quoteForm.elements.requestType.value = qTypes[qParams.get('type')];
     }

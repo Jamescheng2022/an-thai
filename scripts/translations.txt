@@ -597,3 +597,14 @@ Key Technical Deliverables || 核心技术交付成果 || ผลงานส่�
 Related Technical Guide || 关联技术指南 || คู่มือเทคนิคที่เกี่ยวข้อง
 View Service Scope || 查看业务单元详情 || ดูรายละเอียดบริการ
 Discuss Similar Scope → || 对接同类项目需求 → || ปรึกษาขอบเขตงานลักษณะนี้ →
+03 Cement & Mining Process Equipment | AN-THAI Engineering || 03 水泥与矿山工艺装备 | 安泰工程 AN-THAI Engineering || 03 เครื่องจักรและระบบปูนซีเมนต์และเหมืองแร่ | AN-THAI Engineering
+Technical coordination and supply support for cement and mining process equipment: crushing, grinding, pyro-processing peripherals, classification, conveying, electrical control, commissioning coordination, and spares. || 面向水泥与矿山全流程工艺装备提供技术协调与供货对接：破碎、粉磨、烧成周边、分级收尘、输送储运、电控配套、调试协调与备件供应。 || บริการประสานงานเทคนิคและจัดหาเครื่องจักรระบบผลิตปูนซีเมนต์และเหมืองแร่: บดย่อย บดละเอียด ระบบประกอบเตาเผา คัดแยก ลำเลียง ควบคุมไฟฟ้า ร่วมเดินระบบ และอะไหล่
+Pile testing, buyer-side steel procurement agency, cement and mining process equipment coordination, and testing instruments in Thailand. || 在泰国提供桩基检测、买方立场钢结构采购代理、水泥与矿山工艺装备协调及工程检测仪器供应服务。 || บริการทดสอบเสาเข็ม ตัวแทนจัดหาโครงสร้างเหล็กฝั่งผู้ซื้อ ประสานงานเครื่องจักรปูนซีเมนต์และเหมืองแร่ และเครื่องมือทดสอบในประเทศไทย
+Moved to Cement & Mining Process Equipment | AN-THAI Engineering || 页面已迁移至水泥与矿山工艺装备 | 安泰工程 || ย้ายไปยังหน้าเครื่องจักรและระบบปูนซีเมนต์และเหมืองแร่ | AN-THAI Engineering
+This page has moved to Cement & Mining Process Equipment at /cement-mining-equipment.html. || 本页已迁移至水泥与矿山工艺装备页面（/cement-mining-equipment.html）。 || หน้านี้ได้ย้ายไปยังหน้าเครื่องจักรและระบบปูนซีเมนต์และเหมืองแร่ (/cement-mining-equipment.html) แล้ว
+Foundation piling hammer rig and steel static load reaction frame on site || 施工现场打桩锤机与钢梁静载反力架实景 || ภาพเครื่องตอกเสาเข็มและโครงรับแรงทดสอบสถิตในหน้างานจริง
+Hydraulic jack, steel reaction beams, and anchor piles during a static pile load test || 静载试验中的液压千斤顶、钢反力梁与锚桩现场 || ภาพแม่แรงไฮดรอลิก คานรับแรง และเสาเข็มสมอในการทดสอบรับน้ำหนักแบบสถิต
+Clean structural steel fabrication bay showing H-beams undergoing welding, dimensional check, and coating inspection || 整洁的重钢制造车间：H型钢焊缝、尺寸复测与涂层检验 || โรงงานประกอบโครงสร้างเหล็กที่เป็นระเบียบ พร้อมการตรวจสอบแนวเชื่อม ขนาด และผิวเคลือบ H-Beam
+Industrial cement and mineral processing facility showing preheater tower, grinding mill building, enclosed conveyors, and crushing screening bay || 现代水泥与矿山工艺综合厂区：预热器塔、粉磨车间、封闭输送走廊与破碎筛分工段 || ภาพโรงงานระบบผลิตปูนซีเมนต์และแร่ธาตุ ประกอบด้วยหอ Preheater โรงบด สายพานลำเลียง และหน่วยบดคัดขนาด
+Portable digital pile integrity and dynamic testing analyzer connected by shielded cables to sensors on a concrete pile head || 混凝土桩头旁的便携式数字桩基检测主机及屏蔽线缆与传感器实物 || เครื่องวิเคราะห์ความสมบูรณ์และพลศาสตร์เสาเข็มแบบพกพาพร้อมสายสัญญาณและเซนเซอร์บนหัวเสาเข็มคอนกรีต
+Geotechnical and materials testing instruments with Bangkok engineering coordination room || 岩土与材料实验室仪器实景及曼谷技术协调办公室 || ภาพเครื่องมือทดสอบปฐพีและวัสดุในห้องปฏิบัติการพันธมิตรพร้อมห้องประสานงานกรุงเทพฯ

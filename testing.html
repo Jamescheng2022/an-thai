@@ -14,7 +14,7 @@
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="/assets/images/brand-logo.png" />
   <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png" />
-  <script>(function(){try{var d=document,h=location.hostname.toLowerCase().replace(/\.+$/,''),f=location.protocol==='file:',p=!f&&(h==='localhost'||h==='127.0.0.1'||h==='[::1]'||/\.vercel\.app$/.test(h)),t=p&&new URLSearchParams(location.search).get('theme');if(t==='cinematic'||t==='blueprint'||t==='storytelling')d.documentElement.setAttribute('data-theme',t);if(!f&&(p||d.documentElement.hasAttribute('data-theme'))){var l=function(){var s=d.createElement('script');s.src='/assets/themes/motion-core.js';d.head.appendChild(s);};if(d.readyState!=='loading')l();else d.addEventListener('DOMContentLoaded',l);}}catch(e){}})();</script>
+  <script>(function(){try{var d=document;d.documentElement.setAttribute('data-theme','blueprint');if(location.protocol!=='file:'){var l=function(){var s=d.createElement('script');s.src='/assets/themes/motion-core.js';d.head.appendChild(s);};if(d.readyState!=='loading')l();else d.addEventListener('DOMContentLoaded',l);}}catch(e){}})();</script>
   <link rel="stylesheet" href="./assets/css/styles.css" />
     <script type="application/ld+json">
 {
@@ -82,9 +82,9 @@
               <span data-i18n="svcMenu2">Buyer-Side Steel Procurement</span>
               <span class="nav-drop-sub">/steel-procurement.html</span>
             </a>
-            <a href="./powder-equipment.html" role="menuitem" data-page-id="powder">
-              <span data-i18n="svcMenu3">Powder-Process Equipment</span>
-              <span class="nav-drop-sub">/powder-equipment.html</span>
+            <a href="./cement-mining-equipment.html" role="menuitem" data-page-id="powder">
+              <span data-i18n="svcMenu3">Cement &amp; Mining Equipment</span>
+              <span class="nav-drop-sub">/cement-mining-equipment.html</span>
             </a>
             <a href="./testing-instruments.html" role="menuitem" data-page-id="instruments">
               <span data-i18n="svcMenu4">Testing Instruments</span>
@@ -119,7 +119,7 @@
       <div id="mobileServicesPanel" class="mobile-acc-panel" hidden>
         <a href="./testing.html" data-page-id="testing" data-i18n="svcMenu1" aria-current="page">Foundation Testing &amp; Geotechnical</a>
         <a href="./steel-procurement.html" data-page-id="steel" data-i18n="svcMenu2">Buyer-Side Steel Procurement</a>
-        <a href="./powder-equipment.html" data-page-id="powder" data-i18n="svcMenu3">Powder-Process Equipment</a>
+        <a href="./cement-mining-equipment.html" data-page-id="powder" data-i18n="svcMenu3">Cement &amp; Mining Equipment</a>
         <a href="./testing-instruments.html" data-page-id="instruments" data-i18n="svcMenu4">Testing Instruments</a>
       </div>
       <a href="/insights/index.html" data-page-id="insights" data-i18n="navInsights">Insights</a>
@@ -231,6 +231,17 @@
           <div><h2 class="h3" data-i18n="testBoundTitle">Responsibility Boundary</h2><p class="muted" style="margin-top:6px;" data-i18n="testBoundBody">Test methods, acceptance criteria, and statutory sign-off follow project specifications and licensed Thai professional responsibility confirmed per contract.</p></div>
         </div>
 
+        <div class="split-box" style="align-items:center;">
+          <div class="split-pane" style="padding:18px;">
+            <span class="mono" style="font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;" data-i18n="testLabEyebrow">Partner Soil &amp; Materials Lab Context</span>
+            <h2 class="h3" style="margin-top:6px;" data-i18n="testLabTitle">Geotechnical &amp; Material Testing Coordination</h2>
+            <p class="muted" style="font-size:13px;margin-top:6px;" data-i18n="testLabDesc">Soil shear, pressure/permeability and concrete compression tests conducted through partner laboratory facilities alongside field pile testing.</p>
+          </div>
+          <div class="split-pane" style="padding:12px;background:var(--surface-alt);">
+            <img src="/assets/images/lab-equipment.webp" srcset="/assets/images/lab-equipment-small.webp 520w, /assets/images/lab-equipment.webp 900w" sizes="(max-width: 640px) calc(100vw - 40px), 440px" alt="Geotechnical and materials testing instruments with Bangkok engineering coordination room" width="900" height="513" loading="lazy" style="width:100%;height:auto;display:block;border-radius:4px;" />
+          </div>
+        </div>
+
         <div class="accordion-group">
           <details class="acc-item"><summary><span data-i18n="testAcc1Sum">Before You Contact Us (Required Inputs)</span><span class="acc-icon" aria-hidden="true">+</span></summary><div class="acc-panel" data-i18n="testAcc1Body">Project location/province · Pile type, diameter, length &amp; test count · Design working load &amp; required test load · Construction schedule · Drawings &amp; soil profile logs.</div></details>
         </div>
@@ -320,7 +331,7 @@
             <select id="drawerRoute">
               <option value="01 Foundation Testing & Geotech" data-i18n="fRoute1">01 Foundation Testing &amp; Geotech</option>
               <option value="02 Buyer-Side Steel Procurement Agency" data-i18n="fRoute2">02 Buyer-Side Steel Procurement Agency</option>
-              <option value="03 Powder-Process Equipment" data-i18n="fRoute3">03 Powder-Process Equipment</option>
+              <option value="03 Cement & Mining Equipment" data-i18n="fRoute3">03 Cement &amp; Mining Equipment</option>
               <option value="04 Field Testing Instruments" data-i18n="fRoute4">04 Field Testing Instruments</option>
             </select>
           </div>

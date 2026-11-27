@@ -21,8 +21,10 @@ class Doc(HTMLParser):
 for preview in (root/'_qa').glob('*.html'):
     assert 'noindex,nofollow' in preview.read_text(encoding='utf-8'), preview
 docs={p.relative_to(root).as_posix():Doc(p.read_text(encoding='utf-8')) for p in root.rglob('*.html') if '_qa' not in p.relative_to(root).parts and not p.relative_to(root).as_posix().startswith('studio/')}
-expected_docs = 47
+expected_docs = 50
 assert len(docs) == expected_docs, f"Expected {expected_docs} docs, got {len(docs)}"
+for loc_prefix in ('', 'zh/', 'th/'):
+    assert f'{loc_prefix}cement-mining-equipment.html' in docs, f'Missing {loc_prefix}cement-mining-equipment.html'
 assert not (root/'content/project-references-review.json').exists(), 'Internal review-only leads must not be packaged in dist'
 assert not (root/'content/image_evidence.json').exists(), 'Internal image evidence ledger with unapproved URLs must not be packaged in dist'
 assert not (root/'content/cases.json').exists(), 'Undisclosed cases registry must not be packaged in dist'

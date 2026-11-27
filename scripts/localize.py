@@ -7,7 +7,7 @@ import re
 import os
 
 ROOT = Path(__file__).resolve().parent.parent
-PAGES = ['index', 'testing', 'steel-procurement', 'powder-equipment', 'testing-instruments', 'about', 'contact', 'insights', 'services', 'equipment', 'portfolio', '404']
+PAGES = ['index', 'testing', 'steel-procurement', 'cement-mining-equipment', 'powder-equipment', 'testing-instruments', 'about', 'contact', 'insights', 'services', 'equipment', 'portfolio', '404']
 
 # Load legacy translations.txt if present
 MAP = {}

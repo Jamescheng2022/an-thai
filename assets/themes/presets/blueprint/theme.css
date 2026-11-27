@@ -1,5 +1,7 @@
 /* Theme 2: Technical Blueprint (Drafting grid + SVG flow & symbolic Q-s schematic) */
 html[data-theme="blueprint"] {
+  --th-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --th-dur: 0.45s;
   --bg: #eef4fa;
   --surface: #ffffff;
   --surface-alt: #f5f9fd;
@@ -49,7 +51,7 @@ html[data-theme="blueprint"] .unit-num {
   background: #0c4a6e;
   color: #7dd3fc;
 }
-html[data-theme="blueprint"] .split-box .split-pane:first-child:not(.has-bp)::after,
+html[data-theme="blueprint"] .container > .split-box:first-child .split-pane:first-child:not(.has-bp)::after,
 html[data-theme="blueprint"]:not(:has(.split-box .split-pane, .diagram-box)) footer:not(.has-bp)::after {
   content: "";
   display: block;

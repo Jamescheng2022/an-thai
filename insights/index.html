@@ -14,7 +14,7 @@
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="/assets/images/brand-logo.png" />
   <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png" />
-  <script>(function(){try{var d=document,h=location.hostname.toLowerCase().replace(/\.+$/,''),f=location.protocol==='file:',p=!f&&(h==='localhost'||h==='127.0.0.1'||h==='[::1]'||/\.vercel\.app$/.test(h)),t=p&&new URLSearchParams(location.search).get('theme');if(t==='cinematic'||t==='blueprint'||t==='storytelling')d.documentElement.setAttribute('data-theme',t);if(!f&&(p||d.documentElement.hasAttribute('data-theme'))){var l=function(){var s=d.createElement('script');s.src='/assets/themes/motion-core.js';d.head.appendChild(s);};if(d.readyState!=='loading')l();else d.addEventListener('DOMContentLoaded',l);}}catch(e){}})();</script>
+  <script>(function(){try{var d=document;d.documentElement.setAttribute('data-theme','blueprint');if(location.protocol!=='file:'){var l=function(){var s=d.createElement('script');s.src='/assets/themes/motion-core.js';d.head.appendChild(s);};if(d.readyState!=='loading')l();else d.addEventListener('DOMContentLoaded',l);}}catch(e){}})();</script>
   <link rel="stylesheet" href="../assets/css/styles.css" />
   <script type="application/ld+json">
 [
@@ -57,9 +57,9 @@
               <span data-i18n="svcMenu2">Buyer-Side Steel Procurement</span>
               <span class="nav-drop-sub">/steel-procurement.html</span>
             </a>
-            <a href="../powder-equipment.html" role="menuitem" data-page-id="powder">
-              <span data-i18n="svcMenu3">Powder-Process Equipment</span>
-              <span class="nav-drop-sub">/powder-equipment.html</span>
+            <a href="../cement-mining-equipment.html" role="menuitem" data-page-id="powder">
+              <span data-i18n="svcMenu3">Cement &amp; Mining Equipment</span>
+              <span class="nav-drop-sub">/cement-mining-equipment.html</span>
             </a>
             <a href="../testing-instruments.html" role="menuitem" data-page-id="instruments">
               <span data-i18n="svcMenu4">Testing Instruments</span>
@@ -94,7 +94,7 @@
       <div id="mobileServicesPanel" class="mobile-acc-panel" hidden>
         <a href="../testing.html" data-page-id="testing" data-i18n="svcMenu1">Foundation Testing &amp; Geotechnical</a>
         <a href="../steel-procurement.html" data-page-id="steel" data-i18n="svcMenu2">Buyer-Side Steel Procurement</a>
-        <a href="../powder-equipment.html" data-page-id="powder" data-i18n="svcMenu3">Powder-Process Equipment</a>
+        <a href="../cement-mining-equipment.html" data-page-id="powder" data-i18n="svcMenu3">Cement &amp; Mining Equipment</a>
         <a href="../testing-instruments.html" data-page-id="instruments" data-i18n="svcMenu4">Testing Instruments</a>
       </div>
       <a href="../insights/index.html" data-page-id="insights" data-i18n="navInsights" aria-current="page">Insights</a>
@@ -115,7 +115,7 @@
           <button type="button" class="filter-btn" data-filter="all" aria-pressed="true" data-i18n="insFilterAll">All</button>
           <button type="button" class="filter-btn" data-filter="testing" aria-pressed="false" data-i18n="insFilterTesting">01 Testing</button>
           <button type="button" class="filter-btn" data-filter="steel" aria-pressed="false" data-i18n="insFilterSteel">02 Steel</button>
-          <button type="button" class="filter-btn" data-filter="powder" aria-pressed="false" data-i18n="insFilterPowder">03 Powder</button>
+          <button type="button" class="filter-btn" data-filter="powder" aria-pressed="false" data-i18n="insFilterPowder">03 Cement &amp; Mining</button>
           <button type="button" class="filter-btn" data-filter="instruments" aria-pressed="false" data-i18n="insFilterInstr">04 Instruments</button>
         </div>
 
@@ -125,7 +125,7 @@
 
         <div class="engineering-editorial-note" style="margin-top:20px;padding:16px 20px;background:var(--card);border:1px solid var(--border);border-radius:6px;font-size:13px;line-height:1.6;">
           <strong style="display:block;margin-bottom:4px;" data-i18n="insightsEditorialTitle">Editorial &amp; Discipline Notice:</strong>
-          <span class="muted" data-i18n="insightsEditorialNote">Current published insights cover Foundation Testing &amp; Geotechnical Engineering (CSL, PIT, PDA, Static Load Testing). Technical practice notes for Buyer-Side Steel Procurement Agency and Powder-Process Equipment are undergoing peer review by our Bangkok engineering desk. For project-specific inquiries or technical requirements in these disciplines, please contact us directly.</span>
+          <span class="muted" data-i18n="insightsEditorialNote">Current published insights cover Foundation Testing &amp; Geotechnical Engineering (CSL, PIT, PDA, Static Load Testing). Technical practice notes for Buyer-Side Steel Procurement Agency and Cement &amp; Mining Process Equipment are undergoing peer review by our Bangkok engineering desk. For project-specific inquiries or technical requirements in these disciplines, please contact us directly.</span>
         </div>
       </div>
     </section>
@@ -185,7 +185,7 @@
             <select id="drawerRoute">
               <option value="01 Foundation Testing & Geotech" data-i18n="fRoute1">01 Foundation Testing &amp; Geotech</option>
               <option value="02 Buyer-Side Steel Procurement Agency" data-i18n="fRoute2">02 Buyer-Side Steel Procurement Agency</option>
-              <option value="03 Powder-Process Equipment" data-i18n="fRoute3">03 Powder-Process Equipment</option>
+              <option value="03 Cement & Mining Equipment" data-i18n="fRoute3">03 Cement &amp; Mining Equipment</option>
               <option value="04 Field Testing Instruments" data-i18n="fRoute4">04 Field Testing Instruments</option>
             </select>
           </div>

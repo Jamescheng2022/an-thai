@@ -5,7 +5,7 @@ const root = path.resolve(__dirname, '..');
 const output = path.join(root, 'dist');
 const files = [
   'index.html', 'about.html', 'contact.html', 'testing.html',
-  'steel-procurement.html', 'powder-equipment.html', 'testing-instruments.html',
+  'steel-procurement.html', 'cement-mining-equipment.html', 'powder-equipment.html', 'testing-instruments.html',
   'services.html', 'equipment.html', 'portfolio.html', 'insights.html',
   '404.html', 'favicon.ico', 'robots.txt', 'sitemap.xml', 'llms.txt'
 ];
@@ -16,15 +16,20 @@ fs.rmSync(output, {recursive: true, force: true});
 fs.mkdirSync(output, {recursive: true});
 for (const file of files) fs.copyFileSync(path.join(root, file), path.join(output, file));
 
-// Copy public asset and content directories (exclude internal studio/, api/, review-only leads, raw cases registry, rights-held external case banners, unlinked legacy draft downloads; V1.1 branch includes sourcerating-embed-adapter.js & sr-bridge-mock.js)
+// Copy public asset and content directories (exclude internal studio/, api/, review-only leads, raw cases registry, rights-held external case banners, unlinked legacy draft downloads, and non-default presets retained only in themes/ library; V1.1 branch includes sourcerating-embed-adapter.js & sr-bridge-mock.js)
 if (fs.existsSync(path.join(root, 'assets'))) {
   const heldCasesDir = path.join(root, 'assets', 'images', 'cases');
   const legacyDownloadsDir = path.join(root, 'assets', 'downloads');
+  const unusedPresetDirs = [
+    path.join(root, 'assets', 'themes', 'presets', 'cinematic'),
+    path.join(root, 'assets', 'themes', 'presets', 'storytelling'),
+  ];
   fs.cpSync(path.join(root, 'assets'), path.join(output, 'assets'), {
     recursive: true,
     filter: (src) =>
       src !== heldCasesDir && !src.startsWith(heldCasesDir + path.sep) &&
-      src !== legacyDownloadsDir && !src.startsWith(legacyDownloadsDir + path.sep)
+      src !== legacyDownloadsDir && !src.startsWith(legacyDownloadsDir + path.sep) &&
+      !unusedPresetDirs.some((d) => src === d || src.startsWith(d + path.sep))
   });
 }
 if (fs.existsSync(path.join(root, 'cases'))) fs.cpSync(path.join(root, 'cases'), path.join(output, 'cases'), {recursive: true});
@@ -53,7 +58,9 @@ require('./check-themes.cjs');
   const distStylesPath = path.join(output, 'assets/css/styles.css');
   let bundledCss = fs.readFileSync(distStylesPath, 'utf8') + `\n/* anthai-themes-bundled:v${manifest.version} */\n:root{--thb:1;}\n`;
   for (const p of manifest.presets) {
-    bundledCss += `\n/* preset:${p.id} */\n` + fs.readFileSync(path.join(root, p.css), 'utf8') + '\n';
+    if (p.id === manifest.defaultTheme) {
+      bundledCss += `\n/* preset:${p.id} */\n` + fs.readFileSync(path.join(root, p.css), 'utf8') + '\n';
+    }
   }
   fs.writeFileSync(distStylesPath, bundledCss);
 }

@@ -1,7 +1,7 @@
 {
   "name": "anthai-site-themes",
   "version": "1.0.0",
-  "defaultTheme": "default",
+  "defaultTheme": "blueprint",
   "allowedHosts": ["localhost", "127.0.0.1", "[::1]", "*.vercel.app"],
   "core": {
     "css": "assets/themes/tokens.css",

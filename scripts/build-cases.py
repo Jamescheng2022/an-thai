@@ -18,16 +18,16 @@ LANGS = [
 LOCALE_UI = {
     'en': {
         'title': 'Engineering Capabilities & Delivery Standards | AN-THAI Engineering',
-        'desc': 'AN-THAI Engineering technical capabilities across foundation testing, buyer-side steel procurement, powder-process equipment, and testing instruments in Thailand.',
+        'desc': 'AN-THAI Engineering technical capabilities across foundation testing, buyer-side steel procurement, cement and mining process equipment, and testing instruments in Thailand.',
         'eyebrow': 'Technical Capabilities & Standards',
         'h1': 'Engineering Scope & Field Delivery Standards',
-        'lead': 'From Bangkok and the Eastern Economic Corridor (EEC) to cross-border equipment supply, AN-THAI Engineering executes field testing, buyer-side fabrication QA/QC, and industrial instrumentation under clear contractual scopes and traceable international codes.',
+        'lead': 'From Bangkok and the Eastern Economic Corridor (EEC) to cross-border equipment supply, AN-THAI Engineering executes field testing, buyer-side fabrication QA/QC, and industrial process coordination under clear contractual scopes and traceable international codes.',
         'disciplinesTitle': 'Core Engineering & Procurement Disciplines',
         'disciplines': [
-            ('/testing.html', '/assets/images/hero-field.webp', 900, 687, '01 · Foundation Testing & Geotech', 'Static Load Testing (SLT), high-strain PDA/CAPWAP, low-strain PIT, Crosshole Sonic Logging (CSL), plate load tests, and soil boring per ASTM, TIS & EIT codes.', 'Explore Foundation Testing →'),
-            ('/steel-procurement.html', '/assets/images/steel/steel-structure.webp', 1300, 1733, '02 · Buyer-Side Steel Procurement', 'Independent buyer representation for structural steel & space frames: RFQ leveling, China fabricator qualification, NDT & welding inspection, MTC traceability, and pre-shipment release.', 'Explore Steel Procurement →'),
-            ('/powder-equipment.html', '/assets/images/plate-load.webp', 900, 522, '03 · Powder-Process Equipment', 'Technical coordination for vertical roller mills (VRM), dynamic air classifiers, and pulse-jet baghouse collectors tailored for cement, slag, and industrial mineral grinding.', 'Explore Powder Equipment →'),
-            ('/testing-instruments.html', '/assets/images/static-load.webp', 900, 389, '04 · Field Testing Instruments', 'Supply and technical support for pile integrity testers, CSL ultrasonic analyzers, hydraulic load cells, displacement transducers, and data acquisition systems.', 'Explore Testing Instruments →'),
+            ('/testing.html', '/assets/images/hero-field-clean.webp', 530, 318, '01 · Foundation Testing & Geotech', 'Static Load Testing (SLT), high-strain PDA/CAPWAP, low-strain PIT, Crosshole Sonic Logging (CSL), plate load tests, and soil boring per ASTM, TIS & EIT codes.', 'Explore Foundation Testing →'),
+            ('/steel-procurement.html', '/assets/images/steel/steel-hero.webp', 1200, 670, '02 · Buyer-Side Steel Procurement', 'Independent buyer representation for structural steel & space frames: RFQ leveling, China fabricator qualification, NDT & welding inspection, MTC traceability, and pre-shipment release.', 'Explore Steel Procurement →'),
+            ('/cement-mining-equipment.html', '/assets/images/cement-mining.webp', 1200, 670, '03 · Cement & Mining Process Equipment', 'Technical coordination and supply support for crushing, grinding (VRM/ball mill/roller press), pyro-processing peripherals, dust collection, conveying, electrical control, commissioning support, and spares.', 'Explore Cement & Mining Equipment →'),
+            ('/testing-instruments.html', '/assets/images/field-instruments.webp', 1200, 670, '04 · Field Testing Instruments', 'Supply and technical support for pile integrity testers, CSL ultrasonic analyzers, hydraulic load cells, displacement transducers, and data acquisition systems.', 'Explore Testing Instruments →'),
         ],
         'credTitle': 'Project Credentials & Technical Documentation',
         'credBody': 'Representative method statements, anonymized sample test report formats, and discipline-specific track references are shared directly with prospective clients and engineering consultants during project scoping.',
@@ -57,16 +57,16 @@ LOCALE_UI = {
     },
     'zh': {
         'title': '工程技术能力与交付标准 | 安泰工程 AN-THAI Engineering',
-        'desc': '安泰工程在泰国提供地基与桩基检测、买方立场钢结构采购代理、粉体工艺装备协调及工程检测仪器供应服务。',
+        'desc': '安泰工程在泰国提供地基与桩基检测、买方立场钢结构采购代理、水泥与矿山工艺装备协调及工程检测仪器供应服务。',
         'eyebrow': '工程交付能力与规范体系',
         'h1': '工程技术能力与交付标准',
-        'lead': '立足曼谷与泰国东部经济走廊（EEC），安泰工程围绕国际工程规范（ASTM、BS、EN、ISO）与泰国本土标准（TIS、EIT、BMA），开展清晰的工程检测协调、买方钢构品控及装备供应服务。',
+        'lead': '立足曼谷与泰国东部经济走廊（EEC），安泰工程围绕国际工程规范（ASTM、BS、EN、ISO）与泰国本土标准（TIS、EIT、BMA），开展清晰的工程检测协调、买方钢构品控及工艺装备供应协调。',
         'disciplinesTitle': '四大核心工程与采购业务',
         'disciplines': [
-            ('/zh/testing.html', '/assets/images/hero-field.webp', 900, 687, '01 · 桩基检测与岩土工程', '严格遵循 ASTM、TIS 及 EIT 规范，协调执行静载试验（SLT）、高应变 PDA/CAPWAP、低应变 PIT、声波透射（CSL）、平板载荷试验及地质钻探取样。', '查看检测服务详情 →'),
-            ('/zh/steel-procurement.html', '/assets/images/steel/steel-structure.webp', 1300, 1733, '02 · 买方立场钢结构采购代理', '代表采购方提供重钢与网架结构可比性核价、中国制造厂产能与焊缝/无损检测核查、材质单（MTC）追溯与装船前放行把关。', '查看钢构采购详情 →'),
-            ('/zh/powder-equipment.html', '/assets/images/plate-load.webp', 900, 522, '03 · 工业粉体工艺装备', '面向水泥、矿渣与工业矿物粉磨产线，协调立式磨机（VRM）、高效选粉机与脉冲袋式除尘器的技术选型与商务对接。', '查看粉体装备详情 →'),
-            ('/zh/testing-instruments.html', '/assets/images/static-load.webp', 900, 389, '04 · 工程检测仪器系统', '提供基桩完整性测试仪、声波透射超声记录仪、高精度荷载传感器、位移传感器及数据采集系统的选型供应与技术支持。', '查看检测仪器详情 →'),
+            ('/zh/testing.html', '/assets/images/hero-field-clean.webp', 530, 318, '01 · 桩基检测与岩土工程', '严格遵循 ASTM、TIS 及 EIT 规范，协调执行静载试验（SLT）、高应变 PDA/CAPWAP、低应变 PIT、声波透射（CSL）、平板载荷试验及地质钻探取样。', '查看检测服务详情 →'),
+            ('/zh/steel-procurement.html', '/assets/images/steel/steel-hero.webp', 1200, 670, '02 · 买方立场钢结构采购代理', '代表采购方提供重钢与网架结构可比性核价、中国制造厂产能与焊缝/无损检测核查、材质单（MTC）追溯与装船前放行把关。', '查看钢构采购详情 →'),
+            ('/zh/cement-mining-equipment.html', '/assets/images/cement-mining.webp', 1200, 670, '03 · 水泥与矿山工艺装备', '面向水泥及矿山全流程产线提供设备技术协调与供货对接，覆盖破碎预均化、粉磨、烧成周边、选粉收尘、输送储运、矿山筛分、电控调试配合及备件。', '查看水泥矿山装备 →'),
+            ('/zh/testing-instruments.html', '/assets/images/field-instruments.webp', 1200, 670, '04 · 工程检测仪器系统', '提供基桩完整性测试仪、声波透射超声记录仪、高精度荷载传感器、位移传感器及数据采集系统的选型供应与技术支持。', '查看检测仪器详情 →'),
         ],
         'credTitle': '代表性工程资料与技术范本',
         'credBody': '如贵方处于招投标、施工方案审查或设备选型阶段，欢迎直接联系曼谷技术团队索取对应学科的方法说明、报告范本及交付能力文件。',
@@ -96,16 +96,16 @@ LOCALE_UI = {
     },
     'th': {
         'title': 'ขีดความสามารถทางวิศวกรรมและมาตรฐานการส่งมอบ | AN-THAI Engineering',
-        'desc': 'บริการทดสอบเสาเข็มและฐานราก จัดซื้อโครงสร้างเหล็กฝั่งผู้ซื้อ เครื่องจักรบดผงอุตสาหกรรม และเครื่องมือทดสอบภาคสนามในประเทศไทย',
+        'desc': 'บริการทดสอบเสาเข็มและฐานราก จัดซื้อโครงสร้างเหล็กฝั่งผู้ซื้อ เครื่องจักรและระบบงานปูนซีเมนต์และเหมืองแร่ และเครื่องมือทดสอบภาคสนามในประเทศไทย',
         'eyebrow': 'ขีดความสามารถและมาตรฐานวิศวกรรม',
         'h1': 'ขีดความสามารถทางวิศวกรรมและมาตรฐานการส่งมอบ',
         'lead': 'AN-THAI Engineering ให้บริการประสานงานด้านการทดสอบฐานราก การตรวจสอบคุณภาพการจัดหาเหล็กโครงสร้างฝั่งผู้ซื้อ และเครื่องมือทดสอบในกรุงเทพฯ และพื้นที่ EEC ภายใต้มาตรฐานสากล (ASTM, BS, EN, ISO) และมาตรฐานไทย (มอก., วสท.)',
         'disciplinesTitle': '4 กลุ่มงานวิศวกรรมและการจัดหาหลัก',
         'disciplines': [
-            ('/th/testing.html', '/assets/images/hero-field.webp', 900, 687, '01 · งานทดสอบเสาเข็มและปฐพี', 'ประสานงานทดสอบรับน้ำหนักแบบสถิต (SLT), ทดสอบพลศาสตร์ (PDA/CAPWAP), ความสมบูรณ์เสาเข็ม (PIT/CSL), Plate Load และเจาะสำรวจดินตามมาตรฐาน ASTM และ วสท.', 'ดูรายละเอียดงานทดสอบ →'),
-            ('/th/steel-procurement.html', '/assets/images/steel/steel-structure.webp', 1300, 1733, '02 · ตัวแทนจัดหาเหล็กโครงสร้างฝั่งผู้ซื้อ', 'เป็นตัวแทนฝ่ายผู้ซื้อเปรียบเทียบ RFQ ตรวจสอบโรงงานผลิต ตรวจสอบรอยเชื่อม/NDT ตรวจสอบใบรับรองวัสดุ (MTC) และตรวจปล่อยสินค้าก่อนส่งมอบ', 'ดูรายละเอียดจัดหาเหล็ก →'),
-            ('/th/powder-equipment.html', '/assets/images/plate-load.webp', 900, 522, '03 · เครื่องจักรกระบวนการบดผงอุตสาหกรรม', 'ประสานงานเทคนิคสำหรับเครื่องบดแนวตั้ง (VRM), เครื่องคัดแยกอนุภาค (Dynamic Separator) และระบบกรองฝุ่นอุตสาหกรรมสำหรับโรงงานปูนซีเมนต์และแร่ธาตุ', 'ดูรายละเอียดเครื่องจักรบดผง →'),
-            ('/th/testing-instruments.html', '/assets/images/static-load.webp', 900, 389, '04 · เครื่องมือทดสอบวิศวกรรมภาคสนาม', 'จัดหาและให้คำปรึกษาเครื่องทดสอบความสมบูรณ์เสาเข็ม เครื่องวิเคราะห์คลื่นเสียง CSL เซนเซอร์วัดแรง โหลดเซลล์ และระบบบันทึกข้อมูลสนาม', 'ดูรายละเอียดเครื่องมือทดสอบ →'),
+            ('/th/testing.html', '/assets/images/hero-field-clean.webp', 530, 318, '01 · งานทดสอบเสาเข็มและปฐพี', 'ประสานงานทดสอบรับน้ำหนักแบบสถิต (SLT), ทดสอบพลศาสตร์ (PDA/CAPWAP), ความสมบูรณ์เสาเข็ม (PIT/CSL), Plate Load และเจาะสำรวจดินตามมาตรฐาน ASTM และ วสท.', 'ดูรายละเอียดงานทดสอบ →'),
+            ('/th/steel-procurement.html', '/assets/images/steel/steel-hero.webp', 1200, 670, '02 · ตัวแทนจัดหาเหล็กโครงสร้างฝั่งผู้ซื้อ', 'เป็นตัวแทนฝ่ายผู้ซื้อเปรียบเทียบ RFQ ตรวจสอบโรงงานผลิต ตรวจสอบรอยเชื่อม/NDT ตรวจสอบใบรับรองวัสดุ (MTC) และตรวจปล่อยสินค้าก่อนส่งมอบ', 'ดูรายละเอียดจัดหาเหล็ก →'),
+            ('/th/cement-mining-equipment.html', '/assets/images/cement-mining.webp', 1200, 670, '03 · เครื่องจักรและระบบกระบวนการผลิตปูนซีเมนต์และเหมืองแร่', 'ประสานงานเทคนิคและจัดหาเครื่องจักรระบบบดย่อย การบดละเอียด (VRM/Ball Mill/Roller Press) ระบบประกอบเตาเผา ลำเลียง ดักฝุ่น ควบคุมไฟฟ้า และอะไหล่สำหรับอุตสาหกรรมซีเมนต์และเหมืองแร่', 'ดูรายละเอียดเครื่องจักรซีเมนต์และเหมือง →'),
+            ('/th/testing-instruments.html', '/assets/images/field-instruments.webp', 1200, 670, '04 · เครื่องมือทดสอบวิศวกรรมภาคสนาม', 'จัดหาและให้คำปรึกษาเครื่องทดสอบความสมบูรณ์เสาเข็ม เครื่องวิเคราะห์คลื่นเสียง CSL เซนเซอร์วัดแรง โหลดเซลล์ และระบบบันทึกข้อมูลสนาม', 'ดูรายละเอียดเครื่องมือทดสอบ →'),
         ],
         'credTitle': 'เอกสารข้อมูลทางเทคนิคและตัวอย่างรายงาน',
         'credBody': 'หากท่านกำลังเตรียมแผนการทดสอบฐานรากหรือคัดเลือกผู้ผลิตเหล็กโครงสร้าง สามารถติดต่อทีมวิศวกรประจำกรุงเทพฯ เพื่อขอรับตัวอย่างรูปแบบรายงานและรายละเอียดขอบเขตงานได้โดยตรง',
@@ -183,7 +183,7 @@ def build_shell(lang, lang_code, lang_upper, subpath, title, desc, body_html, sc
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="/assets/images/brand-logo.png" />
   <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png" />
-  <script>(function(){{try{{var d=document,h=location.hostname.toLowerCase().replace(/\\.+$/,''),f=location.protocol==='file:',p=!f&&(h==='localhost'||h==='127.0.0.1'||h==='[::1]'||/\\.vercel\\.app$/.test(h)),t=p&&new URLSearchParams(location.search).get('theme');if(t==='cinematic'||t==='blueprint'||t==='storytelling')d.documentElement.setAttribute('data-theme',t);if(!f&&(p||d.documentElement.hasAttribute('data-theme'))){{var l=function(){{var s=d.createElement('script');s.src='/assets/themes/motion-core.js';d.head.appendChild(s);}};if(d.readyState!=='loading')l();else d.addEventListener('DOMContentLoaded',l);}}}}catch(e){{}}}})();</script>
+  <script>(function(){{try{{var d=document;d.documentElement.setAttribute('data-theme','blueprint');if(location.protocol!=='file:'){{var l=function(){{var s=d.createElement('script');s.src='/assets/themes/motion-core.js';d.head.appendChild(s);}};if(d.readyState!=='loading')l();else d.addEventListener('DOMContentLoaded',l);}}}}catch(e){{}}}})();</script>
   <link rel="stylesheet" href="/assets/css/styles.css" />
   <link rel="stylesheet" href="/assets/css/portfolio-v1.css" />
   <script type="application/ld+json">{schemas_json}</script>
@@ -216,9 +216,9 @@ def build_shell(lang, lang_code, lang_upper, subpath, title, desc, body_html, sc
               <span data-i18n="svcMenu2">{tr("svcMenu2", "Buyer-Side Steel Procurement")}</span>
               <span class="nav-drop-sub">/steel-procurement.html</span>
             </a>
-            <a href="{prefix}/powder-equipment.html" role="menuitem" data-page-id="powder">
-              <span data-i18n="svcMenu3">{tr("svcMenu3", "Powder-Process Equipment")}</span>
-              <span class="nav-drop-sub">/powder-equipment.html</span>
+            <a href="{prefix}/cement-mining-equipment.html" role="menuitem" data-page-id="powder">
+              <span data-i18n="svcMenu3">{tr("svcMenu3", "Cement & Mining Equipment")}</span>
+              <span class="nav-drop-sub">/cement-mining-equipment.html</span>
             </a>
             <a href="{prefix}/testing-instruments.html" role="menuitem" data-page-id="instruments">
               <span data-i18n="svcMenu4">{tr("svcMenu4", "Testing Instruments")}</span>
@@ -249,7 +249,7 @@ def build_shell(lang, lang_code, lang_upper, subpath, title, desc, body_html, sc
       <div id="mobileServicesPanel" class="mobile-acc-panel" hidden>
         <a href="{prefix}/testing.html" data-page-id="testing" data-i18n="svcMenu1">{tr("svcMenu1", "Foundation Testing & Geotechnical")}</a>
         <a href="{prefix}/steel-procurement.html" data-page-id="steel" data-i18n="svcMenu2">{tr("svcMenu2", "Buyer-Side Steel Procurement")}</a>
-        <a href="{prefix}/powder-equipment.html" data-page-id="powder" data-i18n="svcMenu3">{tr("svcMenu3", "Powder-Process Equipment")}</a>
+        <a href="{prefix}/cement-mining-equipment.html" data-page-id="powder" data-i18n="svcMenu3">{tr("svcMenu3", "Cement & Mining Equipment")}</a>
         <a href="{prefix}/testing-instruments.html" data-page-id="instruments" data-i18n="svcMenu4">{tr("svcMenu4", "Testing Instruments")}</a>
       </div>
       <a href="{prefix}/insights/index.html" data-page-id="insights" data-i18n="navInsights">{tr("navInsights", "Insights")}</a>
@@ -316,7 +316,7 @@ def build_shell(lang, lang_code, lang_upper, subpath, title, desc, body_html, sc
             <select id="drawerRoute">
               <option value="01 Foundation Testing & Geotech" data-i18n="fRoute1">{tr("fRoute1", "01 Foundation Testing & Geotech")}</option>
               <option value="02 Buyer-Side Steel Procurement Agency" data-i18n="fRoute2">{tr("fRoute2", "02 Buyer-Side Steel Procurement Agency")}</option>
-              <option value="03 Powder-Process Equipment" data-i18n="fRoute3">{tr("fRoute3", "03 Powder-Process Equipment")}</option>
+              <option value="03 Cement & Mining Equipment" data-i18n="fRoute3">{tr("fRoute3", "03 Cement & Mining Equipment")}</option>
               <option value="04 Field Testing Instruments" data-i18n="fRoute4">{tr("fRoute4", "04 Field Testing Instruments")}</option>
             </select>
           </div>

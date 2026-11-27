@@ -27,6 +27,7 @@ PAGES = [
     'index.html',
     'testing.html',
     'steel-procurement.html',
+    'cement-mining-equipment.html',
     'powder-equipment.html',
     'testing-instruments.html',
     'about.html',
@@ -62,7 +63,7 @@ KEY_SNAPSHOT_PAGES = [
     ('th/index.html', 'home_th'),
     ('testing.html', 'unit1_testing'),
     ('steel-procurement.html', 'unit2_steel'),
-    ('powder-equipment.html', 'unit3_powder'),
+    ('cement-mining-equipment.html', 'unit3_cement_mining'),
     ('testing-instruments.html', 'unit4_instruments'),
     ('cases/index.html', 'cases_index_en'),
     ('zh/cases/index.html', 'cases_index_zh'),
@@ -74,8 +75,17 @@ KEY_SNAPSHOT_PAGES = [
 
 class QuietHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
-        if self.path.split('?')[0] == '/api/inquiry':
+        route = self.path.split('?')[0]
+        if route in ('/api/inquiry', '/api/enquiry'):
             body = b'{"ok":true,"configured":false,"backend":"unconfigured","recipient":"info@an-thai.com"}'
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Content-Length', str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
+        if route == '/api/sr-bridge':
+            body = b'{"ok":true,"configured":false,"online":false}'
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
             self.send_header('Content-Length', str(len(body)))
@@ -223,9 +233,11 @@ def run_tests():
             print("PASS: ZH/TH Insights (5 articles + badges), clean Cases capabilities & nested lang switcher verified.")
             zh_page.close()
 
-            # Check query prefill (?type=equipment&category=measurement AND ?route=03 / 04 exact unit routing)
+            # Check query prefill (?type=equipment&category=measurement AND ?route=03 / 04 exact unit routing + powder legacy alias)
+            page.goto(f"{base_url}/contact.html?route=03%20Cement%20%26%20Mining%20Equipment", wait_until="networkidle")
+            assert page.locator("#cRoute").input_value() == "03 Cement & Mining Equipment"
             page.goto(f"{base_url}/contact.html?route=03%20Powder-Process%20Equipment", wait_until="networkidle")
-            assert page.locator("#cRoute").input_value() == "03 Powder-Process Equipment"
+            assert page.locator("#cRoute").input_value() == "03 Cement & Mining Equipment"
             page.goto(f"{base_url}/contact.html?route=04%20Field%20Testing%20Instruments", wait_until="networkidle")
             assert page.locator("#cRoute").input_value() == "04 Field Testing Instruments"
             page.goto(f"{base_url}/contact.html?type=equipment&category=measurement", wait_until="networkidle")
@@ -277,8 +289,7 @@ def run_tests():
             print("\n--- Testing Mobile Menu, Responsive Flowchart & Inquiry Fallback UX @ 390px ---")
             page.set_viewport_size({"width": 390, "height": 844})
             page.goto(f"{base_url}/testing.html", wait_until="networkidle")
-            assert page.locator(".workflow-mobile-steps .wf-m-step").first.is_visible(), "Mobile vertical workflow cards must be visible @ 390px"
-            assert not page.locator(".diagram-box.has-mobile-flow .diagram-svg-wrap").first.is_visible(), "Tiny wide SVG must hide @ 390px"
+            assert page.locator(".flow-pipeline .flow-step").first.is_visible(), "Mobile vertical workflow cards must be visible @ 390px"
             page.goto(f"{base_url}/index.html", wait_until="networkidle")
             page.wait_for_timeout(100)
 

@@ -17,7 +17,12 @@
     },
     {
       "source": "/equipment.html",
-      "destination": "/powder-equipment.html",
+      "destination": "/cement-mining-equipment.html",
+      "permanent": true
+    },
+    {
+      "source": "/powder-equipment.html",
+      "destination": "/cement-mining-equipment.html",
       "permanent": true
     },
     {
@@ -37,12 +42,22 @@
     },
     {
       "source": "/zh/equipment.html",
-      "destination": "/zh/powder-equipment.html",
+      "destination": "/zh/cement-mining-equipment.html",
       "permanent": true
     },
     {
       "source": "/th/equipment.html",
-      "destination": "/th/powder-equipment.html",
+      "destination": "/th/cement-mining-equipment.html",
+      "permanent": true
+    },
+    {
+      "source": "/zh/powder-equipment.html",
+      "destination": "/zh/cement-mining-equipment.html",
+      "permanent": true
+    },
+    {
+      "source": "/th/powder-equipment.html",
+      "destination": "/th/cement-mining-equipment.html",
       "permanent": true
     },
     {

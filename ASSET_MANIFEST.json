@@ -298,15 +298,17 @@
     {
       "path": "assets/images/static-load-clean.webp",
       "zip_source": "v1.1-20261128-remediation",
-      "sha256": "7b173171b90ca8c6c1323f2c0beb74cd19345ffc615916c68d2d1f890f17b873",
-      "bytes": 42736,
+      "sha256": "26658738ee31a8c806f1a10efe4d6a7d446f98557b4003a1808c7191a5038d86",
+      "bytes": 40520,
       "dimensions": [
         560,
         328
       ],
       "description": "Clean uncaptioned static pile load test field photograph reused from repository insights asset for homepage Unit 01 card only",
       "provenance": "Owner-supplied AN-THAI brochure clean photographic crop",
-      "kind": "brochure photographic crop"
+      "kind": "brochure photographic crop",
+      "width": 560,
+      "height": 302
     },
     {
       "path": "assets/images/steel/steel-hero.webp",

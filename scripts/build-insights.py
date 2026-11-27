@@ -311,7 +311,7 @@ def build_latest_home_cards(articles, lang='en'):
     unit_labels = {
         'testing': '01 Testing',
         'steel': '02 Steel',
-        'powder': '03 Cement & Mining',
+        'powder': '03 Cement & Mining Equipment',
         'instruments': '04 Instruments',
     }
     cards = []

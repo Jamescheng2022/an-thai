@@ -399,7 +399,6 @@ Steel / space-structure cooperation || 钢结构／空间结构合作 || คว�
 Special steel, long-span and space-structure opportunities where cross-border supply and engineering coordination may be relevant. || 面向特种钢结构、大跨度及空间结构项目，协调可能适用的跨境供应与工程合作。 || สำหรับโอกาสด้านโครงสร้างเหล็กพิเศษ โครงสร้างช่วงกว้าง และโครงสร้างสามมิติที่อาจเหมาะกับการจัดหาข้ามประเทศและการประสานงานวิศวกรรม
 Drawings or span/grid, design basis, material/finish, quantity, delivery or erection boundary and schedule. || 图纸或跨度/网格、设计依据、材料及表面处理、数量、供货/安装边界和工期。 || แบบหรือช่วงพาด/กริด เกณฑ์ออกแบบ วัสดุและผิวสำเร็จ ปริมาณ ขอบเขตการส่งมอบหรือติดตั้ง และกำหนดการ
 Fabrication, design responsibility, certification and installation are confirmed with the selected partner. || 加工制造、设计责任、认证及安装范围以最终选定合作方的确认内容为准。 || ขอบเขตการผลิต ความรับผิดชอบด้านการออกแบบ การรับรอง และการติดตั้ง จะยืนยันกับพันธมิตรที่ได้รับเลือก
-CNBM powder-equipment cooperation || CNBM 粉体设备合作 || ความร่วมมือด้านเครื่องจักรกระบวนการผง CNBM
 Powder-process and grinding-related equipment cooperation based on the project duty. || 根据项目工况开展粉体工艺及粉磨相关设备合作。 || ความร่วมมือด้านเครื่องจักรกระบวนการผงและงานบดตามหน้าที่การใช้งานของโครงการ
 Material, feed/product size, target capacity, process flow, utilities, layout limits, destination and schedule. || 物料、进料/成品粒度、目标产能、工艺流程、公用工程、布置限制、目的地和工期。 || ชนิดวัสดุ ขนาดป้อน/ผลิตภัณฑ์ กำลังการผลิตเป้าหมาย กระบวนการ สาธารณูปโภค ข้อจำกัดด้านผัง ปลายทาง และกำหนดการ
 Manufacturer selection, guarantees and the final technical offer remain subject to manufacturer confirmation. || 制造商选择、性能保证及最终技术方案均以制造商确认文件为准。 || การเลือกผู้ผลิต การรับประกันสมรรถนะ และข้อเสนอทางเทคนิคฉบับสุดท้าย ต้องอ้างอิงการยืนยันจากผู้ผลิต
@@ -426,7 +425,6 @@ Measurement equipment || 测量设备 || เครื่องมือวัด
 Project cooperation || 项目合作 || ความร่วมมือโครงการ
 Steel / space-structure || 钢结构／空间结构 || โครงสร้างเหล็ก / โครงสร้างช่วงกว้าง
 Equipment cooperation || 设备合作 || ความร่วมมือด้านอุปกรณ์
-CNBM powder-equipment || CNBM 粉体设备 || เครื่องจักรกระบวนการผง CNBM
 to build, test or source. || 工程、检测或设备采购。 || ด้านงานวิศวกรรม การทดสอบ หรือการจัดหา
 Send the project location, business route, drawings/specification or equipment requirement. We will begin by confirming the technical scope and who is responsible for what. || 请提供项目地点、业务类型、图纸/规范或设备需求。我们会先确认技术范围以及各方责任。 || กรุณาส่งสถานที่โครงการ ประเภทธุรกิจ แบบ/ข้อกำหนด หรือความต้องการด้านอุปกรณ์ เราจะเริ่มจากการยืนยันขอบเขตทางเทคนิคและความรับผิดชอบของแต่ละฝ่าย
 AN-THAI is a Thailand-based engineering company providing testing, technical coordination, testing-instrument support and selected project cooperation. || AN-THAI 是一家立足泰国的工程公司，提供检测、技术协调、检测仪器支持及经确认的项目合作。 || AN-THAI เป็นบริษัทวิศวกรรมในประเทศไทย ให้บริการงานทดสอบ การประสานงานทางเทคนิค การสนับสนุนเครื่องมือทดสอบ และความร่วมมือโครงการที่ได้รับการยืนยัน
@@ -514,7 +512,6 @@ We bridge international project developers, EPC contractors, and equipment manuf
 Parallel technical service lines operating under unified engineering coordination, not separate legal entities. || 四个业务单元由安泰工程统一技术协调与交付管理，各自保持清晰的专业边界与责任分工。 || สายงานบริการทางเทคนิค 4 ด้าน ดำเนินงานภายใต้การประสานงานวิศวกรรมแบบบูรณาการ พร้อมขอบเขตความรับผิดชอบที่ชัดเจน
 Static load testing (SLT), dynamic testing (PDA), integrity testing (PIT/CSL), borehole drilling, and Thai statutory engineering review. || 静载试验（SLT）、高应变动载（PDA）、低应变反射波法（PIT）、跨孔声波透射法（CSL）、地质勘察钻探与泰国法定资质签章审查。 || การทดสอบรับน้ำหนักเสาเข็ม (SLT), การทดสอบไดนามิก (PDA), การทดสอบความสมบูรณ์ (PIT/CSL), งานเจาะสำรวจดิน และการลงนามรับรองตามกฎหมายไทย
 Independent buyer-side procurement agency: technical RFQ alignment, factory QC audits, mill cert traceability (ASTM/GB), and pre-shipment sign-off. || 独立买方采办代理：中泰双语技术规格对齐、中国工厂质量审查、钢厂质保书溯源（ASTM/GB双标）、第三方驻厂监造与出厂验收签发。 || ตัวแทนจัดหาโครงสร้างเหล็กฝั่งผู้ซื้อ: เทียบสเปกเทคนิค RFQ, ตรวจสอบโรงงาน, ตรวจสอบย้อนกลับใบรับรองโรงงาน (ASTM/GB) และตรวจรับก่อนส่งมอบ
-Technical boundary coordination for grinding systems (CNBM Hefei scope), cyclones, dust collectors, motor matching, and Thai statutory compliance. || 大型辊磨/立磨系统（中材合肥院供货边界协调）、旋风分离器、袋式除尘器、电机电气匹配与泰国本地报建标准合规。 || การประสานงานเทคนิคสำหรับระบบบดแนวตั้ง (ขอบเขต CNBM Hefei), ไซโคลน, ระบบกรองฝุ่น, การจับคู่มอเตอร์ และความสอดคล้องตามมาตรฐานไทย
 Selection, supply coordination, local delivery, calibration documentation, and sensor matching for pile testing hardware and site instruments. || 桩基检测仪（PIT/CSL）、位移计、力传感器、数据采集仪的选型、现货调配、校准证书及中文/英文/泰文技术支持。 || การคัดเลือกและจัดหาเครื่องมือทดสอบเสาเข็ม (PIT/CSL), เซนเซอร์, เกจวัด และระบบตรวจวัดภาคสนาม พร้อมเอกสารสอบเทียบและการสนับสนุนด้านเทคนิค
 View Testing Services → || 查看工程检测业务 → || ดูบริการงานทดสอบ →
 View Steel Agency → || 查看钢材采办业务 → || ดูบริการจัดหาเหล็ก →

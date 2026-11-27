@@ -31,7 +31,7 @@
   "heroLead": {
     "EN": "Check-only configuration validating P4 schema and OWNER_GATES #7 fail-closed build blocking without publishing any PACO pages or references.",
     "ZH": "仅用于验证 P4 清单预检与 OWNER_GATES #7 阻断构造，禁止构建任何公开页面或外发内容。",
-    "TH": "สำหรับตรวจสอบโครงสร้าง清单 P4 และการบล็อกงานสร้างภายใต้ OWNER_GATES #7 เท่านั้น"
+    "TH": "สำหรับตรวจสอบรายการ P4 และการบล็อกงานสร้างภายใต้ OWNER_GATES #7 เท่านั้น"
   },
   "serviceLines": [
     {

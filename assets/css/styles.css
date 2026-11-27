@@ -648,6 +648,7 @@ a.qr-mini-card .qr-mini-sub{color:var(--accent-hover);font-weight:700}
 .sr-status-pill{display:inline-flex;align-items:center;gap:6px;padding:3px 8px;border:1px solid var(--line);font-family:var(--font-mono);font-size:10px;font-weight:700;text-transform:uppercase}
 .sr-status-pill.is-mock{border-color:#b45309;background:#fef3c7;color:#92400e}
 .sr-status-pill.is-live{border-color:#15803d;background:#dcfce7;color:#166534}
+#liveMsgInput:disabled,#liveHandoffBtn:disabled,#liveMessageForm button:disabled{opacity:.48;cursor:not-allowed}
 
 
 

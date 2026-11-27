@@ -437,7 +437,7 @@ window.ANTHAI_I18N = {
     "publicPostBadgeCorrected": "CORRECTED",
     "publicPostBadgePublished": "PUBLISHED",
     "publicPostBadgeMock": "MOCK",
-    "publicPostBadgeAiGrounded": "AI-GROUNDED VERIFIED",
+    "publicPostBadgeAiGrounded": "AI-ASSISTED SUMMARY",
     "publicPostBadgeProjectRef": "PROJECT REF: ",
     "publicPostSourceLabel": "Source: SourceRating I-4",
     "publicPostOpenRef": "Reference Link →"
@@ -866,7 +866,7 @@ window.ANTHAI_I18N = {
     "drawerStatusWaitingHuman": "等待人工工程师接入 · 会话：",
     "drawerStatusHumanActive": "工程师已接入 · ",
     "drawerStatusClosed": "已结单 · 会话：",
-    "liveClosedNotice": "当前会话已结单。点击「新建会话」可发起后续技术咨询。",
+    "liveClosedNotice": "当前会话已结单。点击「新会话」可发起后续技术咨询。",
     "mockDrawerNotice": "当前处于 V1.1 契约 MOCK 模式（SourceRating Staging 存在 302 访问保护）。消息仅保存在本地浏览器，尚未真实送达团队；正式询盘请直接使用下方邮件、WhatsApp 或 LINE。",
     "mockContactNotice": "V1.1 契约 MOCK 已在本地记录本次技术简报（仅用于预览测试，未发送至 AN-THAI 真实收件箱）。如需真实联系，请点击下方调起邮件或 WhatsApp。",
     "liveOfflineContactNotice": "SourceRating 会话服务当前离线或未配置。请点击下方邮件或 WhatsApp 直接向曼谷团队发送需求。",
@@ -880,7 +880,7 @@ window.ANTHAI_I18N = {
     "publicPostBadgeCorrected": "已修订",
     "publicPostBadgePublished": "已授权发布",
     "publicPostBadgeMock": "MOCK",
-    "publicPostBadgeAiGrounded": "AI 辅助核验",
+    "publicPostBadgeAiGrounded": "AI 辅助生成",
     "publicPostBadgeProjectRef": "项目编号：",
     "publicPostSourceLabel": "来源：SourceRating I-4",
     "publicPostOpenRef": "查看来源详情 →"
@@ -1323,7 +1323,7 @@ window.ANTHAI_I18N = {
     "publicPostBadgeCorrected": "แก้ไขแล้ว",
     "publicPostBadgePublished": "เผยแพร่แล้ว",
     "publicPostBadgeMock": "จำลอง MOCK",
-    "publicPostBadgeAiGrounded": "สรุปโดย AI (ตรวจแล้ว)",
+    "publicPostBadgeAiGrounded": "สรุปโดย AI",
     "publicPostBadgeProjectRef": "รหัสโครงการ: ",
     "publicPostSourceLabel": "แหล่งที่มา: SourceRating I-4",
     "publicPostOpenRef": "ลิงก์อ้างอิง →"

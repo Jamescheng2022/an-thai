@@ -98,6 +98,12 @@ html[data-theme="cinematic"] #liveClaimForm input:focus {
   background: #18202c !important;
   border-color: var(--accent) !important;
 }
+html[data-theme="cinematic"] #drawerLiveFooter input:disabled,
+html[data-theme="cinematic"] #drawerLiveFooter button:disabled,
+html[data-theme="cinematic"] #liveHandoffBtn:disabled {
+  opacity: 0.45 !important;
+  cursor: not-allowed;
+}
 html[data-theme="cinematic"] .unit-card {
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
   transition: transform 0.28s var(--th-ease, ease), border-color 0.28s ease, box-shadow 0.28s ease;

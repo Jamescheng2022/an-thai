@@ -306,13 +306,8 @@ function renderPage(loc, pageName) {
 </html>\n`;
 }
 
-const isSelfAnThaiPilot = cfg.internalPilot === true && cfg.tenantSlug === 'an-thai-pilot';
-const forbiddenLeakTerms = isSelfAnThaiPilot
-  ? ['PACO', 'ROGE', 'TEST-ANTHAI-UPD', 'test-demo', 'test-demo-noreply@example.invalid']
-  : [
-      'an-thai.com', 'info@an-thai.com', 'an-thai-th', '66902921749', '90 292 1749',
-      'James2021', 'p0_XsfILmH', 'Arwan', 'PACO', 'ROGE', 'TEST-ANTHAI-UPD', '安泰', 'อัน-ไทย'
-    ];
+const { getForbiddenLeakTerms, scanDirForLeaks } = require('./provision-tenant.cjs');
+const forbiddenLeakTerms = getForbiddenLeakTerms(cfg);
 let generatedCount = 0;
 
 for (const loc of locales) {
@@ -325,17 +320,6 @@ for (const loc of locales) {
 }
 fs.writeFileSync(path.join(outDir, 'robots.txt'), 'User-agent: *\nDisallow: /\n');
 
-(function verifyAllGeneratedFilesClean(dir) {
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) verifyAllGeneratedFilesClean(full);
-    else if (entry.isFile()) {
-      const content = fs.readFileSync(full, 'utf8');
-      for (const term of forbiddenLeakTerms) {
-        assert(!content.toLowerCase().includes(term.toLowerCase()), `Forbidden An-Thai data leaked into ${path.relative(outDir, full)}: ${term}`);
-      }
-    }
-  }
-})(outDir);
+scanDirForLeaks(outDir, forbiddenLeakTerms);
 
 console.log(`PASS: generated ${generatedCount} isolated noindex pages for "${cfg.legalName}" (workspaceKey=${workspaceKey}) in ${path.relative(root, outDir)}`);

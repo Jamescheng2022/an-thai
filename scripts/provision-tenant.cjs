@@ -3,9 +3,9 @@
 
 /**
  * P4 Enterprise Fleet Onboarding Validator & Executable Checklist Runner
- * - Validates tenant configs against config/tenants/tenant.schema.json + themes/manifest.json.
+ * - Enforces full recursive JSON Schema validation (tenant.schema.json) + theme manifest check.
  * - Rejects embedded secret patterns and enforces OWNER_GATES holds (--check-only only).
- * - Builds isolated site via build-tenant.cjs and writes deterministic PROVISIONING_CHECKLIST.md + provision-plan.json.
+ * - Enforces shared cross-tenant leak scan across both generated HTML and provisioning artifacts.
  */
 const assert = require('node:assert');
 const { execFileSync } = require('node:child_process');
@@ -20,63 +20,109 @@ const SECRET_VALUE_PATTERNS = [
   /\bpostgres(?:ql)?:\/\/[^/\s]+:[^@\s]+@/i,
 ];
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+function getForbiddenLeakTerms(cfg) {
+  const isSelfAnThaiPilot = cfg && cfg.internalPilot === true && cfg.tenantSlug === 'an-thai-pilot';
+  return isSelfAnThaiPilot
+    ? ['PACO', 'ROGE', 'TEST-ANTHAI-UPD', 'test-demo', 'test-demo-noreply@example.invalid']
+    : [
+        'an-thai.com', 'info@an-thai.com', 'an-thai-th', '66902921749', '90 292 1749',
+        'James2021', 'p0_XsfILmH', 'Arwan', 'PACO', 'ROGE', 'TEST-ANTHAI-UPD', '安泰', 'อัน-ไทย'
+      ];
+}
+
+function scanTextForLeaks(text, forbiddenTerms, sourceLabel) {
+  const lower = String(text).toLowerCase();
+  const hits = [];
+  for (const term of forbiddenTerms) {
+    if (lower.includes(term.toLowerCase())) {
+      hits.push(`Forbidden term "${term}" leaked in ${sourceLabel}`);
+    }
+  }
+  return hits;
+}
+
+function scanDirForLeaks(dir, forbiddenTerms, baseDir) {
+  const rootDir = baseDir || dir;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      scanDirForLeaks(full, forbiddenTerms, rootDir);
+    } else if (entry.isFile()) {
+      const content = fs.readFileSync(full, 'utf8');
+      const hits = scanTextForLeaks(content, forbiddenTerms, path.relative(rootDir, full));
+      assert.strictEqual(hits.length, 0, hits[0] || '');
+    }
+  }
+}
+
+function validateSchemaNode(val, schemaNode, pathLabel, errors) {
+  if (!schemaNode || typeof schemaNode !== 'object') return;
+  if (schemaNode.type) {
+    const actualType = Array.isArray(val) ? 'array' : (val === null ? 'null' : typeof val);
+    if (schemaNode.type !== actualType) {
+      errors.push(`${pathLabel} expected ${schemaNode.type}, got ${actualType}`);
+      return;
+    }
+  }
+  if (Array.isArray(schemaNode.enum) && !schemaNode.enum.includes(val)) {
+    errors.push(`${pathLabel} value ${JSON.stringify(val)} not in allowed enum [${schemaNode.enum.map((x) => JSON.stringify(x)).join(', ')}]`);
+  }
+  if (typeof val === 'string') {
+    if (typeof schemaNode.minLength === 'number' && val.length < schemaNode.minLength) {
+      errors.push(`${pathLabel} length ${val.length} < minLength ${schemaNode.minLength}`);
+    }
+    if (typeof schemaNode.maxLength === 'number' && val.length > schemaNode.maxLength) {
+      errors.push(`${pathLabel} length ${val.length} > maxLength ${schemaNode.maxLength}`);
+    }
+    if (schemaNode.pattern && !new RegExp(schemaNode.pattern).test(val)) {
+      errors.push(`${pathLabel} does not match pattern ${schemaNode.pattern}`);
+    }
+    if (schemaNode.format === 'email' && !EMAIL_RE.test(val)) {
+      errors.push(`${pathLabel} is not a valid email address: ${val}`);
+    }
+  } else if (Array.isArray(val)) {
+    if (typeof schemaNode.minItems === 'number' && val.length < schemaNode.minItems) {
+      errors.push(`${pathLabel} items ${val.length} < minItems ${schemaNode.minItems}`);
+    }
+    if (typeof schemaNode.maxItems === 'number' && val.length > schemaNode.maxItems) {
+      errors.push(`${pathLabel} items ${val.length} > maxItems ${schemaNode.maxItems}`);
+    }
+    if (schemaNode.items) {
+      val.forEach((item, idx) => validateSchemaNode(item, schemaNode.items, `${pathLabel}[${idx}]`, errors));
+    }
+  } else if (val && typeof val === 'object') {
+    const props = schemaNode.properties || {};
+    if (schemaNode.additionalProperties === false) {
+      for (const k of Object.keys(val)) {
+        if (!Object.prototype.hasOwnProperty.call(props, k)) {
+          errors.push(`Unexpected property: ${pathLabel ? pathLabel + '.' : ''}${k}`);
+        }
+      }
+    }
+    for (const req of schemaNode.required || []) {
+      if (val[req] === undefined || val[req] === null || val[req] === '') {
+        errors.push(`Missing required field: ${pathLabel ? pathLabel + '.' : ''}${req}`);
+      }
+    }
+    for (const [k, subSchema] of Object.entries(props)) {
+      if (Object.prototype.hasOwnProperty.call(val, k)) {
+        validateSchemaNode(val[k], subSchema, pathLabel ? `${pathLabel}.${k}` : k, errors);
+      }
+    }
+  }
+}
+
 function validateAgainstSchema(cfg, schema, manifest) {
   const errors = [];
-  if (!cfg || typeof cfg !== 'object' || Array.isArray(cfg)) {
-    return ['Root config must be a JSON object'];
-  }
-  const allowedTop = new Set(Object.keys(schema.properties || {}));
-  for (const k of Object.keys(cfg)) {
-    if (!allowedTop.has(k)) errors.push(`Unexpected top-level property: ${k}`);
-  }
-  for (const req of schema.required || []) {
-    if (cfg[req] === undefined || cfg[req] === null || cfg[req] === '') {
-      errors.push(`Missing required field: ${req}`);
-    }
-  }
-  if (typeof cfg.tenantSlug === 'string' && !/^[a-z0-9][a-z0-9-]{1,48}$/.test(cfg.tenantSlug)) {
-    errors.push(`Invalid tenantSlug format: ${cfg.tenantSlug}`);
-  }
-  if (typeof cfg.primaryDomain === 'string' && !/^https:\/\/[a-z0-9.-]+$/.test(cfg.primaryDomain)) {
-    errors.push(`primaryDomain must be strict https:// hostname: ${cfg.primaryDomain}`);
-  }
+  validateSchemaNode(cfg, schema, '', errors);
+
   const validThemes = new Set(['default', ...manifest.presets.map((p) => p.id)]);
-  if (!validThemes.has(cfg.theme)) {
-    errors.push(`Invalid theme "${cfg.theme}"; allowed: ${Array.from(validThemes).join(', ')}`);
+  if (cfg && typeof cfg.theme === 'string' && !validThemes.has(cfg.theme)) {
+    errors.push(`Theme "${cfg.theme}" missing from themes/manifest.json`);
   }
-  for (const locKey of ['brandTagline', 'heroHeadline', 'heroLead']) {
-    const obj = cfg[locKey];
-    if (!obj || typeof obj !== 'object') {
-      errors.push(`Missing object ${locKey}`);
-    } else {
-      for (const l of ['EN', 'ZH', 'TH']) {
-        if (!obj[l] || typeof obj[l] !== 'string' || obj[l].trim().length < 2) {
-          errors.push(`${locKey}.${l} must be non-empty string`);
-        }
-      }
-    }
-  }
-  if (!cfg.sourceRating || typeof cfg.sourceRating !== 'object') {
-    errors.push('Missing sourceRating object');
-  } else {
-    if (!/^[a-z0-9][a-z0-9-]{1,79}$/.test(String(cfg.sourceRating.workspaceKey || ''))) {
-      errors.push(`Invalid sourceRating.workspaceKey: ${cfg.sourceRating.workspaceKey}`);
-    }
-    if (!['an_thai_v1_1', 'precast_v3_1'].includes(cfg.sourceRating.callerKind)) {
-      errors.push(`Unsupported callerKind: ${cfg.sourceRating.callerKind}`);
-    }
-  }
-  if (!Array.isArray(cfg.serviceLines) || cfg.serviceLines.length < 1) {
-    errors.push('serviceLines must contain at least 1 entry');
-  } else {
-    cfg.serviceLines.forEach((s, idx) => {
-      for (const k of ['code', 'value', 'titleEN', 'descEN', 'titleZH', 'descZH', 'titleTH', 'descTH']) {
-        if (!s || typeof s[k] !== 'string' || !s[k].trim()) {
-          errors.push(`serviceLines[${idx}].${k} required`);
-        }
-      }
-    });
-  }
+
   const rawStr = JSON.stringify(cfg);
   for (const rx of SECRET_VALUE_PATTERNS) {
     if (rx.test(rawStr)) errors.push(`Forbidden secret-like value detected matching ${rx}`);
@@ -100,7 +146,8 @@ function buildChecklistPlan(cfg, rootDir, outDirRel) {
     theme: cfg.theme,
     mode: held ? 'check-only-held' : 'executable-ready',
     ownerGateHold: cfg.ownerGateHold || null,
-    noindex: cfg.noindex !== false,
+    // build-tenant.cjs unconditionally enforces <meta name="robots" content="noindex, nofollow" />
+    noindex: true,
     outDir: outDirRel,
     steps: [
       {
@@ -152,7 +199,7 @@ function renderChecklistMarkdown(plan) {
     `- **Mode:** \`${plan.mode}\`${plan.ownerGateHold ? ` (**HOLD:** \`${plan.ownerGateHold}\`)` : ''}`,
     `- **Workspace Key:** \`${plan.workspaceKey}\``,
     `- **Visual Theme Preset:** \`${plan.theme}\``,
-    `- **Robots Policy:** \`${plan.noindex ? 'noindex, nofollow (safe isolated preview)' : 'index, follow'}\``,
+    `- **Robots Policy:** \`noindex, nofollow (enforced by isolated template)\``,
     '',
     '## Provisioning & Verification Steps',
     '',
@@ -190,6 +237,19 @@ function runCli() {
 
   const outRel = outIdx >= 0 ? args[outIdx + 1] : `dist-${cfg.tenantSlug}`;
   const plan = buildChecklistPlan(cfg, root, outRel);
+  const planJson = JSON.stringify(plan, null, 2);
+  const checklistMd = renderChecklistMarkdown(plan);
+  const forbiddenTerms = getForbiddenLeakTerms(cfg);
+
+  if (!(cfg.checkOnly || cfg.ownerGateHold)) {
+    const leakHits = [
+      ...scanTextForLeaks(planJson, forbiddenTerms, 'provision-plan.json'),
+      ...scanTextForLeaks(checklistMd, forbiddenTerms, 'PROVISIONING_CHECKLIST.md'),
+    ];
+    if (leakHits.length > 0) {
+      throw new Error(`TENANT_ISOLATION_VIOLATION: ${leakHits.join('; ')}`);
+    }
+  }
 
   if (checkOnly) {
     const msg = cfg.ownerGateHold || cfg.checkOnly
@@ -208,8 +268,9 @@ function runCli() {
   execFileSync(process.execPath, [path.join(__dirname, 'build-tenant.cjs'), '--config', cfgPath, '--out', outRel], { cwd: root, stdio: 'pipe' });
 
   const outAbs = path.resolve(root, outRel);
-  fs.writeFileSync(path.join(outAbs, 'provision-plan.json'), JSON.stringify(plan, null, 2));
-  fs.writeFileSync(path.join(outAbs, 'PROVISIONING_CHECKLIST.md'), renderChecklistMarkdown(plan));
+  fs.writeFileSync(path.join(outAbs, 'provision-plan.json'), planJson);
+  fs.writeFileSync(path.join(outAbs, 'PROVISIONING_CHECKLIST.md'), checklistMd);
+  scanDirForLeaks(outAbs, forbiddenTerms);
 
   if (jsonMode) console.log(JSON.stringify({ ok: true, built: outRel, plan }, null, 2));
   else console.log(`PASS_PROVISIONED: "${cfg.legalName}" -> ${outRel} (checklist + plan + 6 noindex pages, workspaceKey=${plan.workspaceKey})`);
@@ -219,4 +280,11 @@ if (require.main === module) {
   runCli();
 }
 
-module.exports = { validateAgainstSchema, buildChecklistPlan, renderChecklistMarkdown };
+module.exports = {
+  getForbiddenLeakTerms,
+  scanTextForLeaks,
+  scanDirForLeaks,
+  validateAgainstSchema,
+  buildChecklistPlan,
+  renderChecklistMarkdown,
+};

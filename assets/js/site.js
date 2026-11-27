@@ -97,8 +97,10 @@
     var isClosed = state.sessionStatus === 'closed';
     var msgIn = document.getElementById('liveMsgInput');
     var handBtn = document.getElementById('liveHandoffBtn');
+    var sendBtn = document.querySelector('#liveMessageForm button[type="submit"]');
     if (msgIn) msgIn.disabled = isClosed;
     if (handBtn) handBtn.disabled = isClosed;
+    if (sendBtn) sendBtn.disabled = isClosed;
     var offlineView = document.getElementById('drawerOfflineView');
     var liveView = document.getElementById('drawerLiveView');
     var liveFooter = document.getElementById('drawerLiveFooter');
@@ -369,7 +371,7 @@
         var gs = await adapter.getSession();
         if (gs && gs.ok && gs.session) {
           if (gs.session.status) state.sessionStatus = gs.session.status;
-          if (gs.session.assignedStaffLabel) state.assignedStaffLabel = String(gs.session.assignedStaffLabel);
+          state.assignedStaffLabel = gs.session.assignedStaffLabel ? String(gs.session.assignedStaffLabel) : '';
         } else if (gs && gs.sessionReset) {
           applySessionResetUI();
           await refreshPublicPosts();
@@ -401,6 +403,7 @@
       var text = liveInput.value.trim();
       var connected = state.adapterMode === 'live' || state.adapterMode === 'mock';
       if (!text || !adapter || !connected) return;
+      if (state.sessionStatus === 'closed') { showLiveFeedback(t('liveClosedNotice'), 'neutral'); return; }
       showLiveFeedback('', '');
       var res = await adapter.sendMessage({ text: text, context: { page: window.location.pathname, lang: state.lang } });
       if (!res.ok) {
@@ -468,12 +471,13 @@
       if (sRes && sRes.ok) {
         var nextStatus = (sRes.session && sRes.session.status) || sRes.status || '';
         if (nextStatus) state.sessionStatus = nextStatus;
-        if (sRes.session && sRes.session.assignedStaffLabel) state.assignedStaffLabel = String(sRes.session.assignedStaffLabel);
+        if (sRes.session) state.assignedStaffLabel = sRes.session.assignedStaffLabel ? String(sRes.session.assignedStaffLabel) : '';
       }
       var listRes = await adapter.listMessages();
       if (listRes.ok) {
         if (listRes.sessionId) state.sessionId = listRes.sessionId;
         if (listRes.status) state.sessionStatus = listRes.status;
+        if (state.sessionStatus !== 'human_active') state.assignedStaffLabel = '';
         syncStatusUI();
         renderLiveMessages(listRes.messages);
         showLiveFeedback(state.sessionStatus === 'closed' ? t('liveClosedNotice') : (listRes.sessionReset ? t('liveSessionReset') : ''), 'neutral');
@@ -545,15 +549,17 @@
       if (r.ok) {
         var prevStatus = state.sessionStatus;
         if (r.status) state.sessionStatus = r.status;
-        if (r.status && (r.status !== prevStatus || (r.status === 'human_active' && !state.assignedStaffLabel)) && typeof adapter.getSession === 'function') {
+        if (r.status && (r.status === 'human_active' || r.status !== prevStatus) && typeof adapter.getSession === 'function') {
           var sRes = await adapter.getSession();
           if (sRes && sRes.ok && sRes.session) {
             if (sRes.session.status) state.sessionStatus = sRes.session.status;
-            if (sRes.session.assignedStaffLabel) state.assignedStaffLabel = String(sRes.session.assignedStaffLabel);
+            state.assignedStaffLabel = sRes.session.assignedStaffLabel ? String(sRes.session.assignedStaffLabel) : '';
           } else if (sRes && sRes.sessionReset) {
             applySessionResetUI();
             return;
           }
+        } else if (state.sessionStatus !== 'human_active') {
+          state.assignedStaffLabel = '';
         }
         syncStatusUI();
         if (state.sessionStatus === 'closed') showLiveFeedback(t('liveClosedNotice'), 'neutral');

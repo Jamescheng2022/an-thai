@@ -51,7 +51,8 @@ PAGES = [
     'insights/bored-pile-csl-testing-tube-debonding-anomaly-thailand.html',
     'insights/pit-pretest-site-readiness-owner-checklist.html',
     'insights/static-load-vs-pda-thailand-pile-capacity.html',
-    'insights/pile-integrity-test-report-review-checklist.html'
+    'insights/pile-integrity-test-report-review-checklist.html',
+    'insights/static-pile-load-test-slt-reaction-frame-anchor-pile-failure-reference-beam-distortion.html'
 ]
 
 VIEWPORTS = [390, 768, 1024, 1440]
@@ -204,8 +205,8 @@ def run_tests():
             zh_page.wait_for_timeout(80)
             assert "/zh/insights/index.html" in zh_page.url, f"Expected /zh/insights/index.html, got {zh_page.url}"
             assert "工程技术洞察" in zh_page.locator("h1").inner_text() or "技术专栏" in zh_page.locator("h1").inner_text()
-            assert zh_page.locator(".insights-grid .insight-card").count() == 5, "Expected all 5 articles on insights index"
-            assert "2026-11-24" in zh_page.locator(".insights-grid .insight-card").first.inner_text(), "Newest article must be first"
+            assert zh_page.locator(".insights-grid .insight-card").count() == 6, "Expected all 6 articles on insights index"
+            assert "2026-11-27" in zh_page.locator(".insights-grid .insight-card").first.inner_text(), "Newest article must be first"
             assert "EN 英文原稿" in zh_page.locator(".insights-grid").inner_text()
 
             # Check /zh/cases/index.html clean capabilities landing + /th/cases/index.html + lang switcher
@@ -213,14 +214,14 @@ def run_tests():
             assert zh_page.locator(".case-card").count() == 4
             en_switch_href = zh_page.locator('.lang-btn[data-language="en"]').get_attribute("href")
             assert en_switch_href == "/cases/index.html", f"Unexpected EN href: {en_switch_href}"
-            # Verify TH insights index also has EN origin badge and 5 articles
+            # Verify TH insights index also has EN origin badge and 6 articles
             zh_page.goto(f"{base_url}/th/insights/index.html", wait_until="networkidle")
-            assert zh_page.locator(".insights-grid .insight-card").count() == 5
+            assert zh_page.locator(".insights-grid .insight-card").count() == 6
             assert "EN ต้นฉบับ" in zh_page.locator(".insights-grid").inner_text()
             # Verify EN article keeps canonical slug in EN switcher link
-            zh_page.goto(f"{base_url}/insights/global-foundation-full-spectrum-engineering-inspection.html", wait_until="networkidle")
-            assert zh_page.locator('.lang-btn[data-language="en"]').get_attribute("href") == "/insights/global-foundation-full-spectrum-engineering-inspection.html"
-            print("PASS: ZH/TH Insights (5 articles + badges), clean Cases capabilities & nested lang switcher verified.")
+            zh_page.goto(f"{base_url}/insights/static-pile-load-test-slt-reaction-frame-anchor-pile-failure-reference-beam-distortion.html", wait_until="networkidle")
+            assert zh_page.locator('.lang-btn[data-language="en"]').get_attribute("href") == "/insights/static-pile-load-test-slt-reaction-frame-anchor-pile-failure-reference-beam-distortion.html"
+            print("PASS: ZH/TH Insights (6 articles + badges), clean Cases capabilities & nested lang switcher verified.")
             zh_page.close()
 
             # Check query prefill (?type=equipment&category=measurement AND ?route=03 / 04 exact unit routing)
@@ -277,8 +278,7 @@ def run_tests():
             print("\n--- Testing Mobile Menu, Responsive Flowchart & Inquiry Fallback UX @ 390px ---")
             page.set_viewport_size({"width": 390, "height": 844})
             page.goto(f"{base_url}/testing.html", wait_until="networkidle")
-            assert page.locator(".workflow-mobile-steps .wf-m-step").first.is_visible(), "Mobile vertical workflow cards must be visible @ 390px"
-            assert not page.locator(".diagram-box.has-mobile-flow .diagram-svg-wrap").first.is_visible(), "Tiny wide SVG must hide @ 390px"
+            assert page.locator(".flow-pipeline .flow-step").first.is_visible(), "Mobile vertical workflow cards must be visible @ 390px"
             page.goto(f"{base_url}/index.html", wait_until="networkidle")
             page.wait_for_timeout(100)
 

@@ -1,13 +1,14 @@
 (function(w,d){
 'use strict';
-var K=['default','cinematic','blueprint','storytelling'],de=d.documentElement,u='/assets/themes/';
+var K=['default','cinematic','blueprint','storytelling'],de=d.documentElement,u='/assets/themes/',L=w.location;
 function has(k){return K.indexOf(k)>0;}
 function sa(o,k,v){o.setAttribute(k,v);}
-var isP=(function(){try{var l=w.location,h=(l.hostname||'').toLowerCase().replace(/\.+$/,'');return l.protocol==='file:'||h==='localhost'||h==='127.0.0.1'||h==='[::1]'||/\.vercel\.app$/i.test(h);}catch(e){return!1;}})();
+var h=(L&&L.hostname||'').toLowerCase().replace(/\.+$/,''),
+  isP=!!L&&(L.protocol==='file:'||h==='localhost'||h==='127.0.0.1'||h==='[::1]'||/\.vercel\.app$/.test(h));
 function loc(){var l=((de&&de.lang)||'en').toLowerCase();return!l.indexOf('zh')?'ZH':(l==='th'?'TH':'EN');}
 function rm(){return!!(w.matchMedia&&w.matchMedia('(prefers-reduced-motion: reduce)').matches);}
 function get(){
-  if(isP){try{var q=new URLSearchParams(w.location.search||'').get('theme');if(q==='default'||has(q))return q;}catch(e){}}
+  if(isP){try{var q=new URLSearchParams(L.search||'').get('theme');if(q==='default'||has(q))return q;}catch(e){}}
   var c=w.ANTHAI_CONFIG||{};return has(c.theme)?c.theme:'default';
 }
 function css(id,hr){if(!d.getElementById(id)){var e=d.createElement('link');e.id=id;e.rel='stylesheet';e.href=hr;d.head.appendChild(e);}}
@@ -26,13 +27,13 @@ function bar(cur){
   K.forEach(function(id,i){
     var b=d.createElement('button');b.type='button';b.className='ptb-btn';sa(b,'data-theme-opt',id);sa(b,'aria-pressed',cur===id);
     b.textContent=i?id:'V1.0';
-    b.onclick=function(){var x=new URL(w.location.href);if(!i)x.searchParams.delete('theme');else x.searchParams.set('theme',id);w.location.assign(x.href);};
+    b.onclick=function(){var x=new URL(L.href);if(!i)x.searchParams.delete('theme');else x.searchParams.set('theme',id);L.assign(x.href);};
     el.appendChild(b);
   });
   d.body.appendChild(el);
   if(cur!=='default')d.querySelectorAll('a[href]').forEach(function(a){
     var hr=a.getAttribute('href')||'';if(!hr||hr[0]==='#')return;
-    try{var x=new URL(hr,w.location.href);if(x.origin===w.location.origin&&/(\.html|\/)$/.test(x.pathname)&&!x.searchParams.get('theme')){x.searchParams.set('theme',cur);sa(a,'href',x.pathname+x.search+x.hash);}}catch(e){}
+    try{var x=new URL(hr,L.href);if(x.origin===L.origin&&/(\.html|\/)$/.test(x.pathname)&&!x.searchParams.get('theme')){x.searchParams.set('theme',cur);sa(a,'href',x.pathname+x.search+x.hash);}}catch(e){}
   });
 }
 var cur=get();

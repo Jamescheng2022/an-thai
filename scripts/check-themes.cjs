@@ -31,7 +31,7 @@ function measureFile(relPath) {
 }
 
 function stripJsComments(s) {
-  return s.replace(/\/\*[\s\S]*?\*\/|(?:^|[^:])\/\/.*$/gm, '');
+  return s.replace(/"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, (m) => (m[0] === '"' || m[0] === "'" ? m : ''));
 }
 function hasReducedMotionRule(cssText) {
   const clean = cssText.replace(/\/\*[\s\S]*?\*\//g, '');
@@ -46,7 +46,7 @@ function hasReducedMotionRule(cssText) {
       else if (clean[i] === '}') {
         depth--;
         if (depth === 0) {
-          if (/(?:animation|transition|transform|opacity|stroke-dashoffset|scroll-behavior)/i.test(clean.slice(open + 1, i))) return true;
+          if (/(?:animation(?:-duration)?|transition(?:-duration)?|transform|opacity|stroke-dashoffset|scroll-behavior)\s*:\s*[^;{}]+/i.test(clean.slice(open + 1, i))) return true;
           pos = i + 1;
           break;
         }

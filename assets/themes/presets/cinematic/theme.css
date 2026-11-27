@@ -82,6 +82,10 @@ html[data-theme="cinematic"] .field textarea {
   color: #f8fafc;
   border-color: rgba(248, 250, 252, 0.24);
 }
+html[data-theme="cinematic"] .field ::placeholder {
+  color: #94a3b8;
+  opacity: 1;
+}
 html[data-theme="cinematic"] .field input:focus,
 html[data-theme="cinematic"] .field select:focus,
 html[data-theme="cinematic"] .field textarea:focus {

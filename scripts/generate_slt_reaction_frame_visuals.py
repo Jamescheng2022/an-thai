@@ -84,8 +84,8 @@ def generate_cover_visual():
     W, H = 1200, 720
     im = Image.new("RGB", (W, H), "#090d16")
     draw = ImageDraw.Draw(im)
-    draw_header(draw, W, "Megaton Static Pile Load Test (SLT): Reaction System & 3 Physical Failure Modes",
-                "ASTM D1143-20 / ISO 22477-1:2018: Tension Pull-Out, Thermal Deflection & Zone-of-Influence Traps")
+    draw_header(draw, W, "High-Capacity Static Pile Load Test (SLT): Reaction Systems & 3 Failure Modes",
+                "ASTM D1143-20 / ISO 22477-1:2018: Tension Pull-Out, Thermal Camber & Zone-of-Influence Traps")
 
     # System Overview Banner
     make_card(draw, [30, 110, W - 30, 160], fill="#1e293b", outline="#0284c7")
@@ -98,12 +98,14 @@ def generate_cover_visual():
     draw.text((42, 186), "FAILURE MODE 1: ANCHOR UPLIFT", font=get_font(14, bold=True), fill="#ffffff")
     
     make_card(draw, [45, 225, 385, 335], fill="#1e293b", outline="#475569")
-    draw.text((55, 233), "Anchor Pile Tension Pull-Out & Tilt", font=get_font(12, bold=True), fill="#fca5a5")
-    draw_wrapped_text(draw, "• Soft marine clay / sand interface causes degradation of tension skin friction (Poisson contraction).", (55, 255), 315, get_font(11), "#cbd5e1")
-    draw_wrapped_text(draw, "• Asymmetric uplift (delta > 15mm) causes main crosshead beam to tilt, introducing lateral shear V = P*sin(theta).", (55, 290), 315, get_font(11), "#cbd5e1")
+    draw.text((55, 233), "Anchor Tension Pull-Out & Tilt", font=get_font(12, bold=True), fill="#fca5a5")
+    y_m1 = 252
+    y_m1 += draw_wrapped_text(draw, "• Soft soil interface causes degradation of tension skin friction (Poisson radial contraction).", (55, y_m1), 315, get_font(11), "#cbd5e1") + 4
+    draw_wrapped_text(draw, "• Asymmetric uplift (delta > 15mm) causes crosshead tilt. Spherical seating articulates to isolate tilt; binding transfers shear.", (55, y_m1), 315, get_font(11), "#cbd5e1")
 
     make_card(draw, [45, 345, 385, 475], fill="#1e293b", outline="#475569")
     draw.text((55, 353), "Structural Consequences", font=get_font(12, bold=True), fill="#fca5a5")
+    y_m1_c = 252
     draw_wrapped_text(draw, "• Spherical bearing binding transfers moment M = P * e.", (55, 375), 315, get_font(11), "#f87171")
     draw_wrapped_text(draw, "• Concrete spalling and crushing at pile head perimeter.", (55, 395), 315, get_font(11), "#cbd5e1")
     draw_wrapped_text(draw, "• Hydraulic jack piston seal blowout and catastrophic load loss during maximum proof load holding.", (55, 415), 315, get_font(11), "#cbd5e1")
@@ -121,8 +123,9 @@ def generate_cover_visual():
 
     make_card(draw, [430, 225, 770, 335], fill="#1e293b", outline="#475569")
     draw.text((440, 233), "Defective Geometrical Clearance", font=get_font(12, bold=True), fill="#fcd34d")
-    draw_wrapped_text(draw, "• Reference beam support placed inside ground displacement bowl (ASTM §9.1.1 < 2.5m, ISO §4.4 < max(2.5D, 2.5m)).", (440, 255), 315, get_font(11), "#cbd5e1")
-    draw_wrapped_text(draw, "• Anchor pile upward ground heave or test pile settlement drag pulls beam supports downward/upward.", (440, 290), 315, get_font(11), "#cbd5e1")
+    y_m2 = 252
+    y_m2 += draw_wrapped_text(draw, "• ASTM D1143 §8.3.1: reaction anchor piles clear distance R >= 5D (not less than 2.5m / 8 ft).", (440, y_m2), 315, get_font(10), "#cbd5e1") + 4
+    draw_wrapped_text(draw, "• ASTM §9.1.1 & ISO §4.4: datum supports clear distance >= 2.5m to test pile and reaction anchors.", (440, y_m2), 315, get_font(10), "#cbd5e1")
 
     make_card(draw, [430, 345, 770, 475], fill="#1e293b", outline="#475569")
     draw.text((440, 353), "Measurement Distortion Trap", font=get_font(12, bold=True), fill="#fcd34d")
@@ -132,9 +135,9 @@ def generate_cover_visual():
 
     make_card(draw, [430, 485, 770, 645], fill="#1e293b", outline="#16a34a")
     draw.text((440, 493), "Mandatory Engineering Defense", font=get_font(12, bold=True), fill="#4ade80")
-    draw_wrapped_text(draw, "1. Strict ASTM D1143 §8.3.1 (anchors >= 5D, floor 2.0-2.5m) and §9.1.1 (datum >= 2.5m).", (440, 515), 315, get_font(11), "#86efac")
-    draw_wrapped_text(draw, "2. ISO 22477-1 §4.4 datum clear distance >= max(2.5D, 2.5m) edge-to-edge.", (440, 550), 315, get_font(11), "#cbd5e1")
-    draw_wrapped_text(draw, "3. Optional sleeved datum uprights (>= 1.5m) to decouple surface movements.", (440, 585), 315, get_font(11), "#cbd5e1")
+    draw_wrapped_text(draw, "1. Strict ASTM D1143 §8.3.1 (anchors >= 5D, not less than 2.5m) & §9.1.1 (datum >= 2.5m).", (440, 515), 315, get_font(11), "#86efac")
+    draw_wrapped_text(draw, "2. ISO 22477-1 §4.4 datum clear distance >= max(2.5D, 2.5m) edge-to-edge.", (440, 555), 315, get_font(11), "#cbd5e1")
+    draw_wrapped_text(draw, "3. Optional sleeved datum uprights (>= 1.5m) to decouple surface movements.", (440, 595), 315, get_font(11), "#cbd5e1")
 
     # Mode 3 Card (Right)
     make_card(draw, [800, 175, 1170, 660], fill="#0f172a", outline="#2563eb", width=2)
@@ -228,14 +231,15 @@ def generate_anchor_pile_tension_visual():
     draw.text((710, 160), "TILTED BEAM (theta ~ 0.24°)", font=get_font(11, bold=True), fill="#fca5a5")
 
     # Tie rods with asymmetric displacement
-    draw.line([(630, 170), (630, 230)], fill="#ef4444", width=4)
+    draw.line([(650, 170), (650, 230)], fill="#ef4444", width=4)
     draw.line([(1010, 210), (1010, 280)], fill="#38bdf8", width=4)
-    draw.text((600, 195), "Uplift delta >> 25mm", font=get_font(10, bold=True), fill="#f87171")
+    # Text moved to open space to the left of anchor pile 1
+    draw.text((585, 235), "Uplift delta >> 25mm", font=get_font(10, bold=True), fill="#f87171")
     draw.text((980, 240), "delta <= 4mm", font=get_font(10, bold=True), fill="#38bdf8")
 
     # Anchor piles
-    draw.rectangle([610, 230, 650, 380], fill="#450a0a", outline="#ef4444", width=2)
-    draw.text((595, 390), "Anchor 1 Pulled Out!", font=get_font(11, bold=True), fill="#fca5a5")
+    draw.rectangle([630, 230, 670, 380], fill="#450a0a", outline="#ef4444", width=2)
+    draw.text((615, 390), "Anchor 1 Pulled Out!", font=get_font(11, bold=True), fill="#fca5a5")
     draw.rectangle([990, 280, 1030, 430], fill="#1e293b", outline="#334155", width=2)
     draw.text((990, 440), "Anchor 2 Intact", font=get_font(11, bold=True), fill="#94a3b8")
 
@@ -250,10 +254,10 @@ def generate_anchor_pile_tension_visual():
     draw.polygon([(835, 295), (830, 283), (840, 283)], fill="#ef4444")
     draw.text((845, 275), "P_off-center", font=get_font(10, bold=True), fill="#ef4444")
 
-    # Lateral shear vector
+    # Lateral shear vector if seat binds
     draw.line([(820, 285), (780, 285)], fill="#f59e0b", width=3)
     draw.polygon([(775, 285), (785, 280), (785, 290)], fill="#f59e0b")
-    draw.text((710, 270), "Shear V = P*sin(theta)", font=get_font(10, bold=True), fill="#f59e0b")
+    draw.text((690, 270), "Shear transfer if seat binds", font=get_font(10, bold=True), fill="#f59e0b")
 
     # Spalling warning
     draw.text((865, 305), "Crushing / Spalling!", font=get_font(10, bold=True), fill="#ef4444")
@@ -262,9 +266,9 @@ def generate_anchor_pile_tension_visual():
     make_card(draw, [585, 480, 1055, 605], fill="#1e293b", outline="#334155")
     draw_wrapped_text(draw, "• Soft marine clay tension friction debonding triggers sudden pull-out.", (595, 490), 450, get_font(11, bold=True), "#fca5a5")
     draw_wrapped_text(draw, "• Eccentric moment M = P * e exceeds concrete core shear strength if bearing binds.", (595, 512), 450, get_font(11), "#cbd5e1")
-    draw_wrapped_text(draw, "• Lateral component V pushes jack sideways, scoring rams and blowing packing seals.", (595, 534), 450, get_font(11), "#cbd5e1")
+    draw_wrapped_text(draw, "• ASTM D1143 §8.1.3 spherical seating block articulates to isolate beam tilt; binding transfers shear.", (595, 534), 450, get_font(11), "#86efac")
     draw_wrapped_text(draw, "• Sudden release of 600t reaction energy presents catastrophic safety hazard.", (595, 556), 450, get_font(11), "#cbd5e1")
-    draw_wrapped_text(draw, "• ASTM D1143 §8.1.3 spherical seating block accommodates rotation; binding transfers shear.", (595, 578), 450, get_font(11), "#86efac")
+    draw_wrapped_text(draw, "• Real-time uplift monitoring of every anchor pile head prevents runaway frame collapse.", (595, 578), 450, get_font(11), "#cbd5e1")
 
     draw_footer(draw, W, H)
     im.save(ASSETS_DIR / "slt-anchor-pile-tension-failure.webp", "WEBP", quality=92)
@@ -284,77 +288,87 @@ def generate_zone_of_influence_visual():
     # Top Banner: The Rule
     make_card(draw, [30, 110, W - 30, 160], fill="#1e293b", outline="#0284c7")
     draw.text((45, 118), "ASTM D1143-20 & ISO 22477-1:2018 CLEARANCE GEOMETRY RULES", font=get_font(13, bold=True), fill="#38bdf8")
-    draw.text((45, 137), "Reaction anchor piles clear distance: R >= 5D (min 2.0-2.5m, ASTM §8.3.1). Datum supports: R >= 2.5m (ASTM §9.1.1) / >= max(2.5D, 2.5m) (ISO §4.4).", font=get_font(11, bold=False), fill="#cbd5e1")
+    draw.text((45, 137), "Reaction anchor piles: clear distance R >= 5D (not less than 2.5m, ASTM §8.3.1). Datum supports: clear distance >= 2.5m to test pile and anchors (ASTM §9.1.1) / >= max(2.5D, 2.5m) (ISO §4.4).", font=get_font(11, bold=False), fill="#cbd5e1")
 
     # Schematic Drawing Area (Center)
-    make_card(draw, [30, 175, W - 30, 480], fill="#0f172a", outline="#334155")
+    make_card(draw, [30, 175, W - 30, 485], fill="#0f172a", outline="#334155")
 
-    # Soil line
+    # Ground surface line
     draw.line([(50, 270), (W - 50, 270)], fill="#475569", width=2)
-    draw.text((55, 250), "GROUND SURFACE (ORIGINAL LEVEL)", font=get_font(11, bold=True), fill="#64748b")
+    draw.text((430, 248), "ORIGINAL GROUND LEVEL", font=get_font(10, bold=True), fill="#64748b")
 
-    # Center Test Pile
-    draw.rectangle([520, 270, 580, 450], fill="#1e293b", outline="#38bdf8", width=2)
-    draw.text((525, 350), "TEST PILE (D)", font=get_font(10, bold=True), fill="#38bdf8")
-    draw.text((530, 365), "Dia = D", font=get_font(10), fill="#94a3b8")
+    # Center Test Pile (Width 60: 520 to 580)
+    draw.rectangle([520, 270, 580, 430], fill="#1e293b", outline="#38bdf8", width=2)
+    draw.text((525, 340), "TEST PILE (D)", font=get_font(10, bold=True), fill="#38bdf8")
+    draw.text((530, 355), "Dia = D", font=get_font(10), fill="#94a3b8")
 
-    # Settlement Depression Bowl (curved downward around test pile)
+    # Settlement Depression Bowl (curved downward around test pile from 430 to 670)
     pts_bowl = [
-        (380, 270), (450, 280), (510, 305), (520, 315),
-        (580, 315), (590, 305), (650, 280), (720, 270)
+        (430, 270), (470, 280), (510, 305), (520, 315),
+        (580, 315), (590, 305), (630, 280), (670, 270)
     ]
     draw.line(pts_bowl, fill="#ef4444", width=3)
-    draw.text((430, 320), "Settlement Bowl w_drag(r)", font=get_font(11, bold=True), fill="#fca5a5")
+    draw.text((440, 325), "Settlement Bowl w_drag(r)", font=get_font(11, bold=True), fill="#fca5a5")
 
-    # Anchor Piles (Left & Right)
-    draw.rectangle([150, 270, 190, 430], fill="#1e293b", outline="#d97706", width=2)
-    draw.text((130, 440), "Anchor Pile 1", font=get_font(11, bold=True), fill="#fcd34d")
-    draw.rectangle([910, 270, 950, 430], fill="#1e293b", outline="#d97706", width=2)
-    draw.text((890, 440), "Anchor Pile 2", font=get_font(11, bold=True), fill="#fcd34d")
+    # Reaction Anchor Piles (Left: 280..320, Right: 780..820)
+    draw.rectangle([280, 270, 320, 420], fill="#1e293b", outline="#d97706", width=2)
+    draw.text((265, 428), "Anchor Pile 1", font=get_font(10, bold=True), fill="#fcd34d")
+    draw.rectangle([780, 270, 820, 420], fill="#1e293b", outline="#d97706", width=2)
+    draw.text((765, 428), "Anchor Pile 2", font=get_font(10, bold=True), fill="#fcd34d")
 
-    # Soil Heave Curves around Anchor Piles (bulging upward)
-    pts_heave_left = [(90, 270), (130, 255), (170, 248), (210, 255), (260, 270)]
+    # Soil Heave Curves around Anchor Piles (Left: 210..390; Right: 710..890)
+    pts_heave_left = [(210, 270), (250, 255), (300, 248), (350, 255), (390, 270)]
     draw.line(pts_heave_left, fill="#f59e0b", width=3)
-    draw.text((120, 230), "Ground Heave (+w_heave)", font=get_font(10, bold=True), fill="#fcd34d")
+    draw.text((230, 230), "Ground Heave (+w_heave)", font=get_font(10, bold=True), fill="#fcd34d")
 
-    pts_heave_right = [(840, 270), (890, 255), (930, 248), (970, 255), (1010, 270)]
+    pts_heave_right = [(710, 270), (750, 255), (800, 248), (850, 255), (890, 270)]
     draw.line(pts_heave_right, fill="#f59e0b", width=3)
-    draw.text((870, 230), "Ground Heave (+w_heave)", font=get_font(10, bold=True), fill="#fcd34d")
+    draw.text((730, 230), "Ground Heave (+w_heave)", font=get_font(10, bold=True), fill="#fcd34d")
 
     # Reference Beam Support Positions
-    # Position A: WRONG (Inside Zone of Influence)
-    draw.rectangle([340, 220, 360, 270], fill="#ef4444")
-    draw.text((290, 200), "WRONG DATUM (Inside Bowl)", font=get_font(10, bold=True), fill="#ef4444")
-    draw.line([(350, 200), (350, 220)], fill="#ef4444", width=2)
+    # Position A: WRONG (Inside Test Pile Settlement Bowl at 460..475)
+    draw.rectangle([460, 220, 475, 270], fill="#ef4444")
+    draw.text((410, 200), "WRONG (Inside Bowl)", font=get_font(10, bold=True), fill="#ef4444")
+    draw.line([(467, 215), (467, 225)], fill="#ef4444", width=2)
 
-    # Position B: CORRECT (Outside Zone of Influence) - Adjusted to prevent clipping
-    draw.rectangle([80, 190, 100, 270], fill="#22c55e")
-    draw.text((50, 172), "CORRECT DATUM (§4.4 / §9.1.1)", font=get_font(10, bold=True), fill="#22c55e")
-    draw.rectangle([970, 190, 990, 270], fill="#22c55e")
-    draw.text((870, 172), "CORRECT DATUM (§4.4 / §9.1.1)", font=get_font(10, bold=True), fill="#22c55e")
+    # Position B: CORRECT (In Virgin Ground, far from Anchor Heave at 75..95 and 1005..1025)
+    draw.rectangle([75, 190, 95, 270], fill="#22c55e")
+    draw.text((40, 172), "CORRECT DATUM (Virgin Ground)", font=get_font(10, bold=True), fill="#22c55e")
+    draw.rectangle([1005, 190, 1025, 270], fill="#22c55e")
+    draw.text((860, 172), "CORRECT DATUM (Virgin Ground)", font=get_font(10, bold=True), fill="#22c55e")
 
-    # Dimension lines
-    draw.line([(190, 460), (520, 460)], fill="#38bdf8", width=2)
-    draw.line([(190, 455), (190, 465)], fill="#38bdf8", width=2)
-    draw.line([(520, 455), (520, 465)], fill="#38bdf8", width=2)
-    draw.text((230, 465), "Clear Dist R >= 5D (§8.3.1) / >= 2.5m (§9.1.1)", font=get_font(10, bold=True), fill="#38bdf8")
+    # Dimension lines - Level 1: Anchor clearance to test pile (ASTM §8.3.1 >= 5D, min 2.5m)
+    draw.line([(320, 442), (520, 442)], fill="#38bdf8", width=2)
+    draw.line([(320, 437), (320, 447)], fill="#38bdf8", width=2)
+    draw.line([(520, 437), (520, 447)], fill="#38bdf8", width=2)
+    draw.text((330, 446), "Anchor Clear Dist >= 5D (>= 2.5m) [§8.3.1]", font=get_font(9, bold=True), fill="#38bdf8")
 
-    draw.line([(580, 460), (910, 460)], fill="#38bdf8", width=2)
-    draw.line([(580, 455), (580, 465)], fill="#38bdf8", width=2)
-    draw.line([(910, 455), (910, 465)], fill="#38bdf8", width=2)
-    draw.text((620, 465), "Clear Dist R >= 5D (§8.3.1) / >= 2.5m (§9.1.1)", font=get_font(10, bold=True), fill="#38bdf8")
+    draw.line([(580, 442), (780, 442)], fill="#38bdf8", width=2)
+    draw.line([(580, 437), (580, 447)], fill="#38bdf8", width=2)
+    draw.line([(780, 437), (780, 447)], fill="#38bdf8", width=2)
+    draw.text((590, 446), "Anchor Clear Dist >= 5D (>= 2.5m) [§8.3.1]", font=get_font(9, bold=True), fill="#38bdf8")
+
+    # Dimension lines - Level 2: Datum support clearance to anchors (ASTM §9.1.1 >= 2.5m)
+    draw.line([(95, 468), (280, 468)], fill="#4ade80", width=2)
+    draw.line([(95, 463), (95, 473)], fill="#4ade80", width=2)
+    draw.line([(280, 463), (280, 473)], fill="#4ade80", width=2)
+    draw.text((105, 471), "Datum Clear >= 2.5m to Anchors [§9.1.1]", font=get_font(9, bold=True), fill="#86efac")
+
+    draw.line([(820, 468), (1005, 468)], fill="#4ade80", width=2)
+    draw.line([(820, 463), (820, 473)], fill="#4ade80", width=2)
+    draw.line([(1005, 463), (1005, 473)], fill="#4ade80", width=2)
+    draw.text((830, 471), "Datum Clear >= 2.5m to Anchors [§9.1.1]", font=get_font(9, bold=True), fill="#86efac")
 
     # Bottom Comparison Table
-    make_card(draw, [30, 495, 535, 620], fill="#1e293b", outline="#ef4444")
-    draw.text((45, 505), "DEFECTIVE CLEARANCE ERRORS", font=get_font(12, bold=True), fill="#f87171")
-    draw_wrapped_text(draw, "1. Beam support inside settlement depression: support sags with test pile, dial gauge measures relative settlement delta = w_pile - w_support, UNDERESTIMATING pile settlement by estimated 20%-35%.", (45, 525), 475, get_font(10), "#cbd5e1")
-    draw_wrapped_text(draw, "2. Beam support inside anchor heave field: support lifts upward with anchor pile, dial gauge OVERESTIMATES settlement by estimated 25%-45%, falsely failing a compliant pile.", (45, 568), 475, get_font(10), "#cbd5e1")
+    make_card(draw, [30, 498, 535, 625], fill="#1e293b", outline="#ef4444")
+    draw.text((45, 506), "DEFECTIVE CLEARANCE ERRORS", font=get_font(12, bold=True), fill="#f87171")
+    draw_wrapped_text(draw, "1. Beam support inside settlement depression: support sags with test pile, dial gauge measures relative settlement delta = w_pile - w_support, UNDERESTIMATING pile settlement by estimated 20%-35%.", (45, 526), 475, get_font(10), "#cbd5e1")
+    draw_wrapped_text(draw, "2. Beam support inside anchor heave field: support lifts upward with anchor pile, dial gauge OVERESTIMATES settlement by estimated 25%-45%, falsely failing a compliant pile.", (45, 570), 475, get_font(10), "#cbd5e1")
 
-    make_card(draw, [565, 495, 1070, 620], fill="#1e293b", outline="#16a34a")
-    draw.text((580, 505), "COMPLIANT RIGID DATUM ARCHITECTURE", font=get_font(12, bold=True), fill="#4ade80")
-    draw_wrapped_text(draw, "1. ASTM D1143 §8.3.1 (anchors >= 5D, floor 2.0-2.5m) and §9.1.1 (datum >= 2.5m); ISO §4.4 (datum >= max(2.5D, 2.5m)).", (580, 525), 475, get_font(10), "#86efac")
-    draw_wrapped_text(draw, "2. Recommended: datum uprights embedded >= 1.5m in greased PVC outer sleeves where shallow soil movement or vibration occurs.", (580, 555), 475, get_font(10), "#cbd5e1")
-    draw_wrapped_text(draw, "3. Cross-beam reference spanning independently of reaction kentledge.", (580, 595), 475, get_font(10), "#cbd5e1")
+    make_card(draw, [565, 498, 1070, 625], fill="#1e293b", outline="#16a34a")
+    draw.text((580, 506), "COMPLIANT RIGID DATUM ARCHITECTURE", font=get_font(12, bold=True), fill="#4ade80")
+    draw_wrapped_text(draw, "1. Clear distance R >= 5D (not less than 2.5m) for anchor piles (ASTM §8.3.1). Datum supports clear distance >= 2.5m to all reaction elements (ASTM §9.1.1) and >= max(2.5D, 2.5m) to test pile (ISO §4.4).", (580, 526), 475, get_font(10), "#86efac")
+    draw_wrapped_text(draw, "2. Recommended: datum uprights embedded >= 1.5m in greased PVC outer sleeves where shallow topsoil heave or equipment vibration occurs.", (580, 570), 475, get_font(10), "#cbd5e1")
 
     draw_footer(draw, W, H)
     im.save(ASSETS_DIR / "slt-reference-beam-zone-of-influence.webp", "WEBP", quality=92)
@@ -417,15 +431,15 @@ def generate_thermal_deflection_visual():
 
     # True pile settlement (smooth sustained line)
     draw.line([(620, 240), (720, 250), (820, 255), (930, 258), (1030, 260)], fill="#22c55e", width=3)
-    draw.text((880, 240), "True Settlement (Creep < 0.1 mm/hr)", font=get_font(10, bold=True), fill="#86efac")
+    draw.text((640, 222), "True Pile Settlement (Creep < 0.1 mm/hr)", font=get_font(10, bold=True), fill="#86efac")
 
     # Uncorrected Dial Gauge Reading with Solar Thermal Camber
     draw.line([(620, 240), (670, 270), (720, 310), (770, 295), (820, 265), (870, 245), (930, 248), (1030, 252)], fill="#ef4444", width=3)
-    draw.text((680, 320), "Uncorrected Gauge (Apparent Settlement Peak)", font=get_font(10, bold=True), fill="#fca5a5")
+    draw.text((660, 335), "Uncorrected Gauge (Apparent Settlement Peak)", font=get_font(10, bold=True), fill="#fca5a5")
 
-    # Warning text
+    # Warning text card with wrapping to avoid clipping
     make_card(draw, [575, 395, 1055, 430], fill="#1e293b", outline="#475569")
-    draw.text((585, 405), "Upward beam camber lifts gauge mount, falsely inflating apparent settlement. Night cooling gives false rebound.", font=get_font(9, bold=True), fill="#f87171")
+    draw_wrapped_text(draw, "Upward beam camber lifts gauge mount, falsely inflating apparent settlement. Night cooling gives false rebound.", (585, 402), 460, get_font(10, bold=True), "#f87171")
 
     # Bottom Full-Width: Dual Defense Protocol
     make_card(draw, [30, 460, W - 30, 620], fill="#1e293b", outline="#16a34a", width=2)
@@ -465,10 +479,10 @@ def generate_calibration_chain_visual():
 
     make_card(draw, [45, 165, 515, 310], fill="#1e293b", outline="#475569")
     draw.text((55, 175), "Piston Seal Friction Mechanics", font=get_font(11, bold=True), fill="#fca5a5")
-    draw_wrapped_text(draw, "Heavy-duty hydraulic jacks (500t - 1000t) utilize polyurethane U-cup or chevron packing seals. Seal squeeze against the cylinder wall generates friction F_friction (typically 5% - 12%):", (55, 195), 450, get_font(10), "#cbd5e1")
-    draw.text((55, 240), "• Loading Phase:   P_gauge * Area = P_actual + F_friction", font=get_font(11, bold=True), fill="#ef4444")
-    draw.text((70, 260), "--> Actual load delivered is 5% - 12% LOWER than indicated!", font=get_font(10), fill="#fca5a5")
-    draw.text((55, 275), "• Unloading Phase: P_gauge * Area = P_actual - F_friction", font=get_font(11, bold=True), fill="#38bdf8")
+    draw_wrapped_text(draw, "Heavy-duty hydraulic jacks (500t - 1000t) utilize polyurethane U-cup or chevron packing seals. Seal squeeze against cylinder wall generates friction F_friction (equipment-dependent, typically several percent to 10%+):", (55, 195), 450, get_font(10), "#cbd5e1")
+    draw.text((55, 240), "• Loading Phase:   P_actual = (P_gauge * Area) - F_friction", font=get_font(11, bold=True), fill="#ef4444")
+    draw.text((70, 260), "--> Actual load delivered is lower than indicated by seal drag.", font=get_font(10), fill="#fca5a5")
+    draw.text((55, 275), "• Unloading Phase: P_actual = (P_gauge * Area) + F_friction", font=get_font(11, bold=True), fill="#38bdf8")
     draw.text((70, 293), "--> Hysteresis loop distorts true elastic rebound measurements.", font=get_font(10), fill="#93c5fd")
 
     make_card(draw, [45, 325, 515, 465], fill="#1e293b", outline="#475569")
@@ -490,7 +504,7 @@ def generate_calibration_chain_visual():
 
     make_card(draw, [585, 165, 1055, 310], fill="#1e293b", outline="#475569")
     draw.text((595, 175), "Integral System Calibration Standard", font=get_font(11, bold=True), fill="#4ade80")
-    draw_wrapped_text(draw, "ASTM D1143 §8.2.3 specifies calibrating jack, pump, and gauge together as an integral system where practicable (<= 6 months). ISO 22477-1 §4.5 permits pressure devices (6 mo) or load cells (12 mo):", (595, 195), 450, get_font(10), "#cbd5e1")
+    draw_wrapped_text(draw, "ASTM D1143 §8.2.3 specifies calibrating jack, pump, and gauge together as an integral system where practicable. ISO 22477-1 §4.5 permits pressure devices (recalibration <= 6 mo) or load cells (recalibration <= 12 mo):", (595, 195), 450, get_font(10), "#cbd5e1")
     draw_wrapped_text(draw, "• Full calibration curve covers both ascending and descending cycles.", (595, 245), 450, get_font(10), "#86efac")
     draw_wrapped_text(draw, "• Calibrated spherical bearing plate placed between jack and crosshead.", (595, 270), 450, get_font(10), "#86efac")
     draw_wrapped_text(draw, "• Calibration performed in accredited ISO/IEC 17025 testing facility.", (595, 290), 450, get_font(10), "#cbd5e1")
@@ -502,8 +516,8 @@ def generate_calibration_chain_visual():
     draw_wrapped_text(draw, "• Pressure gauge serves for operator pump control and secondary cross-check.", (595, 430), 450, get_font(10), "#cbd5e1")
 
     make_card(draw, [585, 480, 1055, 605], fill="#1e293b", outline="#16a34a")
-    draw.text((595, 490), "Auditable Field QA/QC Acceptance Criteria", font=get_font(11, bold=True), fill="#4ade80")
-    draw_wrapped_text(draw, "1. Discrepancy between load cell and calibrated pressure gauge <= 2.0%.", (595, 515), 450, get_font(10), "#86efac")
+    draw.text((595, 490), "AN-THAI Recommended QA/QC Tolerance Gates", font=get_font(11, bold=True), fill="#4ade80")
+    draw_wrapped_text(draw, "1. Recommended verification gate: discrepancy between load cell and calibrated pressure gauge <= 2.0%.", (595, 515), 450, get_font(10), "#86efac")
     draw_wrapped_text(draw, "2. If discrepancy exceeds 5.0%, test must halt immediately for seal/cell inspection.", (595, 540), 450, get_font(10), "#fcd34d")
     draw_wrapped_text(draw, "3. Full calibration certificates with traceability to national metrology institutes attached to official engineering test report.", (595, 565), 450, get_font(10), "#cbd5e1")
 

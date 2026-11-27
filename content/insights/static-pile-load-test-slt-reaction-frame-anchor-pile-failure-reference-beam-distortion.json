@@ -60,7 +60,7 @@
       "paragraphs": [
         "A static pile load test generates two opposing displacement fields in the surrounding soil mass: a downward settlement depression bowl surrounding the loaded test pile, and an upward ground heave field surrounding each reaction anchor pile (or downward settlement under kentledge cribbing). In deep deltaic and alluvial deposits, these ground movement fields can extend several pile diameters outward.",
         "Reference datum beams support the displacement transducers (dial indicators or LVDTs) that measure pile head settlement relative to an independent datum. If reference beam support uprights are positioned within these active ground displacement zones, significant measurement corruption occurs. If datum supports reside inside the test pile settlement depression bowl, the supports settle with the ground, causing transducers to underestimate true pile settlement. Conversely, if supports reside within the anchor heave field, the supports lift upward, causing transducers to overestimate settlement and falsely indicate excessive deformation.",
-        "To prevent interference, standards establish separate geometry rules for reaction frames and reference datum supports. ASTM D1143-20 §8.3.1 mandates that reaction anchor piles be located at a clear distance of at least 5 times the maximum diameter of the test pile or reaction pile (with a minimum clear distance of 2.0 m to 2.5 m). For reference datum supports, ASTM D1143-20 §9.1.1 requires an independent clear distance of at least 2.5 m (8 ft) edge-to-edge from the test pile, and at least 2.5 m from any reaction pile or kentledge support. Complementing this, ISO 22477-1:2018 §4.4 recommends that the distance from the test pile to any support of the reference frame be at least max(2.5D, 2.5 m). Installing PVC outer isolation sleeves around datum support uprights can further isolate the datum from shallow topsoil moisture heave or shrinkage."
+        "To prevent interference, standards establish separate geometry rules for reaction frames and reference datum supports. ASTM D1143-20 §8.3.1 mandates that reaction anchor piles be located at a clear distance of at least 5 times the maximum diameter of the test pile or reaction pile (with a minimum clear distance not less than 2.5 m / 8 ft). For reference datum supports, ASTM D1143-20 §9.1.1 requires an independent clear distance of at least 2.5 m (8 ft) edge-to-edge from the test pile, and at least 2.5 m from any reaction pile or kentledge support. Complementing this, ISO 22477-1:2018 §4.4 recommends that the distance from the test pile to any support of the reference frame be at least max(2.5D, 2.5 m). Installing PVC outer isolation sleeves around datum support uprights can further isolate the datum from shallow topsoil moisture heave or shrinkage."
       ],
       "figures": [
         {
@@ -98,8 +98,8 @@
       ],
       "links": [
         {
-          "label": "ASTM D3966/D3966M: Deep Foundation Elements Under Lateral Load",
-          "url": "https://store.astm.org/d3966_d3966m-22.html"
+          "label": "ASTM D1143/D1143M-20: Standard Test Methods for Deep Foundations Under Static Axial Compressive Load",
+          "url": "https://store.astm.org/d1143_d1143m-20.html"
         }
       ]
     },
@@ -129,7 +129,7 @@
     },
     {
       "question": "What are the required clear distances for static pile load testing reaction systems and datum beams?",
-      "answer": "Under ASTM D1143-20 §8.3.1, reaction anchor piles must be located at a clear distance of at least 5 times the maximum diameter of the test or reaction pile (with a minimum of 2.0 m to 2.5 m). For reference datum supports, ASTM D1143-20 §9.1.1 requires an independent clear distance of at least 2.5 m (8 ft) edge-to-edge from the test pile and from reaction piles or cribbing. Complementing this, ISO 22477-1 §4.4 recommends datum supports be placed at least max(2.5D, 2.5 m) from the test pile."
+      "answer": "Under ASTM D1143-20 §8.3.1, reaction anchor piles must be located at a clear distance of at least 5 times the maximum diameter of the test or reaction pile (with a minimum clear distance not less than 2.5 m / 8 ft). For reference datum supports, ASTM D1143-20 §9.1.1 requires an independent clear distance of at least 2.5 m (8 ft) edge-to-edge from the test pile and from reaction piles or cribbing. Complementing this, ISO 22477-1 §4.4 recommends datum supports be placed at least max(2.5D, 2.5 m) from the test pile."
     },
     {
       "question": "How does solar radiation thermal bowing on an unshielded steel reference beam distort measured pile settlement?",

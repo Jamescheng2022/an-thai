@@ -32,10 +32,10 @@ This technical field manual provides the governing mechanics, rigorous diagnosti
 ### 2.1 Tension Skin Friction Degradation Mechanics
 In high-tonnage static tests, reaction frames typically utilize 4 to 8 tension anchor piles to resist the upward thrust of the hydraulic rams. A common design flaw is calculating anchor pile tensile resistance using compressive shaft friction parameters ($q_s$). 
 
-In cohesive marine clays, silt-clay laminations, and unsaturated residual soils, ultimate unit skin friction in tension ($q_{s,tension}$) is systematically 15% to 30% lower than in compression:
+In cohesive marine clays, silt-clay laminations, and unsaturated residual soils, ultimate unit skin friction in tension ($q_{s,tension}$) is typically estimated 15% to 30% lower than in compression (subject to site-specific geotechnical verification):
 $$q_{s,tension} = \beta_{tension} \cdot \sigma'_{v0} \quad \text{where} \quad \beta_{tension} \approx (0.70 \sim 0.85) \cdot \beta_{compression}$$
 
-This reduction stems from the Poisson effect: tensile elongation causes slight radial contraction of the pile shaft ($\Delta r = -\nu \cdot \epsilon_z \cdot r$), reducing the effective horizontal stress ($\sigma'_h$) acting normal to the soil-pile interface. In contrast, compressive loading induces radial Poisson expansion, increasing interface confining pressure.
+This reduction stems from the Poisson effect: tensile elongation causes slight radial contraction of the pile shaft ($\Delta r = -\nu \cdot \epsilon_z \cdot r$), reducing the effective horizontal stress ($\sigma'_h$) acting normal to the soil-pile interface. In contrast, compressive loading induces radial Poisson expansion, increasing interface confining pressure. Therefore, anchor pile tensile capacity should be verified against approved project criteria rather than unadjusted compressive parameters.
 
 ### 2.2 Asymmetric Uplift and Crosshead Tilting Mechanics
 When anchor piles are socketed into heterogeneous alluvial soils (such as the Bangkok soft-to-stiff clay transition or deltaic silts), tensile capacity is rarely identical across all reaction piles. As load increases toward proof level ($1.5 \times$ to $2.0 \times$ design working load):
@@ -80,7 +80,7 @@ The test record can **overestimate settlement by an estimated 25% to 45%**, trig
 
 ### 3.3 Compliance Geometry per ASTM D1143 & ISO 22477-1
 To guarantee that reference beam supports reside in virgin ground unaffected by stress fields:
-- **Clearance to Reaction Piles / Cribbing (ASTM D1143-20 §8.3.1)**: Clear distance between the test pile and any reaction anchor pile must satisfy $R_{clear} \ge 5D$ (with an absolute minimum of 2.0 m to 2.5 m depending on pile type and diameter).
+- **Clearance to Reaction Piles / Cribbing (ASTM D1143-20 §8.3.1)**: Clear distance between the test pile and any reaction anchor pile must satisfy $R_{clear} \ge 5D$, but not less than $2.5\text{ m}$ (8 ft).
 - **Clearance to Datum Supports (ASTM D1143-20 §9.1.1)**: Minimum clear distance from the test pile edge to reference beam supports must be $\ge 2.5\text{ m}$ (8 ft), and datum supports must be positioned $\ge 2.5\text{ m}$ clear of reaction anchor piles or kentledge cribbing.
 - **ISO 22477-1:2018 §4.4 Geometry**: Recommends datum supports be placed at a clear distance $\ge \max(2.5D, 2.5\text{ m})$ from the test pile edge, and outside the direct zone of influence of reaction elements.
 - **Sleeved Datum Embedment**: Where shallow surface heave, desiccation cracking, or construction equipment ground vibration is anticipated, reference support uprights should be driven $\ge 1.5\text{ m}$ below ground and encased in an outer PVC sleeve greased internally as a recommended risk-mitigation measure to isolate shallow ground movements.
@@ -135,10 +135,10 @@ To eliminate thermal distortion, AN-THAI mandates a dual physical-geodetic defen
 ### 5.1 The Packing Friction Hysteresis Loop
 Megaton testing utilizes high-pressure hydraulic cylinders (ram capacity 5,000 kN to 15,000 kN). To contain oil pressures up to 70 MPa, cylinder pistons employ heavy polyurethane U-cups, chevron V-packings, and bronze wear rings. 
 
-When the piston extends under pressure, the packing seals press forcefully against the honed cylinder barrel, generating a friction resistance force ($F_{friction}$) that typically ranges between 5% and 12% of the theoretical hydraulic thrust ($P_{hyd} = p \cdot A_{ram}$), depending on cylinder geometry, seal compound, and operating pressure:
+When the piston extends under pressure, the packing seals press forcefully against the honed cylinder barrel, generating a friction resistance force ($F_{friction}$) that typically ranges from several percent up to 12% of the theoretical hydraulic thrust ($P_{hyd} = p \cdot A_{ram}$), depending on cylinder geometry, seal compound, and operating pressure:
 - **During Loading (Ram Advancing)**:
 $$P_{actual} = (p \cdot A_{ram}) - F_{friction}$$
-The true compressive load delivered to the concrete pile head is **5% to 12% lower** than indicated by a simple hydraulic pressure gauge conversion!
+The true compressive load delivered to the concrete pile head is **typically several percent to 12% lower** than indicated by a simple hydraulic pressure gauge conversion (depending on cylinder condition, seal compound, and operating pressure)!
 - **During Unloading (Ram Retracting)**:
 $$P_{actual} = (p \cdot A_{ram}) + F_{friction}$$
 The friction reverses direction, producing a pronounced mechanical hysteresis loop.
@@ -161,7 +161,7 @@ To comply with ASTM D1143-20 §§8.2.3–8.2.6 and ISO 22477-1:2018 §4.5:
 | Parameter / Requirement | ASTM D1143/D1143M-20 | ISO 22477-1:2018 | EN 1997-1 (Eurocode 7) | BS 8004:2015 |
 | :--- | :--- | :--- | :--- | :--- |
 | **Clear Distance (Test Pile to Datum Supports)** | $\ge 2.5\text{ m}$ (8 ft) edge-to-edge (§9.1.1) | $\ge \max(2.5D, 2.5\text{ m})$ edge-to-edge (§4.4) | $R \ge 4D$ or per national annex (typically $\ge 5D$) | $R \ge 5D$ and $\ge 2.5\text{ m}$ |
-| **Clear Distance (Reaction Piles to Test Pile / Datum)** | Reaction piles $\ge 5D$ ($\ge 2.0\text{ m}\sim 2.5\text{ m}$, §8.3.1); datum $\ge 2.5\text{ m}$ to anchors (§9.1.1) | Outside direct zone of influence ($\ge 4D_{anchor}$ or isolated) | Must prevent interaction with datum | $\ge 5D_{anchor}$ or isolated by sleeve |
+| **Clear Distance (Reaction Piles to Test Pile / Datum)** | Reaction piles $\ge 5D$, not less than $2.5\text{ m}$ (8 ft) (§8.3.1); datum $\ge 2.5\text{ m}$ to anchors (§9.1.1) | Outside direct zone of influence ($\ge 4D_{anchor}$ or isolated) | Must prevent interaction with datum | $\ge 5D_{anchor}$ or isolated by sleeve |
 | **Anchor Pile Factor of Safety ($FS_{tension}$)** | $\ge 2.0$ against ultimate pull-out (approved design criteria) | $\ge 1.5$ to $2.0$ depending on consequence class | Design per ULS STR/GEO ($\gamma_s \ge 1.4\sim 1.6$) | $\ge 2.0$ for temporary test anchors |
 | **Thermal Protection for Reference Beams** | Required; shelter from sun and wind (§9.1.2) | Mandatory thermal insulation & shading (§4.4) | Required to prevent spurious displacement | Mandatory sun and wind shields |
 | **Independent Benchmark Optical Survey** | Required to check datum movement (§9.1.2 / §10.1.2) | Mandatory primary geodetic reference (§4.4) | Mandatory optical leveling check | Recommended optical precision verification |
@@ -175,7 +175,7 @@ To comply with ASTM D1143-20 §§8.2.3–8.2.6 and ISO 22477-1:2018 §4.5:
 ### 7.1 Pre-Test Engineering Verification (T minus 48 Hours)
 - [ ] **Structural Reaction Calculation**: Verify that the main crosshead beam section modulus $Z_x$ and shear capacity satisfy $FS_{struct} \ge 1.5$ at $1.5 \times$ maximum test load.
 - [ ] **Anchor Pile Tension Verification**: Verify anchor pile shaft friction calculation with $FS_{tension} \ge 2.0$ using tension-reduced unit friction parameters under project geotechnical criteria.
-- [ ] **Geometrical Survey**: Measure and record exact edge-to-edge clear distances from test pile edge to all reaction anchor piles (ASTM D1143 §8.3.1 $R \ge 5D$, floor 2.0–2.5 m) and to reference beam support footings (ASTM D1143 §9.1.1 $R \ge 2.5\text{ m}$; ISO 22477-1 §4.4 $R \ge \max(2.5D, 2.5\text{ m})$).
+- [ ] **Geometrical Survey**: Measure and record exact edge-to-edge clear distances from test pile edge to all reaction anchor piles (ASTM D1143 §8.3.1 $R \ge 5D$, not less than $2.5\text{ m}$) and to reference beam support footings (ASTM D1143 §9.1.1 $R \ge 2.5\text{ m}$; ISO 22477-1 §4.4 $R \ge \max(2.5D, 2.5\text{ m})$).
 - [ ] **Datum Support Isolation**: Where shallow ground movement or equipment vibration is anticipated, ensure reference upright posts are embedded $\ge 1.5\text{ m}$ into ground and encased in greased PVC decoupling sleeves.
 - [ ] **Thermal Protection Rigging**: Verify reflective insulation wrap on all steel reference spans and complete installation of UV sunshade canopies.
 - [ ] **Remote Benchmark Setup**: Establish permanent concrete benchmark $R > 25\text{ m}$ from test center. Verify clear line of sight for high-precision optical level (0.01 mm micrometer).
@@ -205,7 +205,7 @@ To illustrate the practical deployment of the mandatory engineering defenses des
 - **Ground Stratigraphy Model**: 8.0 m soft-to-medium marine clay ($S_u \approx 22\text{ kPa}$), underlain by dense silty sand transitioning to weathered granitic rock at 36.0 m.
 - **Reaction Architecture**: 6-pile symmetrical reaction anchor array ($D = 800\text{ mm}$, $L = 32.0\text{ m}$), designed with $FS_{tension} = 2.15$ using tension-reduced unit shaft resistance. Edge-to-edge clear distance to anchor piles $R = 5.2\text{ m}$ ($> 5D$).
 - **Instrument Bridge & Thermal Control**: Reference beam span $L = 22.0\text{ m}$, edge-to-edge clear distance to datum supports $R = 6.0\text{ m}$ ($6D$, exceeding ASTM §9.1.1 and ISO §4.4 criteria). Beams insulated with 50 mm foil-backed mineral wool and shaded by 30 m canopy.
-- **Protocol Verification**: Peak proof load of 6,000 kN held for 24 hours under maintained load protocol. Differential anchor uplift was restricted to 3.2 mm. Optical level closed-loop backsight on the midspan gauge mount confirmed reference datum thermal drift was $< 0.12\text{ mm}$ across noon solar peaks. True pile settlement was recorded at $11.42\text{ mm}$, recovering to $2.84\text{ mm}$ residual net settlement, confirming full compliance with ASTM D1143 and project specifications without contractual dispute.
+- **Protocol Expectation**: When executed under this protocol, peak proof load of 6,000 kN is held for 24 hours under the maintained load procedure. Differential anchor uplift is restricted to $\le 3.5\text{ mm}$. Optical level closed-loop backsight on the midspan gauge mount confirms reference datum thermal drift is controlled within $< 0.15\text{ mm}$ across noon solar peaks. In such illustrative conditions, true pile settlement would be expected at approximately $11.42\text{ mm}$, recovering to approximately $2.84\text{ mm}$ residual net settlement, demonstrating full compliance with ASTM D1143 and project specifications without contractual dispute.
 
 ---
 *AN-THAI Engineering Company Limited · Bangkok, Thailand*  

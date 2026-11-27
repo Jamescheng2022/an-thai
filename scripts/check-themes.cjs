@@ -30,14 +30,42 @@ function measureFile(relPath) {
   };
 }
 
+function stripJsComments(s) {
+  return s.replace(/\/\*[\s\S]*?\*\/|(?:^|[^:])\/\/.*$/gm, '');
+}
+function hasReducedMotionRule(cssText) {
+  const clean = cssText.replace(/\/\*[\s\S]*?\*\//g, '');
+  let pos = 0;
+  while (pos < clean.length) {
+    const idx = clean.slice(pos).search(/@media\s*\(\s*prefers-reduced-motion\s*:\s*reduce\s*\)\s*\{/i);
+    if (idx < 0) return false;
+    const open = clean.indexOf('{', pos + idx);
+    let depth = 0;
+    for (let i = open; i < clean.length; i++) {
+      if (clean[i] === '{') depth++;
+      else if (clean[i] === '}') {
+        depth--;
+        if (depth === 0) {
+          if (/(?:animation|transition|transform|opacity|stroke-dashoffset|scroll-behavior)/i.test(clean.slice(open + 1, i))) return true;
+          pos = i + 1;
+          break;
+        }
+      }
+    }
+    if (depth !== 0) return false;
+  }
+  return false;
+}
+
 const coreCss = measureFile(manifest.core.css);
 const coreJs = measureFile(manifest.core.js);
 assert(coreCss.rawBytes <= manifest.core.maxCssRawBytes, `core CSS raw ${coreCss.rawBytes} > ${manifest.core.maxCssRawBytes}`);
 assert(coreCss.gzipBytes <= manifest.core.maxCssGzipBytes, `core CSS gz ${coreCss.gzipBytes} > ${manifest.core.maxCssGzipBytes}`);
 assert(coreJs.rawBytes <= manifest.core.maxJsRawBytes, `core JS raw ${coreJs.rawBytes} > ${manifest.core.maxJsRawBytes}`);
 assert(coreJs.gzipBytes <= manifest.core.maxJsGzipBytes, `core JS gz ${coreJs.gzipBytes} > ${manifest.core.maxJsGzipBytes}`);
-assert(coreCss.text.includes('prefers-reduced-motion'), 'tokens.css must guard prefers-reduced-motion');
-assert(coreJs.text.includes('prefers-reduced-motion') && coreJs.text.includes('vercel\\.app'), 'motion-core.js must gate preview host and reduced motion');
+assert(hasReducedMotionRule(coreCss.text), 'tokens.css must guard prefers-reduced-motion with CSS rule');
+const cleanCoreJs = stripJsComments(coreJs.text);
+assert(cleanCoreJs.includes('prefers-reduced-motion') && cleanCoreJs.includes('vercel\\.app'), 'motion-core.js must gate preview host and reduced motion');
 
 const summary = {
   version: manifest.version,
@@ -54,7 +82,7 @@ for (const preset of manifest.presets) {
   assert(js.gzipBytes <= preset.maxJsGzipBytes, `${preset.id} JS gz ${js.gzipBytes} > ${preset.maxJsGzipBytes}`);
   assert(coreJs.rawBytes + js.rawBytes <= 5632, `${preset.id} total raw JS ${coreJs.rawBytes + js.rawBytes} > 5632`);
   assert(coreJs.gzipBytes + js.gzipBytes <= 2560, `${preset.id} total gzip JS ${coreJs.gzipBytes + js.gzipBytes} > 2560`);
-  assert(css.text.includes('prefers-reduced-motion'), `${preset.id} CSS must support prefers-reduced-motion`);
+  assert(hasReducedMotionRule(css.text), `${preset.id} CSS must support prefers-reduced-motion rule`);
 
   if (preset.id === 'blueprint') {
     assert(js.text.includes('SCHEMATIC') && js.text.includes('示意图') && js.text.includes('แผนภาพจำลอง'), 'Blueprint SVG must label SCHEMATIC in EN/ZH/TH');

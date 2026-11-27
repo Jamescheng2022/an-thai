@@ -94,7 +94,12 @@ if (fs.existsSync(path.join(root, 'assets/themes'))) {
 for (const f of ['assets/css/styles.css']) {
   const src = path.join(root, f);
   if (fs.existsSync(src)) {
-    fs.writeFileSync(path.join(outDir, f), sanitizeTenantAssetContent(fs.readFileSync(src, 'utf8')));
+    let cssText = sanitizeTenantAssetContent(fs.readFileSync(src, 'utf8'));
+    cssText += `\n/* anthai-themes-bundled:v${themeManifest.version} */\n:root{--thb:1;}\n`;
+    for (const p of themeManifest.presets) {
+      cssText += `\n/* preset:${p.id} */\n` + sanitizeTenantAssetContent(fs.readFileSync(path.join(root, p.css), 'utf8')) + '\n';
+    }
+    fs.writeFileSync(path.join(outDir, f), cssText);
   }
 }
 for (const f of ['assets/js/i18n-data.js', 'assets/js/sourcerating-embed-adapter.js', 'assets/js/site.js']) {

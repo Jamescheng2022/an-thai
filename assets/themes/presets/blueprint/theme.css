@@ -49,8 +49,18 @@ html[data-theme="blueprint"] .unit-num {
   background: #0c4a6e;
   color: #7dd3fc;
 }
+html[data-theme="blueprint"] .split-box .split-pane:first-child:not(.has-bp)::after {
+  content: "";
+  display: block;
+  height: 188px;
+  margin-top: 14px;
+  background: #081e34;
+  border: 1px solid #0c4a6e;
+}
 .bp-panel {
   margin-top: 14px;
+  height: 188px;
+  box-sizing: border-box;
   border: 1px solid #0c4a6e;
   background: #081e34;
   color: #e0f2fe;
@@ -66,7 +76,7 @@ html[data-theme="blueprint"] .unit-num {
   font: 700 10px/1.2 var(--font-mono, monospace);
 }
 .bp-tag {
-  background: #0284c7;
+  background: #075985;
   color: #fff;
   padding: 2px 6px;
   text-transform: uppercase;
@@ -85,7 +95,7 @@ html[data-theme="blueprint"] .unit-num {
   border-color: #38bdf8;
   color: #082f49;
 }
-.bp-svg { width: 100%; height: auto; aspect-ratio: 360 / 128; display: block; }
+.bp-svg { width: 100%; height: 112px; display: block; }
 .bp-svg text { font: 10px monospace; fill: #bae6fd; }
 .bp-svg text.bp-w { fill: #fff; text-anchor: middle; }
 .bp-svg .bp-ax { fill: none; stroke: #7dd3fc; stroke-width: 1.5; }

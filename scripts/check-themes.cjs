@@ -31,10 +31,15 @@ function measureFile(relPath) {
 }
 
 function stripJsComments(s) {
-  return s.replace(/"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, (m) => (m[0] === '"' || m[0] === "'" ? m : ''));
+  return s.replace(/`(?:\\.|[^`\\])*`|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\/\*[\s\S]*?\*\/|\/\/[^\n]*/g, (m) => {
+    if (m[0] === '`' || m[0] === '"' || m[0] === "'") return m;
+    return m[1] === '*' ? ' ' : '';
+  });
 }
 function hasReducedMotionRule(cssText) {
-  const clean = cssText.replace(/\/\*[\s\S]*?\*\//g, '');
+  const clean = cssText
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'/g, '""');
   let pos = 0;
   while (pos < clean.length) {
     const idx = clean.slice(pos).search(/@media\s*\(\s*prefers-reduced-motion\s*:\s*reduce\s*\)\s*\{/i);
@@ -46,7 +51,12 @@ function hasReducedMotionRule(cssText) {
       else if (clean[i] === '}') {
         depth--;
         if (depth === 0) {
-          if (/(?:animation(?:-duration)?|transition(?:-duration)?|transform|opacity|stroke-dashoffset|scroll-behavior)\s*:\s*[^;{}]+/i.test(clean.slice(open + 1, i))) return true;
+          const block = clean.slice(open + 1, i);
+          const innerDecls = Array.from(block.matchAll(/\{([^{}]+)\}/g), (m) => m[1]).join(';');
+          const hasMotionDecl = innerDecls
+            .split(';')
+            .some((d) => /^(?:animation(?:-duration)?|transition(?:-duration)?|transform|opacity|stroke-dashoffset|scroll-behavior)\s*:\s*\S/i.test(d.trim()));
+          if (hasMotionDecl) return true;
           pos = i + 1;
           break;
         }

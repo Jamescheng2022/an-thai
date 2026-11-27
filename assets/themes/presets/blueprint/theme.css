@@ -49,7 +49,8 @@ html[data-theme="blueprint"] .unit-num {
   background: #0c4a6e;
   color: #7dd3fc;
 }
-html[data-theme="blueprint"] .split-box .split-pane:first-child:not(.has-bp)::after {
+html[data-theme="blueprint"] .split-box .split-pane:first-child:not(.has-bp)::after,
+html[data-theme="blueprint"]:not(:has(.split-box .split-pane, .diagram-box)) footer:not(.has-bp)::after {
   content: "";
   display: block;
   height: 188px;

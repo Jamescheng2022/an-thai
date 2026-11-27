@@ -1,0 +1,61 @@
+{
+  "name": "anthai-site-themes",
+  "version": "1.0.0",
+  "defaultTheme": "default",
+  "allowedHosts": ["localhost", "127.0.0.1", "[::1]", "*.vercel.app", "file:"],
+  "core": {
+    "css": "assets/themes/tokens.css",
+    "maxCssRawBytes": 1536,
+    "maxCssGzipBytes": 768,
+    "js": "assets/themes/motion-core.js",
+    "maxJsRawBytes": 3584,
+    "maxJsGzipBytes": 1434
+  },
+  "presets": [
+    {
+      "id": "cinematic",
+      "name": "Cinematic Industrial",
+      "labels": {
+        "EN": "Cinematic",
+        "ZH": "电影工程",
+        "TH": "ซินีมาวิศวกรรม"
+      },
+      "css": "assets/themes/presets/cinematic/theme.css",
+      "js": "assets/themes/presets/cinematic/preset.js",
+      "maxCssRawBytes": 8192,
+      "maxCssGzipBytes": 2560,
+      "maxJsRawBytes": 2048,
+      "maxJsGzipBytes": 922
+    },
+    {
+      "id": "blueprint",
+      "name": "Technical Blueprint",
+      "labels": {
+        "EN": "Blueprint",
+        "ZH": "工程蓝图",
+        "TH": "แบบวิศวกรรม"
+      },
+      "css": "assets/themes/presets/blueprint/theme.css",
+      "js": "assets/themes/presets/blueprint/preset.js",
+      "maxCssRawBytes": 8192,
+      "maxCssGzipBytes": 2560,
+      "maxJsRawBytes": 2048,
+      "maxJsGzipBytes": 1126
+    },
+    {
+      "id": "storytelling",
+      "name": "Motion Storytelling",
+      "labels": {
+        "EN": "Storytelling",
+        "ZH": "滚动叙事",
+        "TH": "เล่าเรื่องภาพ"
+      },
+      "css": "assets/themes/presets/storytelling/theme.css",
+      "js": "assets/themes/presets/storytelling/preset.js",
+      "maxCssRawBytes": 8192,
+      "maxCssGzipBytes": 2560,
+      "maxJsRawBytes": 1536,
+      "maxJsGzipBytes": 717
+    }
+  ]
+}

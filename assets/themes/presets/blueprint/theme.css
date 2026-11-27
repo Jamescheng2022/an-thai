@@ -1,0 +1,107 @@
+/* Theme 2: Technical Blueprint (Drafting grid + SVG flow & symbolic Q-s schematic) */
+html[data-theme="blueprint"] {
+  --bg: #eef4fa;
+  --surface: #ffffff;
+  --surface-alt: #f5f9fd;
+  --surface-hover: #e1ecf7;
+  --ink: #0b1f33;
+  --ink-muted: #334e68;
+  --ink-subtle: #486581;
+  --line: #0c4a6e;
+  --line-soft: rgba(12, 74, 110, 0.2);
+  --accent: #0284c7;
+  --accent-hover: #0369a1;
+}
+html[data-theme="blueprint"] body {
+  background-image:
+    linear-gradient(to right, rgba(2, 132, 199, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(2, 132, 199, 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+html[data-theme="blueprint"] .site-header,
+html[data-theme="blueprint"] .bottom-bar {
+  background: rgba(238, 244, 250, 0.96);
+  border-color: #0c4a6e;
+}
+html[data-theme="blueprint"] .hero {
+  background: #0a2540;
+  background-image:
+    linear-gradient(to right, rgba(56, 189, 248, 0.14) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.14) 1px, transparent 1px);
+  background-size: 24px 24px;
+  border-bottom: 2px solid #0284c7;
+}
+html[data-theme="blueprint"] .hero-img {
+  opacity: 0.34;
+  filter: grayscale(100%) contrast(1.15);
+}
+html[data-theme="blueprint"] .hero-scrim {
+  background: linear-gradient(100deg, rgba(10, 37, 64, 0.92) 0%, rgba(12, 74, 110, 0.56) 65%, rgba(10, 37, 64, 0.85) 100%);
+}
+html[data-theme="blueprint"] .unit-card,
+html[data-theme="blueprint"] .insight-card,
+html[data-theme="blueprint"] .split-box,
+html[data-theme="blueprint"] .card {
+  border-color: #0c4a6e;
+  box-shadow: 4px 4px 0 rgba(12, 74, 110, 0.12);
+}
+html[data-theme="blueprint"] .unit-num {
+  background: #0c4a6e;
+  color: #7dd3fc;
+}
+.bp-panel {
+  margin-top: 14px;
+  border: 1px solid #0c4a6e;
+  background: #081e34;
+  color: #e0f2fe;
+  padding: 12px 14px;
+}
+.bp-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+  font: 700 10px/1.2 var(--font-mono, monospace);
+}
+.bp-tag {
+  background: #0284c7;
+  color: #fff;
+  padding: 2px 6px;
+  text-transform: uppercase;
+}
+.bp-tabs { display: inline-flex; gap: 4px; }
+.bp-tab {
+  border: 1px solid rgba(125, 211, 252, 0.45);
+  background: transparent;
+  color: #bae6fd;
+  padding: 2px 7px;
+  font: inherit;
+  cursor: pointer;
+}
+.bp-tab[aria-pressed="true"] {
+  background: #38bdf8;
+  border-color: #38bdf8;
+  color: #082f49;
+}
+.bp-svg { width: 100%; height: auto; aspect-ratio: 360 / 128; display: block; }
+.bp-svg text { font: 10px monospace; fill: #bae6fd; }
+.bp-svg text.bp-w { fill: #fff; text-anchor: middle; }
+.bp-svg .bp-ax { fill: none; stroke: #7dd3fc; stroke-width: 1.5; }
+.bp-svg .bp-box { fill: #0c4a6e; stroke: #7dd3fc; }
+.bp-svg .bp-c1 { fill: none; stroke: #38bdf8; stroke-width: 2.2; }
+.bp-svg .bp-c2 { fill: none; stroke: #f59e0b; stroke-width: 1.5; stroke-dasharray: 4 4; }
+.bp-draw {
+  stroke-dasharray: 420;
+  stroke-dashoffset: 420;
+  transition: stroke-dashoffset 1.1s var(--th-ease, ease);
+}
+.bp-note { margin-top: 6px; font-size: 10px; color: #93c5fd; }
+.bp-note::after { content: "Conceptual curve only \2014  no numeric test readings"; }
+html[lang^="zh"] .bp-note::after { content: "仅示概念轮廓，不含实测数值"; }
+html[lang="th"] .bp-note::after { content: "แผนภาพแนวคิด ไม่มีค่าทดสอบจริง"; }
+.bp-panel.is-drawn .bp-draw { stroke-dashoffset: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .bp-draw { stroke-dashoffset: 0 !important; }
+}

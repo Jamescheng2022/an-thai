@@ -81,6 +81,15 @@ fs.rmSync(outDir, { recursive: true, force: true });
 fs.mkdirSync(path.join(outDir, 'assets/css'), { recursive: true });
 fs.mkdirSync(path.join(outDir, 'assets/js'), { recursive: true });
 fs.mkdirSync(path.join(outDir, 'assets/images'), { recursive: true });
+fs.mkdirSync(path.join(outDir, 'assets/themes'), { recursive: true });
+
+const themeManifest = JSON.parse(fs.readFileSync(path.join(root, 'themes/manifest.json'), 'utf8'));
+const validThemeIds = new Set(themeManifest.presets.map((p) => p.id));
+const activeTheme = cfg.theme && validThemeIds.has(cfg.theme) ? cfg.theme : 'default';
+
+if (fs.existsSync(path.join(root, 'assets/themes'))) {
+  fs.cpSync(path.join(root, 'assets/themes'), path.join(outDir, 'assets/themes'), { recursive: true });
+}
 
 for (const f of ['assets/css/styles.css']) {
   const src = path.join(root, f);
@@ -134,6 +143,7 @@ const runtimeConfig = {
   directEmail: cfg.directEmail,
   directPhone: cfg.directPhone,
   hideDirectMessengers: Boolean(cfg.hideDirectMessengers),
+  theme: activeTheme,
   sourceRating: cfg.sourceRating,
 };
 
@@ -195,15 +205,20 @@ function renderPage(loc, pageName) {
       </section>
     </main>`;
 
+  const themeAttr = activeTheme !== 'default' ? ` data-theme="${escapeHtml(activeTheme)}"` : '';
+  const themeCssLinks = activeTheme !== 'default'
+    ? `\n  <link id="anthaiThemeTokensCss" rel="stylesheet" href="/assets/themes/tokens.css" />\n  <link id="anthaiThemePresetCss" rel="stylesheet" href="/assets/themes/presets/${escapeHtml(activeTheme)}/theme.css" />`
+    : '';
+
   return `<!DOCTYPE html>
-<html lang="${loc.htmlLang}">
+<html lang="${loc.htmlLang}"${themeAttr}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>${escapeHtml(cfg.legalName)} (${escapeHtml(loc.key)})</title>
   <link rel="icon" href="/assets/images/tenant-logo.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="/assets/css/styles.css" />
+  <link rel="stylesheet" href="/assets/css/styles.css" />${themeCssLinks}
 </head>
 <body>
   <header class="site-header">
@@ -277,6 +292,7 @@ function renderPage(loc, pageName) {
   </script>
   <script src="/assets/js/sr-bridge-mock.js"></script>
   <script src="/assets/js/sourcerating-embed-adapter.js"></script>
+  <script defer src="/assets/themes/motion-core.js"></script>
   <script src="/assets/js/site.js"></script>
 </body>
 </html>\n`;

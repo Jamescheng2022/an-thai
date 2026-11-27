@@ -47,6 +47,16 @@ require('node:child_process').execFileSync('python3', [path.join(root, 'scripts/
 require('node:child_process').execFileSync('python3', [path.join(root, 'scripts/build-cases.py')], {stdio:'inherit', env: {...process.env, PYTHONUTF8: '1'}});
 
 require('./inject-analytics.cjs')(output);
+require('./check-themes.cjs');
+{
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, 'themes/manifest.json'), 'utf8'));
+  const distStylesPath = path.join(output, 'assets/css/styles.css');
+  let bundledCss = fs.readFileSync(distStylesPath, 'utf8') + `\n/* anthai-themes-bundled:v${manifest.version} */\n:root{--thb:1;}\n`;
+  for (const p of manifest.presets) {
+    bundledCss += `\n/* preset:${p.id} */\n` + fs.readFileSync(path.join(root, p.css), 'utf8') + '\n';
+  }
+  fs.writeFileSync(distStylesPath, bundledCss);
+}
 
 // Publish AdSense ownership verification across generated and localized pages.
 const adsenseMeta = '<meta name="google-adsense-account" content="ca-pub-4813203643604350">';

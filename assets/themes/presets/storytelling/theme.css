@@ -1,0 +1,68 @@
+/* Theme 3: Motion Storytelling (Editorial big-image chapters, minimal copy, sticky desktop) */
+html[data-theme="storytelling"] {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-alt: #f5f5f7;
+  --ink: #111315;
+  --ink-muted: #515459;
+  --line: rgba(17, 19, 21, 0.14);
+  --line-soft: rgba(17, 19, 21, 0.1);
+}
+html[data-theme="storytelling"] .site-header,
+html[data-theme="storytelling"] .bottom-bar {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(17, 19, 21, 0.1);
+}
+@media (min-width: 768px) {
+  html[data-theme="storytelling"] .hero {
+    min-height: 330px;
+    height: 46vh;
+    max-height: 440px;
+    border-bottom: 0;
+  }
+}
+html[data-theme="storytelling"] .hero-title {
+  font-size: clamp(30px, 5vw, 56px);
+  letter-spacing: -0.04em;
+  max-width: 14ch;
+}
+html[data-theme="storytelling"] .unit-grid {
+  grid-template-columns: 1fr;
+  gap: 28px;
+}
+html[data-theme="storytelling"] .unit-card {
+  border: 0;
+  background: var(--surface-alt);
+  border-radius: 14px;
+}
+html[data-theme="storytelling"] .unit-thumb {
+  border-bottom: 0;
+  aspect-ratio: 16 / 9;
+}
+html[data-theme="storytelling"] .unit-body {
+  padding: 20px 22px;
+}
+html[data-theme="storytelling"] .unit-card .h3 {
+  font-size: clamp(18px, 2.2vw, 24px);
+}
+@media (min-width: 1024px) {
+  html[data-theme="storytelling"] .unit-card {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    align-items: center;
+  }
+  html[data-theme="storytelling"] .unit-card:nth-child(even) .unit-thumb { order: 2; }
+  html[data-theme="storytelling"] .unit-body { padding: 32px 38px; }
+}
+html[data-theme="storytelling"] .th-story {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  transition: opacity 0.6s var(--th-ease, ease), transform 0.6s var(--th-ease, ease);
+}
+html[data-theme="storytelling"] .th-story.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="storytelling"] .th-story { opacity: 1 !important; transform: none !important; }
+}

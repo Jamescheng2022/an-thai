@@ -1,0 +1,129 @@
+/* Theme 1: Cinematic Industrial (2.5D composited motion, GPU-only transform/opacity) */
+html[data-theme="cinematic"] {
+  --bg: #0c0f14;
+  --surface: #141922;
+  --surface-alt: #1b222e;
+  --surface-hover: #242d3d;
+  --ink: #f1f5f9;
+  --ink-muted: #cbd5e1;
+  --ink-subtle: #94a3b8;
+  --line: rgba(248, 250, 252, 0.2);
+  --line-soft: rgba(248, 250, 252, 0.14);
+  --accent: #f97316;
+  --accent-hover: #ea580c;
+}
+html[data-theme="cinematic"] .site-header,
+html[data-theme="cinematic"] .bottom-bar {
+  background: rgba(12, 15, 20, 0.94);
+  border-color: rgba(249, 115, 22, 0.35);
+}
+html[data-theme="cinematic"] .lang-switch {
+  background: #141922;
+  border-color: rgba(248, 250, 252, 0.24);
+}
+html[data-theme="cinematic"] .menu-toggle {
+  background: #141922;
+  color: #f8fafc;
+}
+html[data-theme="cinematic"] .lang-btn[aria-pressed="true"],
+html[data-theme="cinematic"] .lang-btn[aria-current="true"] {
+  background: var(--accent);
+  color: #0b0d12;
+}
+html[data-theme="cinematic"] .nav-drop-menu {
+  background: #141922;
+  border-color: rgba(248, 250, 252, 0.24);
+}
+html[data-theme="cinematic"] .nav-drop-menu a { color: #f1f5f9; }
+html[data-theme="cinematic"] .hero {
+  background: #07090d;
+  border-bottom: 1px solid rgba(249, 115, 22, 0.45);
+}
+html[data-theme="cinematic"] .hero-img {
+  transform: translate3d(0, var(--hero-shift, 0px), 0) scale(1.06);
+  filter: contrast(1.08) brightness(0.84);
+  transition: transform 0.12s linear;
+}
+html[data-theme="cinematic"] .hero-scrim {
+  background:
+    radial-gradient(circle at 78% 28%, rgba(249, 115, 22, 0.22), transparent 52%),
+    linear-gradient(108deg, rgba(7, 9, 13, 0.94) 15%, rgba(12, 16, 24, 0.56) 62%, rgba(7, 9, 13, 0.85) 100%);
+}
+html[data-theme="cinematic"] .hero-title {
+  text-shadow: 0 8px 28px rgba(0, 0, 0, 0.65);
+  letter-spacing: -0.035em;
+}
+html[data-theme="cinematic"] .unit-card,
+html[data-theme="cinematic"] .insight-card,
+html[data-theme="cinematic"] .split-box,
+html[data-theme="cinematic"] .card,
+html[data-theme="cinematic"] .accordion-group,
+html[data-theme="cinematic"] .acc-item summary,
+html[data-theme="cinematic"] .btn-outline,
+html[data-theme="cinematic"] .receive-box,
+html[data-theme="cinematic"] .filter-btn {
+  background: #141922;
+  color: #f1f5f9;
+  border-color: rgba(248, 250, 252, 0.18);
+}
+html[data-theme="cinematic"] .unit-card {
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
+  transition: transform 0.28s var(--th-ease, ease), border-color 0.28s ease, box-shadow 0.28s ease;
+}
+html[data-theme="cinematic"] .unit-card:hover {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translate3d(0, -4px, 0);
+  border-color: #f97316;
+  box-shadow: 0 20px 40px rgba(249, 115, 22, 0.18);
+}
+html[data-theme="cinematic"] .acc-panel,
+html[data-theme="cinematic"] .drawer-panel,
+html[data-theme="cinematic"] .drawer-footer,
+html[data-theme="cinematic"] .qr-mini-card,
+html[data-theme="cinematic"] .msg-bubble:not(.is-guest):not(.is-human):not(.is-system) {
+  background: #1b222e;
+  color: #f1f5f9;
+}
+html[data-theme="cinematic"] .btn-dark,
+html[data-theme="cinematic"] .desk-btn,
+html[data-theme="cinematic"] .tag-pill:not(.tag-accent),
+html[data-theme="cinematic"] .filter-btn[aria-pressed="true"],
+html[data-theme="cinematic"] .drawer-header,
+html[data-theme="cinematic"] .msg-bubble.is-guest {
+  background: #1e293b;
+  color: #f8fafc;
+  border-color: rgba(248, 250, 252, 0.35);
+}
+html[data-theme="cinematic"] .btn-dark:hover,
+html[data-theme="cinematic"] .desk-btn:hover {
+  background: var(--accent);
+  color: #0b0d12;
+  border-color: var(--accent);
+}
+html[data-theme="cinematic"] .notice-box.is-neutral {
+  background: #1b222e;
+  color: #e2e8f0;
+  border-color: rgba(248, 250, 252, 0.2);
+}
+html[data-theme="cinematic"] .notice-box.is-ok {
+  background: #064e3b;
+  color: #d1fae5;
+  border-color: #10b981;
+}
+html[data-theme="cinematic"] .notice-box.is-err {
+  background: #7f1d1d;
+  color: #fee2e2;
+  border-color: #ef4444;
+}
+html[data-theme="cinematic"] .th-reveal {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  transition: opacity 0.55s var(--th-ease, ease), transform 0.55s var(--th-ease, ease);
+}
+html[data-theme="cinematic"] .th-reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="cinematic"] .hero-img { transform: none !important; }
+  html[data-theme="cinematic"] .th-reveal { opacity: 1 !important; transform: none !important; }
+}

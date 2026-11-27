@@ -223,7 +223,7 @@ function renderPage(loc, pageName) {
   <meta name="robots" content="noindex, nofollow" />
   <title>${escapeHtml(cfg.legalName)} (${escapeHtml(loc.key)})</title>
   <link rel="icon" href="/assets/images/tenant-logo.svg" type="image/svg+xml" />
-  <script>(function(){try{var h=location.hostname.toLowerCase().replace(/\.+$/,''),p=location.protocol==='file:'||h==='localhost'||h==='127.0.0.1'||h==='[::1]'||/\.vercel\.app$/.test(h),t=p&&new URLSearchParams(location.search).get('theme');if(t==='default')document.documentElement.removeAttribute('data-theme');else if(t==='cinematic'||t==='blueprint'||t==='storytelling')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+  <script>(function(){try{var h=location.hostname.toLowerCase().replace(/\\.+$/,''),p=location.protocol==='file:'||h==='localhost'||h==='127.0.0.1'||h==='[::1]'||/\\.vercel\\.app$/.test(h),t=p&&new URLSearchParams(location.search).get('theme');if(t==='default')document.documentElement.removeAttribute('data-theme');else if(t==='cinematic'||t==='blueprint'||t==='storytelling')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
   <link rel="stylesheet" href="/assets/css/styles.css" />${themeCssLinks}
 </head>
 <body>

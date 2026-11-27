@@ -558,9 +558,8 @@
             applySessionResetUI();
             return;
           }
-        } else if (state.sessionStatus !== 'human_active') {
-          state.assignedStaffLabel = '';
         }
+        if (state.sessionStatus !== 'human_active') state.assignedStaffLabel = '';
         syncStatusUI();
         if (state.sessionStatus === 'closed') showLiveFeedback(t('liveClosedNotice'), 'neutral');
         renderLiveMessages(r.messages);

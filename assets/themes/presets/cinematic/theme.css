@@ -75,10 +75,6 @@ html[data-theme="cinematic"] .contact-channels-pane {
   background: #0f141c;
   color: #f8fafc;
 }
-html[data-theme="cinematic"] .drawer-footer {
-  background: #141922;
-  border-color: rgba(248, 250, 252, 0.18);
-}
 html[data-theme="cinematic"] .field input,
 html[data-theme="cinematic"] .field select,
 html[data-theme="cinematic"] .field textarea,
@@ -128,6 +124,9 @@ html[data-theme="cinematic"] .msg-bubble.is-human {
   background: #052e16;
   color: #ecfdf5;
   border-color: #10b981;
+}
+html[data-theme="cinematic"] .msg-bubble.is-human .msg-meta {
+  color: #6ee7b7;
 }
 html[data-theme="cinematic"] .btn-dark,
 html[data-theme="cinematic"] .desk-btn,

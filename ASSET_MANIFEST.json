@@ -161,11 +161,11 @@
     {
       "path": "assets/images/lab-equipment.webp",
       "zip_source": "anthai_site_build/assets/images/lab-equipment.webp",
-      "sha256": "3209ec07178df5e50fe29cc141d53301171174f1c8e07564dd3a3fb14e4941a4",
-      "bytes": 56346,
+      "sha256": "88d1218eb91ef09b13d9335ac8f232035cba733e568c32888070b12fea60c8c6",
+      "bytes": 78276,
       "dimensions": [
         900,
-        513
+        491
       ],
       "description": "Laboratory instruments illustrated in the AN-THAI partner laboratory brochure section",
       "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
@@ -174,11 +174,11 @@
     {
       "path": "assets/images/lab-equipment-small.webp",
       "zip_source": "anthai_commit_images/lab-equipment.webp",
-      "sha256": "57793604b787ebc42c3fe49fbc8276545f64dc5445f3b089e7700d8610a3aa0b",
-      "bytes": 19566,
+      "sha256": "f9895eab3335be77cd7bf9634861fbdf149c45847ede06cb03f06d840130328f",
+      "bytes": 32780,
       "dimensions": [
         520,
-        297
+        284
       ],
       "description": "Laboratory instruments illustrated in the AN-THAI partner laboratory brochure section",
       "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
@@ -298,11 +298,11 @@
     {
       "path": "assets/images/static-load-clean.webp",
       "zip_source": "v1.1-20261128-remediation",
-      "sha256": "698b162aa5e75ac0d5e657964096d9a4e76123361a5980e0d2ccbc6f63ad2f49",
-      "bytes": 50148,
+      "sha256": "7b173171b90ca8c6c1323f2c0beb74cd19345ffc615916c68d2d1f890f17b873",
+      "bytes": 42736,
       "dimensions": [
-        575,
-        350
+        560,
+        328
       ],
       "description": "Clean uncaptioned static pile load test field photograph reused from repository insights asset for homepage Unit 01 card only",
       "provenance": "Owner-supplied AN-THAI brochure clean photographic crop",
@@ -363,27 +363,27 @@
     {
       "path": "assets/images/field-instruments.webp",
       "zip_source": "v1.1-20261128-remediation",
-      "sha256": "e3fee56447b6970b0fbded208dbab1d7632b6711589a5b259d88630d20417a89",
-      "bytes": 109942,
+      "sha256": "922bb1ed061dc9424fad78f861084455b56ea189d8215a10131dad395c7c6cef",
+      "bytes": 96478,
       "dimensions": [
         1200,
         670
       ],
-      "description": "Portable digital pile integrity and dynamic testing analyzer connected by shielded cables to sensors on a concrete pile head",
-      "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
+      "description": "Illustrative visualization of a portable pile testing analyzer connected to side-mounted pile shaft sensors",
+      "provenance": "Gemini realistic editorial generation (2026-11-28, illustrative visualization)",
       "kind": "editorial industrial visualization"
     },
     {
       "path": "assets/images/field-instruments-small.webp",
       "zip_source": "v1.1-20261128-remediation",
-      "sha256": "cfb0ef3393d00c0e74a2cf0f8e184a42e5d05bd99c84b97dad822dd98c0ba8dc",
-      "bytes": 43544,
+      "sha256": "551c3a6715d51fe832b30b2effceae5e4997a28c29987341f22dc191037e12fc",
+      "bytes": 40886,
       "dimensions": [
         640,
         357
       ],
-      "description": "Mobile portable digital pile integrity and dynamic testing analyzer connected by shielded cables to sensors on a concrete pile head",
-      "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
+      "description": "Mobile illustrative visualization of a portable pile testing analyzer connected to side-mounted pile shaft sensors",
+      "provenance": "Gemini realistic editorial generation (2026-11-28, illustrative visualization)",
       "kind": "editorial industrial visualization"
     }
   ]

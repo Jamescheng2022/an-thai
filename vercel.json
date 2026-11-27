@@ -18,12 +18,12 @@
     {
       "source": "/equipment.html",
       "destination": "/cement-mining-equipment.html",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/powder-equipment.html",
       "destination": "/cement-mining-equipment.html",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/portfolio.html",
@@ -43,22 +43,22 @@
     {
       "source": "/zh/equipment.html",
       "destination": "/zh/cement-mining-equipment.html",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/th/equipment.html",
       "destination": "/th/cement-mining-equipment.html",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/zh/powder-equipment.html",
       "destination": "/zh/cement-mining-equipment.html",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/th/powder-equipment.html",
       "destination": "/th/cement-mining-equipment.html",
-      "permanent": true
+      "statusCode": 301
     },
     {
       "source": "/zh/portfolio.html",

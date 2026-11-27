@@ -24,10 +24,10 @@ LOCALE_UI = {
         'lead': 'From Bangkok and the Eastern Economic Corridor (EEC) to cross-border equipment supply, AN-THAI Engineering executes field testing, buyer-side fabrication QA/QC, and industrial process coordination under clear contractual scopes and traceable international codes.',
         'disciplinesTitle': 'Core Engineering & Procurement Disciplines',
         'disciplines': [
-            ('/testing.html', '/assets/images/hero-field-clean.webp', 530, 318, '01 · Foundation Testing & Geotech', 'Static Load Testing (SLT), high-strain PDA/CAPWAP, low-strain PIT, Crosshole Sonic Logging (CSL), plate load tests, and soil boring per ASTM, TIS & EIT codes.', 'Explore Foundation Testing →'),
-            ('/steel-procurement.html', '/assets/images/steel/steel-hero.webp', 1200, 670, '02 · Buyer-Side Steel Procurement', 'Independent buyer representation for structural steel & space frames: RFQ leveling, China fabricator qualification, NDT & welding inspection, MTC traceability, and pre-shipment release.', 'Explore Steel Procurement →'),
-            ('/cement-mining-equipment.html', '/assets/images/cement-mining.webp', 1200, 670, '03 · Cement & Mining Process Equipment', 'Technical coordination and supply support for crushing, grinding (VRM/ball mill/roller press), pyro-processing peripherals, dust collection, conveying, electrical control, commissioning support, and spares.', 'Explore Cement & Mining Equipment →'),
-            ('/testing-instruments.html', '/assets/images/field-instruments.webp', 1200, 670, '04 · Field Testing Instruments', 'Supply and technical support for pile integrity testers, CSL ultrasonic analyzers, hydraulic load cells, displacement transducers, and data acquisition systems.', 'Explore Testing Instruments →'),
+            ('/testing.html', '/assets/images/hero-field-clean.webp', 530, 318, '01 · Foundation Testing & Geotech', 'Static Load Testing (SLT), high-strain PDA/CAPWAP, low-strain PIT, Crosshole Sonic Logging (CSL), plate load tests, and soil boring per ASTM, TIS & EIT codes.', 'Explore Foundation Testing →', ''),
+            ('/steel-procurement.html', '/assets/images/steel/steel-hero.webp', 1200, 670, '02 · Buyer-Side Steel Procurement', 'Independent buyer representation for structural steel & space frames: RFQ leveling, China fabricator qualification, NDT & welding inspection, MTC traceability, and pre-shipment release.', 'Explore Steel Procurement →', 'Illustrative engineering visualization (not an AN-THAI jobsite photo)'),
+            ('/cement-mining-equipment.html', '/assets/images/cement-mining.webp', 1200, 670, '03 · Cement & Mining Process Equipment', 'Technical coordination and supply support for crushing, grinding (VRM/ball mill/roller press), pyro-processing peripherals, dust collection, conveying, electrical control, commissioning support, and spares.', 'Explore Cement & Mining Equipment →', 'Illustrative engineering visualization (not an AN-THAI jobsite photo)'),
+            ('/testing-instruments.html', '/assets/images/field-instruments.webp', 1200, 670, '04 · Field Testing Instruments', 'Supply and technical support for pile integrity testers, CSL ultrasonic analyzers, hydraulic load cells, displacement transducers, and data acquisition systems.', 'Explore Testing Instruments →', 'Illustrative engineering visualization (not an AN-THAI jobsite photo)'),
         ],
         'credTitle': 'Project Credentials & Technical Documentation',
         'credBody': 'Representative method statements, anonymized sample test report formats, and discipline-specific track references are shared directly with prospective clients and engineering consultants during project scoping.',
@@ -63,10 +63,10 @@ LOCALE_UI = {
         'lead': '立足曼谷与泰国东部经济走廊（EEC），安泰工程围绕国际工程规范（ASTM、BS、EN、ISO）与泰国本土标准（TIS、EIT、BMA），开展清晰的工程检测协调、买方钢构品控及工艺装备供应协调。',
         'disciplinesTitle': '四大核心工程与采购业务',
         'disciplines': [
-            ('/zh/testing.html', '/assets/images/hero-field-clean.webp', 530, 318, '01 · 桩基检测与岩土工程', '严格遵循 ASTM、TIS 及 EIT 规范，协调执行静载试验（SLT）、高应变 PDA/CAPWAP、低应变 PIT、声波透射（CSL）、平板载荷试验及地质钻探取样。', '查看检测服务详情 →'),
-            ('/zh/steel-procurement.html', '/assets/images/steel/steel-hero.webp', 1200, 670, '02 · 买方立场钢结构采购代理', '代表采购方提供重钢与网架结构可比性核价、中国制造厂产能与焊缝/无损检测核查、材质单（MTC）追溯与装船前放行把关。', '查看钢构采购详情 →'),
-            ('/zh/cement-mining-equipment.html', '/assets/images/cement-mining.webp', 1200, 670, '03 · 水泥与矿山工艺装备', '面向水泥及矿山全流程产线提供设备技术协调与供货对接，覆盖破碎预均化、粉磨、烧成周边、选粉收尘、输送储运、矿山筛分、电控调试配合及备件。', '查看水泥矿山装备 →'),
-            ('/zh/testing-instruments.html', '/assets/images/field-instruments.webp', 1200, 670, '04 · 工程检测仪器系统', '提供基桩完整性测试仪、声波透射超声记录仪、高精度荷载传感器、位移传感器及数据采集系统的选型供应与技术支持。', '查看检测仪器详情 →'),
+            ('/zh/testing.html', '/assets/images/hero-field-clean.webp', 530, 318, '01 · 桩基检测与岩土工程', '严格遵循 ASTM、TIS 及 EIT 规范，协调执行静载试验（SLT）、高应变 PDA/CAPWAP、低应变 PIT、声波透射（CSL）、平板载荷试验及地质钻探取样。', '查看检测服务详情 →', ''),
+            ('/zh/steel-procurement.html', '/assets/images/steel/steel-hero.webp', 1200, 670, '02 · 买方立场钢结构采购代理', '代表采购方提供重钢与网架结构可比性核价、中国制造厂产能与焊缝/无损检测核查、材质单（MTC）追溯与装船前放行把关。', '查看钢构采购详情 →', '工程示意图（非 AN-THAI 实拍项目现场）'),
+            ('/zh/cement-mining-equipment.html', '/assets/images/cement-mining.webp', 1200, 670, '03 · 水泥与矿山工艺装备', '面向水泥及矿山全流程产线提供设备技术协调与供货对接，覆盖破碎预均化、粉磨、烧成周边、选粉收尘、输送储运、矿山筛分、电控调试配合及备件。', '查看水泥矿山装备 →', '工程示意图（非 AN-THAI 实拍项目现场）'),
+            ('/zh/testing-instruments.html', '/assets/images/field-instruments.webp', 1200, 670, '04 · 工程检测仪器系统', '提供基桩完整性测试仪、声波透射超声记录仪、高精度荷载传感器、位移传感器及数据采集系统的选型供应与技术支持。', '查看检测仪器详情 →', '工程示意图（非 AN-THAI 实拍项目现场）'),
         ],
         'credTitle': '代表性工程资料与技术范本',
         'credBody': '如贵方处于招投标、施工方案审查或设备选型阶段，欢迎直接联系曼谷技术团队索取对应学科的方法说明、报告范本及交付能力文件。',
@@ -102,10 +102,10 @@ LOCALE_UI = {
         'lead': 'AN-THAI Engineering ให้บริการประสานงานด้านการทดสอบฐานราก การตรวจสอบคุณภาพการจัดหาเหล็กโครงสร้างฝั่งผู้ซื้อ และเครื่องมือทดสอบในกรุงเทพฯ และพื้นที่ EEC ภายใต้มาตรฐานสากล (ASTM, BS, EN, ISO) และมาตรฐานไทย (มอก., วสท.)',
         'disciplinesTitle': '4 กลุ่มงานวิศวกรรมและการจัดหาหลัก',
         'disciplines': [
-            ('/th/testing.html', '/assets/images/hero-field-clean.webp', 530, 318, '01 · งานทดสอบเสาเข็มและปฐพี', 'ประสานงานทดสอบรับน้ำหนักแบบสถิต (SLT), ทดสอบพลศาสตร์ (PDA/CAPWAP), ความสมบูรณ์เสาเข็ม (PIT/CSL), Plate Load และเจาะสำรวจดินตามมาตรฐาน ASTM และ วสท.', 'ดูรายละเอียดงานทดสอบ →'),
-            ('/th/steel-procurement.html', '/assets/images/steel/steel-hero.webp', 1200, 670, '02 · ตัวแทนจัดหาเหล็กโครงสร้างฝั่งผู้ซื้อ', 'เป็นตัวแทนฝ่ายผู้ซื้อเปรียบเทียบ RFQ ตรวจสอบโรงงานผลิต ตรวจสอบรอยเชื่อม/NDT ตรวจสอบใบรับรองวัสดุ (MTC) และตรวจปล่อยสินค้าก่อนส่งมอบ', 'ดูรายละเอียดจัดหาเหล็ก →'),
-            ('/th/cement-mining-equipment.html', '/assets/images/cement-mining.webp', 1200, 670, '03 · เครื่องจักรและระบบกระบวนการผลิตปูนซีเมนต์และเหมืองแร่', 'ประสานงานเทคนิคและจัดหาเครื่องจักรระบบบดย่อย การบดละเอียด (VRM/Ball Mill/Roller Press) ระบบประกอบเตาเผา ลำเลียง ดักฝุ่น ควบคุมไฟฟ้า และอะไหล่สำหรับอุตสาหกรรมซีเมนต์และเหมืองแร่', 'ดูรายละเอียดเครื่องจักรซีเมนต์และเหมือง →'),
-            ('/th/testing-instruments.html', '/assets/images/field-instruments.webp', 1200, 670, '04 · เครื่องมือทดสอบวิศวกรรมภาคสนาม', 'จัดหาและให้คำปรึกษาเครื่องทดสอบความสมบูรณ์เสาเข็ม เครื่องวิเคราะห์คลื่นเสียง CSL เซนเซอร์วัดแรง โหลดเซลล์ และระบบบันทึกข้อมูลสนาม', 'ดูรายละเอียดเครื่องมือทดสอบ →'),
+            ('/th/testing.html', '/assets/images/hero-field-clean.webp', 530, 318, '01 · งานทดสอบเสาเข็มและปฐพี', 'ประสานงานทดสอบรับน้ำหนักแบบสถิต (SLT), ทดสอบพลศาสตร์ (PDA/CAPWAP), ความสมบูรณ์เสาเข็ม (PIT/CSL), Plate Load และเจาะสำรวจดินตามมาตรฐาน ASTM และ วสท.', 'ดูรายละเอียดงานทดสอบ →', ''),
+            ('/th/steel-procurement.html', '/assets/images/steel/steel-hero.webp', 1200, 670, '02 · ตัวแทนจัดหาเหล็กโครงสร้างฝั่งผู้ซื้อ', 'เป็นตัวแทนฝ่ายผู้ซื้อเปรียบเทียบ RFQ ตรวจสอบโรงงานผลิต ตรวจสอบรอยเชื่อม/NDT ตรวจสอบใบรับรองวัสดุ (MTC) และตรวจปล่อยสินค้าก่อนส่งมอบ', 'ดูรายละเอียดจัดหาเหล็ก →', 'ภาพประกอบเชิงวิศวกรรม (ไม่ใช่ภาพหน้างานจริงของ AN-THAI)'),
+            ('/th/cement-mining-equipment.html', '/assets/images/cement-mining.webp', 1200, 670, '03 · เครื่องจักรและระบบสำหรับอุตสาหกรรมปูนซีเมนต์และเหมืองแร่', 'ประสานงานเทคนิคและจัดหาเครื่องจักรระบบบดย่อย การบดละเอียด (VRM/Ball Mill/Roller Press) ระบบประกอบเตาเผา ลำเลียง ดักฝุ่น ควบคุมไฟฟ้าและเครื่องมือวัด (E&I) และอะไหล่', 'ดูรายละเอียดเครื่องจักรซีเมนต์และเหมือง →', 'ภาพประกอบเชิงวิศวกรรม (ไม่ใช่ภาพหน้างานจริงของ AN-THAI)'),
+            ('/th/testing-instruments.html', '/assets/images/field-instruments.webp', 1200, 670, '04 · เครื่องมือทดสอบวิศวกรรมภาคสนาม', 'จัดหาและให้คำปรึกษาเครื่องทดสอบความสมบูรณ์เสาเข็ม เครื่องวิเคราะห์คลื่นเสียง CSL เซนเซอร์วัดแรง โหลดเซลล์ และระบบบันทึกข้อมูลสนาม', 'ดูรายละเอียดเครื่องมือทดสอบ →', 'ภาพประกอบเชิงวิศวกรรม (ไม่ใช่ภาพหน้างานจริงของ AN-THAI)'),
         ],
         'credTitle': 'เอกสารข้อมูลทางเทคนิคและตัวอย่างรายงาน',
         'credBody': 'หากท่านกำลังเตรียมแผนการทดสอบฐานรากหรือคัดเลือกผู้ผลิตเหล็กโครงสร้าง สามารถติดต่อทีมวิศวกรประจำกรุงเทพฯ เพื่อขอรับตัวอย่างรูปแบบรายงานและรายละเอียดขอบเขตงานได้โดยตรง',
@@ -365,18 +365,19 @@ def build_capabilities_body(lang):
         f'<article class="case-card">'
         f'<div>'
         f'<div class="case-card-media">'
-        f'<img src="{img}" alt="{e(title)}" width="{w}" height="{h}" loading="lazy" />'
+        f'<img src="{img}" alt="{e((note + ": " + title) if note else title)}" width="{w}" height="{h}" loading="lazy" />'
         f'</div>'
         f'<div class="case-card-body">'
         f'<h3 class="h3" style="margin:0;"><a href="{href}">{e(title)}</a></h3>'
         f'<p class="muted" style="font-size:13px;margin:0;line-height:1.55;">{e(summary)}</p>'
-        f'</div>'
+        + (f'<span class="mono muted" style="font-size:10px;margin-top:6px;display:block;">{e(note)}</span>' if note else '')
+        + f'</div>'
         f'</div>'
         f'<div class="case-card-footer">'
         f'<a href="{href}" class="unit-link">{e(cta)}</a>'
         f'</div>'
         f'</article>'
-        for href, img, w, h, title, summary, cta in ui['disciplines']
+        for href, img, w, h, title, summary, cta, note in ui['disciplines']
     )
 
     return f'''<section class="section">

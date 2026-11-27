@@ -311,7 +311,7 @@ def build_latest_home_cards(articles, lang='en'):
     unit_labels = {
         'testing': '01 Testing',
         'steel': '02 Steel',
-        'powder': '03 Powder',
+        'powder': '03 Cement & Mining',
         'instruments': '04 Instruments',
     }
     cards = []
@@ -361,7 +361,7 @@ def _localize_insights_subdir(base_html, lang, i18n):
     out = re.sub(r'<meta property="og:url" content="[^"]*"\s*/?>', f'<meta property="og:url" content="{canon}" />', out, count=1)
     out = out.replace('../assets/', '/assets/').replace('./assets/', '/assets/')
     if lang != 'en':
-        for slug in ['index', 'testing', 'steel-procurement', 'powder-equipment', 'testing-instruments', 'about', 'contact']:
+        for slug in ['index', 'testing', 'steel-procurement', 'cement-mining-equipment', 'powder-equipment', 'testing-instruments', 'about', 'contact']:
             out = out.replace(f'href="../{slug}.html', f'href="/{lang}/{slug}.html')
             out = out.replace(f'href="/{slug}.html', f'href="/{lang}/{slug}.html')
         out = out.replace('href="../cases/index.html"', f'href="/{lang}/cases/index.html"')

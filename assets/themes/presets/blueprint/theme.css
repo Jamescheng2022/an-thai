@@ -102,7 +102,7 @@ html[data-theme="blueprint"]:not(:has(.split-box .split-pane, .diagram-box)) foo
 .bp-svg .bp-ax { fill: none; stroke: #7dd3fc; stroke-width: 1.5; }
 .bp-svg .bp-box { fill: #0c4a6e; stroke: #7dd3fc; }
 .bp-svg .bp-c1 { fill: none; stroke: #38bdf8; stroke-width: 2.2; }
-.bp-svg .bp-c2 { fill: none; stroke: #f59e0b; stroke-width: 1.5; stroke-dasharray: 4 4; }
+.bp-svg .bp-c2 { fill: none; stroke: #f59e0b; stroke-width: 1.5; stroke-dasharray: 4 4; opacity: 0; transition: opacity 0.6s ease 0.35s; }
 .bp-draw {
   stroke-dasharray: 420;
   stroke-dashoffset: 420;
@@ -113,6 +113,8 @@ html[data-theme="blueprint"]:not(:has(.split-box .split-pane, .diagram-box)) foo
 html[lang^="zh"] .bp-note::after { content: "仅示概念轮廓，不含实测数值"; }
 html[lang="th"] .bp-note::after { content: "แผนภาพแนวคิด ไม่มีค่าทดสอบจริง"; }
 .bp-panel.is-drawn .bp-draw { stroke-dashoffset: 0; }
+.bp-panel.is-drawn .bp-c2 { opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
   .bp-draw { stroke-dashoffset: 0 !important; }
+  .bp-svg .bp-c2 { opacity: 1 !important; transition: none; }
 }

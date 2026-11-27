@@ -75,22 +75,32 @@ html[data-theme="cinematic"] .contact-channels-pane {
   background: #0f141c;
   color: #f8fafc;
 }
+html[data-theme="cinematic"] .drawer-footer {
+  background: #141922;
+  border-color: rgba(248, 250, 252, 0.18);
+}
 html[data-theme="cinematic"] .field input,
 html[data-theme="cinematic"] .field select,
-html[data-theme="cinematic"] .field textarea {
-  background: #0f141c;
-  color: #f8fafc;
-  border-color: rgba(248, 250, 252, 0.24);
+html[data-theme="cinematic"] .field textarea,
+html[data-theme="cinematic"] #drawerLiveFooter input,
+html[data-theme="cinematic"] #liveClaimForm input {
+  background: #0f141c !important;
+  color: #f8fafc !important;
+  border-color: rgba(248, 250, 252, 0.24) !important;
 }
-html[data-theme="cinematic"] .field ::placeholder {
+html[data-theme="cinematic"] .field ::placeholder,
+html[data-theme="cinematic"] #drawerLiveFooter input::placeholder,
+html[data-theme="cinematic"] #liveClaimForm input::placeholder {
   color: #94a3b8;
   opacity: 1;
 }
 html[data-theme="cinematic"] .field input:focus,
 html[data-theme="cinematic"] .field select:focus,
-html[data-theme="cinematic"] .field textarea:focus {
-  background: #18202c;
-  border-color: var(--accent);
+html[data-theme="cinematic"] .field textarea:focus,
+html[data-theme="cinematic"] #drawerLiveFooter input:focus,
+html[data-theme="cinematic"] #liveClaimForm input:focus {
+  background: #18202c !important;
+  border-color: var(--accent) !important;
 }
 html[data-theme="cinematic"] .unit-card {
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);

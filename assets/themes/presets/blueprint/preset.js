@@ -12,7 +12,7 @@ function draw(m){
   return'<svg class="bp-svg" viewBox="0 0 360 128" role="img" aria-label="'+B+'"><rect x="252" y="6" width="102" height="16" fill="#075985"/>'+T(303,17,B,'bp-w')+b+'</svg>';
 }
 var box=d.createElement('div');box.id='bpPanel';box.className='bp-panel';
-box.innerHTML='<div class="bp-head"><span class="bp-tag">'+B+'</span><div class="bp-tabs"><button type="button" class="bp-tab" data-bp="q" aria-pressed="true">Q-s</button><button type="button" class="bp-tab" data-bp="f" aria-pressed="false">01-04</button></div></div><div data-bs="">'+draw('q')+'</div><div class="bp-note"></div>';
+box.innerHTML='<div class="bp-head"><div class="bp-tabs"><button type="button" class="bp-tab" data-bp="q" aria-pressed="true">Q-s</button><button type="button" class="bp-tab" data-bp="f" aria-pressed="false">01-04</button></div></div><div data-bs="">'+draw('q')+'</div><div class="bp-note"></div>';
 p.classList.add('has-bp');p.appendChild(box);
 var st=box.querySelector('[data-bs]'),bs=box.querySelectorAll('[data-bp]');
 bs.forEach(function(b){b.onclick=function(){st.innerHTML=draw(b.dataset.bp);bs.forEach(function(x){x.setAttribute('aria-pressed',x===b);});};});

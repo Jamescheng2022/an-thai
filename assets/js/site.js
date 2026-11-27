@@ -34,7 +34,7 @@
   };
 
   var I18N = window.ANTHAI_I18N || { EN: {} };
-  var state = { lang: 'EN', adapterMode: 'unconfigured', isMock: false, sessionStatus: '', inquiryApiConfigured: false, sessionId: '', lastFocused: null, pollTimer: null, lastPosts: [], postsIsMock: false };
+  var state = { lang: 'EN', adapterMode: 'unconfigured', isMock: false, sessionStatus: '', assignedStaffLabel: '', requestId: '', inquiryApiConfigured: false, sessionId: '', lastFocused: null, pollTimer: null, lastPosts: [], postsIsMock: false };
 
   function detectInitialLang() {
     var p = window.location.pathname || '';
@@ -78,13 +78,27 @@
     if (drawerStatus) {
       var shortId = state.sessionId ? state.sessionId.slice(0, 8) : 'ready';
       if (isMock) {
-        drawerStatus.textContent = t('drawerStatusMock') + shortId;
+        drawerStatus.textContent = (state.sessionStatus === 'closed' ? t('drawerStatusClosed') : t('drawerStatusMock')) + shortId;
       } else if (isLive) {
-        drawerStatus.textContent = (state.sessionStatus === 'waiting_human' ? t('drawerStatusWaitingHuman') : t('drawerStatusLive')) + (state.sessionId ? shortId : 'active');
+        if (state.sessionStatus === 'waiting_human') {
+          drawerStatus.textContent = t('drawerStatusWaitingHuman') + shortId;
+        } else if (state.sessionStatus === 'human_active') {
+          var staffTag = state.assignedStaffLabel ? (state.assignedStaffLabel + ' · ') : '';
+          drawerStatus.textContent = t('drawerStatusHumanActive') + staffTag + shortId;
+        } else if (state.sessionStatus === 'closed') {
+          drawerStatus.textContent = t('drawerStatusClosed') + shortId;
+        } else {
+          drawerStatus.textContent = t('drawerStatusLive') + (state.sessionId ? shortId : 'active');
+        }
       } else {
         drawerStatus.textContent = t('drawerStatusOffline');
       }
     }
+    var isClosed = state.sessionStatus === 'closed';
+    var msgIn = document.getElementById('liveMsgInput');
+    var handBtn = document.getElementById('liveHandoffBtn');
+    if (msgIn) msgIn.disabled = isClosed;
+    if (handBtn) handBtn.disabled = isClosed;
     var offlineView = document.getElementById('drawerOfflineView');
     var liveView = document.getElementById('drawerLiveView');
     var liveFooter = document.getElementById('drawerLiveFooter');
@@ -273,6 +287,8 @@
       var badgesHtml = '<div class="post-badges">'
         + (isTest ? '<span class="post-badge is-test">' + esc(t('publicPostBadgeTest')) + '</span>' : '')
         + (cardMock ? '<span class="post-badge is-mock">' + esc(t('publicPostBadgeMock')) + '</span>' : '')
+        + ((p.source_kind === 'ai_grounded' || p.ai_used === true) ? '<span class="post-badge is-ai">' + esc(t('publicPostBadgeAiGrounded')) + '</span>' : '')
+        + (p.project_ref ? '<span class="post-badge is-project">' + esc(t('publicPostBadgeProjectRef') + String(p.project_ref).slice(0, 48)) + '</span>' : '')
         + '<span class="post-badge ' + statusCls + '">' + esc(t(statusKey)) + (p.publish_status === 'corrected' && p.revision_no ? (' v' + esc(String(p.revision_no))) : '') + '</span>'
         + '</div>';
       var mediaHtml = imgUrl
@@ -348,7 +364,20 @@
     var res = await adapter.init();
     if (res && res.ok && (res.mode === 'live' || res.mode === 'mock')) {
       if (res.session && res.session.status) state.sessionStatus = res.session.status;
+      if (res.session && res.session.assignedStaffLabel) state.assignedStaffLabel = String(res.session.assignedStaffLabel);
+      if (adapter.session && adapter.session.sessionId && typeof adapter.getSession === 'function') {
+        var gs = await adapter.getSession();
+        if (gs && gs.ok && gs.session) {
+          if (gs.session.status) state.sessionStatus = gs.session.status;
+          if (gs.session.assignedStaffLabel) state.assignedStaffLabel = String(gs.session.assignedStaffLabel);
+        } else if (gs && gs.sessionReset) {
+          applySessionResetUI();
+          await refreshPublicPosts();
+          return;
+        }
+      }
       syncStatusUI();
+      if (state.sessionStatus === 'closed') showLiveFeedback(t('liveClosedNotice'), 'neutral');
       renderLiveMessages(res.messages || []);
       await refreshPublicPosts();
     }
@@ -357,6 +386,8 @@
   function applySessionResetUI() {
     state.sessionId = '';
     state.sessionStatus = '';
+    state.assignedStaffLabel = '';
+    state.requestId = '';
     syncStatusUI();
     renderLiveMessages([]);
     showLiveFeedback(t('liveSessionReset'), 'neutral');
@@ -437,6 +468,7 @@
       if (sRes && sRes.ok) {
         var nextStatus = (sRes.session && sRes.session.status) || sRes.status || '';
         if (nextStatus) state.sessionStatus = nextStatus;
+        if (sRes.session && sRes.session.assignedStaffLabel) state.assignedStaffLabel = String(sRes.session.assignedStaffLabel);
       }
       var listRes = await adapter.listMessages();
       if (listRes.ok) {
@@ -444,7 +476,7 @@
         if (listRes.status) state.sessionStatus = listRes.status;
         syncStatusUI();
         renderLiveMessages(listRes.messages);
-        showLiveFeedback(listRes.sessionReset ? t('liveSessionReset') : '', 'neutral');
+        showLiveFeedback(state.sessionStatus === 'closed' ? t('liveClosedNotice') : (listRes.sessionReset ? t('liveSessionReset') : ''), 'neutral');
       } else {
         if (listRes.sessionReset) {
           applySessionResetUI();
@@ -462,6 +494,8 @@
       adapter.clearSession();
       state.sessionId = '';
       state.sessionStatus = '';
+      state.assignedStaffLabel = '';
+      state.requestId = '';
       showLiveFeedback('', '');
       await initAdapter();
     });
@@ -504,8 +538,27 @@
     if (state.adapterMode !== 'live') return;
     state.pollTimer = window.setInterval(async function () {
       if (!adapter || state.adapterMode !== 'live' || !drawer || !drawer.classList.contains('is-open')) return;
+      if (!adapter.session || !adapter.session.sessionId) return;
       var r = await adapter.listMessages();
-      if (r.ok) renderLiveMessages(r.messages);
+      if (!r) return;
+      if (r.sessionReset) { applySessionResetUI(); return; }
+      if (r.ok) {
+        var prevStatus = state.sessionStatus;
+        if (r.status) state.sessionStatus = r.status;
+        if (r.status && (r.status !== prevStatus || (r.status === 'human_active' && !state.assignedStaffLabel)) && typeof adapter.getSession === 'function') {
+          var sRes = await adapter.getSession();
+          if (sRes && sRes.ok && sRes.session) {
+            if (sRes.session.status) state.sessionStatus = sRes.session.status;
+            if (sRes.session.assignedStaffLabel) state.assignedStaffLabel = String(sRes.session.assignedStaffLabel);
+          } else if (sRes && sRes.sessionReset) {
+            applySessionResetUI();
+            return;
+          }
+        }
+        syncStatusUI();
+        if (state.sessionStatus === 'closed') showLiveFeedback(t('liveClosedNotice'), 'neutral');
+        renderLiveMessages(r.messages);
+      }
     }, 5000);
   }
   function stopPolling() {
@@ -864,6 +917,8 @@
           if (srRes && srRes.ok && srRes.sessionId) {
             state.sessionId = srRes.sessionId;
             state.sessionStatus = srRes.status || 'ai_active';
+            state.requestId = srRes.requestId || '';
+            state.assignedStaffLabel = srRes.assignedStaffLabel || '';
             syncStatusUI();
             var listRes = await adapter.listMessages();
             if (listRes && listRes.ok) renderLiveMessages(listRes.messages);

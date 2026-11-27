@@ -640,6 +640,8 @@ a.qr-mini-card .qr-mini-sub{color:var(--accent-hover);font-weight:700}
 .post-badge.is-mock{border-color:#475569;background:#f1f5f9;color:#334155}
 .post-badge.is-corrected{border-color:#0369a1;background:#e0f2fe;color:#075985}
 .post-badge.is-published{border-color:#15803d;background:#dcfce7;color:#166534}
+.post-badge.is-ai{border-color:#6d28d9;background:#f5f3ff;color:#5b21b6}
+.post-badge.is-project{border-color:#1e293b;background:#f8fafc;color:#0f172a}
 .post-card-media{margin-top:10px;border:1px solid var(--line-soft);background:#14161a;overflow:hidden}
 .post-card-media img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
 .post-card-caption{padding:6px 8px;background:var(--surface-alt);font-family:var(--font-mono);font-size:10.5px;color:var(--ink-muted);border-top:1px solid var(--line-soft)}

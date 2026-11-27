@@ -15,6 +15,9 @@ const outIdx = args.indexOf('--out');
 const root = path.resolve(__dirname, '..');
 const cfgPath = path.resolve(root, cfgIdx >= 0 ? args[cfgIdx + 1] : 'config/tenants/test-demo.json');
 const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
+if (cfg.checkOnly || cfg.ownerGateHold) {
+  throw new Error(`OWNER_GATE_HOLD_BLOCKS_BUILD: tenant "${cfg.tenantSlug}" is check-only / held (${cfg.ownerGateHold || 'checkOnly'})`);
+}
 const workspaceKey = (cfg.sourceRating && cfg.sourceRating.workspaceKey) || cfg.workspaceKey || cfg.tenantSlug;
 const rawOutArg = outIdx >= 0 ? args[outIdx + 1] : `dist-${cfg.tenantSlug}`;
 const outDir = path.resolve(root, rawOutArg);
@@ -303,10 +306,13 @@ function renderPage(loc, pageName) {
 </html>\n`;
 }
 
-const forbiddenLeakTerms = [
-  'an-thai.com', 'info@an-thai.com', 'an-thai-th', '66902921749', '90 292 1749',
-  'James2021', 'p0_XsfILmH', 'Arwan', 'PACO', 'ROGE', 'TEST-ANTHAI-UPD', '安泰', 'อัน-ไทย'
-];
+const isSelfAnThaiPilot = cfg.internalPilot === true && cfg.tenantSlug === 'an-thai-pilot';
+const forbiddenLeakTerms = isSelfAnThaiPilot
+  ? ['PACO', 'ROGE', 'TEST-ANTHAI-UPD', 'test-demo', 'test-demo-noreply@example.invalid']
+  : [
+      'an-thai.com', 'info@an-thai.com', 'an-thai-th', '66902921749', '90 292 1749',
+      'James2021', 'p0_XsfILmH', 'Arwan', 'PACO', 'ROGE', 'TEST-ANTHAI-UPD', '安泰', 'อัน-ไทย'
+    ];
 let generatedCount = 0;
 
 for (const loc of locales) {

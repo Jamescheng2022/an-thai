@@ -1,0 +1,61 @@
+{
+  "tenantSlug": "an-thai-pilot",
+  "legalName": "AN-THAI Engineering Company Limited",
+  "brandShort": "AN-THAI",
+  "brandTagline": {
+    "EN": "Bangkok Engineering Hub · P4 Internal Provisioning Pilot (NOINDEX)",
+    "ZH": "AN-THAI 安泰工程 · P4 标准化交付内部试点（禁止收录）",
+    "TH": "AN-THAI เอ็นจิเนียริ่ง · ชุดทดสอบการส่งมอบมาตรฐาน P4 (NOINDEX)"
+  },
+  "primaryDomain": "https://an-thai.com",
+  "allowedOrigins": [
+    "https://an-thai.com",
+    "https://an-thai-git-feat-v11-i4-bridge-g3-jamescheng2022s-projects.vercel.app"
+  ],
+  "cityRegion": "Greater Bangkok & EEC",
+  "officeAddress": "1339 Arwan Building, Pracharat 1 Rd, Wongsawang, Bangsue District, Bangkok 10800",
+  "directEmail": "info@an-thai.com",
+  "directPhone": "+66 90 292 1749",
+  "hideDirectMessengers": false,
+  "noindex": true,
+  "internalPilot": true,
+  "theme": "blueprint",
+  "sourceRating": {
+    "bridgeEndpoint": "/api/sr-bridge",
+    "apiBaseUrl": "",
+    "workspaceKey": "an-thai-th",
+    "callerKind": "an_thai_v1_1"
+  },
+  "heroHeadline": {
+    "EN": "Substructure to Superstructure.",
+    "ZH": "泰国工程支持 · 地基至结构",
+    "TH": "จากฐานรากสู่โครงสร้างอย่างโปร่งใส"
+  },
+  "heroLead": {
+    "EN": "Internal P4 repeatable provisioning pilot verifying domain, Resend, SR workspace binding, theme budget, and isolated inquiry routing for AN-THAI.",
+    "ZH": "P4 多域名自动化交付清单的 AN-THAI 内部试点校验：验证域名、Resend、SR 工作区绑定、视觉方案与询盘链路闭环。",
+    "TH": "โครงสร้างนำร่องภายใน P4 สำหรับตรวจสอบรายการตั้งค่าโดเมน Resend และ SourceRating Bridge ของ AN-THAI"
+  },
+  "serviceLines": [
+    {
+      "code": "01",
+      "value": "01 Foundation Testing & Geotech",
+      "titleEN": "Foundation Testing & Geotech",
+      "descEN": "Static load testing, PDA/CAPWAP, PIT/CSL integrity screening, and geotechnical investigation in Thailand.",
+      "titleZH": "桩基检测与勘察",
+      "descZH": "泰国本地桩基承载力检测、完整性筛查与岩土勘察协调。",
+      "titleTH": "ทดสอบเสาเข็มและธรณีเทคนิค",
+      "descTH": "บริการประสานงานทดสอบรับน้ำหนักและความสมบูรณ์เสาเข็มในประเทศไทย"
+    },
+    {
+      "code": "02",
+      "value": "02 Steel Procurement Agency",
+      "titleEN": "Buyer-Side Steel Procurement Agency",
+      "descEN": "Independent buyer-side sourcing, comparable RFQs, mill audits, and pre-shipment verification.",
+      "titleZH": "钢结构买方代理",
+      "descZH": "面向国际买方的独立寻源、比价、验厂及出运前复核。",
+      "titleTH": "ตัวแทนจัดซื้อโครงสร้างเหล็กฝั่งผู้ซื้อ",
+      "descTH": "บริการจัดหาโรงงานและตรวจสอบคุณภาพเหล็กโครงสร้างฝั่งผู้ซื้อ"
+    }
+  ]
+}

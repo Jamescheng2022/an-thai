@@ -83,8 +83,7 @@
         if (state.sessionStatus === 'waiting_human') {
           drawerStatus.textContent = t('drawerStatusWaitingHuman') + shortId;
         } else if (state.sessionStatus === 'human_active') {
-          var staffTag = state.assignedStaffLabel ? (state.assignedStaffLabel + ' · ') : '';
-          drawerStatus.textContent = t('drawerStatusHumanActive') + staffTag + shortId;
+          drawerStatus.textContent = t('drawerStatusHumanActive') + t('liveRoleHuman') + ' · ' + shortId;
         } else if (state.sessionStatus === 'closed') {
           drawerStatus.textContent = t('drawerStatusClosed') + shortId;
         } else {
@@ -210,6 +209,14 @@
     liveFeedback.hidden = !msg;
   }
 
+  function formatMessageTime(rawIso) {
+    if (!rawIso) return '';
+    var d = new Date(rawIso);
+    if (isNaN(d.getTime())) return '';
+    var pad = function (n) { return n < 10 ? '0' + n : String(n); };
+    return pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+  }
+
   function renderLiveMessages(messages) {
     if (!liveMount) return;
     if (!Array.isArray(messages) || messages.length === 0) {
@@ -218,17 +225,22 @@
       return;
     }
     liveMount.innerHTML = messages.map(function (m) {
+      var rawText = String(m.text || m.body || m.content || '');
+      var isHandoverNotice = /^visitor requested engineering team handover\.?$/i.test(rawText.trim());
       var role = String(m.senderKind || m.sender || m.senderType || m.senderRole || m.role || 'ai').toLowerCase();
+      if (isHandoverNotice) role = 'system';
       var isGuestRole = (role === 'guest' || role === 'visitor' || role === 'user');
       var isHumanRole = (role === 'human' || role === 'staff' || role === 'admin' || role === 'operator' || role === 'member' || role === 'agent_human');
       var cls = isGuestRole ? 'is-guest'
         : (isHumanRole ? 'is-human'
         : (role === 'system' ? 'is-system' : ''));
       var roleLabel = isGuestRole ? t('liveRoleGuest')
-        : (isHumanRole ? (m.senderLabel || (m.orgVerified ? t('liveRoleHumanVerified') : t('liveRoleHuman')))
-        : (role === 'system' ? t('liveRoleSystem') : (m.senderLabel || t('liveRoleAi'))));
-      var meta = esc(roleLabel) + (m.id ? ' · #' + esc(String(m.id).slice(0, 8)) : '') + (m.createdAt ? ' · ' + esc(m.createdAt) : '');
-      return '<div class="msg-bubble ' + cls + '"><div class="msg-meta">' + meta + '</div><div>' + esc(m.text || m.body || m.content || '') + '</div></div>';
+        : (isHumanRole ? (m.orgVerified ? t('liveRoleHumanVerified') : t('liveRoleHuman'))
+        : (role === 'system' ? t('liveRoleSystem') : t('liveRoleAi')));
+      var displayText = isHandoverNotice ? t('liveSystemHandover') : rawText;
+      var ts = formatMessageTime(m.createdAt);
+      var meta = esc(roleLabel) + (ts ? ' · ' + esc(ts) : '');
+      return '<div class="msg-bubble ' + cls + '"><div class="msg-meta">' + meta + '</div><div>' + esc(displayText) + '</div></div>';
     }).join('');
     var body = document.querySelector('.drawer-body');
     if (body) body.scrollTop = body.scrollHeight;
@@ -432,13 +444,10 @@
       state.sessionStatus = res.sessionStatus || res.status || '';
       syncStatusUI();
       window.ANTHAI_TRACK('human_handoff_requested', { sessionId: state.sessionId, isMock: state.isMock });
-      var ref = (res.messageId || res.eventId || (res.data && (res.data.handoffId || res.data.id)))
-        ? ' #' + String(res.messageId || res.eventId || res.data.handoffId || res.data.id).slice(0, 8)
-        : '';
       if (res.isMock || state.isMock) {
-        showLiveFeedback(t('liveOkHandoffMock') + ref, 'neutral');
+        showLiveFeedback(t('liveOkHandoffMock'), 'neutral');
       } else {
-        showLiveFeedback(t('liveOkHandoff') + ref + (res.sessionReset ? ' ' + t('liveSessionReset') : ''), 'ok');
+        showLiveFeedback(t('liveOkHandoff') + (res.sessionReset ? ' ' + t('liveSessionReset') : ''), 'ok');
       }
       var listRes = await adapter.listMessages();
       if (listRes.ok) renderLiveMessages(listRes.messages);

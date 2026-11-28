@@ -170,11 +170,11 @@ window.ANTHAI_I18N = {
     "drawerCopyBrief": "Copy Structured Brief",
     "liveWelcomeEmpty": "Send your inquiry brief below to reach our Bangkok engineering team.",
     "liveWelcomeEmptyMock": "Preview mock mode only: messages typed below stay in this browser and are NOT sent to AN-THAI staff. Use Email, WhatsApp, or LINE above for real inquiries.",
-    "liveRoleGuest": "Guest",
+    "liveRoleGuest": "You",
     "liveRoleAi": "AN-THAI AI Assistant",
-    "liveRoleHuman": "AN-THAI Team",
-    "liveRoleHumanVerified": "AN-THAI Team (Org Verified)",
-    "liveRoleSystem": "System",
+    "liveRoleHuman": "AN-THAI Engineering",
+    "liveRoleHumanVerified": "AN-THAI Engineering",
+    "liveRoleSystem": "Notice",
     "liveSendBtn": "Send",
     "liveInputPh": "Write a message...",
     "liveHandoffBtn": "Request Human Engineer",
@@ -449,7 +449,8 @@ window.ANTHAI_I18N = {
     "testLabDesc": "Soil shear, pressure/permeability and concrete compression tests conducted through partner laboratory facilities alongside field pile testing.",
     "visualIllustrativeNote": "Illustrative engineering visualization (not an AN-THAI jobsite photo)",
     "visualHeroIllustrativeNote": "Illustrative engineering visualization · Representative industrial scope imagery, not a claimed AN-THAI jobsite photograph.",
-    "heroScopeVisualTag": "Illustrative engineering visualization"
+    "heroScopeVisualTag": "Illustrative engineering visualization",
+    "liveSystemHandover": "Engineering team handover requested — an engineer will follow up shortly."
   },
   "ZH": {
     "brandSub": "泰国工程支持 · 地基至结构",
@@ -622,11 +623,11 @@ window.ANTHAI_I18N = {
     "drawerCopyBrief": "复制结构化需求",
     "liveWelcomeEmpty": "请在下方填写您的工程需求简报，直接联系曼谷工程团队。",
     "liveWelcomeEmptyMock": "当前为预览 MOCK 模式：下方发送的消息仅保存于本地浏览器，不会送达 AN-THAI 真实团队。正式询盘请使用上方邮件、WhatsApp 或 LINE。",
-    "liveRoleGuest": "访客",
+    "liveRoleGuest": "您",
     "liveRoleAi": "AN-THAI AI 助手",
-    "liveRoleHuman": "AN-THAI 团队",
-    "liveRoleHumanVerified": "AN-THAI 团队（组织已核验）",
-    "liveRoleSystem": "系统通知",
+    "liveRoleHuman": "AN-THAI 工程团队",
+    "liveRoleHumanVerified": "AN-THAI 工程团队",
+    "liveRoleSystem": "系统提示",
     "liveSendBtn": "发送",
     "liveInputPh": "输入消息...",
     "liveHandoffBtn": "申请真人工程师接管",
@@ -901,7 +902,8 @@ window.ANTHAI_I18N = {
     "testLabDesc": "配合现场桩基检测，协同认可合作伙伴实验室开展直剪、渗压及材料强度校核试验。",
     "visualIllustrativeNote": "工程示意图（非 AN-THAI 实拍项目现场）",
     "visualHeroIllustrativeNote": "工程示意图 · 仅示典型工艺与业务范围场景，不作为 AN-THAI 已交付实景证明。",
-    "heroScopeVisualTag": "工程示意图 · 业务全景展示"
+    "heroScopeVisualTag": "工程示意图 · 业务全景展示",
+    "liveSystemHandover": "已请求工程师接手，技术团队将尽快跟进。"
   },
   "TH": {
     "brandSub": "ประเทศไทย · ฐานรากสู่โครงสร้าง",
@@ -1074,11 +1076,11 @@ window.ANTHAI_I18N = {
     "drawerCopyBrief": "คัดลอกสรุปลงคลิปบอร์ด",
     "liveWelcomeEmpty": "กรอกรายละเอียดคำสอบถามด้านล่างเพื่อติดต่อทีมวิศวกรในกรุงเทพฯ",
     "liveWelcomeEmptyMock": "โหมดจำลองสำหรับการแสดงตัวอย่างเท่านั้น: ข้อความด้านล่างจะบันทึกในเบราว์เซอร์นี้เท่านั้น ไม่ได้ส่งถึงทีมงาน AN-THAI จริง โปรดใช้อีเมล WhatsApp หรือ LINE ด้านบน",
-    "liveRoleGuest": "ผู้เยี่ยมชม",
+    "liveRoleGuest": "คุณ",
     "liveRoleAi": "ผู้ช่วย AI ของ AN-THAI",
-    "liveRoleHuman": "ทีมงาน AN-THAI",
-    "liveRoleHumanVerified": "ทีมงาน AN-THAI (ยืนยันองค์กรแล้ว)",
-    "liveRoleSystem": "ระบบ",
+    "liveRoleHuman": "ทีมวิศวกร AN-THAI",
+    "liveRoleHumanVerified": "ทีมวิศวกร AN-THAI",
+    "liveRoleSystem": "แจ้งเตือน",
     "liveSendBtn": "ส่ง",
     "liveInputPh": "พิมพ์ข้อความ...",
     "liveHandoffBtn": "ขอต่อสายวิศวกรจริง",
@@ -1353,6 +1355,7 @@ window.ANTHAI_I18N = {
     "testLabDesc": "สนับสนุนการทดสอบแรงเฉือน การซึมน้ำ และกำลังรับแรงอัดร่วมกับการทดสอบเสาเข็มภาคสนาม",
     "visualIllustrativeNote": "ภาพประกอบเชิงวิศวกรรม (ไม่ใช่ภาพหน้างานจริงของ AN-THAI)",
     "visualHeroIllustrativeNote": "ภาพประกอบเชิงวิศวกรรม · ใช้เพื่อแสดงขอบเขตงานและอุปกรณ์เท่านั้น ไม่ใช่ภาพโครงการที่ AN-THAI ส่งมอบแล้ว",
-    "heroScopeVisualTag": "ภาพจำลองเชิงวิศวกรรม · ภาพรวมขอบเขตงาน"
+    "heroScopeVisualTag": "ภาพจำลองเชิงวิศวกรรม · ภาพรวมขอบเขตงาน",
+    "liveSystemHandover": "ส่งคำขอให้วิศวกรรับช่วงดูแลแล้ว ทีมวิศวกรจะติดต่อกลับโดยเร็ว"
   }
 };

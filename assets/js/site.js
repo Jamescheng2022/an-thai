@@ -158,13 +158,8 @@
     }
     var statusEl = document.getElementById('contactApiStatus');
     if (statusEl) {
-      if (state.inquiryApiConfigured) {
-        statusEl.textContent = t('contactApiReadyNotice');
-        statusEl.hidden = false;
-      } else {
-        statusEl.textContent = '';
-        statusEl.hidden = true;
-      }
+      statusEl.textContent = '';
+      statusEl.hidden = true;
     }
   }
 

@@ -150,7 +150,6 @@ Component testing, NDT and specialized tests according to project needs. || 根�
 Technical Coordination || 技术协调 || การประสานงานทางเทคนิค
 Method planning, review, result discussion and bilingual project coordination. || 方法规划、审查、结果讨论与双语项目协调。 || วางแผนวิธีทดสอบ ทบทวน อภิปรายผล และประสานงานโครงการสองภาษา
 Laboratory instruments illustrated in the AN-THAI partner laboratory brochure section || 安泰宣传册合作实验室章节中的仪器图像 || ภาพเครื่องมือในส่วนห้องปฏิบัติการพันธมิตรของเอกสารแนะนำบริษัท AN-THAI
-Partner laboratory imagery · AN-THAI brochure || 合作实验室图像 · 安泰宣传册 || ภาพห้องปฏิบัติการพันธมิตร · เอกสารแนะนำบริษัท AN-THAI
 Testing Enquiry Guide || 检测询价指南 || แนวทางสอบถามงานทดสอบ
 What should be confirmed before a testing quotation? || 检测报价前需要确认什么？ || ควรยืนยันอะไรบ้างก่อนเสนอราคางานทดสอบ?
 What information helps AN-THAI review a pile-testing enquiry? || 桩基检测询价需要哪些信息？ || ต้องใช้ข้อมูลใดในการพิจารณางานทดสอบเสาเข็ม?
@@ -178,14 +177,6 @@ Need Testing Service? || 需要检测服务？ || ต้องการบริ
 Equipment Categories || 设备类别 || หมวดหมู่เครื่องมือ
 From pile response to laboratory verification || 从桩体响应到实验室验证 || จากการตอบสนองของเสาเข็มถึงการตรวจสอบในห้องปฏิบัติการ
 Select by test application and measurement requirements. Models, specifications, availability and support scope are confirmed in the quotation. || 根据检测应用和测量要求选型，型号、规格、供货情况及支持范围以报价确认为准。 || เลือกตามงานทดสอบและข้อกำหนดการวัด โดยยืนยันรุ่น สเปก ความพร้อมจำหน่าย และขอบเขตสนับสนุนในใบเสนอราคา
-01 · EQUIPMENT & SUPPORT || 01 · 设备与支持 || 01 · เครื่องมือและการสนับสนุน
-02 · EQUIPMENT & SUPPORT || 02 · 设备与支持 || 02 · เครื่องมือและการสนับสนุน
-03 · EQUIPMENT & SUPPORT || 03 · 设备与支持 || 03 · เครื่องมือและการสนับสนุน
-04 · EQUIPMENT & SUPPORT || 04 · 设备与支持 || 04 · เครื่องมือและการสนับสนุน
-05 · EQUIPMENT & SUPPORT || 05 · 设备与支持 || 05 · เครื่องมือและการสนับสนุน
-06 · EQUIPMENT & SUPPORT || 06 · 设备与支持 || 06 · เครื่องมือและการสนับสนุน
-07 · EQUIPMENT & SUPPORT || 07 · 设备与支持 || 07 · เครื่องมือและการสนับสนุน
-08 · EQUIPMENT & SUPPORT || 08 · 设备与支持 || 08 · เครื่องมือและการสนับสนุน
 Pile Integrity Testing Instruments || 桩身完整性检测仪器 || เครื่องมือทดสอบความสมบูรณ์ของเสาเข็ม
 Application || 应用 || การใช้งาน
 Low-strain integrity screening of piles. || 桩身低应变完整性筛查。 || คัดกรองความสมบูรณ์ของเสาเข็มแบบความเครียดต่ำ
@@ -256,7 +247,6 @@ REAL TESTING. || 真实检测。 || งานทดสอบจริง
 REAL PROJECT CONDITIONS. || 真实工程条件。 || ภายใต้สภาพโครงการจริง
 AN-THAI supports engineering teams across Thailand with testing, inspection, equipment and technical coordination. Delivery is planned around the test requirements, site conditions and available specialist resources. || 安泰为泰国工程团队提供检测、检验、设备及技术协调支持，依据检测要求、现场条件与可用专业资源安排交付。 || AN-THAI สนับสนุนทีมวิศวกรรมทั่วประเทศไทยด้านการทดสอบ ตรวจสอบ เครื่องมือ และประสานงานทางเทคนิค โดยวางแผนตามข้อกำหนด สภาพพื้นที่ และทรัพยากรผู้เชี่ยวชาญที่มี
 Illustration of investigation and testing methods from ground to structure || 从地基到结构的勘察检测方法示意图 || ภาพอธิบายการสำรวจและทดสอบตั้งแต่ฐานรากถึงโครงสร้าง
-Testing scope illustration · AN-THAI brochure || 检测范围示意图 · 安泰宣传册 || ภาพขอบเขตงานทดสอบ · เอกสารแนะนำบริษัท AN-THAI
 Application Sectors || 应用行业 || กลุ่มการใช้งาน
 Where our testing capability fits || 检测能力的应用场景 || งานที่เหมาะกับขอบเขตบริการของเรา
 Testing scope is adapted to the technical requirement, site condition, project schedule and governing project specifications. || 根据技术要求、现场条件、工期及项目适用规范确定检测范围。 || ปรับขอบเขตทดสอบตามข้อกำหนดทางเทคนิค สภาพพื้นที่ กำหนดการ และข้อกำหนดที่ใช้กับโครงการ
@@ -457,7 +447,6 @@ Domain email || 域名邮箱 || อีเมลโดเมน
 Prepare your enquiry, then send it from your email app. This website does not transmit the form or create a customer record. You can also email anthaicheng@gmail.com directly, use LINE ID: rachada2018, or call us. || 填写需求后，请在邮件应用中发送。本站不会自动提交表单或创建客户记录。也可直接发邮件到 anthaicheng@gmail.com、通过 LINE ID：rachada2018 或电话联系。 || กรอกคำสอบถามแล้วส่งผ่านแอปอีเมล เว็บไซต์นี้ไม่ส่งแบบฟอร์มหรือสร้างข้อมูลลูกค้าโดยอัตโนมัติ ติดต่อโดยตรงได้ทาง anthaicheng@gmail.com, LINE ID: rachada2018 หรือโทรศัพท์
 , add LINE ID: rachada2018, or call || ，也可以添加 LINE ID：rachada2018，或拨打 || หรือเพิ่ม LINE ID: rachada2018 หรือโทร
 01 Testing || 01 检测业务 || 01 งานทดสอบ
-02 · BUYER-SIDE || 02 · 买方立场 || 02 · ฝ่ายผู้ซื้อ
 01 · BRIEF || 01 · 需求要件 || 01 · ขอบเขตเบื้องต้น
 02 · METHOD || 02 · 检测方案 || 02 · วิธีการทดสอบ
 03 · FIELD || 03 · 现场测试 || 03 · ปฏิบัติการภาคสนาม
@@ -598,8 +587,19 @@ Moved to Cement & Mining Process Equipment | AN-THAI Engineering || 页面已迁
 This page has moved to Cement & Mining Process Equipment at /cement-mining-equipment.html. || 本页已迁移至水泥与矿山工艺装备页面（/cement-mining-equipment.html）。 || หน้านี้ได้ย้ายไปยังหน้าเครื่องจักรปูนซีเมนต์และเหมืองแร่ (/cement-mining-equipment.html) แล้ว
 Foundation piling hammer rig and steel static load reaction frame on site || 施工现场打桩锤机与钢梁静载反力架实景 || ภาพเครื่องตอกเสาเข็มและโครงรับแรงทดสอบสถิตในหน้างานจริง
 Hydraulic jack, steel reaction beams, and anchor piles during a static pile load test || 静载试验中的液压千斤顶、钢反力梁与锚桩现场 || ภาพแม่แรงไฮดรอลิก คานรับแรง และเสาเข็มสมอในการทดสอบรับน้ำหนักแบบสถิต
-Illustrative visualization of structural steel H-beams undergoing welding, dimensional check, and coating inspection || 工程示意图：重钢制造车间内 H 型钢焊缝、尺寸与涂层检验（非实拍项目） || ภาพจำลองเชิงวิศวกรรม: โรงงานประกอบเหล็กโครงสร้าง H-Beam การตรวจแนวเชื่อม ขนาด และผิวเคลือบ
-Illustrative visualization of an industrial cement and mineral processing facility showing preheater tower, grinding mill hall, conveyors, and crushing bay || 工程示意图：现代水泥与矿山工艺厂区（预热器塔、粉磨车间、输送与破碎工段，非实拍项目） || ภาพจำลองเชิงวิศวกรรม: ระบบอุตสาหกรรมปูนซีเมนต์และเหมืองแร่ หอ Preheater อาคารบด สายพานลำเลียง และหน่วยบดคัดขนาด
-Illustrative visualization of a portable pile testing analyzer connected to side-mounted pile shaft sensors || 工程示意图：便携式数字桩基检测分析仪与桩身侧装传感器（非实拍项目） || ภาพจำลองเชิงวิศวกรรม: เครื่องวิเคราะห์ทดสอบเสาเข็มแบบพกพาและเซนเซอร์ติดตั้งข้างตัวเสาเข็ม
+Structural steel H-beams undergoing welding, dimensional check, and coating inspection || 重钢制造车间内 H 型钢焊缝、尺寸与涂层检验 || งานตรวจสอบรอยเชื่อม ขนาด และการเคลือบผิวโครงสร้างเหล็ก H-Beam ในโรงงาน
+Industrial cement and mineral processing facility with preheater tower, grinding mill hall, conveyors, and crushing bay || 现代水泥与矿山工艺厂区：预热器塔、粉磨车间、输送系统与破碎工段 || โรงงานอุตสาหกรรมปูนซีเมนต์และเหมืองแร่ หอ Preheater อาคารบด สายพานลำเลียง และหน่วยบดย่อย
+Portable pile testing analyzer connected to side-mounted pile shaft sensors || 便携式数字桩基检测分析仪与桩身侧装传感器 || เครื่องวิเคราะห์ทดสอบเสาเข็มแบบพกพาพร้อมเซนเซอร์ติดตั้งข้างตัวเสาเข็ม
 Geotechnical and materials testing instruments with Bangkok engineering coordination room || 岩土与材料实验室仪器实景及曼谷技术协调办公室 || ภาพเครื่องมือทดสอบปฐพีและวัสดุในห้องปฏิบัติการพันธมิตรพร้อมห้องประสานงานกรุงเทพฯ
-Illustrative engineering visualization showing rotary pile drilling rig, foundation pile caps, steel truss bridge erection, and industrial process silos in coastal Thailand || 工程示意图：泰国沿海基础设施现场的旋挖钻机、桩帽、钢桁架梁架设与工业料仓设施（非实拍项目） || ภาพจำลองเชิงวิศวกรรม: เครื่องเจาะเสาเข็มโรตารี หัวเสาเข็ม โครงสร้างสะพานเหล็กถัก และไซโลอุตสาหกรรมในเขตอุตสาหกรรมชายฝั่งประเทศไทย
+Rotary pile drilling rig, foundation pile caps, steel truss span, and industrial process silos || 旋挖钻机、桩帽基础、钢桁架梁架设与工业料仓设施 || เครื่องเจาะเสาเข็มโรตารี ฐานรากเสาเข็ม โครงสร้างสะพานเหล็กถัก และไซโลอุตสาหกรรม
+Structural steel fabrication in a manufacturing workshop || 制造车间内的重型结构钢制作 || งานประกอบเหล็กโครงสร้างในโรงงานผลิต
+Structural steelwork engineering and coordination || 结构钢工程协调与深化设计 || งานประสานงานวิศวกรรมเหล็กโครงสร้าง
+Welding inspection in a steel fabrication workshop || 钢结构制造车间焊缝检验 || งานตรวจสอบรอยเชื่อมในโรงงานประกอบเหล็ก
+Industrial prefabricated steel buildings || 工业预制轻重钢结构厂房 || อาคารโรงงานเหล็กโครงสร้างสำเร็จรูป
+Heavy fabricated steel structures || 重型装配式结构钢构件 || โครงสร้างเหล็กขนาดใหญ่
+Industrial steel pipe racks and support frames || 工业管廊与钢结构支架系统 || โครงเหล็กแร็กท่อและโครงสร้างรองรับอุตสาหกรรม
+Large span steel roof truss and space frame || 大跨度钢屋架与网架结构 || โครงถักหลังคาเหล็กช่วงพาดกว้างและสเปซเฟรม
+Steel plates and fabricated components || 钢板与深加工配套构件 || แผ่นเหล็กและชิ้นส่วนประกอบโครงสร้าง
+Laboratory instruments in a geotechnical and material testing partner lab || 合作岩土与材料实验室检测仪器 || เครื่องมือทดสอบปฐพีและวัสดุในห้องปฏิบัติการพันธมิตร
+Foundation investigation and structural testing capabilities overview || 地基勘察与结构检测工程能力全景 || ภาพรวมขีดความสามารถงานสำรวจดินและทดสอบโครงสร้าง
+Modern cable-stayed bridge and concrete viaduct piers in Bangkok || 曼谷现代斜拉桥与混凝土高架桥墩工程全景 || สะพานขึงและตอม่อทางยกระดับคอนกรีตสมัยใหม่ในกรุงเทพมหานคร

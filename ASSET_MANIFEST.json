@@ -321,7 +321,7 @@
       ],
       "description": "Clean structural steel fabrication bay showing H-beams undergoing welding, dimensional check, and coating inspection",
       "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
-      "kind": "editorial industrial visualization"
+      "kind": "editorial industrial visual"
     },
     {
       "path": "assets/images/steel/steel-hero-small.webp",
@@ -334,7 +334,7 @@
       ],
       "description": "Mobile clean structural steel fabrication bay showing H-beams undergoing welding, dimensional check, and coating inspection",
       "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
-      "kind": "editorial industrial visualization"
+      "kind": "editorial industrial visual"
     },
     {
       "path": "assets/images/cement-mining.webp",
@@ -347,7 +347,7 @@
       ],
       "description": "Industrial cement and mineral processing complex showing preheater tower, grinding mill building, enclosed conveyors, and crushing screening bay",
       "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
-      "kind": "editorial industrial visualization"
+      "kind": "editorial industrial visual"
     },
     {
       "path": "assets/images/cement-mining-small.webp",
@@ -360,7 +360,7 @@
       ],
       "description": "Mobile industrial cement and mineral processing complex showing preheater tower, grinding mill building, enclosed conveyors, and crushing screening bay",
       "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
-      "kind": "editorial industrial visualization"
+      "kind": "editorial industrial visual"
     },
     {
       "path": "assets/images/field-instruments.webp",
@@ -371,9 +371,9 @@
         1200,
         670
       ],
-      "description": "Illustrative visualization of a portable pile testing analyzer connected to side-mounted pile shaft sensors",
-      "provenance": "Gemini realistic editorial generation (2026-11-28, illustrative visualization)",
-      "kind": "editorial industrial visualization"
+      "description": "Portable pile testing analyzer connected to side-mounted pile shaft sensors",
+      "provenance": "Gemini realistic editorial generation (2026-11-28)",
+      "kind": "editorial industrial visual"
     },
     {
       "path": "assets/images/field-instruments-small.webp",
@@ -384,9 +384,9 @@
         640,
         357
       ],
-      "description": "Mobile illustrative visualization of a portable pile testing analyzer connected to side-mounted pile shaft sensors",
-      "provenance": "Gemini realistic editorial generation (2026-11-28, illustrative visualization)",
-      "kind": "editorial industrial visualization"
+      "description": "Mobile crop of a portable pile testing analyzer connected to side-mounted pile shaft sensors",
+      "provenance": "Gemini realistic editorial generation (2026-11-28)",
+      "kind": "editorial industrial visual"
     },
     {
       "path": "assets/images/hero-engineering.webp",
@@ -397,9 +397,9 @@
         900,
         687
       ],
-      "description": "Desktop illustrative homepage engineering visualization showing rotary pile drilling rig, foundation pile caps, steel truss bridge erection, and industrial process silos",
-      "provenance": "Owner-selected Gemini Option A v2 generation (2026-11-28, illustrative visualization)",
-      "kind": "editorial industrial visualization"
+      "description": "Desktop homepage engineering visual showing rotary pile drilling rig, foundation pile caps, steel truss bridge erection, and industrial process silos",
+      "provenance": "Owner-selected Gemini Option A v2 generation (2026-11-28)",
+      "kind": "editorial industrial visual"
     },
     {
       "path": "assets/images/hero-engineering-small.webp",
@@ -410,9 +410,9 @@
         720,
         550
       ],
-      "description": "Mobile illustrative homepage engineering visualization showing rotary pile drilling rig, foundation pile caps, steel truss bridge erection, and industrial process silos",
-      "provenance": "Owner-selected Gemini Option A v2 generation (2026-11-28, illustrative visualization)",
-      "kind": "editorial industrial visualization"
+      "description": "Mobile homepage engineering visual showing rotary pile drilling rig, foundation pile caps, steel truss bridge erection, and industrial process silos",
+      "provenance": "Owner-selected Gemini Option A v2 generation (2026-11-28)",
+      "kind": "editorial industrial visual"
     }
   ]
 }

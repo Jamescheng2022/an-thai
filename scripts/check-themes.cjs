@@ -111,8 +111,8 @@ for (const preset of manifest.presets) {
   assert(hasReducedMotionRule(css.text), `${preset.id} CSS must support prefers-reduced-motion rule`);
 
   if (preset.id === 'blueprint') {
-    assert(js.text.includes('SCHEMATIC') && js.text.includes('示意图') && js.text.includes('แผนภาพจำลอง'), 'Blueprint SVG must label SCHEMATIC in EN/ZH/TH');
-    assert(!/\b\d+(?:\.\d+)?\s*(?:kN|MPa|mm|kHz|m\/s|%)\b/i.test(js.text), 'Blueprint schematic must not include numeric test result values');
+    assert(!js.text.includes('bpPanel') && !js.text.includes('SCHEMATIC'), 'Blueprint preset must not inject bpPanel or SCHEMATIC SVG');
+    assert(!css.text.includes('.bp-panel') && !css.text.includes('.bp-note') && !css.text.includes('Conceptual curve'), 'Blueprint CSS must not contain removed .bp-* schematic panel rules');
   }
 
   summary.presets[preset.id] = {

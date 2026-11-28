@@ -92,8 +92,32 @@
           return { ok: true, status: 'filtered', requestId: 'FILTERED', isMock: true };
         }
         var st = loadState(wKey);
+        st.requestIndex = st.requestIndex || {};
+        if (payload && payload.clientRequestId && st.requestIndex[payload.clientRequestId]) {
+          var existingId = st.requestIndex[payload.clientRequestId];
+          var existingSess = st.sessions[existingId];
+          if (existingSess) {
+            return {
+              ok: true,
+              isMock: true,
+              persistedToSr: false,
+              idempotentReplay: true,
+              sessionId: existingSess.sessionId,
+              visitorToken: existingSess.visitorToken,
+              guestToken: existingSess.visitorToken,
+              expiresAt: existingSess.expiresAt,
+              status: existingSess.status,
+              identityState: existingSess.identityState,
+              activeHandover: existingSess.activeHandover,
+              requestId: existingSess.requestId,
+            };
+          }
+        }
         var sessionId = makeUuid();
-        var visitorToken = 'vtok_mock_' + sessionId.replace(/-/g, '').slice(0, 24);
+        if (!st.visitorToken) {
+          st.visitorToken = 'vtok_mock_' + sessionId.replace(/-/g, '').slice(0, 24);
+        }
+        var visitorToken = st.visitorToken;
         var dateTag = new Date().toISOString().slice(0, 10).replace(/-/g, '');
         var requestId = 'SR-MOCK-' + dateTag + '-' + sessionId.slice(0, 8).toUpperCase();
         var now = new Date().toISOString();
@@ -127,6 +151,9 @@
             },
           ],
         };
+        if (payload && payload.clientRequestId) {
+          st.requestIndex[payload.clientRequestId] = sessionId;
+        }
         saveState(wKey, st);
 
         return {
@@ -189,6 +216,23 @@
         var st = loadState(wKey);
         var sess = st.sessions[sessionId];
         if (!sess || sess.visitorToken !== token) return { ok: false, statusCode: 401, error: 'Unauthorized', isMock: true };
+        if (payload && payload.clientMsgId) {
+          for (var i = 0; i < sess.messages.length; i++) {
+            if (sess.messages[i].clientMsgId === payload.clientMsgId) {
+              return {
+                ok: true,
+                isMock: true,
+                persisted: false,
+                idempotentReplay: true,
+                sessionId: sessionId,
+                sessionStatus: sess.status,
+                eventId: sess.messages[i].id,
+                seq: sess.messages[i].seq,
+                createdAt: sess.messages[i].createdAt,
+              };
+            }
+          }
+        }
         var nextSeq = sess.messages.length + 1;
         var now = new Date().toISOString();
         var msg = {

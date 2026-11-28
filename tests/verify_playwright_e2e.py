@@ -336,6 +336,232 @@ def run_tests():
             page.screenshot(path=str(SCREENSHOTS_DIR / "390px_inquiry_feedback_fallback.png"))
             print("PASS: Inquiry fallback card verified (WhatsApp direct link, Copy Brief button, Email link all active).")
 
+            # 4. P0 Live Chat Drawer Single-Flight, Refresh, Idempotency & EN/ZH/TH UI Subtraction @ 390px
+            print("\n--- Testing Live Chat Single-Flight (Rapid Multi-Click, Slow Net, Refresh) & Clean UI @ 390px ---")
+            import json as _json
+            from urllib.parse import parse_qs, urlparse
+
+            live_ctx = browser.new_context(viewport={"width": 390, "height": 844})
+            live_page = live_ctx.new_page()
+            live_errors = []
+            live_page.on("pageerror", lambda err: live_errors.append(str(err)))
+
+            bridge_state = {
+                "create_calls": 0,
+                "post_msg_calls": 0,
+                "req_id_map": {},
+                "sessions": {},
+                "fail_next_create": False,
+                "delay_ms": 600,
+            }
+
+            def handle_sr_bridge(route):
+                req = route.request
+                parsed = urlparse(req.url)
+                qs = parse_qs(parsed.query)
+                rt = (qs.get("route") or [""])[0]
+                if rt == "health":
+                    route.fulfill(
+                        status=200,
+                        content_type="application/json",
+                        body=_json.dumps({
+                            "ok": True,
+                            "configured": True,
+                            "online": True,
+                            "organizationId": "00000000-0000-4000-8000-00000000a771",
+                            "workspaceKey": "an-thai-th",
+                            "workspaceName": "AN-THAI Engineering",
+                            "challengeToken": "chal_e2e_1",
+                        }),
+                    )
+                    return
+                if rt == "posts":
+                    route.fulfill(status=200, content_type="application/json", body=_json.dumps({"ok": True, "posts": []}))
+                    return
+                if rt == "sessions" and req.method == "POST":
+                    bridge_state["create_calls"] += 1
+                    body = _json.loads(req.post_data or "{}")
+                    if bridge_state["delay_ms"]:
+                        live_page.wait_for_timeout(bridge_state["delay_ms"])
+                    if bridge_state["fail_next_create"]:
+                        bridge_state["fail_next_create"] = False
+                        route.fulfill(status=503, content_type="application/json", body=_json.dumps({"ok": False, "error": "SLOW_TEMP_503"}))
+                        return
+                    crid = body.get("clientRequestId") or "none"
+                    if crid in bridge_state["req_id_map"]:
+                        sess = bridge_state["sessions"][bridge_state["req_id_map"][crid]]
+                    else:
+                        sid = f"6c446896-6fc8-4453-9732-00000000000{len(bridge_state['sessions']) + 1}"
+                        sess = {
+                            "sessionId": sid,
+                            "visitorToken": "vtok_e2e_persistent_01",
+                            "requestId": "SR-E2E-001",
+                            "status": "waiting_human",
+                            "messages": [
+                                {"id": "m-1", "seq": 1, "senderKind": "visitor", "text": body.get("message", ""), "createdAt": "2026-11-28T10:29:00Z"},
+                                {"id": "m-2", "seq": 2, "senderKind": "staff", "senderLabel": "AN-THAI Engineering", "orgVerified": True, "text": "您好，曼谷工程团队已收到您的需求，我们正在核对技术参数。", "createdAt": "2026-11-28T10:30:00Z"},
+                            ],
+                        }
+                        bridge_state["sessions"][sid] = sess
+                        bridge_state["req_id_map"][crid] = sid
+                    route.fulfill(
+                        status=201,
+                        content_type="application/json",
+                        body=_json.dumps({
+                            "ok": True,
+                            "sessionId": sess["sessionId"],
+                            "visitorToken": sess["visitorToken"],
+                            "requestId": sess["requestId"],
+                            "status": sess["status"],
+                        }),
+                    )
+                    return
+                if rt == "session":
+                    sid = (qs.get("sessionId") or [""])[0]
+                    sess = bridge_state["sessions"].get(sid)
+                    if not sess:
+                        route.fulfill(status=401, content_type="application/json", body=_json.dumps({"ok": False, "error": "Unauthorized"}))
+                        return
+                    route.fulfill(status=200, content_type="application/json", body=_json.dumps({"ok": True, "session": {"sessionId": sid, "status": sess["status"]}}))
+                    return
+                if rt == "messages":
+                    sid = (qs.get("sessionId") or [""])[0]
+                    sess = bridge_state["sessions"].get(sid)
+                    if not sess:
+                        route.fulfill(status=401, content_type="application/json", body=_json.dumps({"ok": False, "error": "Unauthorized"}))
+                        return
+                    if req.method == "POST":
+                        bridge_state["post_msg_calls"] += 1
+                        b = _json.loads(req.post_data or "{}")
+                        seq = len(sess["messages"]) + 1
+                        sess["messages"].append({"id": f"m-{seq}", "seq": seq, "senderKind": "visitor", "text": b.get("text", ""), "createdAt": "2026-11-28T10:31:00Z"})
+                        route.fulfill(status=201, content_type="application/json", body=_json.dumps({"ok": True, "persisted": True, "sessionStatus": sess["status"]}))
+                        return
+                    after_seq = int((qs.get("afterSeq") or ["0"])[0])
+                    msgs = [m for m in sess["messages"] if m["seq"] > after_seq]
+                    route.fulfill(status=200, content_type="application/json", body=_json.dumps({"ok": True, "sessionId": sid, "status": sess["status"], "messages": msgs, "nextAfterSeq": sess["messages"][-1]["seq"] if sess["messages"] else after_seq, "hasMore": False}))
+                    return
+                route.abort()
+
+            live_page.route("**/api/sr-bridge*", handle_sr_bridge)
+
+            # A. Rapid multi-click + slow network on ZH page -> only 1 session created
+            live_page.goto(f"{base_url}/zh/index.html", wait_until="networkidle")
+            live_page.locator("#bottomBarDeskBtn").click()
+            live_page.wait_for_timeout(120)
+            live_page.locator("#liveMsgInput").fill("你好")
+            # Fire 5 rapid submit events/clicks within slow 600ms window
+            live_page.evaluate("""() => {
+                const btn = document.querySelector('#liveMessageForm button[type="submit"]');
+                const form = document.getElementById('liveMessageForm');
+                for (let i = 0; i < 5; i++) {
+                    btn.click();
+                    form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+                }
+            }""")
+            live_page.wait_for_timeout(1200)
+            assert bridge_state["create_calls"] == 1, f"Expected 1 session on rapid 5x submit, got {bridge_state['create_calls']}"
+            assert len(bridge_state["sessions"]) == 1, f"Expected 1 stored session, got {len(bridge_state['sessions'])}"
+
+            # B. Refresh page -> restores same session & 0 new sessions on follow-up message
+            live_page.reload(wait_until="networkidle")
+            live_page.locator("#bottomBarDeskBtn").click()
+            live_page.wait_for_timeout(150)
+            assert bridge_state["create_calls"] == 1, "Page reload must restore session without calling createSession"
+            live_page.screenshot(path=str(SCREENSHOTS_DIR / "390px_live_drawer_zh.png"))
+
+            # Verify ZH Drawer UI Subtraction rules
+            assert live_page.locator("#drawerHeading").inner_text().strip() == "AN-THAI"
+            zh_sub = live_page.locator("#drawerStatusText").inner_text().strip()
+            assert zh_sub == "通常在工作时间内回复", f"Unexpected ZH subtitle: {zh_sub!r}"
+            assert "Session" not in zh_sub and "acf58ce4" not in zh_sub and "HUMAN" not in zh_sub
+            assert live_page.locator("#liveHandoffBtn").count() == 0
+            assert live_page.locator("#liveRefreshBtn").count() == 0
+            assert live_page.locator(".live-toolbar").count() == 0
+            assert live_page.locator("#liveClearBtn").is_hidden(), "New Session must start tucked inside menu"
+
+            # Open top-right menu & capture screenshot
+            live_page.locator("#drawerMenuBtn").click()
+            live_page.wait_for_timeout(100)
+            assert live_page.locator("#liveClearBtn").is_visible()
+            live_page.screenshot(path=str(SCREENSHOTS_DIR / "390px_live_drawer_menu_open_zh.png"))
+            live_page.locator("#drawerMenuBtn").click()
+            live_page.wait_for_timeout(80)
+
+            # Verify guest bubble meta shows ONLY timestamp (no YOU / 您)
+            import re as _re
+            guest_meta = live_page.locator(".msg-bubble.is-guest .msg-meta").first.inner_text().strip()
+            assert _re.fullmatch(r"\d{2}-\d{2}\s+\d{2}:\d{2}", guest_meta), f"Guest meta must be timestamp-only, got {guest_meta!r}"
+
+            # Follow-up send uses existing session (0 new create_calls)
+            live_page.locator("#liveMsgInput").fill("请问泰国罗勇项目可对接静载检测吗？")
+            live_page.locator('#liveMessageForm button[type="submit"]').click()
+            live_page.wait_for_timeout(300)
+            assert bridge_state["create_calls"] == 1
+            assert bridge_state["post_msg_calls"] == 1
+
+            # C. Transient failure retry reuses exact clientRequestId (1 session only)
+            live_page.locator("#drawerMenuBtn").click()
+            live_page.locator("#liveClearBtn").click()
+            live_page.wait_for_timeout(150)
+            bridge_state["fail_next_create"] = True
+            bridge_state["delay_ms"] = 200
+            live_page.locator("#liveMsgInput").fill("Retry idempotency check")
+            live_page.locator('#liveMessageForm button[type="submit"]').click()
+            live_page.wait_for_timeout(450)
+            assert live_page.locator("#liveFeedback").is_visible()
+            assert live_page.locator("#liveMsgInput").input_value() == "Retry idempotency check"
+            # Now retry after clearing temporary failure -> same clientRequestId maps to same 1 session
+            live_page.locator('#liveMessageForm button[type="submit"]').click()
+            live_page.wait_for_timeout(450)
+            assert len(bridge_state["req_id_map"]) == 2, f"Expected exact reuse of clientRequestId on failure retry; req_ids={list(bridge_state['req_id_map'].keys())}"
+
+            # D. Capture clean EN & TH 390px live drawer screenshots
+            for lang_code, path_str, sample_msg, staff_reply, exp_sub in [
+                ("en", "/index.html", "Hello, we need SLT & PDA testing for 40 piles in Rayong EEC.", "Thank you for reaching AN-THAI Engineering. Our Bangkok team has received your Rayong inquiry.", "Usually replies during working hours"),
+                ("th", "/th/index.html", "สวัสดีครับ ต้องการสอบถามงานทดสอบเสาเข็ม SLT ที่ระยองครับ", "ขอบคุณที่ติดต่อทีมวิศวกร AN-THAI กรุงเทพฯ เราได้รับข้อมูลโครงการของท่านแล้วครับ", "โดยปกติตอบกลับในเวลาทำการ"),
+            ]:
+                live_ctx2 = browser.new_context(viewport={"width": 390, "height": 844})
+                p2 = live_ctx2.new_page()
+                def _mk_handler(s_reply):
+                    def _h(route):
+                        rt = (parse_qs(urlparse(route.request.url).query).get("route") or [""])[0]
+                        if rt == "health":
+                            route.fulfill(status=200, content_type="application/json", body=_json.dumps({"ok": True, "configured": True, "online": True, "organizationId": "00000000-0000-4000-8000-00000000a771", "challengeToken": "c2"}))
+                        elif rt == "posts":
+                            route.fulfill(status=200, content_type="application/json", body=_json.dumps({"ok": True, "posts": []}))
+                        elif rt == "sessions":
+                            b = _json.loads(route.request.post_data or "{}")
+                            bridge_state[f"msg_{s_reply[:8]}"] = b.get("message", "")
+                            route.fulfill(status=201, content_type="application/json", body=_json.dumps({"ok": True, "sessionId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa", "visitorToken": "vtok_lang", "status": "human_active"}))
+                        elif rt == "session":
+                            route.fulfill(status=200, content_type="application/json", body=_json.dumps({"ok": True, "session": {"sessionId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa", "status": "human_active"}}))
+                        elif rt == "messages":
+                            route.fulfill(status=200, content_type="application/json", body=_json.dumps({"ok": True, "messages": [
+                                {"id": "1", "seq": 1, "senderKind": "visitor", "text": bridge_state.get(f"msg_{s_reply[:8]}", ""), "createdAt": "2026-11-28T10:35:00Z"},
+                                {"id": "2", "seq": 2, "senderKind": "staff", "orgVerified": True, "text": s_reply, "createdAt": "2026-11-28T10:36:00Z"},
+                            ], "nextAfterSeq": 2, "hasMore": False}))
+                        else:
+                            route.abort()
+                    return _h
+                p2.route("**/api/sr-bridge*", _mk_handler(staff_reply))
+                p2.goto(f"{base_url}{path_str}", wait_until="networkidle")
+                p2.locator("#bottomBarDeskBtn").click()
+                p2.wait_for_timeout(100)
+                assert p2.locator("#drawerHeading").inner_text().strip() == "AN-THAI"
+                assert p2.locator("#drawerStatusText").inner_text().strip() == exp_sub
+                p2.locator("#liveMsgInput").fill(sample_msg)
+                p2.locator('#liveMessageForm button[type="submit"]').click()
+                p2.wait_for_timeout(250)
+                g_meta = p2.locator(".msg-bubble.is-guest .msg-meta").first.inner_text().strip()
+                assert _re.fullmatch(r"\d{2}-\d{2}\s+\d{2}:\d{2}", g_meta), g_meta
+                p2.screenshot(path=str(SCREENSHOTS_DIR / f"390px_live_drawer_{lang_code}.png"))
+                live_ctx2.close()
+
+            assert not live_errors, f"Live drawer E2E page errors: {live_errors}"
+            live_ctx.close()
+            print("PASS: Live Chat rapid multi-click, slow network, refresh idempotency & EN/ZH/TH 390px clean drawer verified.")
+
             # Final console error check (zero tolerance, including resource 404s)
             critical_errors = console_errors.copy()
             assert not critical_errors, f"Critical console errors detected: {critical_errors}"

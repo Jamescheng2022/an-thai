@@ -564,11 +564,169 @@ async function testEnquiryHandler() {
   }
 }
 
+async function testSingleFlightAndIdempotency() {
+  const mockSrc = fs.readFileSync(path.join(__dirname, '../assets/js/sr-bridge-mock.js'), 'utf8');
+  const adapterSrc = fs.readFileSync(path.join(__dirname, '../assets/js/sourcerating-embed-adapter.js'), 'utf8');
+
+  const store = new Map();
+  let createCalls = 0;
+  let createMode = 'delayed_ok'; // 'delayed_ok' | 'fail_once_then_ok'
+  const seenClientReqIds = [];
+  let messageCalls = 0;
+  const seenClientMsgIds = [];
+
+  const createSandbox = () => {
+    const sb = {
+      window: null,
+      console,
+      Date,
+      Math,
+      URLSearchParams,
+      AbortController,
+      setTimeout,
+      clearTimeout,
+      JSON,
+      crypto: require('node:crypto').webcrypto,
+      localStorage: {
+        getItem: (k) => (store.has(k) ? store.get(k) : null),
+        setItem: (k, v) => store.set(k, String(v)),
+        removeItem: (k) => store.delete(k)
+      },
+      location: { href: 'https://an-thai-preview.vercel.app/zh/index.html', protocol: 'https:' },
+      fetch: async (url, init) => {
+        if (url.includes('route=health')) {
+          return {
+            ok: true,
+            status: 200,
+            json: async () => ({
+              ok: true,
+              configured: true,
+              online: true,
+              organizationId: '00000000-0000-4000-8000-00000000a771',
+              challengeToken: 'tok_sf_1'
+            })
+          };
+        }
+        if (url.includes('route=sessions')) {
+          createCalls += 1;
+          const body = JSON.parse((init && init.body) || '{}');
+          seenClientReqIds.push(body.clientRequestId);
+          await new Promise((r) => setTimeout(r, 40));
+          if (createMode === 'fail_once_then_ok' && createCalls === 1) {
+            return { ok: false, status: 503, json: async () => ({ ok: false, error: 'TEMPORARY_UNAVAILABLE' }) };
+          }
+          return {
+            ok: true,
+            status: 201,
+            json: async () => ({
+              ok: true,
+              sessionId: '33333333-3333-4333-8333-333333333333',
+              visitorToken: 'vtok_persistent_sf_999',
+              requestId: 'SR-SF-001',
+              status: 'ai_active'
+            })
+          };
+        }
+        if (url.includes('route=messages')) {
+          if (init && init.method === 'POST') {
+            messageCalls += 1;
+            const b = JSON.parse(init.body || '{}');
+            seenClientMsgIds.push(b.clientMsgId);
+            await new Promise((r) => setTimeout(r, 25));
+            return { ok: true, status: 201, json: async () => ({ ok: true, persisted: true, sessionStatus: 'ai_active' }) };
+          }
+          return {
+            ok: true,
+            status: 200,
+            json: async () => ({
+              ok: true,
+              messages: [{ id: 'm1', seq: 1, senderKind: 'visitor', text: '你好', createdAt: new Date().toISOString() }]
+            })
+          };
+        }
+        return {
+          ok: true,
+          status: 200,
+          json: async () => ({
+            ok: true,
+            session: { sessionId: '33333333-3333-4333-8333-333333333333', status: 'ai_active' }
+          })
+        };
+      }
+    };
+    sb.window = sb;
+    vm.createContext(sb);
+    vm.runInContext(mockSrc, sb);
+    vm.runInContext(adapterSrc, sb);
+    return sb;
+  };
+
+  // 1. Concurrent multi-clicks / double-submit during slow network produce ONLY 1 POST ?route=sessions
+  let sb = createSandbox();
+  let adapter = new sb.SourceRatingEmbedAdapter({ bridgeEndpoint: '/api/sr-bridge', workspaceKey: 'an-thai-th', defaultLang: 'zh' });
+  await adapter.init();
+  const concurrentResults = await Promise.all([
+    adapter.sendMessage({ text: '你好' }),
+    adapter.sendMessage({ text: '你好' }),
+    adapter.sendMessage({ text: '你好' }),
+    adapter.sendMessage({ text: '你好' }),
+  ]);
+  assert.strictEqual(createCalls, 1, 'Concurrent rapid sendMessage calls must issue at most 1 POST ?route=sessions');
+  for (const r of concurrentResults) {
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(r.sessionId, '33333333-3333-4333-8333-333333333333');
+  }
+  assert.strictEqual(adapter.visitorToken, 'vtok_persistent_sf_999');
+
+  // 2. Refresh after session created keeps visitorToken + sessionId and sends follow-up via POST ?route=messages (0 new sessions)
+  sb = createSandbox();
+  const reloadedAdapter = new sb.SourceRatingEmbedAdapter({ bridgeEndpoint: '/api/sr-bridge', workspaceKey: 'an-thai-th', defaultLang: 'zh' });
+  await reloadedAdapter.init();
+  assert.strictEqual(reloadedAdapter.session.sessionId, '33333333-3333-4333-8333-333333333333');
+  assert.strictEqual(reloadedAdapter.visitorToken, 'vtok_persistent_sf_999');
+  const followUp = await reloadedAdapter.sendMessage({ text: '补充需求：1200吨' });
+  assert.strictEqual(followUp.ok, true);
+  assert.strictEqual(createCalls, 1, 'Follow-up after refresh must reuse session and create 0 new sessions');
+  assert.strictEqual(messageCalls, 1);
+
+  // 3. Failure before session finishes + reload + retry reuses EXACT SAME clientRequestId
+  store.clear();
+  createCalls = 0;
+  seenClientReqIds.length = 0;
+  createMode = 'fail_once_then_ok';
+  sb = createSandbox();
+  const retryAdapter1 = new sb.SourceRatingEmbedAdapter({ bridgeEndpoint: '/api/sr-bridge', workspaceKey: 'retry-test', defaultLang: 'en' });
+  await retryAdapter1.init();
+  const failRes = await retryAdapter1.createSession({ message: 'Initial failed send' });
+  assert.strictEqual(failRes.ok, false);
+  // Simulate full browser reload before retrying
+  sb = createSandbox();
+  const retryAdapter2 = new sb.SourceRatingEmbedAdapter({ bridgeEndpoint: '/api/sr-bridge', workspaceKey: 'retry-test', defaultLang: 'en' });
+  await retryAdapter2.init();
+  const okRes = await retryAdapter2.createSession({ message: 'Initial failed send' });
+  assert.strictEqual(okRes.ok, true);
+  assert.strictEqual(createCalls, 2);
+  assert.strictEqual(seenClientReqIds[0], seenClientReqIds[1], 'Retry after failure + reload must reuse exact same clientRequestId');
+
+  // 4. Mock transport idempotency by clientRequestId + clientMsgId
+  store.clear();
+  sb = createSandbox();
+  const mockA = new sb.SourceRatingEmbedAdapter({ bridgeEndpoint: '/api/sr-bridge', workspaceKey: 'mock-idemp', mockFallback: true });
+  await mockA.init();
+  const fixedReqId = '44444444-4444-4444-8444-444444444444';
+  const m1 = await mockA.createSession({ clientRequestId: fixedReqId, message: 'Hello mock' });
+  mockA.session = null; // simulate memory drop before write
+  const m2 = await mockA.createSession({ clientRequestId: fixedReqId, message: 'Hello mock' });
+  assert.strictEqual(m1.sessionId, m2.sessionId, 'Mock createSession must deduplicate identical clientRequestId');
+  assert.strictEqual(m1.visitorToken, m2.visitorToken, 'Mock createSession must reuse persistent visitorToken');
+}
+
 (async () => {
   await testProxyHandler();
   await testAdapterAndMock();
   await testEnquiryHandler();
-  console.log('PASS: sr-bridge + /api/enquiry Resend failover proxy fail-closed checks + adapter 409/401/offline/mock/PublicPost/501 contract tests');
+  await testSingleFlightAndIdempotency();
+  console.log('PASS: sr-bridge + /api/enquiry Resend failover + adapter 409/401/offline/mock/501 + single-flight/reload/idempotency tests');
 })().catch((err) => {
   console.error(err);
   process.exit(1);

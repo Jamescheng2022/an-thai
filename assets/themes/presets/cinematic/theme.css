@@ -99,8 +99,7 @@ html[data-theme="cinematic"] #liveClaimForm input:focus {
   border-color: var(--accent) !important;
 }
 html[data-theme="cinematic"] #drawerLiveFooter input:disabled,
-html[data-theme="cinematic"] #drawerLiveFooter button:disabled,
-html[data-theme="cinematic"] #liveHandoffBtn:disabled {
+html[data-theme="cinematic"] #drawerLiveFooter button:disabled {
   opacity: 0.45 !important;
   cursor: not-allowed;
 }

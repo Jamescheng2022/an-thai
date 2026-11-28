@@ -226,11 +226,17 @@
       <div class="drawer-header">
         <div>
           <div style="display:flex;align-items:center;gap:8px;">
-            <span id="drawerHeading" style="font-weight:800;font-size:14px;" data-i18n="drawerTitle">AN-THAI · Inquiry Desk</span>
+            <span id="drawerHeading" style="font-weight:800;font-size:14px;" data-i18n="drawerTitle">AN-THAI</span>
           </div>
-          <div id="drawerStatusText" class="mono" style="font-size:10px;color:#fcd34d;margin-top:4px;" data-i18n="drawerStatusOffline">Direct Structured Inquiry · Bangkok Engineering Team</div>
+          <div id="drawerStatusText" class="drawer-subtitle" data-i18n="drawerStatusOffline">Direct Structured Inquiry · Bangkok Engineering Team</div>
         </div>
-        <button id="drawerCloseBtn" type="button" class="drawer-close" aria-label="Close drawer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        <div class="drawer-header-actions">
+          <button id="drawerMenuBtn" type="button" class="drawer-menu-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="drawerMenu" data-i18n-aria="drawerMenuAria" aria-label="Conversation options" hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
+          <div id="drawerMenu" class="drawer-menu-popover" role="menu" hidden>
+            <button id="liveClearBtn" type="button" role="menuitem" class="drawer-menu-item" data-i18n="liveClearBtn">New Session</button>
+          </div>
+          <button id="drawerCloseBtn" type="button" class="drawer-close" data-i18n-aria="drawerCloseAria" aria-label="Close drawer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
       </div>
       <div class="drawer-body">
         <div id="drawerOfflineView" class="drawer-stack">
@@ -277,11 +283,6 @@
         <div id="drawerLiveView" class="drawer-stack" hidden>
           <div id="liveMessagesMount" class="live-messages"></div>
           <div id="liveFeedback" class="notice-box" hidden role="status" aria-live="polite"></div>
-          <div class="live-toolbar">
-            <button id="liveHandoffBtn" type="button" class="btn btn-dark" style="padding:7px 12px;font-size:11px;" data-i18n="liveHandoffBtn">Request Human Engineer</button>
-            <button id="liveRefreshBtn" type="button" class="btn btn-outline" style="padding:7px 12px;font-size:11px;" data-i18n="liveRefreshBtn">Refresh</button>
-            <button id="liveClearBtn" type="button" class="btn btn-outline" style="padding:7px 12px;font-size:11px;" data-i18n="liveClearBtn">New Session</button>
-          </div>
           <form id="liveClaimForm" style="display:flex;gap:6px;">
             <label for="liveClaimEmail" class="sr-only">Email</label>
             <input id="liveClaimEmail" type="email" style="flex:1;padding:8px 10px;border:1px solid var(--line-soft);font-size:12px;background:#fff;" data-i18n-ph="liveClaimPh" placeholder="Email to save history (optional)" />

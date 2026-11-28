@@ -246,8 +246,14 @@ function renderPage(loc, pageName) {
   <div id="deskDrawer" class="drawer-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="drawer-panel">
       <div class="drawer-header">
-        <div><div id="drawerHeading" style="font-weight:800;font-size:14px;">${escapeHtml(cfg.brandShort)} · Desk</div><div id="drawerStatusText" class="mono" style="font-size:10px;color:#fcd34d;"></div></div>
-        <button id="drawerCloseBtn" type="button" class="drawer-close" aria-label="Close drawer">×</button>
+        <div><div id="drawerHeading" style="font-weight:800;font-size:14px;">${escapeHtml(cfg.brandShort)}</div><div id="drawerStatusText" class="drawer-subtitle"></div></div>
+        <div class="drawer-header-actions">
+          <button id="drawerMenuBtn" type="button" class="drawer-menu-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="drawerMenu" data-i18n-aria="drawerMenuAria" aria-label="Conversation options" hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
+          <div id="drawerMenu" class="drawer-menu-popover" role="menu" hidden>
+            <button id="liveClearBtn" type="button" role="menuitem" class="drawer-menu-item" data-i18n="liveClearBtn">New Session</button>
+          </div>
+          <button id="drawerCloseBtn" type="button" class="drawer-close" data-i18n-aria="drawerCloseAria" aria-label="Close drawer">×</button>
+        </div>
       </div>
       <div class="drawer-body">
         <div id="drawerOfflineView" class="drawer-stack">
@@ -263,11 +269,6 @@ function renderPage(loc, pageName) {
         <div id="drawerLiveView" class="drawer-stack" hidden>
           <div id="liveMessagesMount" class="live-messages"></div>
           <div id="liveFeedback" class="notice-box" hidden role="status" aria-live="polite"></div>
-          <div class="live-toolbar">
-            <button id="liveHandoffBtn" type="button" class="btn btn-dark" data-i18n="liveHandoffBtn">Request Human</button>
-            <button id="liveRefreshBtn" type="button" class="btn btn-outline" data-i18n="liveRefreshBtn">Refresh</button>
-            <button id="liveClearBtn" type="button" class="btn btn-outline" data-i18n="liveClearBtn">New Session</button>
-          </div>
         </div>
       </div>
       <div id="drawerLiveFooter" class="drawer-footer" hidden>

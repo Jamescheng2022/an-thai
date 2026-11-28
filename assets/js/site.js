@@ -34,7 +34,14 @@
   };
 
   var I18N = window.ANTHAI_I18N || { EN: {} };
-  var state = { lang: 'EN', adapterMode: 'unconfigured', isMock: false, sessionStatus: '', assignedStaffLabel: '', requestId: '', inquiryApiConfigured: false, sessionId: '', lastFocused: null, pollTimer: null, lastPosts: [], postsIsMock: false };
+  var state = { lang: 'EN', adapterMode: 'unconfigured', isMock: false, sessionStatus: '', assignedStaffLabel: '', requestId: '', inquiryApiConfigured: false, sessionId: '', lastFocused: null, pollTimer: null, lastPosts: [], postsIsMock: false, isLiveSending: false, isContactSubmitting: false, pendingLiveMsg: null, pendingContactReq: null, drawerMenuOpen: false };
+
+  function makeClientUuid() {
+    try {
+      if (window.crypto && typeof window.crypto.randomUUID === 'function') return window.crypto.randomUUID();
+    } catch (e) {}
+    return '00000000-0000-4000-8000-' + Date.now().toString(16).padStart(12, '0').slice(-12);
+  }
 
   function detectInitialLang() {
     var p = window.location.pathname || '';
@@ -76,30 +83,25 @@
     if (footerAdapter) footerAdapter.textContent = isConnected ? t('footerAdapterLive') : t('footerAdapterOffline');
     var drawerStatus = document.getElementById('drawerStatusText');
     if (drawerStatus) {
-      var shortId = state.sessionId ? state.sessionId.slice(0, 8) : 'ready';
-      if (isMock) {
-        drawerStatus.textContent = (state.sessionStatus === 'closed' ? t('drawerStatusClosed') : t('drawerStatusMock')) + shortId;
-      } else if (isLive) {
-        if (state.sessionStatus === 'waiting_human') {
-          drawerStatus.textContent = t('drawerStatusWaitingHuman') + shortId;
-        } else if (state.sessionStatus === 'human_active') {
-          drawerStatus.textContent = t('drawerStatusHumanActive') + t('liveRoleHuman') + ' · ' + shortId;
-        } else if (state.sessionStatus === 'closed') {
-          drawerStatus.textContent = t('drawerStatusClosed') + shortId;
-        } else {
-          drawerStatus.textContent = t('drawerStatusLive') + (state.sessionId ? shortId : 'active');
-        }
+      if (isConnected) {
+        drawerStatus.textContent = t('drawerStatusLive');
       } else {
         drawerStatus.textContent = t('drawerStatusOffline');
       }
     }
     var isClosed = state.sessionStatus === 'closed';
     var msgIn = document.getElementById('liveMsgInput');
-    var handBtn = document.getElementById('liveHandoffBtn');
     var sendBtn = document.querySelector('#liveMessageForm button[type="submit"]');
-    if (msgIn) msgIn.disabled = isClosed;
-    if (handBtn) handBtn.disabled = isClosed;
-    if (sendBtn) sendBtn.disabled = isClosed;
+    if (msgIn) {
+      msgIn.disabled = isClosed;
+      msgIn.readOnly = Boolean(state.isLiveSending && !isClosed);
+    }
+    if (sendBtn) {
+      sendBtn.disabled = isClosed || state.isLiveSending;
+      if (typeof sendBtn.setAttribute === 'function') sendBtn.setAttribute('aria-busy', state.isLiveSending ? 'true' : 'false');
+    }
+    var menuBtn = document.getElementById('drawerMenuBtn');
+    var menuEl = document.getElementById('drawerMenu');
     var offlineView = document.getElementById('drawerOfflineView');
     var liveView = document.getElementById('drawerLiveView');
     var liveFooter = document.getElementById('drawerLiveFooter');
@@ -109,6 +111,14 @@
       syncDrawerMockNotice(liveView, isMock);
       var claimForm = document.getElementById('liveClaimForm');
       if (claimForm) claimForm.hidden = true;
+    }
+    if (menuBtn) {
+      menuBtn.hidden = !(isConnected && liveView);
+      if (menuBtn.hidden && menuEl) {
+        menuEl.hidden = true;
+        state.drawerMenuOpen = false;
+        menuBtn.setAttribute('aria-expanded', 'false');
+      }
     }
     if (liveFooter) liveFooter.hidden = !isConnected;
   }
@@ -154,6 +164,8 @@
     var submitBtn = document.getElementById('contactSubmitBtn');
     if (submitBtn) {
       submitBtn.textContent = state.inquiryApiConfigured ? t('fSubmitApi') : t('fSubmitEmail');
+      submitBtn.disabled = Boolean(state.isContactSubmitting);
+      if (typeof submitBtn.setAttribute === 'function') submitBtn.setAttribute('aria-busy', state.isContactSubmitting ? 'true' : 'false');
     }
     var statusEl = document.getElementById('contactApiStatus');
     if (statusEl) {
@@ -234,13 +246,19 @@
       var cls = isGuestRole ? 'is-guest'
         : (isHumanRole ? 'is-human'
         : (role === 'system' ? 'is-system' : ''));
-      var roleLabel = isGuestRole ? t('liveRoleGuest')
+      var roleLabel = isGuestRole ? ''
         : (isHumanRole ? (m.orgVerified ? t('liveRoleHumanVerified') : t('liveRoleHuman'))
         : (role === 'system' ? t('liveRoleSystem') : t('liveRoleAi')));
       var displayText = isHandoverNotice ? t('liveSystemHandover') : rawText;
       var ts = formatMessageTime(m.createdAt);
-      var meta = esc(roleLabel) + (ts ? ' · ' + esc(ts) : '');
-      return '<div class="msg-bubble ' + cls + '"><div class="msg-meta">' + meta + '</div><div>' + esc(displayText) + '</div></div>';
+      var metaHtml = '';
+      if (isGuestRole) {
+        if (ts) metaHtml = '<div class="msg-meta msg-time">' + esc(ts) + '</div>';
+      } else {
+        var meta = esc(roleLabel) + (ts ? ' · ' + esc(ts) : '');
+        metaHtml = '<div class="msg-meta">' + meta + '</div>';
+      }
+      return '<div class="msg-bubble ' + cls + '">' + metaHtml + '<div>' + esc(displayText) + '</div></div>';
     }).join('');
     var body = document.querySelector('.drawer-body');
     if (body) body.scrollTop = body.scrollHeight;
@@ -402,95 +420,65 @@
     showLiveFeedback(t('liveSessionReset'), 'neutral');
   }
 
+  function setDrawerMenuOpen(open) {
+    var menuBtn = document.getElementById('drawerMenuBtn');
+    var menuEl = document.getElementById('drawerMenu');
+    state.drawerMenuOpen = Boolean(open && menuBtn && menuEl && !menuBtn.hidden);
+    if (menuEl) menuEl.hidden = !state.drawerMenuOpen;
+    if (menuBtn) menuBtn.setAttribute('aria-expanded', state.drawerMenuOpen ? 'true' : 'false');
+  }
+
+  var drawerMenuBtn = document.getElementById('drawerMenuBtn');
+  if (drawerMenuBtn) {
+    drawerMenuBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setDrawerMenuOpen(!state.drawerMenuOpen);
+    });
+  }
+
   var liveForm = document.getElementById('liveMessageForm');
   var liveInput = document.getElementById('liveMsgInput');
   if (liveForm && liveInput) {
     liveForm.addEventListener('submit', async function (e) {
       e.preventDefault();
+      if (state.isLiveSending) return;
       var text = liveInput.value.trim();
       var connected = state.adapterMode === 'live' || state.adapterMode === 'mock';
       if (!text || !adapter || !connected) return;
       if (state.sessionStatus === 'closed') { showLiveFeedback(t('liveClosedNotice'), 'neutral'); return; }
+      if (!state.pendingLiveMsg || state.pendingLiveMsg.text !== text) {
+        state.pendingLiveMsg = { text: text, clientMsgId: makeClientUuid() };
+      }
+      state.isLiveSending = true;
+      syncStatusUI();
       showLiveFeedback('', '');
-      var res = await adapter.sendMessage({ text: text, context: { page: window.location.pathname, lang: state.lang } });
-      if (!res.ok) {
-        if (res.sessionReset) { applySessionResetUI(); return; }
-        showLiveFeedback(t('liveErrSend') + (res.error ? ' (' + res.error + ')' : ''), 'err');
-        return;
-      }
-      liveInput.value = '';
-      if (adapter.session && adapter.session.sessionId) state.sessionId = adapter.session.sessionId;
-      if (res.sessionId) state.sessionId = res.sessionId;
-      if (res.sessionStatus) state.sessionStatus = res.sessionStatus;
-      syncStatusUI();
-      if (res.sessionReset) showLiveFeedback(t('liveSessionReset'), 'neutral');
-      var listRes = await adapter.listMessages();
-      if (listRes.ok) renderLiveMessages(listRes.messages);
-    });
-  }
-
-  var liveHandoffBtn = document.getElementById('liveHandoffBtn');
-  if (liveHandoffBtn) {
-    liveHandoffBtn.addEventListener('click', async function () {
-      var connected = state.adapterMode === 'live' || state.adapterMode === 'mock';
-      if (!adapter || !connected) return;
-      var res = await adapter.requestHumanHandoff({ reason: 'visitor_requested', page: window.location.pathname });
-      if (!res.ok) {
-        if (res.sessionReset) { applySessionResetUI(); return; }
-        showLiveFeedback(t('liveErrHandoff') + (res.error ? ' (' + res.error + ')' : ''), 'err');
-        return;
-      }
-      if (res.sessionId) state.sessionId = res.sessionId;
-      state.sessionStatus = res.sessionStatus || res.status || '';
-      syncStatusUI();
-      window.ANTHAI_TRACK('human_handoff_requested', { sessionId: state.sessionId, isMock: state.isMock });
-      if (res.isMock || state.isMock) {
-        showLiveFeedback(t('liveOkHandoffMock'), 'neutral');
-      } else {
-        showLiveFeedback(t('liveOkHandoff') + (res.sessionReset ? ' ' + t('liveSessionReset') : ''), 'ok');
-      }
-      var listRes = await adapter.listMessages();
-      if (listRes.ok) renderLiveMessages(listRes.messages);
-    });
-  }
-
-  var liveRefreshBtn = document.getElementById('liveRefreshBtn');
-  if (liveRefreshBtn) {
-    liveRefreshBtn.addEventListener('click', async function () {
-      var connected = state.adapterMode === 'live' || state.adapterMode === 'mock';
-      if (!adapter || !connected) return;
-      await refreshPublicPosts();
-      if (!adapter.session || !adapter.session.sessionId) {
-        state.sessionId = '';
-        state.sessionStatus = '';
-        syncStatusUI();
-        renderLiveMessages([]);
-        return;
-      }
-      var sRes = await adapter.getSession();
-      if (sRes && sRes.sessionReset) {
-        applySessionResetUI();
-        return;
-      }
-      if (sRes && sRes.ok) {
-        var nextStatus = (sRes.session && sRes.session.status) || sRes.status || '';
-        if (nextStatus) state.sessionStatus = nextStatus;
-        if (sRes.session) state.assignedStaffLabel = sRes.session.assignedStaffLabel ? String(sRes.session.assignedStaffLabel) : '';
-      }
-      var listRes = await adapter.listMessages();
-      if (listRes.ok) {
-        if (listRes.sessionId) state.sessionId = listRes.sessionId;
-        if (listRes.status) state.sessionStatus = listRes.status;
-        if (state.sessionStatus !== 'human_active') state.assignedStaffLabel = '';
-        syncStatusUI();
-        renderLiveMessages(listRes.messages);
-        showLiveFeedback(state.sessionStatus === 'closed' ? t('liveClosedNotice') : (listRes.sessionReset ? t('liveSessionReset') : ''), 'neutral');
-      } else {
-        if (listRes.sessionReset) {
-          applySessionResetUI();
+      try {
+        var res = await adapter.sendMessage({
+          text: text,
+          clientMsgId: state.pendingLiveMsg.clientMsgId,
+          context: { page: window.location.pathname, lang: state.lang }
+        });
+        if (!res || !res.ok) {
+          if (res && res.sessionReset) {
+            state.pendingLiveMsg = null;
+            applySessionResetUI();
+            return;
+          }
+          showLiveFeedback(t('liveErrSend') + (res && res.error ? ' (' + res.error + ')' : ''), 'err');
           return;
         }
-        showLiveFeedback(t('liveErrRefresh') + (listRes.error ? ' (' + listRes.error + ')' : ''), 'err');
+        state.pendingLiveMsg = null;
+        liveInput.value = '';
+        if (adapter.session && adapter.session.sessionId) state.sessionId = adapter.session.sessionId;
+        if (res.sessionId) state.sessionId = res.sessionId;
+        if (res.sessionStatus) state.sessionStatus = res.sessionStatus;
+        syncStatusUI();
+        if (res.sessionReset) showLiveFeedback(t('liveSessionReset'), 'neutral');
+        var listRes = await adapter.listMessages();
+        if (listRes.ok) renderLiveMessages(listRes.messages);
+      } finally {
+        state.isLiveSending = false;
+        syncStatusUI();
       }
     });
   }
@@ -498,12 +486,15 @@
   var liveClearBtn = document.getElementById('liveClearBtn');
   if (liveClearBtn) {
     liveClearBtn.addEventListener('click', async function () {
+      setDrawerMenuOpen(false);
       if (!adapter) return;
       adapter.clearSession();
       state.sessionId = '';
       state.sessionStatus = '';
       state.assignedStaffLabel = '';
       state.requestId = '';
+      state.pendingLiveMsg = null;
+      state.pendingContactReq = null;
       showLiveFeedback('', '');
       await initAdapter();
     });
@@ -568,7 +559,7 @@
         if (state.sessionStatus === 'closed') showLiveFeedback(t('liveClosedNotice'), 'neutral');
         renderLiveMessages(r.messages);
       }
-    }, 5000);
+    }, 3000);
   }
   function stopPolling() {
     if (state.pollTimer) { window.clearInterval(state.pollTimer); state.pollTimer = null; }
@@ -664,6 +655,7 @@
 
   function closeDrawer() {
     if (!drawer || !drawer.classList.contains('is-open')) return;
+    setDrawerMenuOpen(false);
     stopPolling();
     drawer.classList.remove('is-open');
     drawer.setAttribute('aria-hidden', 'true');
@@ -673,6 +665,7 @@
 
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
+      if (state.drawerMenuOpen) { setDrawerMenuOpen(false); return; }
       closeDrawer();
       var mNav = document.getElementById('mobileNav');
       var mBtn = document.getElementById('mobileMenuBtn');
@@ -694,7 +687,12 @@
     btn.addEventListener('click', function () { openDrawer(btn.getAttribute('data-open-desk') || ''); });
   });
   if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
-  if (drawer) drawer.addEventListener('click', function (e) { if (e.target === drawer) closeDrawer(); });
+  if (drawer) drawer.addEventListener('click', function (e) {
+    if (state.drawerMenuOpen && e.target && (!e.target.closest || (!e.target.closest('#drawerMenu') && !e.target.closest('#drawerMenuBtn')))) {
+      setDrawerMenuOpen(false);
+    }
+    if (e.target === drawer) closeDrawer();
+  });
 
   var menuBtn = document.querySelector ? (document.querySelector('.menu-btn') || document.querySelector('.menu-toggle') || document.querySelector('#mobileMenuBtn')) : null;
   var navLinks = document.querySelector ? (document.querySelector('.nav-links') || document.querySelector('.nav-menu') || document.querySelector('#mobileNav')) : null;
@@ -907,6 +905,7 @@
   if (contactForm) {
     contactForm.addEventListener('submit', async function (e) {
       e.preventDefault();
+      if (state.isContactSubmitting) return;
       var f = readContact();
       if (!f.contact || !f.notes) {
         if (contactFeedback) { contactFeedback.className = 'notice-box is-err'; contactFeedback.textContent = t('validationMsg'); contactFeedback.hidden = false; }
@@ -914,87 +913,112 @@
       }
       if (f.website_url) return;
       var brief = buildBrief(f);
-      if (adapter && (state.adapterMode === 'live' || state.adapterMode === 'mock')) {
-        try {
-          var srRes = await adapter.createSession({
-            message: brief,
-            roomLabel: f.route,
-            website_url: f.website_url,
-            channelSlug: 'contact-scope-form'
-          });
-          if (srRes && srRes.status === 'filtered') return;
-          if (srRes && srRes.ok && srRes.sessionId) {
-            state.sessionId = srRes.sessionId;
-            state.sessionStatus = srRes.status || 'ai_active';
-            state.requestId = srRes.requestId || '';
-            state.assignedStaffLabel = srRes.assignedStaffLabel || '';
-            syncStatusUI();
-            var listRes = await adapter.listMessages();
-            if (listRes && listRes.ok) renderLiveMessages(listRes.messages);
-            if (contactFeedback) {
-              if (srRes.isMock || !srRes.persistedToSr) {
-                contactFeedback.className = 'notice-box mock-notice';
-                contactFeedback.innerHTML = '<div style="font-weight:700;margin-bottom:6px;">' + esc(t('mockContactNotice')) + ' [' + esc(srRes.requestId || 'MOCK') + ']</div>'
-                  + renderFallbackLinksHtml(brief);
-              } else {
-                contactFeedback.className = 'notice-box is-ok';
-                contactFeedback.textContent = t('liveContactSent') + (srRes.requestId || srRes.sessionId);
-              }
-              contactFeedback.hidden = false;
-            }
-            window.ANTHAI_TRACK('sr_bridge_session_created', { route: f.route, isMock: !!srRes.isMock, requestId: srRes.requestId || '' });
-            openDrawer(document.getElementById('contactSubmitBtn') || null);
-            // Optional non-blocking Resend notification only after persisted live SR session (when configured on server)
-            if (srRes.persistedToSr && !srRes.isMock && state.inquiryApiConfigured && window.ANTHAI_CONFIG.inquiryEndpoint) {
-              try {
-                fetch(window.ANTHAI_CONFIG.inquiryEndpoint, {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-                  body: JSON.stringify({
-                    route: f.route, location: f.location, scale: f.scale,
-                    contact: f.contact, notes: f.notes, website_url: f.website_url,
-                    lang: state.lang, sourceUrl: window.location.href,
-                    mode: 'sr_notification', srRequestId: srRes.requestId || '', srSessionId: srRes.sessionId
-                  })
-                }).catch(function () {});
-              } catch (notifyErr) {}
-            }
-            return;
-          }
-        } catch (srErr) {
-          // Automatically fail over to independent Resend backup endpoint below
-        }
+      if (!state.pendingContactReq || state.pendingContactReq.brief !== brief) {
+        state.pendingContactReq = { brief: brief, clientRequestId: makeClientUuid() };
       }
-      if (!state.isMock && window.ANTHAI_CONFIG.inquiryEndpoint) {
-        var bCtrl = typeof AbortController === 'function' ? new AbortController() : null;
-        var bTimer = bCtrl ? setTimeout(function () { bCtrl.abort(); }, 10000) : null;
-        try {
-          var res = await fetch(window.ANTHAI_CONFIG.inquiryEndpoint, Object.assign({
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-            body: JSON.stringify({
-              route: f.route, location: f.location, scale: f.scale,
-              contact: f.contact, notes: f.notes, website_url: f.website_url,
-              lang: state.lang, sourceUrl: window.location.href, mode: 'sr_failover_backup'
-            })
-          }, bCtrl ? { signal: bCtrl.signal } : {}));
-          if (res.ok) {
-            var payload = await res.json().catch(function () { return {}; });
-            if (payload && payload.ok === true && payload.delivered === true && payload.requestId) {
-              var receiptId = String(payload.requestId);
-              window.ANTHAI_TRACK('rfq_submit_success', { route: f.route, receiptId: receiptId, backend: payload.backend || 'resend' });
-              if (contactFeedback) { contactFeedback.className = 'notice-box is-ok'; contactFeedback.textContent = t('backupResendOk') + receiptId; contactFeedback.hidden = false; }
-              contactForm.reset();
+      state.isContactSubmitting = true;
+      syncContactSubmitMode();
+      try {
+        if (adapter && (state.adapterMode === 'live' || state.adapterMode === 'mock')) {
+          try {
+            var srRes;
+            if (adapter.session && adapter.session.sessionId) {
+              srRes = await adapter.sendMessage({
+                text: brief,
+                clientMsgId: state.pendingContactReq.clientRequestId,
+                context: { page: window.location.pathname, lang: state.lang }
+              });
+              if (srRes && srRes.ok) {
+                srRes = Object.assign({}, adapter.session, srRes, { persistedToSr: !adapter.isMock, isMock: adapter.isMock });
+              }
+            } else {
+              srRes = await adapter.createSession({
+                clientRequestId: state.pendingContactReq.clientRequestId,
+                message: brief,
+                roomLabel: f.route,
+                website_url: f.website_url,
+                channelSlug: 'contact-scope-form'
+              });
+            }
+            if (srRes && srRes.status === 'filtered') return;
+            if (srRes && srRes.ok && srRes.sessionId) {
+              state.pendingContactReq = null;
+              state.sessionId = srRes.sessionId;
+              state.sessionStatus = srRes.status || srRes.sessionStatus || 'ai_active';
+              state.requestId = srRes.requestId || state.requestId || '';
+              state.assignedStaffLabel = srRes.assignedStaffLabel || '';
+              syncStatusUI();
+              var listRes = await adapter.listMessages();
+              if (listRes && listRes.ok) renderLiveMessages(listRes.messages);
+              if (contactFeedback) {
+                if (srRes.isMock || !srRes.persistedToSr) {
+                  contactFeedback.className = 'notice-box mock-notice';
+                  contactFeedback.innerHTML = '<div style="font-weight:700;margin-bottom:6px;">' + esc(t('mockContactNotice')) + ' [' + esc(srRes.requestId || 'MOCK') + ']</div>'
+                    + renderFallbackLinksHtml(brief);
+                } else {
+                  contactFeedback.className = 'notice-box is-ok';
+                  contactFeedback.textContent = t('liveContactSent') + (srRes.requestId || srRes.sessionId);
+                }
+                contactFeedback.hidden = false;
+              }
+              window.ANTHAI_TRACK('sr_bridge_session_created', { route: f.route, isMock: !!srRes.isMock, requestId: srRes.requestId || '' });
+              openDrawer(document.getElementById('contactSubmitBtn') || null);
+              // Optional non-blocking Resend notification only after persisted live SR session (when configured on server)
+              if (srRes.persistedToSr && !srRes.isMock && state.inquiryApiConfigured && window.ANTHAI_CONFIG.inquiryEndpoint) {
+                try {
+                  fetch(window.ANTHAI_CONFIG.inquiryEndpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                    body: JSON.stringify({
+                      route: f.route, location: f.location, scale: f.scale,
+                      contact: f.contact, notes: f.notes, website_url: f.website_url,
+                      lang: state.lang, sourceUrl: window.location.href,
+                      mode: 'sr_notification', srRequestId: srRes.requestId || '', srSessionId: srRes.sessionId
+                    })
+                  }).catch(function () {});
+                } catch (notifyErr) {}
+              }
               return;
             }
+          } catch (srErr) {
+            // Automatically fail over to independent Resend backup endpoint below
           }
-        } catch (err) {
-          // Both SR and Resend failed/timed out -> explicit NOT DELIVERED guidance below
-        } finally {
-          if (bTimer) clearTimeout(bTimer);
         }
+        if (!state.isMock && window.ANTHAI_CONFIG.inquiryEndpoint) {
+          var bCtrl = typeof AbortController === 'function' ? new AbortController() : null;
+          var bTimer = bCtrl ? setTimeout(function () { bCtrl.abort(); }, 10000) : null;
+          try {
+            var res = await fetch(window.ANTHAI_CONFIG.inquiryEndpoint, Object.assign({
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+              body: JSON.stringify({
+                route: f.route, location: f.location, scale: f.scale,
+                contact: f.contact, notes: f.notes, website_url: f.website_url,
+                lang: state.lang, sourceUrl: window.location.href, mode: 'sr_failover_backup'
+              })
+            }, bCtrl ? { signal: bCtrl.signal } : {}));
+            if (res.ok) {
+              var payload = await res.json().catch(function () { return {}; });
+              if (payload && payload.ok === true && payload.delivered === true && payload.requestId) {
+                var receiptId = String(payload.requestId);
+                state.pendingContactReq = null;
+                window.ANTHAI_TRACK('rfq_submit_success', { route: f.route, receiptId: receiptId, backend: payload.backend || 'resend' });
+                if (contactFeedback) { contactFeedback.className = 'notice-box is-ok'; contactFeedback.textContent = t('backupResendOk') + receiptId; contactFeedback.hidden = false; }
+                contactForm.reset();
+                return;
+              }
+            }
+          } catch (err) {
+            // Both SR and Resend failed/timed out -> explicit NOT DELIVERED guidance below
+          } finally {
+            if (bTimer) clearTimeout(bTimer);
+          }
+        }
+        showDeliveryFailedFeedback(contactFeedback, brief);
+      } finally {
+        state.isContactSubmitting = false;
+        syncContactSubmitMode();
       }
-      showDeliveryFailedFeedback(contactFeedback, brief);
     });
   }
 

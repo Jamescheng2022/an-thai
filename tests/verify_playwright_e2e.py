@@ -558,6 +558,42 @@ def run_tests():
                 p2.screenshot(path=str(SCREENSHOTS_DIR / f"390px_live_drawer_{lang_code}.png"))
                 live_ctx2.close()
 
+            # Verify senderKind="system" auto-confirmation reply renders "AN-THAI" (no Notice/System) across EN/ZH/TH
+            for lang_code, path_str in [("en", "/index.html"), ("zh", "/zh/index.html"), ("th", "/th/index.html")]:
+                sys_ctx = browser.new_context(viewport={"width": 390, "height": 844})
+                sp = sys_ctx.new_page()
+                def _mk_sys_handler():
+                    def _h(route):
+                        rt = (parse_qs(urlparse(route.request.url).query).get("route") or [""])[0]
+                        if rt == "health":
+                            route.fulfill(status=200, content_type="application/json", body=_json.dumps({"ok": True, "configured": True, "online": True, "organizationId": "00000000-0000-4000-8000-00000000a771", "challengeToken": "csys"}))
+                        elif rt == "posts":
+                            route.fulfill(status=200, content_type="application/json", body=_json.dumps({"ok": True, "posts": []}))
+                        elif rt == "sessions":
+                            route.fulfill(status=201, content_type="application/json", body=_json.dumps({"ok": True, "sessionId": "cccccccc-cccc-4ccc-8ccc-cccccccccccc", "visitorToken": "vtok_sys", "status": "ai_active"}))
+                        elif rt == "session":
+                            route.fulfill(status=200, content_type="application/json", body=_json.dumps({"ok": True, "session": {"sessionId": "cccccccc-cccc-4ccc-8ccc-cccccccccccc", "status": "ai_active"}}))
+                        elif rt == "messages":
+                            route.fulfill(status=200, content_type="application/json", body=_json.dumps({"ok": True, "messages": [
+                                {"id": "1", "seq": 1, "senderKind": "visitor", "text": "Test inquiry", "createdAt": "2026-11-28T10:35:00Z"},
+                                {"id": "2", "seq": 2, "senderKind": "system", "text": "Auto-confirmation reply", "createdAt": "2026-11-28T10:35:05Z"},
+                            ], "nextAfterSeq": 2, "hasMore": False}))
+                        else:
+                            route.abort()
+                    return _h
+                sp.route("**/api/sr-bridge*", _mk_sys_handler())
+                sp.goto(f"{base_url}{path_str}", wait_until="networkidle")
+                sp.locator("#bottomBarDeskBtn").click()
+                sp.wait_for_timeout(100)
+                sp.locator("#liveMsgInput").fill("Test inquiry")
+                sp.locator('#liveMessageForm button[type="submit"]').click()
+                sp.wait_for_timeout(250)
+                sys_meta = sp.locator(".msg-bubble.is-system .msg-meta").first.inner_text().strip()
+                assert sys_meta.startswith("AN-THAI"), f"{lang_code} system sender meta must start with AN-THAI, got {sys_meta!r}"
+                for forbidden in ("Notice", "System", "系统", "แจ้งเตือน"):
+                    assert forbidden not in sys_meta, f"{lang_code} system sender meta must not contain {forbidden!r}: {sys_meta!r}"
+                sys_ctx.close()
+
             assert not live_errors, f"Live drawer E2E page errors: {live_errors}"
             live_ctx.close()
             print("PASS: Live Chat rapid multi-click, slow network, refresh idempotency & EN/ZH/TH 390px clean drawer verified.")

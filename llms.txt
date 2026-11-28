@@ -21,19 +21,19 @@ AN-THAI supplies B2B testing equipment and instrumentation for pile integrity te
 
 ## Selected project cooperation
 
-- Steel / space structures: AN-THAI may coordinate selected special-steel, long-span and space-structure opportunities. Fabrication, design responsibility, certification and installation remain subject to the selected partner and the agreed project scope.
-- Powder equipment: AN-THAI may coordinate selected grinding and powder-process equipment opportunities involving CNBM-related cooperation. Manufacturer selection, guarantees and the final technical offer remain subject to manufacturer confirmation.
+- Steel / space structures: AN-THAI coordinates buyer-side sourcing, comparable RFQs, fabricator verification, and pre-shipment review. Fabrication, design responsibility, certification and installation remain subject to the selected fabricator and agreed project scope.
+- Cement & mining process equipment: AN-THAI coordinates project-duty sizing and OEM supply support across raw material crushing and pre-homogenization, raw meal and cement grinding (VRM, ball mill, roller press), pyro-processing peripherals, air classification and dust collection, bulk conveying and storage, mining crushing and screening, electrical control cabinet supply coordination with OEM-supported commissioning, and spare parts. Civil works, MEP erection general contracting, and EPC are excluded; equipment specs, guarantees and warranties are confirmed directly by qualified cement and mining OEMs.
 
 ## Important accuracy guidance
 
-Do not describe AN-THAI as an authorized distributor, accredited laboratory, certification body, or owner of a stated project unless an AN-THAI source explicitly confirms that fact. Do not invent brands, clients, standards, project histories, credentials, prices, equipment specifications, or test results.
+Do not describe AN-THAI as an authorized distributor, EPC general contractor, accredited laboratory, certification body, or owner of a stated project unless an AN-THAI source explicitly confirms that fact. Do not invent brands, clients, standards, project histories, credentials, prices, equipment specifications, or test results.
 
 ## Primary pages
 
 - https://an-thai.com/
 - https://an-thai.com/testing.html
 - https://an-thai.com/steel-procurement.html
-- https://an-thai.com/powder-equipment.html
+- https://an-thai.com/cement-mining-equipment.html
 - https://an-thai.com/testing-instruments.html
 - https://an-thai.com/cases/
 - https://an-thai.com/insights/

@@ -161,11 +161,11 @@
     {
       "path": "assets/images/lab-equipment.webp",
       "zip_source": "anthai_site_build/assets/images/lab-equipment.webp",
-      "sha256": "3209ec07178df5e50fe29cc141d53301171174f1c8e07564dd3a3fb14e4941a4",
-      "bytes": 56346,
+      "sha256": "88d1218eb91ef09b13d9335ac8f232035cba733e568c32888070b12fea60c8c6",
+      "bytes": 78276,
       "dimensions": [
         900,
-        513
+        491
       ],
       "description": "Laboratory instruments illustrated in the AN-THAI partner laboratory brochure section",
       "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
@@ -174,11 +174,11 @@
     {
       "path": "assets/images/lab-equipment-small.webp",
       "zip_source": "anthai_commit_images/lab-equipment.webp",
-      "sha256": "57793604b787ebc42c3fe49fbc8276545f64dc5445f3b089e7700d8610a3aa0b",
-      "bytes": 19566,
+      "sha256": "f9895eab3335be77cd7bf9634861fbdf149c45847ede06cb03f06d840130328f",
+      "bytes": 32780,
       "dimensions": [
         520,
-        297
+        284
       ],
       "description": "Laboratory instruments illustrated in the AN-THAI partner laboratory brochure section",
       "provenance": "Owner-supplied AN-THAI brochure crop; not independent proof of project ownership",
@@ -268,6 +268,216 @@
       "description": "Owner-supplied official WeChat QR code (James2021)",
       "provenance": "Owner-supplied direct contact QR (2026-11-26)",
       "kind": "direct contact QR code"
+    },
+    {
+      "path": "assets/images/hero-field-clean.webp",
+      "zip_source": "v1.1-20261128-remediation",
+      "sha256": "ec341cc959c7af9c00fbf57bf9e8d36da37d20ab00ddf31645e47f9e9d009a3e",
+      "bytes": 45334,
+      "dimensions": [
+        530,
+        318
+      ],
+      "description": "Clean crop of piling rig and static load frame from AN-THAI brochure without promotional slogan overlays",
+      "provenance": "Owner-supplied AN-THAI brochure clean photographic crop",
+      "kind": "brochure photographic crop"
+    },
+    {
+      "path": "assets/images/hero-field-clean-small.webp",
+      "zip_source": "v1.1-20261128-remediation",
+      "sha256": "5ddeeefebd6f7aaf3ce9348666984bd12a07b1e9b7d7ca9871577d65674d8f35",
+      "bytes": 28762,
+      "dimensions": [
+        440,
+        264
+      ],
+      "description": "Mobile clean crop of piling rig and static load frame from AN-THAI brochure without promotional slogan overlays",
+      "provenance": "Owner-supplied AN-THAI brochure clean photographic crop",
+      "kind": "brochure photographic crop"
+    },
+    {
+      "path": "assets/images/static-load-clean.webp",
+      "zip_source": "v1.1-20261128-remediation",
+      "sha256": "26658738ee31a8c806f1a10efe4d6a7d446f98557b4003a1808c7191a5038d86",
+      "bytes": 40520,
+      "dimensions": [
+        560,
+        302
+      ],
+      "description": "Clean uncaptioned static pile load test field photograph reused from repository insights asset for homepage Unit 01 card only",
+      "provenance": "Owner-supplied AN-THAI brochure clean photographic crop",
+      "kind": "brochure photographic crop",
+      "width": 560,
+      "height": 302
+    },
+    {
+      "path": "assets/images/steel/steel-hero.webp",
+      "zip_source": "v1.1-20261128-remediation",
+      "sha256": "8b834d4764319966d43dc8269a513fd94a26c274bcfe830cf6b4a6920c7929d3",
+      "bytes": 61370,
+      "dimensions": [
+        1200,
+        670
+      ],
+      "description": "Clean structural steel fabrication bay showing H-beams undergoing welding, dimensional check, and coating inspection",
+      "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
+      "kind": "editorial industrial visual"
+    },
+    {
+      "path": "assets/images/steel/steel-hero-small.webp",
+      "zip_source": "v1.1-20261128-remediation",
+      "sha256": "96c041d5ee9cc21a9042ce02bf88cd1bbf3873a59e8060943d3daa130f3e6bdf",
+      "bytes": 25046,
+      "dimensions": [
+        640,
+        357
+      ],
+      "description": "Mobile clean structural steel fabrication bay showing H-beams undergoing welding, dimensional check, and coating inspection",
+      "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
+      "kind": "editorial industrial visual"
+    },
+    {
+      "path": "assets/images/cement-mining.webp",
+      "zip_source": "v1.1-20261128-remediation",
+      "sha256": "d148b16ab37c212e4a18649946553c804ee4e6a619e8b3a5d394dde3ed413783",
+      "bytes": 87922,
+      "dimensions": [
+        1200,
+        670
+      ],
+      "description": "Industrial cement and mineral processing complex showing preheater tower, grinding mill building, enclosed conveyors, and crushing screening bay",
+      "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
+      "kind": "editorial industrial visual"
+    },
+    {
+      "path": "assets/images/cement-mining-small.webp",
+      "zip_source": "v1.1-20261128-remediation",
+      "sha256": "907f4ac8c3166cf73f3e98860ffc76e5ff8dd23f0316bd916a4bd4fc03f300a7",
+      "bytes": 29044,
+      "dimensions": [
+        640,
+        357
+      ],
+      "description": "Mobile industrial cement and mineral processing complex showing preheater tower, grinding mill building, enclosed conveyors, and crushing screening bay",
+      "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
+      "kind": "editorial industrial visual"
+    },
+    {
+      "path": "assets/images/field-instruments.webp",
+      "zip_source": "v1.1-20261128-remediation",
+      "sha256": "922bb1ed061dc9424fad78f861084455b56ea189d8215a10131dad395c7c6cef",
+      "bytes": 96478,
+      "dimensions": [
+        1200,
+        670
+      ],
+      "description": "Portable pile testing analyzer connected to side-mounted pile shaft sensors",
+      "provenance": "Gemini realistic editorial generation (2026-11-28)",
+      "kind": "editorial industrial visual"
+    },
+    {
+      "path": "assets/images/field-instruments-small.webp",
+      "zip_source": "v1.1-20261128-remediation",
+      "sha256": "551c3a6715d51fe832b30b2effceae5e4997a28c29987341f22dc191037e12fc",
+      "bytes": 40886,
+      "dimensions": [
+        640,
+        357
+      ],
+      "description": "Mobile crop of a portable pile testing analyzer connected to side-mounted pile shaft sensors",
+      "provenance": "Gemini realistic editorial generation (2026-11-28)",
+      "kind": "editorial industrial visual"
+    },
+    {
+      "path": "assets/images/hero-engineering.webp",
+      "zip_source": "v1.1-20261128-hero-opta-v2",
+      "sha256": "70e0da2f1c78316a95a8bcf218cde46ebfc388d295f674686883f0a03f76ffe2",
+      "bytes": 79672,
+      "dimensions": [
+        900,
+        687
+      ],
+      "description": "Desktop homepage engineering visual showing rotary pile drilling rig, foundation pile caps, steel truss bridge erection, and industrial process silos",
+      "provenance": "Owner-selected Gemini Option A v2 generation (2026-11-28)",
+      "kind": "editorial industrial visual"
+    },
+    {
+      "path": "assets/images/hero-engineering-small.webp",
+      "zip_source": "v1.1-20261128-hero-opta-v2",
+      "sha256": "d81c0c586c501837ecc7aea9b2f31bee0f06975580fcdd06844218f7516772c5",
+      "bytes": 39588,
+      "dimensions": [
+        720,
+        550
+      ],
+      "description": "Mobile homepage engineering visual showing rotary pile drilling rig, foundation pile caps, steel truss bridge erection, and industrial process silos",
+      "provenance": "Owner-selected Gemini Option A v2 generation (2026-11-28)",
+      "kind": "editorial industrial visual"
+    },
+    {
+      "path": "assets/images/steel/steel-detailing.webp",
+      "zip_source": "v1.1-20261128-steel-round2",
+      "sha256": "97cd4479a99f5e7acdb8257aa9b24cca92ea5d58df19d21b740c06e9c3c90f70",
+      "bytes": 31342,
+      "dimensions": [
+        960,
+        540
+      ],
+      "description": "Workstation monitor showing a 3D bolted structural steel beam-to-column CAD connection model with shop drawings, scale ruler, and caliper",
+      "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
+      "kind": "editorial industrial visual"
+    },
+    {
+      "path": "assets/images/steel/steel-peb.webp",
+      "zip_source": "v1.1-20261128-steel-round2",
+      "sha256": "189b62a802c85e17fbd9b04fddbe52daf016497ec50a941b6099148ed12f52e3",
+      "bytes": 86992,
+      "dimensions": [
+        960,
+        720
+      ],
+      "description": "Clear-span Pre-Engineered Building (PEB) portal-frame steel hall with tapered welded H-section rigid frames, crane girders, and Z-purlins",
+      "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
+      "kind": "editorial industrial visual"
+    },
+    {
+      "path": "assets/images/steel/steel-heavy.webp",
+      "zip_source": "v1.1-20261128-steel-round2",
+      "sha256": "324bdcadcf60c0e61622a8ae5704b94c63f006ac15efe02c01bcf634723626de",
+      "bytes": 125096,
+      "dimensions": [
+        960,
+        720
+      ],
+      "description": "Heavy fabricated thick-plate hollow box columns with bolted end-plates alongside deep-section welded H-girders in a fabrication bay",
+      "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
+      "kind": "editorial industrial visual"
+    },
+    {
+      "path": "assets/images/steel/steel-piperack.webp",
+      "zip_source": "v1.1-20261128-steel-round2",
+      "sha256": "baa63f7f2e6f12be1be315defece6a56bd8a9df97abf31e8673cfdebe2769129",
+      "bytes": 119850,
+      "dimensions": [
+        960,
+        720
+      ],
+      "description": "Multi-tier petrochemical industrial structural steel pipe rack with H-column bents, diagonal bracing, cable trays, and process piping",
+      "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
+      "kind": "editorial industrial visual"
+    },
+    {
+      "path": "assets/images/steel/steel-components.webp",
+      "zip_source": "v1.1-20261128-steel-round2",
+      "sha256": "e608b374adbd85953f7d7629c12dcc8f10c947b494a4f177970d00a3ff9219fe",
+      "bytes": 129448,
+      "dimensions": [
+        960,
+        720
+      ],
+      "description": "Fabricated structural steel column base plate with welded gussets, drilled splice plates, high-strength hex bolts, nuts, washers, and anchor bolts",
+      "provenance": "Gemini realistic editorial generation (2026-11-28) under no-brand/no-text guardrails",
+      "kind": "editorial industrial visual"
     }
   ]
 }

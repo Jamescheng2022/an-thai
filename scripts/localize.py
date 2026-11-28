@@ -7,7 +7,7 @@ import re
 import os
 
 ROOT = Path(__file__).resolve().parent.parent
-PAGES = ['index', 'testing', 'steel-procurement', 'powder-equipment', 'testing-instruments', 'about', 'contact', 'insights', 'services', 'equipment', 'portfolio', '404']
+PAGES = ['index', 'testing', 'steel-procurement', 'cement-mining-equipment', 'powder-equipment', 'testing-instruments', 'about', 'contact', 'insights', 'services', 'equipment', 'portfolio', '404']
 
 # Load legacy translations.txt if present
 MAP = {}
@@ -145,6 +145,11 @@ class Localizer(HTMLParser):
                 attrs_dict['content'] = self.tr(attrs_dict['content'])
             if kind == 'og:url': attrs_dict['content'] = url(self.lang, self.page)
             if kind == 'og:locale': attrs_dict['content'] = {'en':'en_TH','zh':'zh_CN','th':'th_TH'}[self.lang]
+            if attrs_dict.get('http-equiv', '').lower() == 'refresh' and self.lang != 'en':
+                ref_val = attrs_dict.get('content', '')
+                m_ref = re.match(r'^(\d+\s*;\s*url=)/([^/].*)$', ref_val, re.I)
+                if m_ref:
+                    attrs_dict['content'] = f'{m_ref.group(1)}/{self.lang}/{m_ref.group(2)}'
 
         if tag == 'link' and attrs_dict.get('rel') == 'canonical':
             attrs_dict['href'] = url(self.lang, self.page)

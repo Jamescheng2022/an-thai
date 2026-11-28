@@ -31,7 +31,7 @@ s.handlers.keydown({key:'Escape'});assert.equal(s.attrs['aria-expanded'],'false'
 s.buttonHandlers.click();s.linkHandlers.click();assert.equal(s.states.open,false);
 s.buttonHandlers.click();s.handlers.click({target:{closest:()=>null}});assert.equal(s.states.open,false);
 s.buttonHandlers.click();s.handlers.resize();assert.equal(s.attrs['aria-expanded'],'false');
-const mapped={testing:'Engineering services',engineering:'Engineering services',equipment:'Testing instruments',instruments:'Testing instruments',steel:'Steel / space-structure cooperation',powder:'CNBM powder-equipment cooperation'};
+const mapped={testing:'Engineering services',engineering:'Engineering services',equipment:'Testing instruments',instruments:'Testing instruments',steel:'Steel / space-structure cooperation',powder:'Cement & mining equipment cooperation',cement:'Cement & mining equipment cooperation',mining:'Cement & mining equipment cooperation'};
 for (const [type,value] of Object.entries(mapped)) {
   s=setup('?type='+type);assert.equal(s.elements.requestType.value,value);
 }

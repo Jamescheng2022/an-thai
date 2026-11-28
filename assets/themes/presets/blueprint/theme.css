@@ -1,0 +1,73 @@
+/* Theme 2: Technical Blueprint (Drafting grid and high-contrast engineering palette) */
+html[data-theme="blueprint"] {
+  --th-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --th-dur: 0.45s;
+  --bg: #eef4fa;
+  --surface: #ffffff;
+  --surface-alt: #f5f9fd;
+  --surface-hover: #e1ecf7;
+  --ink: #0b1f33;
+  --ink-muted: #334e68;
+  --ink-subtle: #486581;
+  --line: #0c4a6e;
+  --line-soft: rgba(12, 74, 110, 0.2);
+  --accent: #0369a1;
+  --accent-hover: #075985;
+}
+html[data-theme="blueprint"] body {
+  background-image:
+    linear-gradient(to right, rgba(2, 132, 199, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(2, 132, 199, 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+html[data-theme="blueprint"] .site-header,
+html[data-theme="blueprint"] .bottom-bar {
+  background: rgba(238, 244, 250, 0.96);
+  border-color: #0c4a6e;
+}
+html[data-theme="blueprint"] .hero {
+  background: #0a2540;
+  background-image:
+    linear-gradient(to right, rgba(56, 189, 248, 0.14) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.14) 1px, transparent 1px);
+  background-size: 24px 24px;
+  border-bottom: 2px solid #0284c7;
+}
+html[data-theme="blueprint"] .hero-img {
+  opacity: 1;
+  filter: saturate(1.05) contrast(1.03);
+}
+html[data-theme="blueprint"] .hero-scrim {
+  background:
+    linear-gradient(to top, rgba(10, 37, 64, 0.86) 0%, rgba(10, 37, 64, 0.42) 38%, transparent 72%),
+    linear-gradient(100deg, rgba(10, 37, 64, 0.78) 0%, rgba(10, 37, 64, 0.28) 42%, transparent 68%);
+}
+html[data-theme="blueprint"] .hero-meta > span:first-child {
+  padding: 3px 8px;
+  background: rgba(10, 37, 64, 0.78);
+  border: 1px solid rgba(125, 211, 252, 0.32);
+  color: #f0f9ff;
+}
+html[data-theme="blueprint"] .btn-ghost-light {
+  background: rgba(10, 37, 64, 0.82);
+  border-color: rgba(186, 230, 253, 0.7);
+  color: #ffffff;
+}
+html[data-theme="blueprint"] .unit-card,
+html[data-theme="blueprint"] .insight-card,
+html[data-theme="blueprint"] .split-box,
+html[data-theme="blueprint"] .card {
+  border-color: #0c4a6e;
+  box-shadow: 4px 4px 0 rgba(12, 74, 110, 0.12);
+}
+html[data-theme="blueprint"] .unit-num {
+  background: #0c4a6e;
+  color: #7dd3fc;
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="blueprint"],
+  html[data-theme="blueprint"] * {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+}

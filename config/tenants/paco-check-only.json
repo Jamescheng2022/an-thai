@@ -1,0 +1,48 @@
+{
+  "tenantSlug": "paco-check-only",
+  "legalName": "PACO Onboarding Audit Profile (Check-Only Placeholder)",
+  "brandShort": "PACO-AUDIT",
+  "brandTagline": {
+    "EN": "Check-Only Preflight Profile · Held under OWNER_GATES #7",
+    "ZH": "仅预检隔离档案 · 受 OWNER_GATES #7 严格冻结",
+    "TH": "โปรไฟล์ตรวจสอบเบื้องต้นเท่านั้น · อยู่ภายใต้ OWNER_GATES #7"
+  },
+  "primaryDomain": "https://paco-check-only.invalid",
+  "cityRegion": "Thailand (Preflight Check Only)",
+  "officeAddress": "Check-Only Placeholder (Zero Public Release)",
+  "directEmail": "paco-preflight-hold@example.invalid",
+  "directPhone": "+66 00 000 0000",
+  "hideDirectMessengers": true,
+  "noindex": true,
+  "checkOnly": true,
+  "ownerGateHold": "OWNER_GATES #7",
+  "theme": "default",
+  "sourceRating": {
+    "bridgeEndpoint": "/api/sr-bridge",
+    "apiBaseUrl": "",
+    "workspaceKey": "paco-preflight-hold",
+    "callerKind": "an_thai_v1_1"
+  },
+  "heroHeadline": {
+    "EN": "[HOLD] Check-Only Preflight Verification Target",
+    "ZH": "【冻结】仅预检企业开通清单核验样本",
+    "TH": "[HOLD] โปรไฟล์ทดสอบรายการตรวจสอบเบื้องต้น"
+  },
+  "heroLead": {
+    "EN": "Check-only configuration validating P4 schema and OWNER_GATES #7 fail-closed build blocking without publishing any PACO pages or references.",
+    "ZH": "仅用于验证 P4 清单预检与 OWNER_GATES #7 阻断构造，禁止构建任何公开页面或外发内容。",
+    "TH": "สำหรับตรวจสอบรายการ P4 และการบล็อกงานสร้างภายใต้ OWNER_GATES #7 เท่านั้น"
+  },
+  "serviceLines": [
+    {
+      "code": "CHECK-01",
+      "value": "CHECK-01 Preflight Hold Gate",
+      "titleEN": "Preflight Hold Verification",
+      "descEN": "Confirms check-only validation succeeds while HTML generation fails closed under OWNER_GATES #7.",
+      "titleZH": "预检与门禁阻断验证",
+      "descZH": "验证只查核模式通过，而实际站群构建因 OWNER_GATES #7 严格拒签。",
+      "titleTH": "ตรวจสอบการบล็อกประตู OWNER_GATES #7",
+      "descTH": "ยืนยันว่าระบบตรวจความพร้อมผ่านและปฏิเสธการสร้างหน้าเว็บจริง"
+    }
+  ]
+}

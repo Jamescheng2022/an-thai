@@ -1,0 +1,104 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://an-thai.com/schemas/tenant-v1.json",
+  "title": "Enterprise Site & SourceRating Bridge Onboarding Config (10-Domain Fleet)",
+  "type": "object",
+  "required": [
+    "tenantSlug",
+    "legalName",
+    "brandShort",
+    "brandTagline",
+    "primaryDomain",
+    "cityRegion",
+    "officeAddress",
+    "directEmail",
+    "directPhone",
+    "theme",
+    "sourceRating",
+    "heroHeadline",
+    "heroLead",
+    "serviceLines"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "tenantSlug": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{1,48}$" },
+    "legalName": { "type": "string", "minLength": 2, "maxLength": 140 },
+    "brandShort": { "type": "string", "minLength": 2, "maxLength": 40 },
+    "brandTagline": {
+      "type": "object",
+      "required": ["EN", "ZH", "TH"],
+      "additionalProperties": false,
+      "properties": {
+        "EN": { "type": "string", "minLength": 2, "maxLength": 140 },
+        "ZH": { "type": "string", "minLength": 2, "maxLength": 140 },
+        "TH": { "type": "string", "minLength": 2, "maxLength": 140 }
+      }
+    },
+    "primaryDomain": { "type": "string", "pattern": "^https://[a-z0-9-]+(?:\\.[a-z0-9-]+)+$" },
+    "allowedOrigins": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^https://(?:\\*\\.)?[a-z0-9-]+(?:\\.[a-z0-9-]+)+$" }
+    },
+    "cityRegion": { "type": "string", "minLength": 2, "maxLength": 120 },
+    "officeAddress": { "type": "string", "minLength": 4, "maxLength": 240 },
+    "directEmail": { "type": "string", "format": "email" },
+    "directPhone": { "type": "string", "minLength": 5, "maxLength": 40 },
+    "hideDirectMessengers": { "type": "boolean" },
+    "noindex": { "type": "boolean", "enum": [true] },
+    "internalPilot": { "type": "boolean" },
+    "checkOnly": { "type": "boolean" },
+    "ownerGateHold": { "type": "string", "minLength": 3, "maxLength": 120 },
+    "theme": { "type": "string", "enum": ["default", "cinematic", "blueprint", "storytelling"] },
+    "sourceRating": {
+      "type": "object",
+      "required": ["bridgeEndpoint", "workspaceKey", "callerKind"],
+      "additionalProperties": false,
+      "properties": {
+        "bridgeEndpoint": { "type": "string", "pattern": "^/" },
+        "apiBaseUrl": { "type": "string" },
+        "workspaceKey": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{1,79}$" },
+        "callerKind": { "type": "string", "enum": ["an_thai_v1_1", "precast_v3_1"] }
+      }
+    },
+    "heroHeadline": {
+      "type": "object",
+      "required": ["EN", "ZH", "TH"],
+      "additionalProperties": false,
+      "properties": {
+        "EN": { "type": "string", "minLength": 2, "maxLength": 160 },
+        "ZH": { "type": "string", "minLength": 2, "maxLength": 160 },
+        "TH": { "type": "string", "minLength": 2, "maxLength": 160 }
+      }
+    },
+    "heroLead": {
+      "type": "object",
+      "required": ["EN", "ZH", "TH"],
+      "additionalProperties": false,
+      "properties": {
+        "EN": { "type": "string", "minLength": 4, "maxLength": 500 },
+        "ZH": { "type": "string", "minLength": 4, "maxLength": 500 },
+        "TH": { "type": "string", "minLength": 4, "maxLength": 500 }
+      }
+    },
+    "serviceLines": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "required": ["code", "value", "titleEN", "descEN", "titleZH", "descZH", "titleTH", "descTH"],
+        "additionalProperties": false,
+        "properties": {
+          "code": { "type": "string", "minLength": 1, "maxLength": 32 },
+          "value": { "type": "string", "minLength": 1, "maxLength": 100 },
+          "titleEN": { "type": "string", "minLength": 2, "maxLength": 120 },
+          "descEN": { "type": "string", "minLength": 4, "maxLength": 400 },
+          "titleZH": { "type": "string", "minLength": 2, "maxLength": 120 },
+          "descZH": { "type": "string", "minLength": 4, "maxLength": 400 },
+          "titleTH": { "type": "string", "minLength": 2, "maxLength": 120 },
+          "descTH": { "type": "string", "minLength": 4, "maxLength": 400 }
+        }
+      }
+    }
+  }
+}

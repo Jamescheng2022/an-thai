@@ -1,0 +1,43 @@
+:root {
+  --th-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --th-dur: 0.45s;
+}
+[data-preview-theme-bar] {
+  position: fixed;
+  left: 10px;
+  bottom: 50px;
+  z-index: 45;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3px;
+  padding: 3px 5px;
+  max-width: calc(100vw - 20px);
+  background: rgba(15, 17, 21, 0.92);
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  font: 700 9px/1.2 var(--font-mono, ui-monospace, monospace);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+}
+[data-preview-theme-bar] .ptb-btn {
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: transparent;
+  color: #e2e8f0;
+  padding: 3px 6px;
+  font: inherit;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+[data-preview-theme-bar] .ptb-btn[aria-pressed="true"] {
+  background: #d44800;
+  border-color: #d44800;
+  color: #fff;
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme], html[data-theme] * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

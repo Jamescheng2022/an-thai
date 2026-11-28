@@ -721,12 +721,234 @@ async function testSingleFlightAndIdempotency() {
   assert.strictEqual(m1.visitorToken, m2.visitorToken, 'Mock createSession must reuse persistent visitorToken');
 }
 
+async function testReviewRegressionCases() {
+  const mockSrc = fs.readFileSync(path.join(__dirname, '../assets/js/sr-bridge-mock.js'), 'utf8');
+  const adapterSrc = fs.readFileSync(path.join(__dirname, '../assets/js/sourcerating-embed-adapter.js'), 'utf8');
+
+  // Shared server ledger & storage across simulated tabs
+  const storageMap = new Map();
+  let denyStorage = false;
+  let serverSessions = [];
+  let serverMessages = [];
+  let dropCreateResponseCount = 0;
+  let createDelayMs = 40;
+  let forceGetSession401ForToken = null;
+  let lockChain = Promise.resolve();
+
+  const makeTabSandbox = (listenersOut) => {
+    const ls = {
+      getItem: (k) => {
+        if (denyStorage) throw new Error('SecurityError');
+        return storageMap.has(k) ? storageMap.get(k) : null;
+      },
+      setItem: (k, v) => {
+        if (denyStorage) throw new Error('SecurityError');
+        storageMap.set(k, String(v));
+      },
+      removeItem: (k) => {
+        if (denyStorage) throw new Error('SecurityError');
+        storageMap.delete(k);
+      }
+    };
+    const sb = {
+      window: null,
+      console,
+      Date,
+      Math,
+      URLSearchParams,
+      AbortController,
+      setTimeout,
+      clearTimeout,
+      JSON,
+      crypto: require('node:crypto').webcrypto,
+      localStorage: ls,
+      navigator: {
+        locks: {
+          request: (_name, cb) => {
+            const next = lockChain.then(() => cb(), () => cb());
+            lockChain = next.then(() => {}, () => {});
+            return next;
+          }
+        }
+      },
+      addEventListener: (ev, fn) => {
+        if (listenersOut) listenersOut[ev] = fn;
+      },
+      location: { href: 'https://an-thai-preview.vercel.app/contact.html', protocol: 'https:' },
+      fetch: async (url, init) => {
+        if (url.includes('route=health')) {
+          return {
+            ok: true,
+            status: 200,
+            json: async () => ({ ok: true, configured: true, online: true, organizationId: '00000000-0000-4000-8000-00000000a771', challengeToken: 'tok_r' })
+          };
+        }
+        if (url.includes('route=sessions')) {
+          const b = JSON.parse((init && init.body) || '{}');
+          await new Promise((r) => setTimeout(r, createDelayMs));
+          let existing = serverSessions.find((s) => s.clientRequestId === b.clientRequestId);
+          if (!existing) {
+            const idx = serverSessions.length + 1;
+            const sid = '77777777-7777-4777-8777-' + String(idx).padStart(12, '0');
+            existing = {
+              sessionId: sid,
+              visitorToken: 'vtok_' + idx,
+              requestId: 'SR-R-' + idx,
+              clientRequestId: b.clientRequestId,
+              status: 'ai_active'
+            };
+            serverSessions.push(existing);
+            serverMessages.push({ sessionId: sid, clientMsgId: 'init-' + b.clientRequestId, text: b.message });
+          }
+          if (dropCreateResponseCount > 0) {
+            dropCreateResponseCount -= 1;
+            throw new TypeError('lost response after server commit');
+          }
+          return { ok: true, status: 201, json: async () => Object.assign({ ok: true }, existing) };
+        }
+        if (url.includes('route=session') && !url.includes('route=sessions')) {
+          const auth = (init && init.headers && init.headers.Authorization) || '';
+          const tok = auth.replace(/^Bearer\s+/, '');
+          if (forceGetSession401ForToken && tok === forceGetSession401ForToken) {
+            await new Promise((r) => setTimeout(r, 90));
+            return { ok: false, status: 401, json: async () => ({ ok: false, error: 'Unauthorized' }) };
+          }
+          return { ok: true, status: 200, json: async () => ({ ok: true, session: { sessionId: 'ok', status: 'ai_active' } }) };
+        }
+        if (url.includes('route=messages')) {
+          const sp = new URL('http://localhost' + url).searchParams;
+          const sid = sp.get('sessionId');
+          if (init && init.method === 'POST') {
+            const b = JSON.parse(init.body || '{}');
+            if (!serverMessages.some((m) => m.sessionId === sid && m.clientMsgId === b.clientMsgId)) {
+              serverMessages.push({ sessionId: sid, clientMsgId: b.clientMsgId, text: b.text });
+            }
+            return { ok: true, status: 201, json: async () => ({ ok: true, persisted: true, sessionStatus: 'ai_active' }) };
+          }
+          const msgs = serverMessages
+            .filter((m) => m.sessionId === sid)
+            .map((m, i) => ({ id: 'm-' + (i + 1), seq: i + 1, senderKind: 'visitor', text: m.text, createdAt: new Date().toISOString() }));
+          return { ok: true, status: 200, json: async () => ({ ok: true, messages: msgs, hasMore: false }) };
+        }
+        return { ok: true, status: 200, json: async () => ({ ok: true, posts: [] }) };
+      }
+    };
+    sb.window = sb;
+    vm.createContext(sb);
+    vm.runInContext(mockSrc, sb);
+    vm.runInContext(adapterSrc, sb);
+    return sb;
+  };
+
+  // Case A: Bidirectional Chat + Contact race delivers BOTH payloads into 1 session
+  const sbA = makeTabSandbox();
+  const a1 = new sbA.SourceRatingEmbedAdapter({ bridgeEndpoint: '/api/sr-bridge', workspaceKey: 'race-ab' });
+  await a1.init();
+  const [chatResA, contactResA] = await Promise.all([
+    a1.sendMessage({ text: 'Chat text 1' }),
+    a1.submitStructuredInquiry({ message: 'Contact brief 1', roomLabel: '01 Testing', channelSlug: 'contact-scope-form' })
+  ]);
+  assert.strictEqual(chatResA.ok, true);
+  assert.strictEqual(contactResA.ok, true);
+  assert.strictEqual(serverSessions.length, 1, 'Chat + Contact race must create ONLY 1 session');
+  assert.deepStrictEqual(serverMessages.map((m) => m.text).sort(), ['Chat text 1', 'Contact brief 1']);
+
+  // Reverse direction: Contact starts create POST, Chat submits during flight
+  storageMap.clear(); serverSessions = []; serverMessages = [];
+  const sbB = makeTabSandbox();
+  const a2 = new sbB.SourceRatingEmbedAdapter({ bridgeEndpoint: '/api/sr-bridge', workspaceKey: 'race-ba' });
+  await a2.init();
+  const [contactResB, chatResB] = await Promise.all([
+    a2.submitStructuredInquiry({ message: 'Contact brief 2', roomLabel: '02 Steel', channelSlug: 'contact-scope-form' }),
+    a2.sendMessage({ text: 'Chat text 2' })
+  ]);
+  assert.strictEqual(contactResB.ok, true);
+  assert.strictEqual(chatResB.ok, true);
+  assert.strictEqual(serverSessions.length, 1, 'Contact + Chat race must create ONLY 1 session');
+  assert.deepStrictEqual(serverMessages.map((m) => m.text).sort(), ['Chat text 2', 'Contact brief 2']);
+
+  // Case B: Edited chat retry after lost response reconciles original create & sends edited draft separately + storage-denied memory retention
+  storageMap.clear(); serverSessions = []; serverMessages = [];
+  dropCreateResponseCount = 1;
+  const sbC = makeTabSandbox();
+  const aC = new sbC.SourceRatingEmbedAdapter({ bridgeEndpoint: '/api/sr-bridge', workspaceKey: 'edit-retry' });
+  await aC.init();
+  const lostOut = await aC.sendMessage({ text: 'Original draft before timeout' });
+  assert.strictEqual(lostOut.ok, false);
+  const editedOut = await aC.sendMessage({ text: 'Edited draft after timeout' });
+  assert.strictEqual(editedOut.ok, true);
+  assert.strictEqual(serverSessions.length, 1, 'Edited retry after ambiguous create must reconcile to 1 session');
+  assert.deepStrictEqual(serverMessages.map((m) => m.text), ['Original draft before timeout', 'Edited draft after timeout']);
+
+  // Denied localStorage still retains pending ID & session in memory across retries
+  denyStorage = true;
+  serverSessions = []; serverMessages = [];
+  dropCreateResponseCount = 1;
+  const sbDenied = makeTabSandbox();
+  const aDenied = new sbDenied.SourceRatingEmbedAdapter({ bridgeEndpoint: '/api/sr-bridge', workspaceKey: 'denied-ls' });
+  await aDenied.init();
+  const d1 = await aDenied.createSession({ message: 'Private mode brief' });
+  assert.strictEqual(d1.ok, false);
+  const d2 = await aDenied.createSession({ message: 'Private mode brief' });
+  assert.strictEqual(d2.ok, true);
+  assert.strictEqual(serverSessions.length, 1, 'localStorage denied must retain clientRequestId in memory');
+  denyStorage = false;
+
+  // Case C: Two existing tabs create 1 session; stale 401 on old token does NOT wipe newer session
+  storageMap.clear(); serverSessions = []; serverMessages = [];
+  const tab1Listeners = {}; const tab2Listeners = {};
+  const sbTab1 = makeTabSandbox(tab1Listeners);
+  const sbTab2 = makeTabSandbox(tab2Listeners);
+  const tab1 = new sbTab1.SourceRatingEmbedAdapter({ bridgeEndpoint: '/api/sr-bridge', workspaceKey: 'cross-tab' });
+  const tab2 = new sbTab2.SourceRatingEmbedAdapter({ bridgeEndpoint: '/api/sr-bridge', workspaceKey: 'cross-tab' });
+  await Promise.all([tab1.init(), tab2.init()]);
+  const [t1Res, t2Res] = await Promise.all([
+    tab1.sendMessage({ text: 'From tab 1' }),
+    tab2.sendMessage({ text: 'From tab 2' })
+  ]);
+  assert.strictEqual(t1Res.ok, true);
+  assert.strictEqual(t2Res.ok, true);
+  assert.strictEqual(serverSessions.length, 1, 'Two open tabs must create ONLY 1 session');
+  assert.deepStrictEqual(serverMessages.map((m) => m.text).sort(), ['From tab 1', 'From tab 2']);
+
+  // Stale 401 from vtok_1 after newer session (vtok_2) saved
+  const oldGetSessionPromise = (async () => {
+    forceGetSession401ForToken = 'vtok_1';
+    return tab1.getSession();
+  })();
+  // Advance into New Session in tab2 cleanly while tab1 getSession 401 is still in flight
+  await new Promise((r) => setTimeout(r, 10));
+  tab2.clearSession();
+  const newTab2Sess = await tab2.createSession({ message: 'Fresh tab 2 session' });
+  assert.strictEqual(newTab2Sess.visitorToken, 'vtok_2');
+  const stale401Res = await oldGetSessionPromise;
+  assert.strictEqual(stale401Res.sessionReset, false);
+  const storedAfter401 = JSON.parse(storageMap.get('sr_bridge_session_v1_cross-tab'));
+  assert.strictEqual(storedAfter401.sessionId, newTab2Sess.sessionId, 'Stale 401 must NOT erase newer saved session');
+  forceGetSession401ForToken = null;
+
+  // Case D: New Session during slow create invalidates late response (no resurrection)
+  storageMap.clear(); serverSessions = []; serverMessages = []; createDelayMs = 60;
+  const sbD = makeTabSandbox();
+  const aD = new sbD.SourceRatingEmbedAdapter({ bridgeEndpoint: '/api/sr-bridge', workspaceKey: 'reset-gen' });
+  await aD.init();
+  const slowCreateP = aD.sendMessage({ text: 'Aborted initial draft' });
+  await new Promise((r) => setTimeout(r, 15));
+  aD.clearSession();
+  const lateRes = await slowCreateP;
+  assert.strictEqual(lateRes.ok, false);
+  assert.strictEqual(lateRes.obsolete, true);
+  assert.strictEqual(aD.session, null);
+  assert.strictEqual(storageMap.has('sr_bridge_session_v1_reset-gen'), false, 'Reset must prevent late create response from resurrecting session');
+}
+
 (async () => {
   await testProxyHandler();
   await testAdapterAndMock();
   await testEnquiryHandler();
   await testSingleFlightAndIdempotency();
-  console.log('PASS: sr-bridge + /api/enquiry Resend failover + adapter 409/401/offline/mock/501 + single-flight/reload/idempotency tests');
+  await testReviewRegressionCases();
+  console.log('PASS: sr-bridge + /api/enquiry + adapter 409/401/offline/mock/501 + single-flight + Codex review P1/P2 invariants');
 })().catch((err) => {
   console.error(err);
   process.exit(1);

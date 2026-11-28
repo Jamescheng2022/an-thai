@@ -562,6 +562,88 @@ def run_tests():
             live_ctx.close()
             print("PASS: Live Chat rapid multi-click, slow network, refresh idempotency & EN/ZH/TH 390px clean drawer verified.")
 
+            # E. Browser-level Contact + Chat Race, Slow Transcript Unlock & Reset Cancellation
+            race_ctx = browser.new_context(viewport={"width": 390, "height": 844})
+            race_page = race_ctx.new_page()
+            race_state = {"sessions": [], "messages": [], "slow_get_ms": 0}
+            def handle_race_bridge(route):
+                req = route.request
+                qs = parse_qs(urlparse(req.url).query)
+                rt = (qs.get("route") or [""])[0]
+                if rt == "health":
+                    route.fulfill(status=200, content_type="application/json", body=_json.dumps({"ok": True, "configured": True, "online": True, "organizationId": "00000000-0000-4000-8000-00000000a771", "challengeToken": "crace"}))
+                    return
+                if rt == "posts":
+                    route.fulfill(status=200, content_type="application/json", body=_json.dumps({"ok": True, "posts": []}))
+                    return
+                if rt == "sessions" and req.method == "POST":
+                    b = _json.loads(req.post_data or "{}")
+                    race_page.wait_for_timeout(450)
+                    sid = f"bbbbbbbb-bbbb-4bbb-8bbb-00000000000{len(race_state['sessions']) + 1}"
+                    race_state["sessions"].append({"sessionId": sid, "clientRequestId": b.get("clientRequestId")})
+                    race_state["messages"].append({"seq": 1, "senderKind": "visitor", "text": b.get("message", ""), "createdAt": "2026-11-28T11:00:00Z"})
+                    route.fulfill(status=201, content_type="application/json", body=_json.dumps({"ok": True, "sessionId": sid, "visitorToken": "vtok_race", "requestId": "SR-RACE-1", "status": "ai_active"}))
+                    return
+                if rt == "session":
+                    route.fulfill(status=200, content_type="application/json", body=_json.dumps({"ok": True, "session": {"sessionId": race_state["sessions"][-1]["sessionId"], "status": "ai_active"}}))
+                    return
+                if rt == "messages":
+                    if req.method == "POST":
+                        b = _json.loads(req.post_data or "{}")
+                        race_state["messages"].append({"seq": len(race_state["messages"]) + 1, "senderKind": "visitor", "text": b.get("text", ""), "createdAt": "2026-11-28T11:01:00Z"})
+                        route.fulfill(status=201, content_type="application/json", body=_json.dumps({"ok": True, "persisted": True, "sessionStatus": "ai_active"}))
+                        return
+                    if race_state["slow_get_ms"]:
+                        race_page.wait_for_timeout(race_state["slow_get_ms"])
+                    route.fulfill(status=200, content_type="application/json", body=_json.dumps({"ok": True, "messages": race_state["messages"], "nextAfterSeq": len(race_state["messages"]), "hasMore": False}))
+                    return
+                route.abort()
+
+            race_page.route("**/api/sr-bridge*", handle_race_bridge)
+            race_page.goto(f"{base_url}/contact.html", wait_until="networkidle")
+            race_page.locator("#cContact").fill("qa@race.example")
+            race_page.locator("#cNotes").fill("Contact brief payload during race")
+            race_page.locator("#bottomBarDeskBtn").click()
+            race_page.wait_for_timeout(80)
+            race_page.locator("#liveMsgInput").fill("Chat text payload during race")
+            # Fire chat submit, then immediately submit contact form during slow create
+            race_page.evaluate("""() => {
+                document.getElementById('liveMessageForm').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+                setTimeout(() => {
+                    document.getElementById('contactScopeForm').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+                }, 40);
+            }""")
+            race_page.wait_for_timeout(1100)
+            assert len(race_state["sessions"]) == 1, f"Expected 1 session during Chat+Contact race, got {len(race_state['sessions'])}"
+            written_texts = [m["text"] for m in race_state["messages"]]
+            assert any("Chat text payload during race" in t for t in written_texts), written_texts
+            assert any("Contact brief payload during race" in t for t in written_texts), written_texts
+
+            # Slow post-send listMessages does NOT keep input/Send button locked
+            race_state["slow_get_ms"] = 1200
+            race_page.locator("#liveMsgInput").fill("Quick unlock check")
+            race_page.locator('#liveMessageForm button[type="submit"]').click()
+            race_page.wait_for_timeout(350)  # POST returned (<100ms), slow GET still in flight (1200ms)
+            assert not race_page.locator('#liveMessageForm button[type="submit"]').is_disabled(), "Send button must unlock immediately after POST without waiting for slow transcript GET"
+            assert not race_page.locator("#liveMsgInput").evaluate("el => el.readOnly"), "Input readOnly must clear immediately after POST"
+            race_page.wait_for_timeout(1000)
+
+            # New Session during slow create invalidates late create
+            race_state["slow_get_ms"] = 0
+            race_page.locator("#drawerMenuBtn").click()
+            race_page.locator("#liveClearBtn").click()
+            race_page.wait_for_timeout(80)
+            race_page.locator("#liveMsgInput").fill("Aborted mid-flight session")
+            race_page.locator('#liveMessageForm button[type="submit"]').click()
+            race_page.wait_for_timeout(120)
+            race_page.locator("#drawerMenuBtn").click()
+            race_page.locator("#liveClearBtn").click()
+            race_page.wait_for_timeout(700)
+            stored_after_reset = race_page.evaluate("() => localStorage.getItem('sr_bridge_session_v1_an-thai-th')")
+            assert stored_after_reset is None, f"Old in-flight create must NOT resurrect session after New Session, got {stored_after_reset}"
+            race_ctx.close()
+            print("PASS: Contact+Chat race, slow transcript non-blocking unlock & New Session mid-flight cancellation verified.")
+
             # Final console error check (zero tolerance, including resource 404s)
             critical_errors = console_errors.copy()
             assert not critical_errors, f"Critical console errors detected: {critical_errors}"

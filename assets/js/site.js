@@ -34,7 +34,7 @@
   };
 
   var I18N = window.ANTHAI_I18N || { EN: {} };
-  var state = { lang: 'EN', adapterMode: 'unconfigured', isMock: false, sessionStatus: '', assignedStaffLabel: '', requestId: '', inquiryApiConfigured: false, sessionId: '', lastFocused: null, pollTimer: null, lastPosts: [], postsIsMock: false, isLiveSending: false, isContactSubmitting: false, pendingLiveMsg: null, pendingContactReq: null, drawerMenuOpen: false };
+  var state = { lang: 'EN', adapterMode: 'unconfigured', isMock: false, sessionStatus: '', assignedStaffLabel: '', requestId: '', inquiryApiConfigured: false, sessionId: '', lastFocused: null, pollTimer: null, pollGeneration: 0, isPollingInFlight: false, uiGeneration: 0, lastPosts: [], postsIsMock: false, isLiveSending: false, isContactSubmitting: false, pendingLiveMsg: null, pendingContactFollowUp: null, drawerMenuOpen: false };
 
   function makeClientUuid() {
     try {
@@ -388,12 +388,15 @@
         }
       }
     });
+    var myUiGen = state.uiGeneration;
     var res = await adapter.init();
+    if (myUiGen !== state.uiGeneration || (res && res.obsolete)) return;
     if (res && res.ok && (res.mode === 'live' || res.mode === 'mock')) {
       if (res.session && res.session.status) state.sessionStatus = res.session.status;
       if (res.session && res.session.assignedStaffLabel) state.assignedStaffLabel = String(res.session.assignedStaffLabel);
       if (adapter.session && adapter.session.sessionId && typeof adapter.getSession === 'function') {
         var gs = await adapter.getSession();
+        if (myUiGen !== state.uiGeneration || (gs && gs.obsolete)) return;
         if (gs && gs.ok && gs.session) {
           if (gs.session.status) state.sessionStatus = gs.session.status;
           state.assignedStaffLabel = gs.session.assignedStaffLabel ? String(gs.session.assignedStaffLabel) : '';
@@ -403,6 +406,7 @@
           return;
         }
       }
+      if (myUiGen !== state.uiGeneration) return;
       syncStatusUI();
       if (state.sessionStatus === 'closed') showLiveFeedback(t('liveClosedNotice'), 'neutral');
       renderLiveMessages(res.messages || []);
@@ -415,9 +419,25 @@
     state.sessionStatus = '';
     state.assignedStaffLabel = '';
     state.requestId = '';
+    state.pendingLiveMsg = null;
+    state.pendingContactFollowUp = null;
+    state.pollGeneration += 1;
     syncStatusUI();
     renderLiveMessages([]);
     showLiveFeedback(t('liveSessionReset'), 'neutral');
+  }
+
+  function refreshDrawerTranscript(expectedUiGen, expectedSessionId) {
+    if (!adapter || typeof adapter.listMessages !== 'function') return;
+    var pollGen = ++state.pollGeneration;
+    adapter.listMessages().then(function (listRes) {
+      if (!listRes || listRes.obsolete || listRes.staleSessionIgnored) return;
+      if (expectedUiGen !== state.uiGeneration || pollGen !== state.pollGeneration) return;
+      var curSid = adapter && adapter.session ? adapter.session.sessionId : '';
+      if (expectedSessionId && curSid && curSid !== expectedSessionId) return;
+      if (listRes.sessionReset) { applySessionResetUI(); return; }
+      if (listRes.ok) renderLiveMessages(listRes.messages);
+    }).catch(function () {});
   }
 
   function setDrawerMenuOpen(open) {
@@ -446,40 +466,43 @@
       var connected = state.adapterMode === 'live' || state.adapterMode === 'mock';
       if (!text || !adapter || !connected) return;
       if (state.sessionStatus === 'closed') { showLiveFeedback(t('liveClosedNotice'), 'neutral'); return; }
-      if (!state.pendingLiveMsg || state.pendingLiveMsg.text !== text) {
-        state.pendingLiveMsg = { text: text, clientMsgId: makeClientUuid() };
+      var myUiGen = state.uiGeneration;
+      var curSessionKey = (adapter.session && adapter.session.sessionId) || 'new';
+      if (!state.pendingLiveMsg || state.pendingLiveMsg.text !== text || state.pendingLiveMsg.sessionKey !== curSessionKey) {
+        state.pendingLiveMsg = { text: text, sessionKey: curSessionKey, clientMsgId: makeClientUuid() };
       }
       state.isLiveSending = true;
       syncStatusUI();
       showLiveFeedback('', '');
+      var res = null;
       try {
-        var res = await adapter.sendMessage({
+        res = await adapter.sendMessage({
           text: text,
           clientMsgId: state.pendingLiveMsg.clientMsgId,
           context: { page: window.location.pathname, lang: state.lang }
         });
-        if (!res || !res.ok) {
-          if (res && res.sessionReset) {
-            state.pendingLiveMsg = null;
-            applySessionResetUI();
-            return;
-          }
-          showLiveFeedback(t('liveErrSend') + (res && res.error ? ' (' + res.error + ')' : ''), 'err');
-          return;
-        }
-        state.pendingLiveMsg = null;
-        liveInput.value = '';
-        if (adapter.session && adapter.session.sessionId) state.sessionId = adapter.session.sessionId;
-        if (res.sessionId) state.sessionId = res.sessionId;
-        if (res.sessionStatus) state.sessionStatus = res.sessionStatus;
-        syncStatusUI();
-        if (res.sessionReset) showLiveFeedback(t('liveSessionReset'), 'neutral');
-        var listRes = await adapter.listMessages();
-        if (listRes.ok) renderLiveMessages(listRes.messages);
       } finally {
         state.isLiveSending = false;
         syncStatusUI();
       }
+      if (myUiGen !== state.uiGeneration || (res && res.obsolete)) return;
+      if (!res || !res.ok) {
+        if (res && res.sessionReset) {
+          state.pendingLiveMsg = null;
+          applySessionResetUI();
+          return;
+        }
+        showLiveFeedback(t('liveErrSend') + (res && res.error ? ' (' + res.error + ')' : ''), 'err');
+        return;
+      }
+      state.pendingLiveMsg = null;
+      liveInput.value = '';
+      if (adapter.session && adapter.session.sessionId) state.sessionId = adapter.session.sessionId;
+      if (res.sessionId) state.sessionId = res.sessionId;
+      if (res.sessionStatus) state.sessionStatus = res.sessionStatus;
+      syncStatusUI();
+      if (res.sessionReset) showLiveFeedback(t('liveSessionReset'), 'neutral');
+      refreshDrawerTranscript(myUiGen, state.sessionId);
     });
   }
 
@@ -487,6 +510,11 @@
   if (liveClearBtn) {
     liveClearBtn.addEventListener('click', async function () {
       setDrawerMenuOpen(false);
+      state.uiGeneration += 1;
+      state.pollGeneration += 1;
+      stopPolling();
+      state.isLiveSending = false;
+      state.isContactSubmitting = false;
       if (!adapter) return;
       adapter.clearSession();
       state.sessionId = '';
@@ -494,9 +522,15 @@
       state.assignedStaffLabel = '';
       state.requestId = '';
       state.pendingLiveMsg = null;
-      state.pendingContactReq = null;
+      state.pendingContactFollowUp = null;
       showLiveFeedback('', '');
-      await initAdapter();
+      syncStatusUI();
+      renderLiveMessages([]);
+      if (state.adapterMode !== 'live' && state.adapterMode !== 'mock') {
+        await initAdapter();
+      } else {
+        startPolling();
+      }
     });
   }
 
@@ -535,34 +569,66 @@
   function startPolling() {
     stopPolling();
     if (state.adapterMode !== 'live') return;
-    state.pollTimer = window.setInterval(async function () {
-      if (!adapter || state.adapterMode !== 'live' || !drawer || !drawer.classList.contains('is-open')) return;
-      if (!adapter.session || !adapter.session.sessionId) return;
-      var r = await adapter.listMessages();
-      if (!r) return;
-      if (r.sessionReset) { applySessionResetUI(); return; }
-      if (r.ok) {
-        var prevStatus = state.sessionStatus;
-        if (r.status) state.sessionStatus = r.status;
-        if (r.status && (r.status === 'human_active' || r.status !== prevStatus) && typeof adapter.getSession === 'function') {
-          var sRes = await adapter.getSession();
-          if (sRes && sRes.ok && sRes.session) {
-            if (sRes.session.status) state.sessionStatus = sRes.session.status;
-            state.assignedStaffLabel = sRes.session.assignedStaffLabel ? String(sRes.session.assignedStaffLabel) : '';
-          } else if (sRes && sRes.sessionReset) {
-            applySessionResetUI();
+    var myUiGen = state.uiGeneration;
+    var pollGen = ++state.pollGeneration;
+    function scheduleNext() {
+      if (myUiGen !== state.uiGeneration || pollGen !== state.pollGeneration) return;
+      if (!drawer || !drawer.classList.contains('is-open')) return;
+      state.pollTimer = window.setTimeout(async function () {
+        if (myUiGen !== state.uiGeneration || pollGen !== state.pollGeneration) return;
+        if (!adapter || state.adapterMode !== 'live' || !drawer || !drawer.classList.contains('is-open')) return;
+        if (typeof adapter._syncFromStorage === 'function') adapter._syncFromStorage();
+        if (!adapter.session || !adapter.session.sessionId) {
+          scheduleNext();
+          return;
+        }
+        if (state.isPollingInFlight) {
+          scheduleNext();
+          return;
+        }
+        state.isPollingInFlight = true;
+        var expectedSid = adapter.session.sessionId;
+        try {
+          var r = await adapter.listMessages();
+          if (!r || r.obsolete || r.staleSessionIgnored) return;
+          if (myUiGen !== state.uiGeneration || pollGen !== state.pollGeneration) return;
+          if (!drawer || !drawer.classList.contains('is-open')) return;
+          if (!adapter || !adapter.session || adapter.session.sessionId !== expectedSid) {
+            if (r.sessionReset) applySessionResetUI();
             return;
           }
+          if (r.sessionReset) { applySessionResetUI(); return; }
+          if (r.ok) {
+            var prevStatus = state.sessionStatus;
+            if (r.status) state.sessionStatus = r.status;
+            if (r.status && (r.status === 'human_active' || r.status !== prevStatus) && typeof adapter.getSession === 'function') {
+              var sRes = await adapter.getSession();
+              if (!sRes || sRes.obsolete || sRes.staleSessionIgnored) return;
+              if (myUiGen !== state.uiGeneration || pollGen !== state.pollGeneration) return;
+              if (!drawer || !drawer.classList.contains('is-open')) return;
+              if (sRes.sessionReset) { applySessionResetUI(); return; }
+              if (!adapter || !adapter.session || adapter.session.sessionId !== expectedSid) return;
+              if (sRes.ok && sRes.session) {
+                if (sRes.session.status) state.sessionStatus = sRes.session.status;
+                state.assignedStaffLabel = sRes.session.assignedStaffLabel ? String(sRes.session.assignedStaffLabel) : '';
+              }
+            }
+            if (state.sessionStatus !== 'human_active') state.assignedStaffLabel = '';
+            syncStatusUI();
+            if (state.sessionStatus === 'closed') showLiveFeedback(t('liveClosedNotice'), 'neutral');
+            renderLiveMessages(r.messages);
+          }
+        } finally {
+          state.isPollingInFlight = false;
+          scheduleNext();
         }
-        if (state.sessionStatus !== 'human_active') state.assignedStaffLabel = '';
-        syncStatusUI();
-        if (state.sessionStatus === 'closed') showLiveFeedback(t('liveClosedNotice'), 'neutral');
-        renderLiveMessages(r.messages);
-      }
-    }, 3000);
+      }, 3000);
+    }
+    scheduleNext();
   }
   function stopPolling() {
-    if (state.pollTimer) { window.clearInterval(state.pollTimer); state.pollTimer = null; }
+    state.pollGeneration += 1;
+    if (state.pollTimer) { window.clearTimeout(state.pollTimer); state.pollTimer = null; }
   }
 
   function normalizeRoute(val) {
@@ -646,6 +712,15 @@
             }
           }
         }
+      }
+    }
+    if (adapter && typeof adapter._syncFromStorage === 'function') {
+      var prevOpenSid = state.sessionId;
+      adapter._syncFromStorage();
+      state.sessionId = adapter.session ? adapter.session.sessionId : '';
+      state.sessionStatus = adapter.session ? (adapter.session.status || '') : '';
+      if (state.sessionId && state.sessionId !== prevOpenSid) {
+        refreshDrawerTranscript(state.uiGeneration, state.sessionId);
       }
     }
     syncStatusUI();
@@ -913,8 +988,9 @@
       }
       if (f.website_url) return;
       var brief = buildBrief(f);
-      if (!state.pendingContactReq || state.pendingContactReq.brief !== brief) {
-        state.pendingContactReq = { brief: brief, clientRequestId: makeClientUuid() };
+      var myUiGen = state.uiGeneration;
+      if (!state.pendingContactFollowUp || state.pendingContactFollowUp.brief !== brief) {
+        state.pendingContactFollowUp = { brief: brief, clientMsgId: makeClientUuid() };
       }
       state.isContactSubmitting = true;
       syncContactSubmitMode();
@@ -922,34 +998,31 @@
         if (adapter && (state.adapterMode === 'live' || state.adapterMode === 'mock')) {
           try {
             var srRes;
-            if (adapter.session && adapter.session.sessionId) {
-              srRes = await adapter.sendMessage({
-                text: brief,
-                clientMsgId: state.pendingContactReq.clientRequestId,
-                context: { page: window.location.pathname, lang: state.lang }
+            if (typeof adapter.submitStructuredInquiry === 'function') {
+              srRes = await adapter.submitStructuredInquiry({
+                message: brief,
+                roomLabel: f.route,
+                website_url: f.website_url,
+                channelSlug: 'contact-scope-form',
+                clientMsgId: state.pendingContactFollowUp.clientMsgId
               });
-              if (srRes && srRes.ok) {
-                srRes = Object.assign({}, adapter.session, srRes, { persistedToSr: !adapter.isMock, isMock: adapter.isMock });
-              }
             } else {
               srRes = await adapter.createSession({
-                clientRequestId: state.pendingContactReq.clientRequestId,
                 message: brief,
                 roomLabel: f.route,
                 website_url: f.website_url,
                 channelSlug: 'contact-scope-form'
               });
             }
+            if (myUiGen !== state.uiGeneration || (srRes && srRes.obsolete)) return;
             if (srRes && srRes.status === 'filtered') return;
             if (srRes && srRes.ok && srRes.sessionId) {
-              state.pendingContactReq = null;
+              state.pendingContactFollowUp = null;
               state.sessionId = srRes.sessionId;
               state.sessionStatus = srRes.status || srRes.sessionStatus || 'ai_active';
               state.requestId = srRes.requestId || state.requestId || '';
               state.assignedStaffLabel = srRes.assignedStaffLabel || '';
               syncStatusUI();
-              var listRes = await adapter.listMessages();
-              if (listRes && listRes.ok) renderLiveMessages(listRes.messages);
               if (contactFeedback) {
                 if (srRes.isMock || !srRes.persistedToSr) {
                   contactFeedback.className = 'notice-box mock-notice';
@@ -963,6 +1036,7 @@
               }
               window.ANTHAI_TRACK('sr_bridge_session_created', { route: f.route, isMock: !!srRes.isMock, requestId: srRes.requestId || '' });
               openDrawer(document.getElementById('contactSubmitBtn') || null);
+              refreshDrawerTranscript(myUiGen, state.sessionId);
               // Optional non-blocking Resend notification only after persisted live SR session (when configured on server)
               if (srRes.persistedToSr && !srRes.isMock && state.inquiryApiConfigured && window.ANTHAI_CONFIG.inquiryEndpoint) {
                 try {
@@ -984,6 +1058,7 @@
             // Automatically fail over to independent Resend backup endpoint below
           }
         }
+        if (myUiGen !== state.uiGeneration) return;
         if (!state.isMock && window.ANTHAI_CONFIG.inquiryEndpoint) {
           var bCtrl = typeof AbortController === 'function' ? new AbortController() : null;
           var bTimer = bCtrl ? setTimeout(function () { bCtrl.abort(); }, 10000) : null;
@@ -1001,7 +1076,7 @@
               var payload = await res.json().catch(function () { return {}; });
               if (payload && payload.ok === true && payload.delivered === true && payload.requestId) {
                 var receiptId = String(payload.requestId);
-                state.pendingContactReq = null;
+                state.pendingContactFollowUp = null;
                 window.ANTHAI_TRACK('rfq_submit_success', { route: f.route, receiptId: receiptId, backend: payload.backend || 'resend' });
                 if (contactFeedback) { contactFeedback.className = 'notice-box is-ok'; contactFeedback.textContent = t('backupResendOk') + receiptId; contactFeedback.hidden = false; }
                 contactForm.reset();
@@ -1014,6 +1089,7 @@
             if (bTimer) clearTimeout(bTimer);
           }
         }
+        if (myUiGen !== state.uiGeneration) return;
         showDeliveryFailedFeedback(contactFeedback, brief);
       } finally {
         state.isContactSubmitting = false;

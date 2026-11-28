@@ -387,6 +387,32 @@
       "description": "Mobile illustrative visualization of a portable pile testing analyzer connected to side-mounted pile shaft sensors",
       "provenance": "Gemini realistic editorial generation (2026-11-28, illustrative visualization)",
       "kind": "editorial industrial visualization"
+    },
+    {
+      "path": "assets/images/hero-engineering.webp",
+      "zip_source": "v1.1-20261128-hero-opta-v2",
+      "sha256": "70e0da2f1c78316a95a8bcf218cde46ebfc388d295f674686883f0a03f76ffe2",
+      "bytes": 79672,
+      "dimensions": [
+        900,
+        687
+      ],
+      "description": "Desktop illustrative homepage engineering visualization showing rotary pile drilling rig, foundation pile caps, steel truss bridge erection, and industrial process silos",
+      "provenance": "Owner-selected Gemini Option A v2 generation (2026-11-28, illustrative visualization)",
+      "kind": "editorial industrial visualization"
+    },
+    {
+      "path": "assets/images/hero-engineering-small.webp",
+      "zip_source": "v1.1-20261128-hero-opta-v2",
+      "sha256": "d81c0c586c501837ecc7aea9b2f31bee0f06975580fcdd06844218f7516772c5",
+      "bytes": 39588,
+      "dimensions": [
+        720,
+        550
+      ],
+      "description": "Mobile illustrative homepage engineering visualization showing rotary pile drilling rig, foundation pile caps, steel truss bridge erection, and industrial process silos",
+      "provenance": "Owner-selected Gemini Option A v2 generation (2026-11-28, illustrative visualization)",
+      "kind": "editorial industrial visualization"
     }
   ]
 }

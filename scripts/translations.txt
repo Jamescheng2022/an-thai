@@ -460,10 +460,9 @@ Prepare your enquiry, then send it from your email app. This website does not tr
 03 · QUOTE || 03 · 方案报价 || 03 · ข้อเสนอราคา
 04 · DELIVER || 04 · 交付指导 || 04 · ส่งมอบและแนะนำ
 02 · MATCH || 02 · 选型匹配 || 02 · การเทียบสเปก
-AN-THAI ENGINEERING · THAILAND || 安泰工程 · 泰国 || AN-THAI ENGINEERING · ประเทศไทย
 AN-THAI Engineering | Substructure to Superstructure || 安泰工程 ｜ 从地下基础到地上结构 || AN-THAI Engineering | จากฐานรากสู่โครงสร้าง
-01 Foundation Testing & Geotech | AN-THAI Engineering || 01 桩基与岩土工程检测 ｜ 安泰工程 || 01 การทดสอบเสาเข็มและวิศวกรรมปฐพี | AN-THAI Engineering
-02 Buyer-Side Steel Procurement Agency | AN-THAI Engineering || 02 买方立场钢结构采购代理 ｜ 安泰工程 || 02 ตัวแทนจัดหาโครงสร้างเหล็กฝ่ายผู้ซื้อ | AN-THAI Engineering
+Foundation Testing & Geotech | AN-THAI Engineering || 桩基与岩土工程检测 | 安泰工程 || การทดสอบเสาเข็มและวิศวกรรมปฐพี | AN-THAI Engineering
+Steel Procurement Agency | AN-THAI Engineering || 钢结构采购代理 | 安泰工程 || ตัวแทนจัดหาโครงสร้างเหล็ก | AN-THAI Engineering
 03 Powder-Process Equipment Coordination | AN-THAI Engineering || 03 粉体工艺设备成套协调 ｜ 安泰工程 || 03 การจัดหาและประสานงานเครื่องจักรแปรรูปผง | AN-THAI Engineering
 04 Testing Instruments Supply & Calibration | AN-THAI Engineering || 04 工程检测仪器选型与校准 ｜ 安泰工程 || 04 จัดหาและสอบเทียบเครื่องมือทดสอบ | AN-THAI Engineering
 Company Profile | AN-THAI Engineering || 公司介绍 ｜ 安泰工程 || ข้อมูลบริษัท | AN-THAI Engineering
@@ -489,7 +488,7 @@ Field Instruments || 现场仪器 || เครื่องมือภาคส�
 Four independent business units under AN-THAI Bangkok Hub || 安泰曼谷总部下设四个独立业务单元 || 4 หน่วยธุรกิจอิสระภายใต้ศูนย์กรุงเทพฯ ของ AN-THAI
 04 · REPORT || 04 · 检测报告 || 04 · รายงานผล
 04 · SUPPLY || 04 · 设备供应 || 04 · การจัดหาอุปกรณ์
-04 Field Testing & Measurement Instruments | AN-THAI Engineering || 04 工程现场检测与测量仪器 ｜ 安泰工程 || 04 เครื่องมือทดสอบและวัดค่าภาคสนาม | AN-THAI Engineering
+Field Testing & Measurement Instruments | AN-THAI Engineering || 工程现场检测与测量仪器 | 安泰工程 || เครื่องมือทดสอบและวัดค่าภาคสนาม | AN-THAI Engineering
 
 01 · Identity & Presence || 01 · 实体身份与现场覆盖 || 01 · ข้อมูลนิติบุคคลและพื้นที่ให้บริการ
 Who We Are || 关于安泰工程 || เกี่ยวกับเรา
@@ -580,7 +579,7 @@ Key Technical Deliverables || 核心技术交付成果 || ผลงานส่�
 Related Technical Guide || 关联技术指南 || คู่มือเทคนิคที่เกี่ยวข้อง
 View Service Scope || 查看业务单元详情 || ดูรายละเอียดบริการ
 Discuss Similar Scope → || 对接同类项目需求 → || ปรึกษาขอบเขตงานลักษณะนี้ →
-03 Cement & Mining Process Equipment | AN-THAI Engineering || 03 水泥与矿山工艺装备 | 安泰工程 AN-THAI Engineering || 03 เครื่องจักรและระบบสำหรับอุตสาหกรรมปูนซีเมนต์และเหมืองแร่ | AN-THAI Engineering
+Cement & Mining Process Equipment | AN-THAI Engineering || 水泥与矿山工艺装备 | 安泰工程 AN-THAI Engineering || เครื่องจักรและระบบสำหรับอุตสาหกรรมปูนซีเมนต์และเหมืองแร่ | AN-THAI Engineering
 Technical coordination and supply support for cement and mining process equipment: crushing, grinding, pyro-processing peripherals, classification, conveying, electrical control, commissioning coordination, and spares. || 面向水泥与矿山全流程工艺装备提供技术协调与供货对接：破碎、粉磨、烧成周边、分级收尘、输送储运、电控配套、调试协调与备件对接。 || บริการประสานงานเทคนิคและจัดหาเครื่องจักรสำหรับอุตสาหกรรมปูนซีเมนต์และเหมืองแร่: บดย่อย บดละเอียด ระบบประกอบเตาเผา คัดแยก ลำเลียง ควบคุมไฟฟ้าและเครื่องมือวัด ร่วมเดินระบบ และอะไหล่
 Pile testing, buyer-side steel procurement agency, cement and mining process equipment coordination, and testing instruments in Thailand. || 在泰国提供桩基检测、买方立场钢结构采购代理、水泥与矿山工艺装备协调及工程检测仪器供应服务。 || บริการทดสอบเสาเข็ม ตัวแทนจัดหาโครงสร้างเหล็กฝั่งผู้ซื้อ ประสานงานเครื่องจักรปูนซีเมนต์และเหมืองแร่ และเครื่องมือทดสอบในประเทศไทย
 Moved to Cement & Mining Process Equipment | AN-THAI Engineering || 页面已迁移至水泥与矿山工艺装备 | 安泰工程 || ย้ายไปยังหน้าเครื่องจักรปูนซีเมนต์และเหมืองแร่ | AN-THAI Engineering
@@ -593,13 +592,13 @@ Portable pile testing analyzer connected to side-mounted pile shaft sensors || �
 Geotechnical and materials testing instruments with Bangkok engineering coordination room || 岩土与材料实验室仪器实景及曼谷技术协调办公室 || ภาพเครื่องมือทดสอบปฐพีและวัสดุในห้องปฏิบัติการพันธมิตรพร้อมห้องประสานงานกรุงเทพฯ
 Rotary pile drilling rig, foundation pile caps, steel truss span, and industrial process silos || 旋挖钻机、桩帽基础、钢桁架梁架设与工业料仓设施 || เครื่องเจาะเสาเข็มโรตารี ฐานรากเสาเข็ม โครงสร้างสะพานเหล็กถัก และไซโลอุตสาหกรรม
 Structural steel fabrication in a manufacturing workshop || 制造车间内的重型结构钢制作 || งานประกอบเหล็กโครงสร้างในโรงงานผลิต
-Structural steelwork engineering and coordination || 结构钢工程协调与深化设计 || งานประสานงานวิศวกรรมเหล็กโครงสร้าง
 Welding inspection in a steel fabrication workshop || 钢结构制造车间焊缝检验 || งานตรวจสอบรอยเชื่อมในโรงงานประกอบเหล็ก
-Industrial prefabricated steel buildings || 工业预制轻重钢结构厂房 || อาคารโรงงานเหล็กโครงสร้างสำเร็จรูป
-Heavy fabricated steel structures || 重型装配式结构钢构件 || โครงสร้างเหล็กขนาดใหญ่
-Industrial steel pipe racks and support frames || 工业管廊与钢结构支架系统 || โครงเหล็กแร็กท่อและโครงสร้างรองรับอุตสาหกรรม
 Large span steel roof truss and space frame || 大跨度钢屋架与网架结构 || โครงถักหลังคาเหล็กช่วงพาดกว้างและสเปซเฟรม
-Steel plates and fabricated components || 钢板与深加工配套构件 || แผ่นเหล็กและชิ้นส่วนประกอบโครงสร้าง
 Laboratory instruments in a geotechnical and material testing partner lab || 合作岩土与材料实验室检测仪器 || เครื่องมือทดสอบปฐพีและวัสดุในห้องปฏิบัติการพันธมิตร
 Foundation investigation and structural testing capabilities overview || 地基勘察与结构检测工程能力全景 || ภาพรวมขีดความสามารถงานสำรวจดินและทดสอบโครงสร้าง
 Modern cable-stayed bridge and concrete viaduct piers in Bangkok || 曼谷现代斜拉桥与混凝土高架桥墩工程全景 || สะพานขึงและตอม่อทางยกระดับคอนกรีตสมัยใหม่ในกรุงเทพมหานคร
+Structural steel 3D connection modeling and shop drawing review || 结构钢三维节点深化建模与施工详图校核 || การสร้างแบบจำลองรอยต่อโครงสร้างเหล็ก 3 มิติและการตรวจแบบโรงงาน
+Pre-Engineered Building portal-frame steel industrial warehouse || 预制门式刚架（PEB）重型钢结构工业厂房 || อาคารโรงงานอุตสาหกรรมโครงสร้างเหล็กสำเร็จรูป (PEB)
+Heavy welded structural steel H-beams and thick-plate box columns || 重型焊接 H 型钢与厚板箱型柱结构构件 || คานเหล็ก H-Beam ขนาดใหญ่และเสากล่องเหล็กแผ่นหนา
+Multi-tier petrochemical industrial structural steel pipe rack || 石化与工业装置多层钢结构管廊架 || โครงเหล็กแร็กท่ออุตสาหกรรมหลายชั้นสำหรับโรงงานปิโตรเคมี
+Fabricated structural steel base plates, gusset plates, high-strength bolts, and anchor bolts || 钢结构柱脚底板、节点连接板、高强螺栓副与预埋地脚螺栓 || แผ่นฐานเสาเหล็ก เพลตต่อโครงสร้าง สลักเกลียวกำลังสูง และสมอบกยึดฐานราก

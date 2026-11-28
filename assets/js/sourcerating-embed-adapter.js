@@ -57,6 +57,7 @@
     this.visitorStorageKey = VISITOR_KEY_PREFIX + this.workspaceKey;
     this.pendingReqStorageKey = PENDING_REQ_PREFIX + this.workspaceKey;
     this._memStorage = Object.create(null);
+    this._memOnlyKeys = Object.create(null);
     this._conversationGen = 0;
     this._activeCreateCtrl = null;
     this._createSessionInFlight = null;
@@ -73,6 +74,7 @@
       this._onStorageEvent = function (ev) {
         if (!ev) return;
         if (ev.key === self.storageKey || ev.key === self.visitorStorageKey) {
+          delete self._memOnlyKeys[ev.key];
           self._syncFromStorage();
         }
       };
@@ -81,6 +83,9 @@
   }
 
   SourceRatingEmbedAdapter.prototype._storageGet = function (key) {
+    if (this._memOnlyKeys[key]) {
+      return Object.prototype.hasOwnProperty.call(this._memStorage, key) ? this._memStorage[key] : null;
+    }
     try {
       if (global.localStorage) {
         var val = global.localStorage.getItem(key);
@@ -99,12 +104,20 @@
     var strVal = String(val);
     this._memStorage[key] = strVal;
     try {
-      if (global.localStorage) global.localStorage.setItem(key, strVal);
-    } catch (e) {}
+      if (global.localStorage) {
+        global.localStorage.setItem(key, strVal);
+        delete this._memOnlyKeys[key];
+      } else {
+        this._memOnlyKeys[key] = true;
+      }
+    } catch (e) {
+      this._memOnlyKeys[key] = true;
+    }
   };
 
   SourceRatingEmbedAdapter.prototype._storageRemove = function (key) {
     delete this._memStorage[key];
+    delete this._memOnlyKeys[key];
     try {
       if (global.localStorage) global.localStorage.removeItem(key);
     } catch (e) {}
@@ -250,7 +263,7 @@
     return next;
   };
 
-  SourceRatingEmbedAdapter.prototype._fetchWithDeadline = async function (targetUrl, initObj, timeoutMs, externalSignal) {
+  SourceRatingEmbedAdapter.prototype._fetchJsonWithDeadline = async function (targetUrl, initObj, timeoutMs, externalSignal) {
     var ms = timeoutMs || this.requestTimeoutMs || 10000;
     var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
     var onExternalAbort = null;
@@ -264,7 +277,25 @@
     }
     var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, ms) : null;
     try {
-      return await fetch(targetUrl, ctrl ? Object.assign({}, initObj || {}, { signal: ctrl.signal }) : (initObj || {}));
+      var r = await fetch(targetUrl, ctrl ? Object.assign({}, initObj || {}, { signal: ctrl.signal }) : (initObj || {}));
+      var d = null;
+      try {
+        d = await r.json();
+      } catch (jsonErr) {
+        if (jsonErr && (jsonErr.name === 'AbortError' || jsonErr.name === 'TimeoutError')) throw jsonErr;
+        if (ctrl && ctrl.signal && ctrl.signal.aborted) {
+          var abortErr = new Error('BRIDGE_TIMEOUT');
+          abortErr.name = 'AbortError';
+          throw abortErr;
+        }
+        d = {};
+      }
+      if (ctrl && ctrl.signal && ctrl.signal.aborted) {
+        var postAbortErr = new Error('BRIDGE_TIMEOUT');
+        postAbortErr.name = 'AbortError';
+        throw postAbortErr;
+      }
+      return { res: r, data: d || {} };
     } finally {
       if (timer) clearTimeout(timer);
       if (externalSignal && onExternalAbort && typeof externalSignal.removeEventListener === 'function') {
@@ -311,19 +342,20 @@
     var headers = Object.assign({ Accept: 'application/json' }, options.headers || {}, {
       Authorization: 'Bearer ' + reqToken,
     });
-    var res = await this._fetchWithDeadline(url, Object.assign({}, options, { headers: headers }), this.requestTimeoutMs);
+    var callOut = await this._fetchJsonWithDeadline(url, Object.assign({}, options, { headers: headers }), this.requestTimeoutMs);
+    var res = callOut.res;
     if (res.status === 401 && retryOn401 !== false) {
       var clearedCur = this._clearSessionIfMatches(reqSessionId, reqToken, myGen);
       if (!clearedCur && this._conversationGen !== myGen) {
-        return { res: res, sessionReset: false, obsolete: true };
+        return { res: res, data: callOut.data, sessionReset: false, obsolete: true };
       }
       if (!clearedCur) {
         // Stale 401 from an older session; newer session in storage stays untouched
-        return { res: res, sessionReset: false, staleSessionIgnored: true };
+        return { res: res, data: callOut.data, sessionReset: false, staleSessionIgnored: true };
       }
-      return { res: res, sessionReset: true };
+      return { res: res, data: callOut.data, sessionReset: true };
     }
-    return { res: res, sessionReset: false, obsolete: this._conversationGen !== myGen };
+    return { res: res, data: callOut.data, sessionReset: false, obsolete: this._conversationGen !== myGen };
   };
 
   SourceRatingEmbedAdapter.prototype.init = async function () {
@@ -338,10 +370,9 @@
     var liveHealth = null;
     try {
       if (typeof fetch === 'function') {
-        var hRes = await this._fetchWithDeadline(this._buildUrl('health'), { method: 'GET', headers: { Accept: 'application/json' } }, this.requestTimeoutMs);
-        if (hRes.ok) {
-          var parsed = await hRes.json().catch(function () { return null; });
-          if (parsed && parsed.ok && parsed.configured) liveHealth = parsed;
+        var hOut = await this._fetchJsonWithDeadline(this._buildUrl('health'), { method: 'GET', headers: { Accept: 'application/json' } }, this.requestTimeoutMs);
+        if (hOut.res.ok && hOut.data && hOut.data.ok && hOut.data.configured) {
+          liveHealth = hOut.data;
         }
       }
     } catch (e) {
@@ -494,16 +525,8 @@
 
     var createCtrl = typeof AbortController === 'function' ? new AbortController() : null;
     this._activeCreateCtrl = createCtrl;
-    var fetchJsonWithDeadline = async function (targetUrl, initObj) {
-      var r = await self._fetchWithDeadline(targetUrl, initObj, 9000, createCtrl ? createCtrl.signal : null);
-      var d = null;
-      try {
-        d = await r.json();
-      } catch (jsonErr) {
-        if (jsonErr && (jsonErr.name === 'AbortError' || jsonErr.name === 'TimeoutError')) throw jsonErr;
-        d = {};
-      }
-      return { res: r, data: d || {} };
+    var fetchJsonWithDeadline = function (targetUrl, initObj) {
+      return self._fetchJsonWithDeadline(targetUrl, initObj, Math.min(9000, self.requestTimeoutMs || 9000), createCtrl ? createCtrl.signal : null);
     };
 
     var callOut;
@@ -578,19 +601,25 @@
 
   SourceRatingEmbedAdapter.prototype.createSession = async function (input) {
     input = input || {};
+    var self = this;
+    var myGen = this._conversationGen;
     var opSig = computePayloadFingerprint(input);
     while (this._createSessionInFlight) {
       if (this._createSessionInFlightSignature === opSig && !input.forceNew) {
         return this._createSessionInFlight;
       }
       try { await this._createSessionInFlight; } catch (e) {}
+      if (this._conversationGen !== myGen) {
+        return { ok: false, sessionReset: false, obsolete: true, error: 'SESSION_SUPERSEDED', persistedToSr: false, isMock: Boolean(this.isMock) };
+      }
+    }
+    if (this._conversationGen !== myGen) {
+      return { ok: false, sessionReset: false, obsolete: true, error: 'SESSION_SUPERSEDED', persistedToSr: false, isMock: Boolean(this.isMock) };
     }
 
-    var self = this;
-    var myGen = this._conversationGen;
     var promise = this._withCreateLock(async function () {
       if (self._conversationGen !== myGen) {
-        return { ok: false, obsolete: true, error: 'SESSION_SUPERSEDED', persistedToSr: false, isMock: Boolean(self.isMock) };
+        return { ok: false, sessionReset: false, obsolete: true, error: 'SESSION_SUPERSEDED', persistedToSr: false, isMock: Boolean(self.isMock) };
       }
       self._syncFromStorage();
       if (!input.forceNew && self.session && self.session.sessionId && (self.session.visitorToken || self.session.guestToken)) {
@@ -672,11 +701,12 @@
       if (out.obsolete || this._conversationGen !== myGen) return { ok: false, sessionReset: false, obsolete: true, error: 'SESSION_SUPERSEDED' };
       if (out.staleSessionIgnored) return { ok: false, sessionReset: false, staleSessionIgnored: true, error: 'STALE_SESSION' };
       if (out.sessionReset) return { ok: false, sessionReset: true, error: 'Unauthorized' };
-      var data = await out.res.json().catch(function () { return {}; });
+      var data = out.data || {};
       if (!out.res.ok) return { ok: false, error: data.error || ('HTTP_' + out.res.status) };
       return data;
     } catch (e) {
-      return { ok: false, error: (e && e.message) ? e.message : 'NETWORK_ERROR' };
+      var errN = e && e.name ? e.name : '';
+      return { ok: false, error: (errN === 'AbortError' || errN === 'TimeoutError') ? 'BRIDGE_TIMEOUT' : ((e && e.message) ? e.message : 'NETWORK_ERROR') };
     }
   };
 
@@ -688,7 +718,7 @@
     var reqTok = this.session.visitorToken || this.session.guestToken;
     if (this.mode === 'mock' && this.mockTransport) {
       var mList = await this.mockTransport.listMessages(reqSid, reqTok, afterSeq || 0);
-      if (this._conversationGen !== myGen) return { ok: false, messages: [], obsolete: true, error: 'SESSION_SUPERSEDED', isMock: true };
+      if (this._conversationGen !== myGen) return { ok: false, sessionReset: false, messages: [], obsolete: true, error: 'SESSION_SUPERSEDED', isMock: true };
       if (!mList.ok && mList.statusCode === 401) {
         var clearedM = this._clearSessionIfMatches(reqSid, reqTok, myGen);
         return { ok: false, messages: [], sessionReset: clearedM, staleSessionIgnored: !clearedM, error: 'Unauthorized', isMock: true };
@@ -705,13 +735,13 @@
       var seenKeys = Object.create(null);
       var lastData = {};
       for (var page = 0; page < 200; page++) {
-        if (this._conversationGen !== myGen) return { ok: false, messages: [], obsolete: true, error: 'SESSION_SUPERSEDED' };
+        if (this._conversationGen !== myGen) return { ok: false, sessionReset: false, messages: [], obsolete: true, error: 'SESSION_SUPERSEDED' };
         var pageCursor = cursor;
         var out = await this._authedFetch('messages', function () { return { afterSeq: pageCursor }; }, { method: 'GET' });
         if (out.obsolete || this._conversationGen !== myGen) return { ok: false, sessionReset: false, messages: [], obsolete: true, error: 'SESSION_SUPERSEDED' };
         if (out.staleSessionIgnored) return { ok: false, sessionReset: false, messages: this.messages || [], staleSessionIgnored: true, error: 'STALE_SESSION' };
         if (out.sessionReset) return { ok: false, messages: [], sessionReset: true, error: 'Unauthorized' };
-        var data = await out.res.json().catch(function () { return {}; });
+        var data = out.data || {};
         if (!out.res.ok) return { ok: false, messages: [], error: data.error || ('HTTP_' + out.res.status) };
         lastData = data;
         var batch = Array.isArray(data.messages) ? data.messages : [];
@@ -728,11 +758,12 @@
         if (!batch.length || nextCur === null || nextCur <= pageCursor || (!data.hasMore && batch.length < 50)) break;
         cursor = nextCur;
       }
-      if (this._conversationGen !== myGen) return { ok: false, messages: [], obsolete: true, error: 'SESSION_SUPERSEDED' };
+      if (this._conversationGen !== myGen) return { ok: false, sessionReset: false, messages: [], obsolete: true, error: 'SESSION_SUPERSEDED' };
       this.messages = combined;
       return Object.assign({ ok: true, isMock: false }, lastData, { messages: combined });
     } catch (e) {
-      return { ok: false, messages: this.messages || [], error: (e && e.message) ? e.message : 'NETWORK_ERROR' };
+      var errN = e && e.name ? e.name : '';
+      return { ok: false, messages: this.messages || [], error: (errN === 'AbortError' || errN === 'TimeoutError') ? 'BRIDGE_TIMEOUT' : ((e && e.message) ? e.message : 'NETWORK_ERROR') };
     }
   };
 
@@ -743,7 +774,12 @@
     }
 
     var rawInputText = String(payload.text || '').trim();
-    var sendSig = [rawInputText, payload.requestHandoff ? '1' : '0', String(payload.takeoverReason || '')].join('|');
+    var sendSig = [
+      rawInputText,
+      payload.requestHandoff ? '1' : '0',
+      String(payload.takeoverReason || ''),
+      payload.clientMsgId ? String(payload.clientMsgId) : '',
+    ].join('|');
     if (this._sendMessageInFlight && payload._dedupeConcurrent !== false && this._sendMessageInFlightSignature === sendSig) {
       return this._sendMessageInFlight;
     }
@@ -830,15 +866,15 @@
         return { ok: false, persisted: false, error: (errN === 'AbortError' || errN === 'TimeoutError') ? 'BRIDGE_TIMEOUT' : ((e && e.message) ? e.message : 'NETWORK_ERROR'), isMock: false };
       }
       if (out.obsolete || self._conversationGen !== myGen) {
-        return { ok: false, obsolete: true, persisted: false, error: 'SESSION_SUPERSEDED', isMock: false };
+        return { ok: false, sessionReset: false, obsolete: true, persisted: false, error: 'SESSION_SUPERSEDED', isMock: false };
       }
       if (out.staleSessionIgnored) {
-        return { ok: false, staleSessionIgnored: true, persisted: false, error: 'STALE_SESSION', isMock: false };
+        return { ok: false, sessionReset: false, staleSessionIgnored: true, persisted: false, error: 'STALE_SESSION', isMock: false };
       }
       if (out.sessionReset) {
         return { ok: false, sessionReset: true, persisted: false, error: 'Unauthorized', isMock: false };
       }
-      var data = await out.res.json().catch(function () { return {}; });
+      var data = out.data || {};
       if (!out.res.ok) {
         return { ok: false, persisted: false, error: data.error || ('HTTP_' + out.res.status), isMock: false };
       }
@@ -939,12 +975,12 @@
     }
     if (this.mode !== 'live') return { ok: false, posts: [], isMock: false };
     try {
-      var res = await this._fetchWithDeadline(this._buildUrl('posts', { organizationId: this.organizationId }), {
+      var pOut = await this._fetchJsonWithDeadline(this._buildUrl('posts', { organizationId: this.organizationId }), {
         method: 'GET',
         headers: { Accept: 'application/json' },
       }, this.requestTimeoutMs);
-      if (!res.ok) return { ok: false, posts: [], error: 'HTTP_' + res.status, isMock: false };
-      var data = await res.json().catch(function () { return {}; });
+      if (!pOut.res.ok) return { ok: false, posts: [], error: 'HTTP_' + pOut.res.status, isMock: false };
+      var data = pOut.data || {};
       var list = Array.isArray(data.posts) ? data.posts : [];
       this.posts = list.filter(function (p) {
         return p && p.visibility === 'public' && (p.publish_status === 'published' || p.publish_status === 'corrected');

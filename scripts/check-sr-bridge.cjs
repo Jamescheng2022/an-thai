@@ -940,6 +940,101 @@ async function testReviewRegressionCases() {
   assert.strictEqual(lateRes.obsolete, true);
   assert.strictEqual(aD.session, null);
   assert.strictEqual(storageMap.has('sr_bridge_session_v1_reset-gen'), false, 'Reset must prevent late create response from resurrecting session');
+
+  // Case E: Distinct clientMsgId with identical text NOT coalesced
+  storageMap.clear(); serverSessions = []; serverMessages = []; createDelayMs = 15;
+  const sbE = makeTabSandbox();
+  const aE = new sbE.SourceRatingEmbedAdapter({ bridgeEndpoint: '/api/sr-bridge', workspaceKey: 'distinct-cmsgid' });
+  await aE.init();
+  await aE.createSession({ message: 'Seed session' });
+  const [e1, e2] = await Promise.all([
+    aE.sendMessage({ text: 'Same text', clientMsgId: 'cmsgid-alpha' }),
+    aE.sendMessage({ text: 'Same text', clientMsgId: 'cmsgid-beta' })
+  ]);
+  assert.strictEqual(e1.ok, true);
+  assert.strictEqual(e2.ok, true);
+  assert.ok(serverMessages.some((m) => m.clientMsgId === 'cmsgid-alpha'));
+  assert.ok(serverMessages.some((m) => m.clientMsgId === 'cmsgid-beta'));
+
+  // Case F: setItem throws while getItem still returns null -> retains pending create in memory
+  let denySetOnly = false;
+  const sbF = (() => {
+    const ls = {
+      getItem: (k) => (storageMap.has(k) ? storageMap.get(k) : null),
+      setItem: (k, v) => {
+        if (denySetOnly) throw new Error('QuotaExceededError');
+        storageMap.set(k, String(v));
+      },
+      removeItem: (k) => storageMap.delete(k)
+    };
+    const orig = makeTabSandbox();
+    orig.localStorage = ls;
+    return orig;
+  })();
+  storageMap.clear(); serverSessions = []; serverMessages = [];
+  denySetOnly = true;
+  dropCreateResponseCount = 1;
+  const aF = new sbF.SourceRatingEmbedAdapter({ bridgeEndpoint: '/api/sr-bridge', workspaceKey: 'quota-fail' });
+  await aF.init();
+  const f1 = await aF.createSession({ message: 'Quota test brief' });
+  assert.strictEqual(f1.ok, false);
+  const f2 = await aF.createSession({ message: 'Quota test brief' });
+  assert.strictEqual(f2.ok, true);
+  assert.strictEqual(serverSessions.length, 1, 'setItem failure with working getItem must still retain pending clientRequestId');
+  denySetOnly = false;
+
+  // Case G: Queued Contact waiting behind Chat create while New Session runs -> returns obsolete after reset
+  storageMap.clear(); serverSessions = []; serverMessages = []; createDelayMs = 45;
+  const sbG = makeTabSandbox();
+  const aG = new sbG.SourceRatingEmbedAdapter({ bridgeEndpoint: '/api/sr-bridge', workspaceKey: 'queued-reset' });
+  await aG.init();
+  const chatWaitP = aG.sendMessage({ text: 'First chat before reset' });
+  const queuedContactP = aG.submitStructuredInquiry({ message: 'Queued contact before reset', channelSlug: 'contact-scope-form' });
+  await new Promise((r) => setTimeout(r, 15));
+  aG.clearSession();
+  const [wRes, qRes] = await Promise.all([chatWaitP, queuedContactP]);
+  assert.strictEqual(wRes.obsolete, true);
+  assert.strictEqual(qRes.obsolete, true);
+  assert.strictEqual(qRes.ok, false);
+  assert.strictEqual(aG.session, null, 'Queued Contact must NOT create/save a session after New Session reset');
+
+  // Case H: Stalled JSON body on POST ?route=messages aborts cleanly under requestTimeoutMs deadline
+  storageMap.clear(); serverSessions = []; serverMessages = []; createDelayMs = 5;
+  const sbH = makeTabSandbox();
+  const origFetchH = sbH.fetch;
+  sbH.fetch = async (url, init) => {
+    if (url.includes('route=messages') && init && init.method === 'POST') {
+      return {
+        ok: true,
+        status: 201,
+        json: () => new Promise((_resolve, reject) => {
+          if (init && init.signal) {
+            if (init.signal.aborted) {
+              const e = new Error('aborted');
+              e.name = 'AbortError';
+              reject(e);
+              return;
+            }
+            init.signal.addEventListener('abort', () => {
+              const e = new Error('aborted');
+              e.name = 'AbortError';
+              reject(e);
+            }, { once: true });
+          }
+        })
+      };
+    }
+    return origFetchH(url, init);
+  };
+  const aH = new sbH.SourceRatingEmbedAdapter({ bridgeEndpoint: '/api/sr-bridge', workspaceKey: 'stalled-body', requestTimeoutMs: 60 });
+  await aH.init();
+  await aH.createSession({ message: 'Init body test' });
+  const tStart = Date.now();
+  const stalledOut = await aH.sendMessage({ text: 'Stalled response body msg' });
+  const elapsedMs = Date.now() - tStart;
+  assert.strictEqual(stalledOut.ok, false);
+  assert.strictEqual(stalledOut.error, 'BRIDGE_TIMEOUT');
+  assert.ok(elapsedMs < 1000, 'Stalled JSON body must abort within deadline, got ' + elapsedMs + 'ms');
 }
 
 (async () => {
@@ -948,7 +1043,7 @@ async function testReviewRegressionCases() {
   await testEnquiryHandler();
   await testSingleFlightAndIdempotency();
   await testReviewRegressionCases();
-  console.log('PASS: sr-bridge + /api/enquiry + adapter 409/401/offline/mock/501 + single-flight + Codex review P1/P2 invariants');
+  console.log('PASS: sr-bridge + /api/enquiry + adapter 409/401/offline/mock/501 + single-flight + all 8 Codex P1/P2 invariants');
 })().catch((err) => {
   console.error(err);
   process.exit(1);

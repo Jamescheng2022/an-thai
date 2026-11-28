@@ -34,7 +34,7 @@
   };
 
   var I18N = window.ANTHAI_I18N || { EN: {} };
-  var state = { lang: 'EN', adapterMode: 'unconfigured', isMock: false, sessionStatus: '', assignedStaffLabel: '', requestId: '', inquiryApiConfigured: false, sessionId: '', lastFocused: null, pollTimer: null, pollGeneration: 0, isPollingInFlight: false, uiGeneration: 0, lastPosts: [], postsIsMock: false, isLiveSending: false, isContactSubmitting: false, pendingLiveMsg: null, pendingContactFollowUp: null, drawerMenuOpen: false };
+  var state = { lang: 'EN', adapterMode: 'unconfigured', isMock: false, sessionStatus: '', assignedStaffLabel: '', requestId: '', inquiryApiConfigured: false, sessionId: '', lastFocused: null, pollTimer: null, pollGeneration: 0, transcriptRenderGen: 0, isPollingInFlight: false, uiGeneration: 0, lastPosts: [], postsIsMock: false, isLiveSending: false, isContactSubmitting: false, pendingLiveMsg: null, pendingContactFollowUp: null, drawerMenuOpen: false };
 
   function makeClientUuid() {
     try {
@@ -429,10 +429,10 @@
 
   function refreshDrawerTranscript(expectedUiGen, expectedSessionId) {
     if (!adapter || typeof adapter.listMessages !== 'function') return;
-    var pollGen = ++state.pollGeneration;
+    var renderGen = ++state.transcriptRenderGen;
     adapter.listMessages().then(function (listRes) {
       if (!listRes || listRes.obsolete || listRes.staleSessionIgnored) return;
-      if (expectedUiGen !== state.uiGeneration || pollGen !== state.pollGeneration) return;
+      if (expectedUiGen !== state.uiGeneration || renderGen !== state.transcriptRenderGen) return;
       var curSid = adapter && adapter.session ? adapter.session.sessionId : '';
       if (expectedSessionId && curSid && curSid !== expectedSessionId) return;
       if (listRes.sessionReset) { applySessionResetUI(); return; }
@@ -588,6 +588,7 @@
         }
         state.isPollingInFlight = true;
         var expectedSid = adapter.session.sessionId;
+        var renderGen = ++state.transcriptRenderGen;
         try {
           var r = await adapter.listMessages();
           if (!r || r.obsolete || r.staleSessionIgnored) return;
@@ -598,7 +599,7 @@
             return;
           }
           if (r.sessionReset) { applySessionResetUI(); return; }
-          if (r.ok) {
+          if (r.ok && renderGen === state.transcriptRenderGen) {
             var prevStatus = state.sessionStatus;
             if (r.status) state.sessionStatus = r.status;
             if (r.status && (r.status === 'human_active' || r.status !== prevStatus) && typeof adapter.getSession === 'function') {
@@ -616,7 +617,7 @@
             if (state.sessionStatus !== 'human_active') state.assignedStaffLabel = '';
             syncStatusUI();
             if (state.sessionStatus === 'closed') showLiveFeedback(t('liveClosedNotice'), 'neutral');
-            renderLiveMessages(r.messages);
+            if (renderGen === state.transcriptRenderGen) renderLiveMessages(r.messages);
           }
         } finally {
           state.isPollingInFlight = false;

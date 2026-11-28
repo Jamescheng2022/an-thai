@@ -628,6 +628,21 @@ def run_tests():
             assert not race_page.locator("#liveMsgInput").evaluate("el => el.readOnly"), "Input readOnly must clear immediately after POST"
             race_page.wait_for_timeout(1000)
 
+            # Verify polling remains alive after send (delayed staff reply arrives automatically via poll)
+            race_state["slow_get_ms"] = 0
+            race_state["messages"].append({
+                "id": "m-poll-reply",
+                "seq": len(race_state["messages"]) + 1,
+                "senderKind": "staff",
+                "orgVerified": True,
+                "text": "Auto-polled staff reply after message send",
+                "createdAt": "2026-11-28T11:02:00Z",
+            })
+            race_page.wait_for_function(
+                "() => document.getElementById('liveMessagesMount').innerText.includes('Auto-polled staff reply after message send')",
+                timeout=4500,
+            )
+
             # New Session during slow create invalidates late create
             race_state["slow_get_ms"] = 0
             race_page.locator("#drawerMenuBtn").click()

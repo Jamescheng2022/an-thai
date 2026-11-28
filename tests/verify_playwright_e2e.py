@@ -52,7 +52,8 @@ PAGES = [
     'insights/pit-pretest-site-readiness-owner-checklist.html',
     'insights/static-load-vs-pda-thailand-pile-capacity.html',
     'insights/pile-integrity-test-report-review-checklist.html',
-    'insights/static-pile-load-test-slt-reaction-frame-anchor-pile-failure-reference-beam-distortion.html'
+    'insights/static-pile-load-test-slt-reaction-frame-anchor-pile-failure-reference-beam-distortion.html',
+    'insights/low-strain-pit-shallow-bulbing-impedance-shadowing-defect-guide.html'
 ]
 
 VIEWPORTS = [390, 768, 1024, 1440]
@@ -205,8 +206,8 @@ def run_tests():
             zh_page.wait_for_timeout(80)
             assert "/zh/insights/index.html" in zh_page.url, f"Expected /zh/insights/index.html, got {zh_page.url}"
             assert "工程技术洞察" in zh_page.locator("h1").inner_text() or "技术专栏" in zh_page.locator("h1").inner_text()
-            assert zh_page.locator(".insights-grid .insight-card").count() == 6, "Expected all 6 articles on insights index"
-            assert "2026-11-27" in zh_page.locator(".insights-grid .insight-card").first.inner_text(), "Newest article must be first"
+            assert zh_page.locator(".insights-grid .insight-card").count() == 7, "Expected all 7 articles on insights index"
+            assert "2026-11-28" in zh_page.locator(".insights-grid .insight-card").first.inner_text(), "Newest article must be first"
             assert "EN 英文原稿" in zh_page.locator(".insights-grid").inner_text()
 
             # Check /zh/cases/index.html clean capabilities landing + /th/cases/index.html + lang switcher
@@ -214,14 +215,14 @@ def run_tests():
             assert zh_page.locator(".case-card").count() == 4
             en_switch_href = zh_page.locator('.lang-btn[data-language="en"]').get_attribute("href")
             assert en_switch_href == "/cases/index.html", f"Unexpected EN href: {en_switch_href}"
-            # Verify TH insights index also has EN origin badge and 6 articles
+            # Verify TH insights index also has EN origin badge and 7 articles
             zh_page.goto(f"{base_url}/th/insights/index.html", wait_until="networkidle")
-            assert zh_page.locator(".insights-grid .insight-card").count() == 6
+            assert zh_page.locator(".insights-grid .insight-card").count() == 7
             assert "EN ต้นฉบับ" in zh_page.locator(".insights-grid").inner_text()
             # Verify EN article keeps canonical slug in EN switcher link
-            zh_page.goto(f"{base_url}/insights/static-pile-load-test-slt-reaction-frame-anchor-pile-failure-reference-beam-distortion.html", wait_until="networkidle")
-            assert zh_page.locator('.lang-btn[data-language="en"]').get_attribute("href") == "/insights/static-pile-load-test-slt-reaction-frame-anchor-pile-failure-reference-beam-distortion.html"
-            print("PASS: ZH/TH Insights (6 articles + badges), clean Cases capabilities & nested lang switcher verified.")
+            zh_page.goto(f"{base_url}/insights/low-strain-pit-shallow-bulbing-impedance-shadowing-defect-guide.html", wait_until="networkidle")
+            assert zh_page.locator('.lang-btn[data-language="en"]').get_attribute("href") == "/insights/low-strain-pit-shallow-bulbing-impedance-shadowing-defect-guide.html"
+            print("PASS: ZH/TH Insights (7 articles + badges), clean Cases capabilities & nested lang switcher verified.")
             zh_page.close()
 
             # Check query prefill (?type=equipment&category=measurement AND ?route=03 / 04 exact unit routing)
